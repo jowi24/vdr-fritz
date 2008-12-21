@@ -208,6 +208,7 @@
 <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 
 
+
 <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 <buildTargets>
 <target name="remote-all" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
@@ -230,6 +231,14 @@
 <buildCommand>/home/joachim/workspace/vdr/remote-make</buildCommand>
 <buildArguments>vdr</buildArguments>
 <buildTarget>restart</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+<runAllBuilders>false</runAllBuilders>
+</target>
+<target name="copy-lib" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+<buildCommand>scp</buildCommand>
+<buildArguments>/home/joachim/workspace/vdr-fritzbox/libvdr-fritzbox.so</buildArguments>
+<buildTarget>root@vdr:/usr/local/lib/vdr/libvdr-fritzbox.so.1.7.0</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 <runAllBuilders>false</runAllBuilders>
