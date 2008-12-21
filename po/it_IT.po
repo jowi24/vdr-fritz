@@ -1,0 +1,222 @@
+# VDR plugin language source file.
+# Copyright (C) 2007 Klaus Schmidinger <kls@cadsoft.de>
+# This file is distributed under the same license as the VDR package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: VDR 1.5.7\n"
+"Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
+"POT-Creation-Date: 2008-06-14 16:47+0200\n"
+"PO-Revision-Date: 2008-03-30 17:53+0100\n"
+"Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
+"Language-Team:  <vdr@linuxtv.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
+#: fonbuch.c:49
+msgid "H"
+msgstr "C"
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
+#: fonbuch.c:53
+msgid "M"
+msgstr "T"
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
+#: fonbuch.c:57
+msgid "W"
+msgstr "L"
+
+#: fritzbox.c:33
+msgid "Fritz!Box Plugin for AVM Fritz!Box"
+msgstr "Plugin Fritz!Box per AVM Fritz!Box"
+
+#: fritzbox.c:34 fritzfonbuch.c:155
+msgid "Fritz!Box phone book"
+msgstr "Rubrica Fritz!Box"
+
+#: fritzlistener.c:125
+msgid "POTS"
+msgstr "analogico"
+
+#: fritzlistener.c:132
+msgid "ISDN"
+msgstr "ISDN"
+
+#: fritzlistener.c:133
+msgid "VoIP"
+msgstr "VoIP"
+
+#: fritzlistener.c:135
+msgid "Call from unknown extension"
+msgstr "Chiamata da estensione sconosciuta"
+
+#: fritzlistener.c:137
+msgid "Call from"
+msgstr "Chiamata da"
+
+#: menu.c:55 menu.c:274
+msgid "No number to call"
+msgstr "Nessun numero da chiamare"
+
+#: menu.c:58 menu.c:277
+msgid "Pick up your phone now"
+msgstr "Prendi ora la telefonata"
+
+#: menu.c:60 menu.c:279
+msgid "Error while initiating call"
+msgstr "Errore avvio chiamata"
+
+#: menu.c:80
+msgid "Retrieving phone book"
+msgstr "Recupero rubrica"
+
+#: menu.c:93
+msgid "Error fetching the call list"
+msgstr "Errore recupero elenco chiamate"
+
+#: menu.c:110
+msgid "This phonebook is not yet available."
+msgstr "Questa rubrica non è ancora disponibile."
+
+#: menu.c:111
+msgid "You may need to wait some minutes,"
+msgstr "Potresti dover aspettare alcuni minuti,"
+
+#: menu.c:112
+msgid "otherwise there may be a network problem."
+msgstr "altrimenti ci potrebbe essere un problema di rete."
+
+#: menu.c:115
+msgid "This phonebook is not displayable"
+msgstr "Questa rubrica non è disponibile"
+
+#: menu.c:131
+msgid "Reload"
+msgstr "Ricarica"
+
+#: menu.c:137
+msgid "Fritz!Box call list"
+msgstr "Elenco chiamate Fritz!Box"
+
+#: menu.c:142
+msgid "incoming"
+msgstr "in arrivo"
+
+#: menu.c:145
+msgid "missed"
+msgstr "perse"
+
+#: menu.c:148
+msgid "outgoing"
+msgstr "in uscita"
+
+#: menu.c:190 menu.c:250
+msgid "unknown"
+msgstr "sconosciuta"
+
+#. TRANSLATORS: this is the short form of "phone book"
+#: menu.c:220
+msgid "PB"
+msgstr "RU"
+
+#: menu.c:225
+msgid "Call details"
+msgstr "Dettagli chiamate"
+
+#: menu.c:236
+msgid "Date"
+msgstr "Data"
+
+#: menu.c:237
+msgid "Time"
+msgstr "Ora"
+
+#: menu.c:238
+msgid "Duration"
+msgstr "Durata"
+
+#: menu.c:239
+msgid "call was not accepted"
+msgstr "chiamata non accettata"
+
+#: menu.c:241 setup.c:76
+msgid "Extension"
+msgstr "Estensione MSN"
+
+#: menu.c:246
+msgid "Callee"
+msgstr "Chiamato"
+
+#: menu.c:247
+msgid "Caller"
+msgstr "Chiamante"
+
+#. TRANSLATORS: this is the label for the button to initiate a call
+#: menu.c:253
+msgid "Call"
+msgstr "Chiama"
+
+#: setup.c:62
+msgid "Fritz!Box URL"
+msgstr "Indirizzo Fritz!Box"
+
+#: setup.c:63
+msgid "Password"
+msgstr "Password"
+
+#: setup.c:65
+msgid "Mute on call"
+msgstr "Metti in muto la chiamata"
+
+#: setup.c:66
+msgid "Pause on call"
+msgstr "Metti in pausa la chiamata"
+
+#: setup.c:67
+msgid "Show incoming calls"
+msgstr "Mostra chiamate in arrivo"
+
+#: setup.c:68
+msgid "Detailed call lists"
+msgstr "Dettagli elenco chiamate"
+
+#: setup.c:69
+msgid "Group call lists by date"
+msgstr "Raggruppa chiamate per data"
+
+#: setup.c:70
+msgid "Hide main menu entry"
+msgstr "Nascondi voce menu principale"
+
+#: setup.c:71
+msgid "Setup phonebooks to use..."
+msgstr "Imposta rubriche da utilizzare..."
+
+#: setup.c:72
+msgid "Restrict monitor to certain extensions"
+msgstr "Restringi controllo estensioni MSN"
+
+#: setup.c:74
+msgid "Number of monitored extensions"
+msgstr "Num. estens. MSN controllate"
+
+#: setup.c:219
+msgid "Setup phonebooks to use"
+msgstr "Imposta rubriche da utilizzare"
+
+#: setup.c:232
+msgid "Less"
+msgstr "Elimina"
+
+#: setup.c:232
+msgid "More"
+msgstr "Aggiungi"
+
+#~ msgid "Country code"
+#~ msgstr "Codice internazionale"
+
+#~ msgid "Please wait..."
+#~ msgstr "Attendere prego..."
