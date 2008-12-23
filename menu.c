@@ -46,7 +46,7 @@ trNOOP("das-oertliche.de");
 cMenuFritzbox::cMenuFritzbox(fritz::CallList *callList )
 :cOsdMenu("Fritz!Box", 1) // just dummy values
 {
-	this->fonbuch = fritz::FonbookManager::GetFonbuch();
+	this->fonbook = fritz::FonbookManager::GetFonbook();
 	this->callList = callList;
 	DisplayFonbuch();
 }
@@ -64,32 +64,32 @@ eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 		case kOk:
 			switch (currentMode) {
 			case FONBUCH:
-				if (Current() >= 0 && fonbuch->isDisplayable() && fonbuch->isInitialized())
-					state = AddSubMenu(new cMenuFonbuchDetail(fonbuch->RetrieveFonbuchEntry(Current()), fonbuch));
+				if (Current() >= 0 && fonbook->isDisplayable() && fonbook->isInitialized())
+					state = AddSubMenu(new cMenuFonbuchDetail(fonbook->RetrieveFonbookEntry(Current()), fonbook));
 				break;
 			case IN:
 				if (currentKeyItem)
-					ce = callList->RetrieveEntry(fritz::CallList::INCOMING, currentKeyItem->key);
+					ce = callList->RetrieveEntry(fritz::CallEntry::INCOMING, currentKeyItem->key);
 				if (ce)
-					state = AddSubMenu(new cMenuCallDetail(ce, currentMode, fonbuch));
+					state = AddSubMenu(new cMenuCallDetail(ce, currentMode, fonbook));
 				break;
 			case OUT:
 				if (currentKeyItem)
-					ce = callList->RetrieveEntry(fritz::CallList::OUTGOING, currentKeyItem->key);
+					ce = callList->RetrieveEntry(fritz::CallEntry::OUTGOING, currentKeyItem->key);
 				if (ce)
-					state = AddSubMenu(new cMenuCallDetail(ce, currentMode, fonbuch));
+					state = AddSubMenu(new cMenuCallDetail(ce, currentMode, fonbook));
 				break;
 			case MISSED:
 				if (currentKeyItem)
-					ce = callList->RetrieveEntry(fritz::CallList::MISSED, currentKeyItem->key);
+					ce = callList->RetrieveEntry(fritz::CallEntry::MISSED, currentKeyItem->key);
 				if (ce)
-					state = AddSubMenu(new cMenuCallDetail(ce, currentMode, fonbuch));
+					state = AddSubMenu(new cMenuCallDetail(ce, currentMode, fonbook));
 				break;
 			}
 			break;
 		case kRed:
 			if (currentMode == FONBUCH) {
-				fritz::FonbookManager::GetFonbuchManager()->NextFonbuch();
+				fritz::FonbookManager::GetFonbookManager()->NextFonbook();
 			}
 			DisplayFonbuch();
 			state = osContinue;
@@ -98,7 +98,7 @@ eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 		case kYellow:
 		case kBlue:
 			if (callList->isValid()) {
-				DisplayCalls((fritz::CallList::callType)(Key - kRed));
+				DisplayCalls((fritz::CallEntry::callType)(Key - kRed));
 			} else {
 				Skins.Message(mtError, tr("Error fetching the call list"));
 			}
@@ -114,20 +114,20 @@ eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 void cMenuFritzbox::DisplayFonbuch() {
 	unsigned int nameWidth = 0;
 	currentMode = FONBUCH;
-	SetTitle(tr(fonbuch->GetTitle().c_str()));
+	SetTitle(tr(fonbook->GetTitle().c_str()));
 	Clear();
-	if (fonbuch->isInitialized() == false) {
+	if (fonbook->isInitialized() == false) {
 		Add(new cOsdItem(tr("This phonebook is not yet available."), osUnknown, false));
 		Add(new cOsdItem(tr("You may need to wait some minutes,"), osUnknown, false));
 		Add(new cOsdItem(tr("otherwise there may be a network problem."), osUnknown, false));
 	}
-	else if (fonbuch->isDisplayable() == false) {
+	else if (fonbook->isDisplayable() == false) {
 		Add(new cOsdItem(tr("This phonebook is not displayable"), osUnknown, false));
 	}
 	else {
 		std::string lastName;
-		for (size_t pos=0; pos < fonbuch->GetFonbuchSize(); pos++) {
-			fritz::FonbookEntry *fe = fonbuch->RetrieveFonbuchEntry(pos);
+		for (size_t pos=0; pos < fonbook->GetFonbookSize(); pos++) {
+			fritz::FonbookEntry *fe = fonbook->RetrieveFonbookEntry(pos);
 			if (fe) {
 				// build the menu entries
 				char *line;
@@ -148,20 +148,20 @@ void cMenuFritzbox::DisplayFonbuch() {
 	Display();
 }
 
-void cMenuFritzbox::DisplayCalls(fritz::CallList::callType ct) {
+void cMenuFritzbox::DisplayCalls(fritz::CallEntry::callType ct) {
 	currentMode = (mode) ct;
 	std::string title=tr("Fritz!Box call list");
 	Clear();
 	title += " (";
 	switch(ct) {
-	case fritz::CallList::INCOMING:
+	case fritz::CallEntry::INCOMING:
 		title += tr("incoming");
 		break;
-	case fritz::CallList::MISSED:
+	case fritz::CallEntry::MISSED:
 		title += tr("missed");
 		fritzboxConfig.lastKnownMissedCall = callList->LastMissedCall();
 		break;
-	case fritz::CallList::OUTGOING:
+	case fritz::CallEntry::OUTGOING:
 		title += tr("outgoing");
 		break;
 	}
@@ -291,12 +291,12 @@ eOSState cMenuCallDetail::ProcessKey (eKeys Key) {
 
 // cMenuFonbuchDetail *********************************************************
 
-cMenuFonbuchDetail::cMenuFonbuchDetail(fritz::FonbookEntry *fe, fritz::Fonbook *fonbuch)
+cMenuFonbuchDetail::cMenuFonbuchDetail(fritz::FonbookEntry *fe, fritz::Fonbook *fonbook)
 :cOsdMenu(tr("Phone book details"), 15)
 {
 //  search for other entries with same name but different type
-	for(size_t i = 0; i < fonbuch->GetFonbuchSize(); i++) {
-		fritz::FonbookEntry  *fe2 = fonbuch->RetrieveFonbuchEntry(i);
+	for(size_t i = 0; i < fonbook->GetFonbookSize(); i++) {
+		fritz::FonbookEntry  *fe2 = fonbook->RetrieveFonbookEntry(i);
 		if (fe2->getName() == fe->getName())
 			numbers[fe2->getType()] = fe2->getNumber();
 	}

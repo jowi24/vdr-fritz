@@ -36,7 +36,7 @@ public:
 		FONBUCH
 	};
 private:
-	fritz::Fonbook *fonbuch;
+	fritz::Fonbook *fonbook;
 	fritz::CallList *callList;
     mode currentMode;
 public:
@@ -44,7 +44,7 @@ public:
 	virtual ~cMenuFritzbox();
 	virtual eOSState ProcessKey (eKeys Key);
 	void DisplayFonbuch();
-	void DisplayCalls(fritz::CallList::callType ct);
+	void DisplayCalls(fritz::CallEntry::callType ct);
 };
 
 class cMenuCallDetail : public cOsdMenu
@@ -62,7 +62,7 @@ class cMenuFonbuchDetail : public cOsdMenu
 private:
 	std::string numbers[4];
 public:
-	cMenuFonbuchDetail(fritz::FonbookEntry *fe, fritz::Fonbook *fonbuch);
+	cMenuFonbuchDetail(fritz::FonbookEntry *fe, fritz::Fonbook *fonbook);
 	virtual eOSState ProcessKey (eKeys Key);
 };
 

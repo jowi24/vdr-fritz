@@ -47,7 +47,7 @@ FonbookManager::FonbookManager()
 		else
 			gConfig->getFonbookIDs().erase(gConfig->getFonbookIDs().begin()+i);
 	}
-	// track the currently active (=shown) fonbuch
+	// track the currently active (=shown) fonbook
 	activeFonbookPos = std::string::npos;
     // set activeFonbookPos to the last displayed fonbook (if this is still valid and displayable)
 	size_t pos = 0;
@@ -67,19 +67,19 @@ FonbookManager::~FonbookManager()
 	}
 }
 
-Fonbook* FonbookManager::GetFonbuch() {
+Fonbook* FonbookManager::GetFonbook() {
 	if (!me)
 		me = new FonbookManager();
 	return (Fonbook*) me;
 }
 
-FonbookManager* FonbookManager::GetFonbuchManager() {
+FonbookManager* FonbookManager::GetFonbookManager() {
 	if (!me)
 		me = new FonbookManager();
 	return me;
 }
 
-void FonbookManager::NextFonbuch() {
+void FonbookManager::NextFonbook() {
 	size_t pos = activeFonbookPos + 1;
     // no phonebooks -> no switching
 	if ( gConfig->getFonbookIDs().size() == 0)
@@ -115,13 +115,13 @@ FonbookEntry &FonbookManager::ResolveToName(FonbookEntry &fe) {
 
 Fonbook *FonbookManager::GetActiveFonbook() {
 	if (activeFonbookPos == std::string::npos) {
-		NextFonbuch();
+		NextFonbook();
 	}
 	return fonbooks[gConfig->getFonbookIDs()[activeFonbookPos]];
 }
 
-FonbookEntry *FonbookManager::RetrieveFonbuchEntry(size_t id) {
-	return GetActiveFonbook() ? GetActiveFonbook()->RetrieveFonbuchEntry(id) : NULL;
+FonbookEntry *FonbookManager::RetrieveFonbookEntry(size_t id) {
+	return GetActiveFonbook() ? GetActiveFonbook()->RetrieveFonbookEntry(id) : NULL;
 }
 
 bool FonbookManager::isDisplayable() {
@@ -137,8 +137,8 @@ void FonbookManager::setInitialized(bool isInitialized) {
 		GetActiveFonbook()->setInitialized(isInitialized);
 }
 
-size_t FonbookManager::GetFonbuchSize() {
-	return GetActiveFonbook() ? GetActiveFonbook()->GetFonbuchSize() : 0;
+size_t FonbookManager::GetFonbookSize() {
+	return GetActiveFonbook() ? GetActiveFonbook()->GetFonbookSize() : 0;
 }
 
 std::string FonbookManager::GetTitle() {

@@ -43,7 +43,7 @@ public:
 	fritz::sCallInfo *GetCallInfo() { return callInfo; }
 	std::string ComposeCallMessage();
 
-	virtual void HandleCall(bool outgoing, int connId, std::string remoteParty, std::string localParty, std::string medium);
+	virtual void HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string localParty, std::string medium);
 	virtual void HandleConnect(int connId);
 	virtual void HandleDisconnect(int connId, std::string duration);
 };

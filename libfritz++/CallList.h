@@ -29,8 +29,17 @@
 
 namespace fritz{
 
+class CallList;
+
 class CallEntry {
 public:
+	enum callType {
+		ALL      = 0,
+		INCOMING = 1,
+		MISSED   = 2,
+		OUTGOING = 3
+	};
+	callType    type;
 	std::string date;
 	std::string time;
 	std::string remoteName;
@@ -48,20 +57,18 @@ private:
 	std::vector<CallEntry> callListIn;
 	std::vector<CallEntry> callListMissed;
 	std::vector<CallEntry> callListOut;
+	std::vector<CallEntry> callListAll;
 	bool callListRead;
 	time_t lastMissedCall;
+	static CallList *callList;
+    CallList();
 public:
-	enum callType {
-		INCOMING = 1,
-		MISSED   = 2,
-		OUTGOING = 3
-	};
-	CallList();
-	virtual ~CallList();
+	static CallList *getCallList(bool create = true);
+    virtual ~CallList();
 	void Action();
 	bool isValid() { return callListRead; }
-	CallEntry *RetrieveEntry(callType type, size_t id);
-	size_t GetSize(callType type);
+	CallEntry *RetrieveEntry(CallEntry::callType type, size_t id);
+	size_t GetSize(CallEntry::callType type);
 	size_t MissedCalls(time_t since);
 	time_t LastMissedCall() { return lastMissedCall; }
 };

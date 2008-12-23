@@ -34,6 +34,7 @@ std::ostream *dlog = &std::clog;
 std::ostream *ilog = &std::cout;
 std::ostream *elog = &std::cerr;
 
+//TODO: notify lib about config changes, e.g. msn filter
 
 std::string cMenuSetupFritzbox::StoreMsn(){
 	std::vector<std::string>::iterator it;
@@ -145,7 +146,7 @@ eOSState cMenuSetupFritzbox::ProcessKey(eKeys Key) {
 	if (state == osUnknown) {
 		switch (Key) {
 		case kRed:
-			fritz::FonbookManager::GetFonbuch()->Reload();
+			fritz::FonbookManager::GetFonbook()->Reload();
 			Skins.QueueMessage(mtInfo, tr("Retrieving phone book"));
 			state = osContinue;
 			break;
@@ -193,7 +194,7 @@ void cMenuSetupFritzbox::Store(void) {
 			}
 		}
 		if (initialize)
-			(*(fritz::FonbookManager::GetFonbuchManager()->GetFonbooks()))[selectedFonbookIDs[i]]->Initialize();
+			(*(fritz::FonbookManager::GetFonbookManager()->GetFonbooks()))[selectedFonbookIDs[i]]->Initialize();
 	}
 	fritzboxConfig.selectedFonbookIDs   = selectedFonbookIDs;
 
@@ -261,7 +262,7 @@ cMenuSetupFritzbox::~cMenuSetupFritzbox()
 cMenuSetupFritzboxFonbooks::cMenuSetupFritzboxFonbooks(std::vector<std::string> *selectedFonbookIDs)
 :cOsdMenu(tr("Setup phonebooks to use"), 4)
 {
-	fonbooks = fritz::FonbookManager::GetFonbuchManager()->GetFonbooks();
+	fonbooks = fritz::FonbookManager::GetFonbookManager()->GetFonbooks();
 	this->selectedFonbookIDs = selectedFonbookIDs;
 	// copy setup to temporary parameters
 	numberOfSelectedFonbooks = selectedFonbookIDs->size();
