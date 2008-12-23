@@ -37,7 +37,7 @@ cPluginFritzbox::cPluginFritzbox(void)
 	// Initialize any member variables here.
 	// DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
 	// VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
-	fonbuch = NULL;
+	fonbook = NULL;
 	listener = NULL;
 	callList = NULL;
 	event = NULL;
@@ -91,12 +91,12 @@ bool cPluginFritzbox::Start(void)
 	fritz::Config::SetupConfigDir(fritzboxConfig.configDir);
 	fritz::Config::SetupFonbookIDs(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
 	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
-	fonbuch = fritz::FonbookManager::GetFonbuch();
-	callList = new fritz::CallList();
+	fonbook = fritz::FonbookManager::GetFonbook();
+	callList = fritz::CallList::getCallList();
 	// Create FritzListener only if needed
 	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
-		event = new cFritzEventHandler(fonbuch);
-		listener = new fritz::Listener(event, callList);
+		event = new cFritzEventHandler(fonbook);
+		listener = new fritz::Listener(event);
 		if (listener)
 			listener->Start();
 	}
@@ -116,8 +116,8 @@ void cPluginFritzbox::Stop(void)
 		delete event;
 	if (callList)
 		delete callList;
-	if (fonbuch)
-		delete fonbuch;
+	if (fonbook)
+		delete fonbook;
 	if (dlog)
 		delete dlog;
 	if (ilog)

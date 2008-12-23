@@ -70,7 +70,7 @@ std::string cFritzEventHandler::ComposeCallMessage() {
 }
 
 
-void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remoteParty, std::string localParty, std::string medium) {
+void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string localParty, std::string medium) {
 
 	if (fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_ANY) {
 		if (outgoing && fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_OUT)
@@ -86,55 +86,44 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 		control->GetReplayMode(currPlay, currForw, currSpeed);
 	}
 
-	// apply MSN-filter if enabled
-	bool notify = fritzboxConfig.msn.size() ? false : true;
-	for (std::vector<std::string>::iterator it = fritzboxConfig.msn.begin(); it < fritzboxConfig.msn.end(); it++){
-		if (localParty.compare(*it) == 0 )
-			notify = true;
+	connIdList.push_back(connId);
+	if (fritzboxConfig.muteOnCall && !cDevice::PrimaryDevice()->IsMute()) {
+		*ilog << __FILE__ << ": " << (outgoing ? "outgoing": "incoming") << " call, muting." << std::endl;
+		cDevice::PrimaryDevice()->ToggleMute();
+		muted = true;
 	}
-	if (notify) {
-		connIdList.push_back(connId);
-		if (fritzboxConfig.muteOnCall && !cDevice::PrimaryDevice()->IsMute()) {
-			*ilog << __FILE__ << ": " << (outgoing ? "outgoing": "incoming") << " call, muting." << std::endl;
-			cDevice::PrimaryDevice()->ToggleMute();
-			muted = true;
-		}
-		if (fritzboxConfig.pauseOnCall && !paused && control && currPlay) {
-			*ilog << __FILE__ <<": " << (outgoing ? "outgoing": "incoming") << " call, pressing kPause." << std::endl;
-			cRemote::Put(kPause);
-			paused = true;
-		}
-		if (medium.find("SIP") != std::string::npos)
-			medium.replace(0, 3, "VoIP ");
-		if (medium.find("POTS") != std::string::npos)
-			medium = tr("POTS");
-		if (fritzboxConfig.showNumber) {
-			// save the message into "message", MainThreadHook or MainMenuAction will take care of it
-			displayedConnId = connId;
+	if (fritzboxConfig.pauseOnCall && !paused && control && currPlay) {
+		*ilog << __FILE__ <<": " << (outgoing ? "outgoing": "incoming") << " call, pressing kPause." << std::endl;
+		cRemote::Put(kPause);
+		paused = true;
+	}
+	if (medium.find("SIP") != std::string::npos)
+		medium.replace(0, 3, "VoIP ");
+	if (medium.find("POTS") != std::string::npos)
+		medium = tr("POTS");
+	if (fritzboxConfig.showNumber) {
+		// save the message into "message", MainThreadHook or MainMenuAction will take care of it
+		displayedConnId = connId;
 #ifdef DO_NOT_SET
-			// trigger translation of string coming from the Fritz!Box - do not compile!
-			trNOOP("ISDN")
-			trNOOP("VoIP")
+		// trigger translation of string coming from the Fritz!Box - do not compile!
+		trNOOP("ISDN")
+		trNOOP("VoIP")
 #endif
-			std::string name;
-			fritz::FonbookEntry fe(name, remoteParty);
-			fonbuch->ResolveToName(fe);
 
-			callInfo = new fritz::sCallInfo();
-			callInfo->isOutgoing   = outgoing;
-			callInfo->remoteNumber = remoteParty;
-			callInfo->remoteName   = fe.getName();
-			if (fe.getTypeName().size() > 0) {
-				callInfo->remoteName += " ";
-				callInfo->remoteName += tr(fe.getTypeName().c_str());
-			}
-			callInfo->localNumber  = localParty;
-			callInfo->medium       = medium;
-			// trigger notification using own osd
-			if (fritzboxConfig.useNotifyOsd && !cNotifyOsd::isOpen()) {
-				*dlog << __FILE__ << ": triggering NotifyOsd" << std::endl;
-				cRemote::CallPlugin(fritzboxConfig.pluginName.c_str());
-			}
+		callInfo = new fritz::sCallInfo();
+		callInfo->isOutgoing   = outgoing;
+		callInfo->remoteNumber = remoteNumber;
+		callInfo->remoteName   = remoteName;
+		//			if (fe.getTypeName().size() > 0) { TODO: get type from lib
+		//				callInfo->remoteName += " ";
+		//				callInfo->remoteName += tr(fe.getTypeName().c_str());
+		//			}
+		callInfo->localNumber  = localParty;
+		callInfo->medium       = medium;
+		// trigger notification using own osd
+		if (fritzboxConfig.useNotifyOsd && !cNotifyOsd::isOpen()) {
+			*dlog << __FILE__ << ": triggering NotifyOsd" << std::endl;
+			cRemote::CallPlugin(fritzboxConfig.pluginName.c_str());
 		}
 	}
 }

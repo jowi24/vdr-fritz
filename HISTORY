@@ -358,6 +358,15 @@ VDR Plugin 'fritzbox' Revision History
 - fixed some compiler warnings that occur with recent compiler versions (4.3.x)
 - fixed missing includes which prevented compilation with recent compiler versions (4.3.x)
 
+2008-xx-xx: Version 1.1.4
+- adapted to changes in libfritz++
+  * Added type "ALL" to CallList to retrieve complete list of calls at once.
+  * Moved callType from CallList to CallEntry. 
+  * Implemented in-library msn filtering and reverse-lookups.
+  * Renamed various methods in FonbookManager from *Fonbuch* to *Fonbook*.
+  * Made CallList a singleton.
+  
+
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
