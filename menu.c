@@ -164,6 +164,9 @@ void cMenuFritzbox::DisplayCalls(fritz::CallEntry::callType ct) {
 	case fritz::CallEntry::OUTGOING:
 		title += tr("outgoing");
 		break;
+	case fritz::CallEntry::ALL:
+		// just a "meta-value", the plugin does not use it
+		break;
 	}
 	title += ")";
 	unsigned int destWidth = 0;
