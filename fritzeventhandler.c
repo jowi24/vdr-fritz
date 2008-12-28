@@ -69,7 +69,7 @@ std::string cFritzEventHandler::ComposeCallMessage() {
 }
 
 
-void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string remoteType, std::string localParty, std::string medium) {
+void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string remoteType, std::string localParty, std::string medium, std::string mediumName) {
 
 	if (fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_ANY) {
 		if (outgoing && fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_OUT)
@@ -96,10 +96,12 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 		cRemote::Put(kPause);
 		paused = true;
 	}
-	if (medium.find("SIP") != std::string::npos)
-		medium.replace(0, 3, "VoIP ");
-	if (medium.find("POTS") != std::string::npos)
-		medium = tr("POTS");
+	if (medium.compare(mediumName) == 0){
+		if (mediumName.find("SIP") != std::string::npos)
+			mediumName.replace(0, 3, "VoIP ");
+		if (mediumName.find("POTS") != std::string::npos)
+			mediumName = tr("POTS");
+	}
 	if (fritzboxConfig.showNumber) {
 		// save the message into "message", MainThreadHook or MainMenuAction will take care of it
 		displayedConnId = connId;
@@ -118,7 +120,7 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 			callInfo->remoteName += tr(remoteType.c_str());
 		}
 		callInfo->localNumber  = localParty;
-		callInfo->medium       = medium;
+		callInfo->medium       = mediumName;
 		// trigger notification using own osd
 		if (fritzboxConfig.useNotifyOsd && !cNotifyOsd::isOpen()) {
 			*dlog << __FILE__ << ": triggering NotifyOsd" << std::endl;

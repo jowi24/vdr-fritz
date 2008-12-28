@@ -20,4 +20,5 @@
 - Introduced new method CallList::CreateCallList() to explicitly pre-fetch the call list before
   calling CallList::getCallList().
 - Moved Config::SetupFonbookIDs to FonbookManager::CreateFonbookManager().
-
+- Renamed Tools::GetPhoneSettings() to Tools::GetLocationSettings().
+- Added resolving of SIP[0-9] to real provider names.

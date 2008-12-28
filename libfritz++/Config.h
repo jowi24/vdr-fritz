@@ -49,6 +49,7 @@ private:
 		std::string password;               			// fritz!box web interface password
 		std::string countryCode;            			// fritz!box country-code
 		std::string regionCode;             			// fritz!box region-code
+		std::vector <std::string> sipNames;				// the SIP provider names
 		std::vector <std::string> msn;      			// msn's we are interesed in
 		std::vector <std::string> selectedFonbookIDs; 	// active phone books
 		std::string activeFonbook;						// currently selected Fonbook
@@ -88,20 +89,22 @@ public:
 	 * @param full path to the writable directory
 	 */
 	void static SetupConfigDir( std::string dir);
-	std::string &getConfigDir( )               { return mConfig.configDir; }
-	std::string &getLang( )                    { return mConfig.lang; }
-	void setLang( std::string l )              { mConfig.lang = l; }
-	std::string &getUrl( )                     { return mConfig.url; }
-	std::string &getPassword( )                { return mConfig.password; }
-	std::string &getCountryCode( )        	   { return mConfig.countryCode; }
-	void setCountryCode( std::string cc )      { mConfig.countryCode = cc; }
-	std::string &getRegionCode( )              { return mConfig.regionCode; }
-	void setRegionCode( std::string rc )       { mConfig.regionCode = rc; }
-	std::vector <std::string> getMsnFilter( )  { return mConfig.msn; }
-	std::vector <std::string> getFonbookIDs( ) { return mConfig.selectedFonbookIDs; }
-	void setFonbookIDs(std::vector<std::string> v) { mConfig.selectedFonbookIDs = v; }
-	std::string &getActiveFonbook( )           { return mConfig.activeFonbook; }
-	void setActiveFonbook( std::string f )     { mConfig.activeFonbook = f; }
+	std::string &getConfigDir( )                      { return mConfig.configDir; }
+	std::string &getLang( )                           { return mConfig.lang; }
+	void setLang( std::string l )                     { mConfig.lang = l; }
+	std::string &getUrl( )                            { return mConfig.url; }
+	std::string &getPassword( )                       { return mConfig.password; }
+	std::string &getCountryCode( )        	          { return mConfig.countryCode; }
+	void setCountryCode( std::string cc )             { mConfig.countryCode = cc; }
+	std::string &getRegionCode( )                     { return mConfig.regionCode; }
+	void setRegionCode( std::string rc )              { mConfig.regionCode = rc; }
+	std::vector <std::string> &getSipNames( )         { return mConfig.sipNames; }
+	void setSipNames( std::vector<std::string> names) { mConfig.sipNames = names; }
+	std::vector <std::string> getMsnFilter( )         { return mConfig.msn; }
+	std::vector <std::string> getFonbookIDs( )        { return mConfig.selectedFonbookIDs; }
+	void setFonbookIDs(std::vector<std::string> v)    { mConfig.selectedFonbookIDs = v; }
+	std::string &getActiveFonbook( )                  { return mConfig.activeFonbook; }
+	void setActiveFonbook( std::string f )            { mConfig.activeFonbook = f; }
 	virtual ~Config();
 };
 

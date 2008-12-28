@@ -120,8 +120,15 @@ void Listener::Action() {
 						std::string remoteName;
 						fritz::FonbookEntry fe(remoteName, partC);
 						FonbookManager::GetFonbook()->ResolveToName(fe);
+						// resolve SIP names
+						std::string mediumName;
+						if (partD.find("SIP")           != std::string::npos &&
+						    gConfig->getSipNames().size() >= (size_t)atoi(&partD[3]))
+							mediumName = gConfig->getSipNames()[atoi(&partD[3])];
+						else
+							mediumName = partD;
 						// notify application
-						if (event) event->HandleCall(true, connId, partC, fe.getName(), fe.getTypeName(), partB, partD);
+						if (event) event->HandleCall(true, connId, partC, fe.getName(), fe.getTypeName(), partB, partD, mediumName);
 						activeConnections.push_back(connId);
 					}
 
@@ -135,8 +142,15 @@ void Listener::Action() {
 						std::string remoteName;
 						fritz::FonbookEntry fe(remoteName, partA);
 						FonbookManager::GetFonbook()->ResolveToName(fe);
+						// resolve SIP names
+						std::string mediumName;
+						if (partC.find("SIP")           != std::string::npos &&
+						    gConfig->getSipNames().size() >= (size_t)atoi(&partC[3]))
+							mediumName = gConfig->getSipNames()[atoi(&partC[3])];
+						else
+							mediumName = partC;
 						// notify application
-						if (event) event->HandleCall(false, connId, partA, fe.getName(), fe.getTypeName(), partB, partC);
+						if (event) event->HandleCall(false, connId, partA, fe.getName(), fe.getTypeName(), partB, partC, mediumName);
 						activeConnections.push_back(connId);
 					}
 				} else if (type.compare("CONNECT") == 0) {
