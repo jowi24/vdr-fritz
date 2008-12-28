@@ -31,19 +31,38 @@
 
 namespace fritz{
 
+Listener *Listener::me = NULL;
+
 Listener::Listener(EventHandler *event)
 :PThread("fritzlistener")
 {
 	this->event = event;
 	tcpclient = new tcpclient::TcpClient(gConfig->getUrl(), PORT_MONITOR);
+	this->Start();
 }
 
 Listener::~Listener()
 {
+	this->Cancel();
 	delete tcpclient;
 }
 
+void Listener::CreateListener(EventHandler *event) {
+	EventHandler *oldEvent = me ? me->event : NULL;
+	DeleteListener();
+	if (event || oldEvent)
+		me = new Listener(event ? event : oldEvent);
+	else
+		*esyslog << __FILE__ << ": Invalid call parameter. First call to CreateListener needs event handler object." << std::endl;
+}
 
+void Listener::DeleteListener() {
+	if (me) {
+		*dsyslog << __FILE__ << ": deleting listener" << std::endl;
+		delete me;
+		me = NULL;
+	}
+}
 
 void Listener::Action() {
 	std::string data = "";
@@ -102,7 +121,7 @@ void Listener::Action() {
 						fritz::FonbookEntry fe(remoteName, partC);
 						FonbookManager::GetFonbook()->ResolveToName(fe);
 						// notify application
-						if (event) event->HandleCall(true, connId, partC, fe.getName(), partB, partD);
+						if (event) event->HandleCall(true, connId, partC, fe.getName(), fe.getTypeName(), partB, partD);
 						activeConnections.push_back(connId);
 					}
 
@@ -117,7 +136,7 @@ void Listener::Action() {
 						fritz::FonbookEntry fe(remoteName, partA);
 						FonbookManager::GetFonbook()->ResolveToName(fe);
 						// notify application
-						if (event) event->HandleCall(false, connId, partA, fe.getName(), partB, partC);
+						if (event) event->HandleCall(false, connId, partA, fe.getName(), fe.getTypeName(), partB, partC);
 						activeConnections.push_back(connId);
 					}
 				} else if (type.compare("CONNECT") == 0) {
