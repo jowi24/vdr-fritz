@@ -21,6 +21,7 @@
 
 
 #include "Config.h"
+#include "FonbookManager.h"
 #include "Tools.h"
 #include <PThread++.h>
 
@@ -38,27 +39,9 @@ void Config::Setup(std::string hostname, std::string password){
 	Tools::GetLang();
 }
 
-void Config::SetupMsnFilter(  std::vector <std::string> vMsn){
+void Config::SetupMsnFilter( std::vector <std::string> vMsn){
 	if (gConfig)
 		gConfig->mConfig.msn = vMsn;
-}
-
-void Config::SetupFonbookIDs( std::vector <std::string> vFonbookID, std::string activeFonbook){
-	if (gConfig){
-		gConfig->mConfig.selectedFonbookIDs = vFonbookID;
-		if (activeFonbook.size() > 0) {
-			bool activeFonbookValid = false;
-			for (unsigned int pos = 0; pos < vFonbookID.size(); pos++)
-				if (vFonbookID[pos].compare(activeFonbook) == 0) {
-					activeFonbookValid = true;
-					break;
-				}
-			if (activeFonbookValid)
-				gConfig->mConfig.activeFonbook = activeFonbook;
-			else
-				*esyslog << __FILE__ << ": activeFonbook '" << activeFonbook << "'is not enabled or unknown" << std::endl;
-		}
-	}
 }
 
 void Config::SetupConfigDir(std::string dir)

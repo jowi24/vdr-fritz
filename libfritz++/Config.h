@@ -73,17 +73,6 @@ public:
 	 */
 	void static SetupMsnFilter(  std::vector <std::string> vMsn );
 	/**
-	 * Activates certain fonbooks.
-	 * If some of the fonbooks provided by libfritz++ shall be used, they need to be
-	 * activated by this method. These fonbooks are used for reverse lookup on call events.
-	 * The order of the fonbooks determines the priority regarding these lookups.
-	 * Regarding queries to the fonbooks, a pointer is maintained which points to the currently
-	 * "active" fonbook. This pointer can be moved, using FonbookManager::NextFonbook().
-	 * @param the list of enabled fonbooks
-	 * @param the currently "active" fonbook
-	 */
-	void static SetupFonbookIDs( std::vector <std::string> vFonbookID, std::string activeFonbook );
-	/**
 	 * Modifies logging channels.
 	 * As default, logging of libfritz++ actions is performed using default c++
 	 * cout, cerr and clog objects. This method enables the application to redirect
@@ -110,6 +99,7 @@ public:
 	void setRegionCode( std::string rc )       { mConfig.regionCode = rc; }
 	std::vector <std::string> getMsnFilter( )  { return mConfig.msn; }
 	std::vector <std::string> getFonbookIDs( ) { return mConfig.selectedFonbookIDs; }
+	void setFonbookIDs(std::vector<std::string> v) { mConfig.selectedFonbookIDs = v; }
 	std::string &getActiveFonbook( )           { return mConfig.activeFonbook; }
 	void setActiveFonbook( std::string f )     { mConfig.activeFonbook = f; }
 	virtual ~Config();
