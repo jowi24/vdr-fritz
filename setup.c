@@ -21,6 +21,9 @@
 
 #include "setup.h"
 #include <FonbookManager.h>
+#include <CallList.h>
+#include <Listener.h>
+#include <Config.h>
 #include <vdr/menuitems.h>
 
 #if VDRVERSNUM < 10509
@@ -33,8 +36,6 @@ sFritzboxConfig fritzboxConfig;
 std::ostream *dlog = &std::clog;
 std::ostream *ilog = &std::cout;
 std::ostream *elog = &std::cerr;
-
-//TODO: notify lib about config changes, e.g. msn filter
 
 std::string cMenuSetupFritzbox::StoreMsn(){
 	std::vector<std::string>::iterator it;
@@ -185,18 +186,15 @@ void cMenuSetupFritzbox::Store(void) {
 		std::string s = msn[i];
 		fritzboxConfig.msn.push_back(s);
 	}
-	for (size_t i=0; i<selectedFonbookIDs.size(); i++) {
-		bool initialize = true;
-		for (size_t j=0; j<fritzboxConfig.selectedFonbookIDs.size(); j++) {
-			if (selectedFonbookIDs[i].compare(fritzboxConfig.selectedFonbookIDs[j]) == 0) {
-				initialize = false;
-				break;
-			}
-		}
-		if (initialize)
-			(*(fritz::FonbookManager::GetFonbookManager()->GetFonbooks()))[selectedFonbookIDs[i]]->Initialize();
-	}
 	fritzboxConfig.selectedFonbookIDs   = selectedFonbookIDs;
+
+	// notify libfritz++ about possible changes
+	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password);
+	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
+	// recreate depending objects
+	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
+	fritz::CallList::CreateCallList();
+	fritz::Listener::CreateListener();
 
 	SetupStore("Url",          			url);
 	SetupStore("Password",     			fritzboxConfig.password.c_str());
@@ -210,6 +208,7 @@ void cMenuSetupFritzbox::Store(void) {
 	SetupStore("HideMainMenu", 			hideMainMenu);
 	SetupStore("MsnList",      			StoreMsn().c_str());
 	SetupStore("Fonbooks",              StoreFonbooks().c_str());
+
 }
 
 cMenuSetupFritzbox::cMenuSetupFritzbox()

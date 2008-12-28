@@ -37,9 +37,7 @@ cPluginFritzbox::cPluginFritzbox(void)
 	// Initialize any member variables here.
 	// DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
 	// VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
-	fonbook = NULL;
 	listener = NULL;
-	callList = NULL;
 	event = NULL;
 }
 
@@ -86,19 +84,18 @@ bool cPluginFritzbox::Start(void)
 	ilog = new cLogStream(cLogBuf::INFO);
 	// use logging objects with libfritz++
 	fritz::Config::SetupLogging(dlog, ilog, elog);
+
 	// init libfritz++
 	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password);
 	fritz::Config::SetupConfigDir(fritzboxConfig.configDir);
-	fritz::Config::SetupFonbookIDs(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
 	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
-	fonbook = fritz::FonbookManager::GetFonbook();
-	callList = fritz::CallList::getCallList();
+	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
+	fritz::CallList::CreateCallList();
+
 	// Create FritzListener only if needed
 	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
-		event = new cFritzEventHandler(fonbook);
-		listener = new fritz::Listener(event);
-		if (listener)
-			listener->Start();
+		event = new cFritzEventHandler();
+		fritz::Listener::CreateListener(event);
 	}
 	return true;
 }
@@ -110,14 +107,11 @@ void cPluginFritzbox::Stop(void)
 	SetupStore("ActiveFonbook", fritzboxConfig.activeFonbookID.c_str());
 	SetupStore("LastKnownMissedCall", fritzboxConfig.lastKnownMissedCall);
 	// Stop any background activities the plugin shall perform.
-	if (listener)
-		delete listener;
+	fritz::Listener::DeleteListener();
+	fritz::CallList::DeleteCallList();
+	fritz::FonbookManager::DeleteFonbookManager();
 	if (event)
 		delete event;
-	if (callList)
-		delete callList;
-	if (fonbook)
-		delete fonbook;
 	if (dlog)
 		delete dlog;
 	if (ilog)
@@ -156,7 +150,8 @@ const char *cPluginFritzbox::MainMenuEntry(void)
 {
 	std::ostringstream ssMainMenuEntry;
 	ssMainMenuEntry << tr(MAINMENUENTRY);
-	if (callList && callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) > 0) {
+	fritz::CallList *callList = fritz::CallList::getCallList();
+	if (callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) > 0) {
 		std::string buffer = (callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) > 1) ? tr("missed calls") : tr("missed call");
 		ssMainMenuEntry << " (" << callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) << " " << buffer << ")";
 	}
@@ -172,7 +167,7 @@ cOsdObject *cPluginFritzbox::MainMenuAction(void)
 	}
 	else
 		// called by the user
-		return new cMenuFritzbox(callList);
+		return new cMenuFritzbox();
 }
 
 cMenuSetupPage *cPluginFritzbox::SetupMenu(void)
