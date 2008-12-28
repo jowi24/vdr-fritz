@@ -33,9 +33,7 @@
 
 class cPluginFritzbox : public cPlugin {
 private:
-	fritz::Fonbook *fonbook;
 	fritz::Listener *listener;
-	fritz::CallList *callList;
 	cFritzEventHandler *event;
 	std::string mainMenuEntry;
 

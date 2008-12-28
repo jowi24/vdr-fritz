@@ -36,11 +36,9 @@ public:
 		FONBUCH
 	};
 private:
-	fritz::Fonbook *fonbook;
-	fritz::CallList *callList;
     mode currentMode;
 public:
-	cMenuFritzbox(fritz::CallList *callList);
+	cMenuFritzbox();
 	virtual ~cMenuFritzbox();
 	virtual eOSState ProcessKey (eKeys Key);
 	void DisplayFonbuch();

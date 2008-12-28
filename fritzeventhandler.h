@@ -28,7 +28,6 @@
 
 class cFritzEventHandler : public fritz::EventHandler {
 private:
-	fritz::Fonbook *fonbuch;
 	bool muted;
 	bool paused;
 	std::list<int> connIdList;
@@ -37,13 +36,13 @@ private:
 
 
 public:
-	cFritzEventHandler(fritz::Fonbook *fonbuch);
+	cFritzEventHandler();
 	virtual ~cFritzEventHandler();
 
 	fritz::sCallInfo *GetCallInfo() { return callInfo; }
 	std::string ComposeCallMessage();
 
-	virtual void HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string localParty, std::string medium);
+	virtual void HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string remoteType, std::string localParty, std::string medium);
 	virtual void HandleConnect(int connId);
 	virtual void HandleDisconnect(int connId, std::string duration);
 };

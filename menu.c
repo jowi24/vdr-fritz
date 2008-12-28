@@ -43,11 +43,9 @@ trNOOP("nummerzoeker.com");
 trNOOP("das-oertliche.de");
 #endif
 
-cMenuFritzbox::cMenuFritzbox(fritz::CallList *callList )
+cMenuFritzbox::cMenuFritzbox()
 :cOsdMenu("Fritz!Box", 1) // just dummy values
 {
-	this->fonbook = fritz::FonbookManager::GetFonbook();
-	this->callList = callList;
 	DisplayFonbuch();
 }
 
@@ -56,6 +54,9 @@ cMenuFritzbox::~cMenuFritzbox()
 }
 
 eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
+	fritz::Fonbook  *fonbook  = fritz::FonbookManager::GetFonbook();
+	fritz::CallList *callList = fritz::CallList::getCallList();
+
 	eOSState state = cOsdMenu::ProcessKey(Key);
 	fritz::CallEntry *ce = NULL;
 	cKeyOsdItem* currentKeyItem = (cKeyOsdItem*) this->Get(Current());
@@ -113,6 +114,7 @@ eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 
 void cMenuFritzbox::DisplayFonbuch() {
 	unsigned int nameWidth = 0;
+	fritz::Fonbook  *fonbook  = fritz::FonbookManager::GetFonbook();
 	currentMode = FONBUCH;
 	SetTitle(tr(fonbook->GetTitle().c_str()));
 	Clear();
@@ -151,6 +153,7 @@ void cMenuFritzbox::DisplayFonbuch() {
 void cMenuFritzbox::DisplayCalls(fritz::CallEntry::callType ct) {
 	currentMode = (mode) ct;
 	std::string title=tr("Fritz!Box call list");
+	fritz::CallList *callList = fritz::CallList::getCallList();
 	Clear();
 	title += " (";
 	switch(ct) {

@@ -28,8 +28,7 @@
 #include "fritzeventhandler.h"
 #include "notifyosd.h"
 
-cFritzEventHandler::cFritzEventHandler(fritz::Fonbook *fonbuch) {
-	this->fonbuch = fonbuch;
+cFritzEventHandler::cFritzEventHandler() {
 	muted  = false;
 	paused = false;
 	displayedConnId = -1;
@@ -70,7 +69,7 @@ std::string cFritzEventHandler::ComposeCallMessage() {
 }
 
 
-void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string localParty, std::string medium) {
+void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string remoteType, std::string localParty, std::string medium) {
 
 	if (fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_ANY) {
 		if (outgoing && fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_OUT)
@@ -114,10 +113,10 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 		callInfo->isOutgoing   = outgoing;
 		callInfo->remoteNumber = remoteNumber;
 		callInfo->remoteName   = remoteName;
-		//			if (fe.getTypeName().size() > 0) { TODO: get type from lib
-		//				callInfo->remoteName += " ";
-		//				callInfo->remoteName += tr(fe.getTypeName().c_str());
-		//			}
+		if (remoteType.size() > 0) {
+			callInfo->remoteName += " ";
+			callInfo->remoteName += tr(remoteType.c_str());
+		}
 		callInfo->localNumber  = localParty;
 		callInfo->medium       = medium;
 		// trigger notification using own osd
