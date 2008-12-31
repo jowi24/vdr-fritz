@@ -194,7 +194,12 @@ void cMenuSetupFritzbox::Store(void) {
 	// recreate depending objects
 	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
 	fritz::CallList::CreateCallList();
-	fritz::Listener::CreateListener();
+	// Recreate FritzListener only if needed
+	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
+		fritz::Listener::CreateListener(event);
+	} else {
+		fritz::Listener::DeleteListener();
+	}
 
 	SetupStore("Url",          			url);
 	SetupStore("Password",     			fritzboxConfig.password.c_str());
@@ -211,8 +216,9 @@ void cMenuSetupFritzbox::Store(void) {
 
 }
 
-cMenuSetupFritzbox::cMenuSetupFritzbox()
+cMenuSetupFritzbox::cMenuSetupFritzbox(cFritzEventHandler *event)
 {
+	this->event = event;
 	// copy setup to temporary parameters
 	msn = (char **) malloc(MAX_MSN_COUNT * sizeof(char *));
 	url             	 = strdup(fritzboxConfig.url.c_str());

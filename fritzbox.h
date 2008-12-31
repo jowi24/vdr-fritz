@@ -33,7 +33,6 @@
 
 class cPluginFritzbox : public cPlugin {
 private:
-	fritz::Listener *listener;
 	cFritzEventHandler *event;
 	std::string mainMenuEntry;
 

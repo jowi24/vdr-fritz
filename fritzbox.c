@@ -28,7 +28,7 @@
 #include "notifyosd.h"
 #include "menu.h"
 
-static const char *VERSION        = "1.1.4-pre1";
+static const char *VERSION        = "1.1.4";
 static const char *DESCRIPTION    = trNOOP("Fritz!Box Plugin for AVM Fritz!Box");
 static const char *MAINMENUENTRY  = trNOOP("Fritz!Box");
 
@@ -37,7 +37,6 @@ cPluginFritzbox::cPluginFritzbox(void)
 	// Initialize any member variables here.
 	// DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
 	// VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
-	listener = NULL;
 	event = NULL;
 }
 
@@ -93,8 +92,8 @@ bool cPluginFritzbox::Start(void)
 	fritz::CallList::CreateCallList();
 
 	// Create FritzListener only if needed
+	event = new cFritzEventHandler();
 	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
-		event = new cFritzEventHandler();
 		fritz::Listener::CreateListener(event);
 	}
 	return true;
@@ -127,7 +126,7 @@ void cPluginFritzbox::Housekeeping(void)
 
 void cPluginFritzbox::MainThreadHook(void)
 {
-	if (!fritzboxConfig.useNotifyOsd && listener) {
+	if (!fritzboxConfig.useNotifyOsd && event) {
 		fritz::sCallInfo *callInfo = event->GetCallInfo();
 		if (callInfo)
 			Skins.Message(mtInfo, event->ComposeCallMessage().c_str());
@@ -161,7 +160,7 @@ const char *cPluginFritzbox::MainMenuEntry(void)
 
 cOsdObject *cPluginFritzbox::MainMenuAction(void)
 {
-	if (event->GetCallInfo()) {
+	if (event && event->GetCallInfo()) {
 		// called by cRemote::CallPlugin
 		return new cNotifyOsd(event);
 	}
@@ -173,7 +172,7 @@ cOsdObject *cPluginFritzbox::MainMenuAction(void)
 cMenuSetupPage *cPluginFritzbox::SetupMenu(void)
 {
 	// Return a setup menu in case the plugin supports one.
-	return new cMenuSetupFritzbox( );
+	return new cMenuSetupFritzbox(event);
 }
 
 bool cPluginFritzbox::SetupParse(const char *Name, const char *Value)

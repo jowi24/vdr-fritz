@@ -27,6 +27,7 @@
 #include <vdr/menuitems.h>
 #include <Fonbooks.h>
 #include <iostream>
+#include "fritzeventhandler.h"
 
 #define MAX_MSN_COUNT 22
 
@@ -37,7 +38,7 @@ extern std::ostream *elog;
 class cMenuSetupFritzbox : public cMenuSetupPage
 {
 private:
-
+	cFritzEventHandler *event;
 	char *url;
 	char *password;
 	char *directions[3];
@@ -62,7 +63,7 @@ private:
 protected:
 	virtual void Store(void);
 public:
-	cMenuSetupFritzbox();
+	cMenuSetupFritzbox(cFritzEventHandler *event);
 	virtual ~cMenuSetupFritzbox();
 };
 
