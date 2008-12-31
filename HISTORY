@@ -358,7 +358,7 @@ VDR Plugin 'fritzbox' Revision History
 - fixed some compiler warnings that occur with recent compiler versions (4.3.x)
 - fixed missing includes which prevented compilation with recent compiler versions (4.3.x)
 
-2008-xx-xx: Version 1.1.4
+2008-12-31: Version 1.1.4
 - adapted to changes in libfritz++:
   * Added type "ALL" to CallList to retrieve complete list of calls at once.
   * Moved callType from CallList to CallEntry. 
@@ -375,11 +375,15 @@ VDR Plugin 'fritzbox' Revision History
   * Introduced new method CallList::CreateCallList() to explicitly pre-fetch the call list before
     calling CallList::getCallList().
   * Moved Config::SetupFonbookIDs to FonbookManager::CreateFonbookManager().
+  * Renamed Tools::GetPhoneSettings() to Tools::GetLocationSettings().
+  * Added resolving of SIP[0-9] to real provider names.
 - configuration changes of MSN filter, selected fonbooks, hostname and password are now 
   considered immediately without a restart
-- plugin classes no longer hold own references to fonbook and callList. They now use the
+- plugin classes no longer hold own references to fonbook, listener and callList. They now use the
   static getter methods.
-  
+- fixed a possible crash when using the plugin with showNumber = pauseOnCall = muteOnCall = false.
+  (Patch provided by Andreas [26])
+- using new library feature: resolving SIP provider names, instead of signalling SIP0, ...
 
 --- References ---
 
