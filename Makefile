@@ -91,8 +91,7 @@ dist: clean
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)
 	@mkdir $(TMPDIR)/$(ARCHIVE)
 	@cp -a * $(TMPDIR)/$(ARCHIVE)
-	@find $(TMPDIR)/$(ARCHIVE) -type d | grep -e \.svn$ | xargs -i rm -rf {}
-	@tar czf $(PACKAGE).tgz -C $(TMPDIR) $(ARCHIVE)
+	@tar czf $(PACKAGE).tgz --exclude=.* --exclude=test -C $(TMPDIR) $(ARCHIVE)
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)
 	@echo Distribution package created as $(PACKAGE).tgz
 
