@@ -513,5 +513,21 @@ void Tools::GetSipSettings(){
 
 }
 
+std::string Tools::Tokenize(const std::string &buffer, const char delimiter, size_t pos) {
+	size_t tokenStart = 0;
+	for (size_t i=0; i<pos; i++) {
+		tokenStart = buffer.find(delimiter, tokenStart+1);
+		if (tokenStart == std::string::npos)
+			return "";
+	}
+	if (tokenStart > 0)
+		tokenStart++;
+	size_t tokenStop = buffer.find(delimiter, tokenStart);
+	if (tokenStop == std::string::npos)
+		tokenStop = buffer.size();
+	std::string token = buffer.substr(tokenStart, tokenStop - tokenStart);
+	return token;
+}
+
 }
 
