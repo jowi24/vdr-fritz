@@ -385,6 +385,12 @@ VDR Plugin 'fritzbox' Revision History
   (Patch provided by Andreas [26])
 - using new library feature: resolving SIP provider names, instead of signalling SIP0, ...
 
+2009-03-14: Version 1.1.5
+- changes in libfritz++
+  * added exception catch in Tools::GetLang() and Tools::Login()
+- changes in libpthread++
+  * added missing include in PThread++.h to fix compiler issue with g++-3.3
+
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
