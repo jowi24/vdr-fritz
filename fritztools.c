@@ -7,16 +7,16 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  */
 
 #include <sstream>
@@ -38,15 +38,20 @@ void cFritzTools::Login() {
 	std::ostringstream sMsg;
 
 	dsyslog("fritztools.c: sending login request to fritz.box.");
-	cHttpClient tc(fritzboxConfig.url, PORT_WWW);
-	tc   <<		"POST /cgi-bin/webcm HTTP/1.1\n"
-	     <<  	"Content-Type: application/x-www-form-urlencoded\n"
-	     <<  	"Content-Length: "
-	     <<  	23 + UrlEncode(fritzboxConfig.password).size()
-	     <<  	"\n\nlogin:command/password="
-	     <<  	UrlEncode(fritzboxConfig.password)
-	     <<  	"\n";
-	tc >> sMsg;
+	try {
+		cHttpClient tc(fritzboxConfig.url, PORT_WWW);
+		tc  <<		"POST /cgi-bin/webcm HTTP/1.1\n"
+			<<  	"Content-Type: application/x-www-form-urlencoded\n"
+			<<  	"Content-Length: "
+			<<  	23 + UrlEncode(fritzboxConfig.password).size()
+			<<  	"\n\nlogin:command/password="
+			<<  	UrlEncode(fritzboxConfig.password)
+			<<  	"\n";
+		tc  >> sMsg;
+	} catch (cTcpException te) {
+		esyslog("fritztools.c: Exception - %s", te.what());
+		return;
+	}
 	if (sMsg.str().find("FEHLER") != std::string::npos) { // is the Fritz!Box-Webinterface always in German?
 		dsyslog("fritztools.c: login failed.");
 		throw cToolsException(cToolsException::ERR_LOGIN_FAILED);
@@ -94,7 +99,7 @@ bool cFritzTools::InitCall(std::string &number) {
 		dsyslog("fritztools.c: Exception - %s", te.what());
 		return false;
 	}
-	return true;	
+	return true;
 }
 
 std::string cFritzTools::NormalizeNumber(std::string number) {
@@ -102,7 +107,7 @@ std::string cFritzTools::NormalizeNumber(std::string number) {
 	// Only for Germany: Remove Call-By-Call Provider Selection Codes 010(0)xx
 	if (fritzboxConfig.countryCode == "49") {
 		if (number[0] == '0' && number[1] == '1' && number[2] == '0') {
-			if (number[3] == '0') 
+			if (number[3] == '0')
 				number.erase(0, 6);
 			else
 				number.erase(0, 5);
@@ -119,7 +124,7 @@ std::string cFritzTools::NormalizeNumber(std::string number) {
 		number = "00" + number;
 	} else if (number[0] != '0') {
 		// number without country or region code, 1234 -> +49891234
-		number = "00" + fritzboxConfig.countryCode + fritzboxConfig.regionCode + number; 		
+		number = "00" + fritzboxConfig.countryCode + fritzboxConfig.regionCode + number;
 	} // else: number starts with '00', do not change
 	return number;
 }
@@ -131,7 +136,7 @@ int cFritzTools::CompareNormalized(std::string number1, std::string number2) {
 void cFritzTools::GetPhoneSettings() {
 	// if countryCode or regionCode are already set, exit here...
 	if (fritzboxConfig.countryCode.size() > 0 || fritzboxConfig.regionCode.size() > 0)
-		return;		
+		return;
 	// ...otherwise get settings from Fritz!Box.
 	dsyslog("fritztools.c: Looking up Phone Settings...");
 	std::string msg;

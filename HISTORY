@@ -272,9 +272,11 @@ VDR Plugin 'fritzbox' Revision History
   is required by the webserver recently
 - made LKZ/OKZ parsing more robust against wrong password
 - fixed possible segfault on invalid data in fritzbox.Fonbooks setup parameter
+
+2009-03-14: Version 1.0.3
+- added exception catch in Tools::Login() to fix a crash if network is not available
   
 --- References ---
-
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
      http://www.vdr-online.org/
 [ 2] http://vdr-portal.de/board/profile.php?userid=4808

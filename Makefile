@@ -54,10 +54,10 @@ OBJS = $(PLUGIN).o calllist.o fonbooks.o fritzfonbuch.o fritzlistener.o fonbuch.
 
 ### Targets:
 all: libvdr-$(PLUGIN).so i18n
+	@cp --remove-destination $@ $(LIBDIR)/$@.$(APIVERSION)
+
 libvdr-$(PLUGIN).so: $(OBJS)
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) -o $@
-	@cp --remove-destination $@ $(LIBDIR)/$@.$(APIVERSION)
-	
 
 %.o: %.c
 	$(CXX) $(CXXFLAGS) -c $(DEFINES) $(INCLUDES) $<
