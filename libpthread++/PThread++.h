@@ -10,6 +10,7 @@
 #ifndef __PTHREADPP_H
 #define __PTHREADPP_H
 
+#include <stdint.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <sys/types.h>

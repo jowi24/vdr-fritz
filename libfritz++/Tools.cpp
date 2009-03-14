@@ -237,23 +237,27 @@ std::string Tools::GetLang() {
 	//	}
 	// Workaround: "Try-and-Error"
 	if ( gConfig->getLang().size() == 0) {
-		Login();
-		tcpclient::HttpClient tc(gConfig->getUrl(), PORT_WWW);
-		std::vector<std::string> langs;
-		langs.push_back("en");
-		langs.push_back("de");
-		langs.push_back("fr");
-		for (unsigned int p=0; p<langs.size(); p++) {
-			std::string sMsg;
-			tc << "GET /cgi-bin/webcm?getpage=../html/"
-			   << langs[p]
-			   << "/menus/menu2.html HTTP/1.1\n\n";
-			tc >> sMsg;
-			if (sMsg.find("<html>") != std::string::npos) {
-				gConfig->setLang(langs[p]);
-				*dsyslog << __FILE__ << ": interface language is " << gConfig->getLang().c_str() << std::endl;
-				return gConfig->getLang();
+		try {
+			Login();
+			tcpclient::HttpClient tc(gConfig->getUrl(), PORT_WWW);
+			std::vector<std::string> langs;
+			langs.push_back("en");
+			langs.push_back("de");
+			langs.push_back("fr");
+			for (unsigned int p=0; p<langs.size(); p++) {
+				std::string sMsg;
+				tc << "GET /cgi-bin/webcm?getpage=../html/"
+				<< langs[p]
+				         << "/menus/menu2.html HTTP/1.1\n\n";
+				tc >> sMsg;
+				if (sMsg.find("<html>") != std::string::npos) {
+					gConfig->setLang(langs[p]);
+					*dsyslog << __FILE__ << ": interface language is " << gConfig->getLang().c_str() << std::endl;
+					return gConfig->getLang();
+				}
 			}
+		} catch (tcpclient::TcpException te) {
+			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
 		}
 		*dsyslog << __FILE__ << ": error parsing interface language, assuming 'de'" << std::endl;
 		gConfig->setLang("de");
@@ -269,15 +273,20 @@ void Tools::Login() {
 	std::string sMsg;
 
 	*dsyslog << __FILE__ << ": sending login request to fritz.box." << std::endl;
-	tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
-	tc   <<		"POST /cgi-bin/webcm HTTP/1.1\n"
-	<<  	"Content-Type: application/x-www-form-urlencoded\n"
-	<<  	"Content-Length: "
-	<<  	23 + UrlEncode(gConfig->getPassword()).size()
-	<<  	"\n\nlogin:command/password="
-	<<  	UrlEncode(gConfig->getPassword()) // append a newline here?
-	<<      "\n";
-	tc >> sMsg;
+	try {
+		tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
+		tc   <<		"POST /cgi-bin/webcm HTTP/1.1\n"
+		<<  	"Content-Type: application/x-www-form-urlencoded\n"
+		<<  	"Content-Length: "
+		<<  	23 + UrlEncode(gConfig->getPassword()).size()
+		<<  	"\n\nlogin:command/password="
+		<<  	UrlEncode(gConfig->getPassword()) // append a newline here?
+		<<      "\n";
+		tc >> sMsg;
+	} catch (tcpclient::TcpException te) {
+		*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
+		return;
+	}
 
 	// determine if login was successful
 	if (sMsg.find("class=\"errorMessage\"") != std::string::npos) {
