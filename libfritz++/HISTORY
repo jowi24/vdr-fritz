@@ -22,3 +22,6 @@
 - Moved Config::SetupFonbookIDs to FonbookManager::CreateFonbookManager().
 - Renamed Tools::GetPhoneSettings() to Tools::GetLocationSettings().
 - Added resolving of SIP[0-9] to real provider names.
+
+2009-02-23:
+- added exception catch in Tools::GetLang() and Tools::Login()

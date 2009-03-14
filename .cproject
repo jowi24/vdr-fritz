@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?fileVersion 4.0.0?>
 
 <cproject>
@@ -209,6 +209,7 @@
 
 
 
+
 <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 <buildTargets>
 <target name="remote-all" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
@@ -238,7 +239,7 @@
 <target name="copy-lib" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 <buildCommand>scp</buildCommand>
 <buildArguments>/home/joachim/workspace/vdr-fritzbox/libvdr-fritzbox.so</buildArguments>
-<buildTarget>root@vdr:/usr/local/lib/vdr/libvdr-fritzbox.so.1.7.0</buildTarget>
+<buildTarget>root@vdr:/usr/local/lib/vdr/libvdr-fritzbox.so.1.6.0</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 <runAllBuilders>false</runAllBuilders>
