@@ -28,7 +28,7 @@
 #include "notifyosd.h"
 #include "menu.h"
 
-static const char *VERSION        = "1.1.5";
+static const char *VERSION        = "1.1.6";
 static const char *DESCRIPTION    = trNOOP("Fritz!Box Plugin for AVM Fritz!Box");
 static const char *MAINMENUENTRY  = trNOOP("Fritz!Box");
 
@@ -85,7 +85,9 @@ bool cPluginFritzbox::Start(void)
 	fritz::Config::SetupLogging(dlog, ilog, elog);
 
 	// init libfritz++
-	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password);
+	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
+			             &fritzboxConfig.locationSettingsDetected,
+			             &fritzboxConfig.countryCode, &fritzboxConfig.regionCode);
 	fritz::Config::SetupConfigDir(fritzboxConfig.configDir);
 	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
 	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
@@ -102,9 +104,11 @@ bool cPluginFritzbox::Start(void)
 
 void cPluginFritzbox::Stop(void)
 {
-	// Store implicit setup parameters not visible in setup menu
-	SetupStore("ActiveFonbook", fritzboxConfig.activeFonbookID.c_str());
+	// Store implicit setup parameters not visible / auto-detected in setup menu
+	SetupStore("ActiveFonbook",       fritzboxConfig.activeFonbookID.c_str());
 	SetupStore("LastKnownMissedCall", fritzboxConfig.lastKnownMissedCall);
+	SetupStore("CountryCode",         fritzboxConfig.countryCode.c_str());
+	SetupStore("RegionCode",          fritzboxConfig.regionCode.c_str());
 	// Stop any background activities the plugin shall perform.
 	fritz::Listener::DeleteListener();
 	fritz::CallList::DeleteCallList();

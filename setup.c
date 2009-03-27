@@ -62,7 +62,7 @@ std::string cMenuSetupFritzbox::StoreFonbooks() {
 }
 
 void cMenuSetupFritzbox::Setup(void) {
-	// save current postion
+	// save current position
 	int current = Current();
 	// clear entries, if any
 	Clear();
@@ -86,6 +86,8 @@ void cMenuSetupFritzbox::Setup(void) {
 	// build up setup menu
 	Add(new cMenuEditStrItem (tr("Fritz!Box URL"),                  		url,           			MaxFileName, tr(FileNameChars)));
 	Add(new cMenuEditStrItem (tr("Password"),                       		password, 	   			MaxFileName, tr(FileNameChars)));
+	Add(new cMenuEditStrItem (tr("Country code"),                           countryCode,            5,           "0123456789"));
+	Add(new cMenuEditStrItem (tr("Region code"),                            regionCode,             10,          "0123456789"));
 	Add(new cMenuEditStraItem(tr("React on calls"),                         &reactOnDirection,      3,           &directions[0]));
 	Add(new cMenuEditBoolItem(tr("Mute on call"),                   		&muteOnCall,   			trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Pause on call"),                   		&pauseOnCall,  			trVDR("no"), trVDR("yes")));
@@ -187,9 +189,18 @@ void cMenuSetupFritzbox::Store(void) {
 		fritzboxConfig.msn.push_back(s);
 	}
 	fritzboxConfig.selectedFonbookIDs   = selectedFonbookIDs;
+    fritzboxConfig.countryCode          = countryCode;
+    fritzboxConfig.regionCode           = regionCode;
+	// remove any leading zeros from countryCode and regionCode,
+	while (!fritzboxConfig.countryCode.empty() && fritzboxConfig.countryCode[0] == '0')
+		fritzboxConfig.countryCode = fritzboxConfig.countryCode.substr(1);
+	while (!fritzboxConfig.regionCode.empty() && fritzboxConfig.regionCode[0] == '0')
+		fritzboxConfig.regionCode = fritzboxConfig.regionCode.substr(1);
 
 	// notify libfritz++ about possible changes
-	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password);
+	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
+			             &fritzboxConfig.locationSettingsDetected,
+			             &fritzboxConfig.countryCode, &fritzboxConfig.regionCode);
 	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
 	// recreate depending objects
 	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
@@ -213,7 +224,8 @@ void cMenuSetupFritzbox::Store(void) {
 	SetupStore("HideMainMenu", 			hideMainMenu);
 	SetupStore("MsnList",      			StoreMsn().c_str());
 	SetupStore("Fonbooks",              StoreFonbooks().c_str());
-
+	SetupStore("CountryCode",           fritzboxConfig.countryCode.c_str());
+	SetupStore("RegionCode",            fritzboxConfig.regionCode.c_str());
 }
 
 cMenuSetupFritzbox::cMenuSetupFritzbox(cFritzEventHandler *event)
@@ -241,6 +253,8 @@ cMenuSetupFritzbox::cMenuSetupFritzbox(cFritzEventHandler *event)
 	msnFilter       	 = fritzboxConfig.msn.empty() ? 0 : 1;
 	msnFilterBefore 	 = msnFilter;
 	selectedFonbookIDs   = fritzboxConfig.selectedFonbookIDs;
+	countryCode          = strdup(fritzboxConfig.countryCode.c_str());
+	regionCode           = strdup(fritzboxConfig.regionCode.c_str());
 
 	size_t p = 0;
 	for(std::vector<std::string>::iterator itStr = fritzboxConfig.msn.begin(); itStr < fritzboxConfig.msn.end(); itStr++) {
@@ -262,6 +276,8 @@ cMenuSetupFritzbox::~cMenuSetupFritzbox()
 	free(msn);
 	for (int i=0; i<3; i++)
 		free(directions[i]);
+	free(countryCode);
+	free(regionCode);
 }
 
 cMenuSetupFritzboxFonbooks::cMenuSetupFritzboxFonbooks(std::vector<std::string> *selectedFonbookIDs)
@@ -364,7 +380,7 @@ sFritzboxConfig::sFritzboxConfig() {
 	lang                    = "";
 	url             		= "fritz.box";
 	password        		= "";
-	countryCode             = "";
+	countryCode             = "49";
 	regionCode              = "";
 	reactOnDirection        = DIRECTION_IN;
 	muteOnCall      		= 0;
@@ -433,6 +449,8 @@ bool sFritzboxConfig::SetupParse(const char *name, const char *value) {
 	else if (!strcasecmp(name, "ActiveFonbook"))        activeFonbookID      = value;
 	else if (!strcasecmp(name, "MsnList"))      		return SetupParseMsn(value);
 	else if (!strcasecmp(name, "Fonbooks"))      		return SetupParseFonbooks(value);
+	else if (!strcasecmp(name, "CountryCode"))          countryCode          = value;
+	else if (!strcasecmp(name, "RegionCode"))           regionCode           = value;
 	else return false;
 	return true;
 }

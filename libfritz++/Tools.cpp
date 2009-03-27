@@ -343,7 +343,6 @@ bool Tools::InitCall(std::string &number) {
 }
 
 std::string Tools::NormalizeNumber(std::string number) {
-	GetLocationSettings();
 	// Only for Germany: Remove Call-By-Call Provider Selection Codes 010(0)xx
 	if ( gConfig->getCountryCode() == "49") {
 		if (number[0] == '0' && number[1] == '1' && number[2] == '0') {
@@ -374,10 +373,7 @@ int Tools::CompareNormalized(std::string number1, std::string number2) {
 }
 
 void Tools::GetLocationSettings() {
-	// if countryCode or regionCode are already set, exit here...
-	if ( gConfig->getCountryCode().size() > 0 || gConfig->getRegionCode().size() > 0)
-		return;
-	// ...otherwise get settings from Fritz!Box.
+//	get settings from Fritz!Box.
 	*dsyslog << __FILE__ << ": Looking up Phone Settings..." << std::endl;
 	std::string msg;
 	try {
@@ -399,9 +395,7 @@ void Tools::GetLocationSettings() {
 	size_t lkzStart = msg.find("telcfg:settings/Location/LKZ");
 	if (lkzStart == std::string::npos) {
 		*esyslog << __FILE__ << ": Parser error in GetLocationSettings(). Could not find LKZ." << std::endl;
-		*esyslog << __FILE__ << ": LKZ not set! Assuming 49 (Germany)." << std::endl;
-		*esyslog << __FILE__ << ": OKZ not set! Resolving phone numbers may not always work." << std::endl;
-		gConfig->setCountryCode("49");
+		*esyslog << __FILE__ << ": LKZ/OKZ not set! Resolving phone numbers may not always work." << std::endl;
 		return;
 	}
 	lkzStart += 37;
@@ -419,8 +413,7 @@ void Tools::GetLocationSettings() {
 	if (gConfig->getCountryCode().size() > 0) {
 		*dsyslog << __FILE__ << ": Found LKZ " << gConfig->getCountryCode() << std::endl;
 	} else {
-		*esyslog << __FILE__ << ": LKZ not set! Assuming 49 (Germany)." << std::endl;
-		gConfig->setCountryCode("49");
+		*esyslog << __FILE__ << ": LKZ not set! Resolving phone numbers may not always work." << std::endl;
 	}
 	if (gConfig->getRegionCode().size() > 0) {
 		*dsyslog << __FILE__ << ": Found OKZ " << gConfig->getRegionCode() << std::endl;

@@ -63,8 +63,13 @@ public:
 	 * This has to be the first call to libfritz++.
 	 * @param the hostname of the Fritz!Box device, defaults to fritz.box
 	 * @param the password of the Fritz!Box device, defaults to an empty one
+	 * @param indicates, whether auto-detection of location settings was successful
+	 * @param Sets the default value for countryCode. If locationSettingsDetected == true, this returns the detected countryCode.
+	 * @param Sets the default value for regionCode. If locationSettingsDetected == true, this returns the detected regionCode.
 	 */
-	void static Setup( std::string hostname="fritz.box", std::string password="" );
+	void static Setup( std::string hostname="fritz.box", std::string password="",
+			           bool *locationSettingsDetected = NULL,
+			           std::string *countryCode = NULL, std::string *regionCode = NULL);
 	/**
 	 * Establishes MSN filtering.
 	 * An MsnFilter enables the library to only notify the application on
