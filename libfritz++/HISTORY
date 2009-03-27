@@ -25,3 +25,11 @@
 
 2009-02-23:
 - added exception catch in Tools::GetLang() and Tools::Login()
+
+2009-03-27:
+- Removed the default of countryCode = "49" if Tools::GetLocationSettings() fails. This task is 
+  handed over to the caller, see next.
+- Added new parameters to Config::Setup() to give default values for countryCode and regionCode.
+  The default parameters are used, when auto-detection in Tools::GetLocationSettings() fails. The
+  new parameter locationSettingsDetected indicates whether auto-detection was successful. In this
+  case, the given default values are overwritten to give the caller access to the new values.

@@ -52,6 +52,9 @@ private:
 	int showDaySeparator;
 	std::string StoreMsn(void);
 	std::string StoreFonbooks(void);
+	bool locationSettingsDetected;
+	char *countryCode;
+	char *regionCode;
 	int msnFilter;
 	int msnFilterBefore;
 	int msnCount;
@@ -98,6 +101,7 @@ public:
 	std::string lang;                   // webinterface language
 	std::string url;                    // fritz!box url
 	std::string password;               // fritz!box web interface password
+	bool locationSettingsDetected;      // if true, location settings were autodetected by libfritz
 	std::string countryCode;            // fritz!box country-code
 	std::string regionCode;             // fritz!box region-code
 	int reactOnDirection;               // what type of calls are we interested in (eDirection)?
