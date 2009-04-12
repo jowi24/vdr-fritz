@@ -33,3 +33,7 @@
   The default parameters are used, when auto-detection in Tools::GetLocationSettings() fails. The
   new parameter locationSettingsDetected indicates whether auto-detection was successful. In this
   case, the given default values are overwritten to give the caller access to the new values.
+
+2009-04-08:
+- Fixed naming of local phonebook. The recommended name is now localphonebook.csv, the old name 
+  localfonbuch.csv is still accepted. The directory remains $vdrconfigdir/plugins/fritzbox/.

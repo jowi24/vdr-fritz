@@ -81,9 +81,18 @@ bool LocalFonbook::Initialize() {
 	setInitialized(false);
 	fonbookList.clear();
 	char* fileName;
-	int ret = asprintf(&fileName, "%s/__FILE__sv", gConfig->getConfigDir().c_str());
+	int ret = asprintf(&fileName, "%s/localfonbook.csv", gConfig->getConfigDir().c_str());
 	if (ret <= 0)
 		return false;
+	if (access(fileName, F_OK) != 0) {
+		// try deprecated filename
+		free(fileName);
+		int ret = asprintf(&fileName, "%s/localfonbuch.csv", gConfig->getConfigDir().c_str());
+		if (ret <= 0)
+			return false;
+		if (access(fileName, F_OK) == 0)
+			*isyslog << __FILE__ << ": warning, using deprecated file " << fileName << ", please rename to localfonbook.csv." << std::endl;
+	}
 	if (fileName && access(fileName, F_OK) == 0) {
 		*isyslog << "loading " << fileName << std::endl;
 		FILE *f = fopen(fileName, "r");
@@ -111,7 +120,15 @@ bool LocalFonbook::Initialize() {
 			std::sort(fonbookList.begin(), fonbookList.end());
 			return true;
 		}
+	} else {
+		// file not available -> log preferred filename and location
+		free(fileName);
+		int ret = asprintf(&fileName, "%s/localfonbook.csv", gConfig->getConfigDir().c_str());
+		if (ret <= 0)
+			return false;
+		*esyslog << __FILE__ << ": file " << fileName << " not found." << std::endl;
 	}
+	free(fileName);
 	return false;
 }
 
