@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2008-12-08 13:26+0100\n"
+"POT-Creation-Date: 2009-04-22 15:08+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Oktay Yolgeçen <oktay_73@yahoo.de>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -15,281 +15,317 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-9\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: fritzbox.c:31
+#: fritzbox.c:32
 msgid "Fritz!Box Plugin for AVM Fritz!Box"
 msgstr ""
 
-#: fritzbox.c:32
+#: fritzbox.c:33
 #, fuzzy
 msgid "Fritz!Box"
 msgstr "Fritz!Box URL"
 
-#: fritzbox.c:143
+#: fritzbox.c:158
 #, fuzzy
 msgid "missed call"
 msgstr "kaçýrýlan"
 
-#: fritzbox.c:143
+#: fritzbox.c:158
 #, fuzzy
 msgid "missed calls"
 msgstr "kaçýrýlan"
 
-#: fritzeventhandler.c:80
+#: fritzeventhandler.c:53
+#, fuzzy, c-format
+msgid "Calling %s [%s]"
+msgstr "Arayan numara"
+
+#: fritzeventhandler.c:58
+#, fuzzy
+msgid "Call"
+msgstr "Arayan numara"
+
+#: fritzeventhandler.c:62
+msgid "Call from"
+msgstr "Arayan numara"
+
+#: fritzeventhandler.c:103
 msgid "POTS"
 msgstr "analog"
 
-#: fritzeventhandler.c:86
+#: fritzeventhandler.c:110
 msgid "ISDN"
 msgstr "ISDN"
 
-#: fritzeventhandler.c:87
+#: fritzeventhandler.c:111
 msgid "VoIP"
 msgstr "VoIP"
 
-#: menu.c:88
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
+#: menu.c:34
+msgid "H"
+msgstr ""
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
+#: menu.c:36
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
+#: menu.c:38
+msgid "W"
+msgstr ""
+
+#: menu.c:40
+#, fuzzy
+msgid "Local phone book"
+msgstr "Fritz!Box telefon defteri"
+
+#: menu.c:41
+msgid "Fritz!Box phone book"
+msgstr "Fritz!Box telefon defteri"
+
+#: menu.c:42
+msgid "nummerzoeker.com"
+msgstr ""
+
+#: menu.c:43
+msgid "das-oertliche.de"
+msgstr ""
+
+#: menu.c:104
 msgid "Error fetching the call list"
 msgstr "Konuþma listesi yüklenemedi"
 
-#: menu.c:105
+#: menu.c:122
 #, fuzzy
 msgid "This phonebook is not yet available."
 msgstr "Telefon defteri mevcut deðil"
 
-#: menu.c:106
+#: menu.c:123
 msgid "You may need to wait some minutes,"
 msgstr ""
 
-#: menu.c:107
+#: menu.c:124
 msgid "otherwise there may be a network problem."
 msgstr ""
 
-#: menu.c:110
+#: menu.c:127
 #, fuzzy
 msgid "This phonebook is not displayable"
 msgstr "Telefon defteri mevcut deðil"
 
-#: menu.c:128
+#: menu.c:149
 #, fuzzy
 msgid "> PB"
 msgstr "TD"
 
-#: menu.c:134
+#: menu.c:155
 msgid "Fritz!Box call list"
 msgstr "Fritz!Box konuþma listesi"
 
-#: menu.c:139 setup.c:63
+#: menu.c:161 setup.c:76
 msgid "incoming"
 msgstr "gelen"
 
-#: menu.c:142
+#: menu.c:164
 msgid "missed"
 msgstr "kaçýrýlan"
 
-#: menu.c:146 setup.c:64
+#: menu.c:168 setup.c:81
 msgid "outgoing"
 msgstr "giden"
 
-#: menu.c:162 menu.c:224
+#: menu.c:187 menu.c:257
 msgid "unknown"
 msgstr "mechul"
 
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:192
+#: menu.c:217
 msgid "PB"
 msgstr "TD"
 
-#: menu.c:199
+#: menu.c:224
 msgid "Call details"
 msgstr ""
 
-#: menu.c:210
+#: menu.c:243
 msgid "Date"
 msgstr ""
 
-#: menu.c:211
+#: menu.c:244
 msgid "Time"
 msgstr ""
 
-#: menu.c:212
+#: menu.c:245
 msgid "Duration"
 msgstr ""
 
-#: menu.c:213
+#: menu.c:246
 msgid "call was not accepted"
 msgstr ""
 
-#: menu.c:215 setup.c:81
+#: menu.c:248 setup.c:104
 msgid "Extension"
 msgstr "MSN"
 
-#: menu.c:220
+#: menu.c:253
 msgid "Callee"
 msgstr ""
 
-#: menu.c:221
+#: menu.c:254
 #, fuzzy
 msgid "Caller"
 msgstr "Arayan numara"
 
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:227 menu.c:308
+#: menu.c:260 menu.c:341
 #, fuzzy
 msgid "Button$Call"
 msgstr "Telefon gelince sesi kes"
 
-#: menu.c:249 menu.c:319
+#: menu.c:282 menu.c:352
 msgid "No number to call"
 msgstr "Numarasýz arama imkansýz"
 
-#: menu.c:252 menu.c:322
+#: menu.c:285 menu.c:355
 msgid "Pick up your phone now"
 msgstr "Telefonu þimdi kaldýrýn"
 
-#: menu.c:254 menu.c:324
+#: menu.c:287 menu.c:357
 msgid "Error while initiating call"
 msgstr "Baglantý hatasý"
 
-#: menu.c:268
+#: menu.c:301
 msgid "Phone book details"
 msgstr ""
 
-#: menu.c:281 menu.c:287
+#: menu.c:314 menu.c:320
 msgid "Name"
 msgstr ""
 
-#: menu.c:282 menu.c:288
+#: menu.c:315 menu.c:321
 msgid "Numbers"
 msgstr ""
 
-#: menu.c:283
+#: menu.c:316
 msgid "Default"
 msgstr ""
 
-#: menu.c:289
+#: menu.c:322
 msgid "Private"
 msgstr ""
 
-#: menu.c:290
+#: menu.c:323
 msgid "Mobile"
 msgstr ""
 
-#: menu.c:291
+#: menu.c:324
 msgid "Business"
 msgstr ""
 
-#: notifyosd.c:38
+#: notifyosd.c:37
 #, fuzzy
 msgid "Incoming call"
 msgstr "Gelen aramalarý göster"
 
-#: notifyosd.c:38
+#: notifyosd.c:37
 #, fuzzy
 msgid "Outgoing call"
 msgstr "Telefon gelince sesi kes"
 
-#: setup.c:62
+#: setup.c:71
 msgid "any"
 msgstr ""
 
-#: setup.c:66
+#: setup.c:87
 msgid "Fritz!Box URL"
 msgstr "Fritz!Box URL"
 
-#: setup.c:67
+#: setup.c:88
 msgid "Password"
 msgstr "Þifre"
 
-#: setup.c:68
+#: setup.c:89
+msgid "Country code"
+msgstr ""
+
+#: setup.c:90
+msgid "Region code"
+msgstr ""
+
+#: setup.c:91
 #, fuzzy
 msgid "React on calls"
 msgstr "Telefon gelince sesi kes"
 
-#: setup.c:69
+#: setup.c:92
 msgid "Mute on call"
 msgstr "Telefon gelince sesi kes"
 
-#: setup.c:70
+#: setup.c:93
 msgid "Pause on call"
 msgstr "Telefon gelince durakla"
 
-#: setup.c:71
+#: setup.c:94
 #, fuzzy
 msgid "Show calls"
 msgstr "Gelen aramalarý göster"
 
-#: setup.c:72
+#: setup.c:95
 #, fuzzy
 msgid "Show detailed call information"
 msgstr "Detaylý konuþma listesi"
 
-#: setup.c:73
+#: setup.c:96
 msgid "Detailed call lists"
 msgstr "Detaylý konuþma listesi"
 
-#: setup.c:74
+#: setup.c:97
 msgid "Group call lists by date"
 msgstr ""
 
-#: setup.c:75
+#: setup.c:98
 msgid "Hide main menu entry"
 msgstr "Ana menüde sakla"
 
-#: setup.c:76
+#: setup.c:99
 msgid "Setup phonebooks to use..."
 msgstr ""
 
-#: setup.c:77
+#: setup.c:100
 msgid "Restrict monitor to certain extensions"
 msgstr "Gözlenen MSN'leri sýnýrla"
 
-#: setup.c:79
+#: setup.c:102
 msgid "Number of monitored extensions"
 msgstr "Gözlenen MSN'lerinin sayýsý"
 
-#: setup.c:83
+#: setup.c:106
 msgid "Reload"
 msgstr "Tekrar yükle"
 
-#: setup.c:130
+#: setup.c:153
 msgid "Retrieving phone book"
 msgstr "Telefon defteri yükleniyor"
 
-#: setup.c:243
+#: setup.c:284
 msgid "Setup phonebooks to use"
 msgstr ""
 
-#: setup.c:256
+#: setup.c:300
 msgid "Less"
 msgstr ""
 
-#: setup.c:256
+#: setup.c:300
 msgid "More"
 msgstr ""
-
-#~ msgid "Please wait..."
-#~ msgstr "Lütfen bekleyin"
-
-#~ msgid "Call from unknown extension"
-#~ msgstr "Bilinmeyen baðlantý arýyor"
 
 #, fuzzy
 #~ msgid "Fritz!Box Notification"
 #~ msgstr "Fritz!Box konuþma listesi"
 
-#, fuzzy
-#~ msgid "Local phone book"
-#~ msgstr "Fritz!Box telefon defteri"
+#~ msgid "Call from unknown extension"
+#~ msgstr "Bilinmeyen baðlantý arýyor"
 
-#~ msgid "Call from"
-#~ msgstr "Arayan numara"
-
-#, fuzzy
-#~ msgid "Call"
-#~ msgstr "Arayan numara"
-
-#, fuzzy
-#~ msgid "Calling %s [%s]"
-#~ msgstr "Arayan numara"
-
-#~ msgid "Fritz!Box phone book"
-#~ msgstr "Fritz!Box telefon defteri"
+#~ msgid "Please wait..."
+#~ msgstr "Lütfen bekleyin"
