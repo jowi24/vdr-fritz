@@ -9,7 +9,7 @@
 <folderInfo id="preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978." name="/" resourcePath="">
 <toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.1251127305" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
 <targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.1251127305.519386095" name=""/>
-<builder id="org.eclipse.cdt.build.core.settings.default.builder.396504724" incrementalBuildTarget="libvdr-fritzbox.so" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
+<builder id="org.eclipse.cdt.build.core.settings.default.builder.396504724" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
 <tool id="org.eclipse.cdt.build.core.settings.holder.libs.582574737" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
 <tool id="org.eclipse.cdt.build.core.settings.holder.1131250772" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
 <inputType id="org.eclipse.cdt.build.core.settings.holder.inType.854713486" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
@@ -210,42 +210,7 @@
 
 
 
-<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
-<buildTargets>
-<target name="remote-all" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-<buildCommand>${workspace_loc}/vdr/remote-make</buildCommand>
-<buildArguments>vdr-fritzbox</buildArguments>
-<buildTarget>all</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-<runAllBuilders>false</runAllBuilders>
-</target>
-<target name="install" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-<buildCommand>/home/joachim/workspace/vdr/remote-make</buildCommand>
-<buildArguments>vdr</buildArguments>
-<buildTarget>install</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-<runAllBuilders>false</runAllBuilders>
-</target>
-<target name="restart" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-<buildCommand>/home/joachim/workspace/vdr/remote-make</buildCommand>
-<buildArguments>vdr</buildArguments>
-<buildTarget>restart</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-<runAllBuilders>false</runAllBuilders>
-</target>
-<target name="copy-lib" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-<buildCommand>scp</buildCommand>
-<buildArguments>/home/joachim/workspace/vdr-fritzbox/libvdr-fritzbox.so</buildArguments>
-<buildTarget>root@vdr:/usr/local/lib/vdr/libvdr-fritzbox.so.1.6.0</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-<runAllBuilders>false</runAllBuilders>
-</target>
-</buildTargets>
-</storageModule>
+<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cconfiguration>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
