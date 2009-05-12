@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-05-03 17:56+0200\n"
+"POT-Creation-Date: 2009-05-12 20:47+0200\n"
 "PO-Revision-Date: 2008-08-21 00:33+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -114,7 +114,7 @@ msgstr "> RU"
 msgid "Fritz!Box call list"
 msgstr "Elenco chiamate Fritz!Box"
 
-#: menu.c:161 setup.c:76
+#: menu.c:161 setup.c:75
 msgid "incoming"
 msgstr "in arrivo"
 
@@ -122,7 +122,7 @@ msgstr "in arrivo"
 msgid "missed"
 msgstr "perse"
 
-#: menu.c:168 setup.c:81
+#: menu.c:168 setup.c:80
 msgid "outgoing"
 msgstr "in uscita"
 
@@ -155,7 +155,7 @@ msgstr "Durata"
 msgid "call was not accepted"
 msgstr "chiamata non accettata"
 
-#: menu.c:248 setup.c:104
+#: menu.c:248 setup.c:103
 msgid "Extension"
 msgstr "Estensione MSN"
 
@@ -220,97 +220,97 @@ msgstr "Chiamata in arrivo"
 msgid "Outgoing call"
 msgstr "Chiamata in uscita"
 
-#: setup.c:71
+#: setup.c:70
 msgid "any"
 msgstr "qualsiasi"
 
-#: setup.c:87
+#: setup.c:86
 msgid "Fritz!Box URL"
 msgstr "Indirizzo Fritz!Box"
 
-#: setup.c:88
+#: setup.c:87
 msgid "Password"
 msgstr "Password"
 
-#: setup.c:89
+#: setup.c:88
 msgid "Country code"
 msgstr "Codice internazionale"
 
-#: setup.c:90
+#: setup.c:89
 #, fuzzy
 msgid "Region code"
 msgstr "Codice internazionale"
 
-#: setup.c:91
+#: setup.c:90
 msgid "React on calls"
 msgstr "Azione alla chiamata"
 
-#: setup.c:92
+#: setup.c:91
 msgid "Mute on call"
 msgstr "Metti in muto la chiamata"
 
-#: setup.c:93
+#: setup.c:92
 msgid "Pause on call"
 msgstr "Metti in pausa la chiamata"
 
-#: setup.c:94
+#: setup.c:93
 msgid "Show calls"
 msgstr "Mostra chiamate"
 
-#: setup.c:95
+#: setup.c:94
 msgid "Show detailed call information"
 msgstr "Mostra info dettagliate chiamata"
 
-#: setup.c:96
+#: setup.c:95
 msgid "Detailed call lists"
 msgstr "Dettagli elenco chiamate"
 
-#: setup.c:97
+#: setup.c:96
 msgid "Group call lists by date"
 msgstr "Raggruppa chiamate per data"
 
-#: setup.c:98
+#: setup.c:97
 msgid "Hide main menu entry"
 msgstr "Nascondi voce menu principale"
 
-#: setup.c:99
+#: setup.c:98
 msgid "Setup phonebooks to use..."
 msgstr "Imposta rubriche da utilizzare..."
 
-#: setup.c:100
+#: setup.c:99
 msgid "Restrict monitor to certain extensions"
 msgstr "Restringi controllo estensioni MSN"
 
-#: setup.c:102
+#: setup.c:101
 msgid "Number of monitored extensions"
 msgstr "Num. estens. MSN controllate"
 
-#: setup.c:106
+#: setup.c:105
 msgid "Reload"
 msgstr "Ricarica"
 
-#: setup.c:153
+#: setup.c:152
 msgid "Retrieving phone book"
 msgstr "Recupero rubrica"
 
-#: setup.c:284
+#: setup.c:283
 msgid "Setup phonebooks to use"
 msgstr "Imposta rubriche da utilizzare"
 
-#: setup.c:300
+#: setup.c:299
 msgid "Less"
 msgstr "Elimina"
 
-#: setup.c:300
+#: setup.c:299
 msgid "More"
 msgstr "Aggiungi"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Elenco chiamate Fritz!Box"
+#~ msgid "Please wait..."
+#~ msgstr "Attendere prego..."
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Chiamata da estensione sconosciuta"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendere prego..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Elenco chiamate Fritz!Box"

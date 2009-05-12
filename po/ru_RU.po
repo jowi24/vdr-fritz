@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru_RU-UTF8\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-04-22 15:08+0200\n"
+"POT-Creation-Date: 2009-05-12 20:47+0200\n"
 "PO-Revision-Date: 2008-09-09 01:48+0200\n"
 "Last-Translator: Alexander Gross\n"
 "Language-Team: russian\n"
@@ -117,7 +117,7 @@ msgstr "> PB"
 msgid "Fritz!Box call list"
 msgstr "Список звонков Fritz!Box"
 
-#: menu.c:161 setup.c:76
+#: menu.c:161 setup.c:75
 msgid "incoming"
 msgstr "входящие"
 
@@ -125,7 +125,7 @@ msgstr "входящие"
 msgid "missed"
 msgstr "пропущенные"
 
-#: menu.c:168 setup.c:81
+#: menu.c:168 setup.c:80
 msgid "outgoing"
 msgstr "выходящие"
 
@@ -158,7 +158,7 @@ msgstr "Продолжительность"
 msgid "call was not accepted"
 msgstr "непринятый звонок"
 
-#: menu.c:248 setup.c:104
+#: menu.c:248 setup.c:103
 msgid "Extension"
 msgstr "MSN"
 
@@ -223,86 +223,86 @@ msgstr "Входящий звонок"
 msgid "Outgoing call"
 msgstr "Выходящий звонок"
 
-#: setup.c:71
+#: setup.c:70
 msgid "any"
 msgstr "все"
 
-#: setup.c:87
+#: setup.c:86
 msgid "Fritz!Box URL"
 msgstr "Адрес Fritz!Box "
 
-#: setup.c:88
+#: setup.c:87
 msgid "Password"
 msgstr "Пароль"
 
-#: setup.c:89
+#: setup.c:88
 msgid "Country code"
 msgstr ""
 
-#: setup.c:90
+#: setup.c:89
 msgid "Region code"
 msgstr ""
 
-#: setup.c:91
+#: setup.c:90
 msgid "React on calls"
 msgstr "Реагировать при звонке"
 
-#: setup.c:92
+#: setup.c:91
 msgid "Mute on call"
 msgstr "Выключить звук при звонке"
 
-#: setup.c:93
+#: setup.c:92
 msgid "Pause on call"
 msgstr "Активировать паузу при звонке"
 
-#: setup.c:94
+#: setup.c:93
 msgid "Show calls"
 msgstr "Показывать звонки"
 
-#: setup.c:95
+#: setup.c:94
 msgid "Show detailed call information"
 msgstr "Подробности звонка"
 
-#: setup.c:96
+#: setup.c:95
 msgid "Detailed call lists"
 msgstr "Подробный список звонков"
 
-#: setup.c:97
+#: setup.c:96
 msgid "Group call lists by date"
 msgstr "Группировать списки звонков по дате"
 
-#: setup.c:98
+#: setup.c:97
 msgid "Hide main menu entry"
 msgstr "Скрыть в главном меню"
 
-#: setup.c:99
+#: setup.c:98
 msgid "Setup phonebooks to use..."
 msgstr "Выбрать телефонные справочники ..."
 
-#: setup.c:100
+#: setup.c:99
 msgid "Restrict monitor to certain extensions"
 msgstr "Ограничить контролируемые MSNs"
 
-#: setup.c:102
+#: setup.c:101
 msgid "Number of monitored extensions"
 msgstr "Количество контролируемыx MSNs"
 
-#: setup.c:106
+#: setup.c:105
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: setup.c:153
+#: setup.c:152
 msgid "Retrieving phone book"
 msgstr "Запросить телефонный справочник"
 
-#: setup.c:284
+#: setup.c:283
 msgid "Setup phonebooks to use"
 msgstr "Выбрать телефонные справочники"
 
-#: setup.c:300
+#: setup.c:299
 msgid "Less"
 msgstr "Меньше"
 
-#: setup.c:300
+#: setup.c:299
 msgid "More"
 msgstr "Больше"

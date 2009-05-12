@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-05-03 17:56+0200\n"
+"POT-Creation-Date: 2009-05-12 20:47+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Oktay Yolgeçen <oktay_73@yahoo.de>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -123,7 +123,7 @@ msgstr "TD"
 msgid "Fritz!Box call list"
 msgstr "Fritz!Box konuþma listesi"
 
-#: menu.c:161 setup.c:76
+#: menu.c:161 setup.c:75
 msgid "incoming"
 msgstr "gelen"
 
@@ -131,7 +131,7 @@ msgstr "gelen"
 msgid "missed"
 msgstr "kaçýrýlan"
 
-#: menu.c:168 setup.c:81
+#: menu.c:168 setup.c:80
 msgid "outgoing"
 msgstr "giden"
 
@@ -164,7 +164,7 @@ msgstr ""
 msgid "call was not accepted"
 msgstr ""
 
-#: menu.c:248 setup.c:104
+#: menu.c:248 setup.c:103
 msgid "Extension"
 msgstr "MSN"
 
@@ -233,99 +233,99 @@ msgstr "Gelen aramalarý göster"
 msgid "Outgoing call"
 msgstr "Telefon gelince sesi kes"
 
-#: setup.c:71
+#: setup.c:70
 msgid "any"
 msgstr ""
 
-#: setup.c:87
+#: setup.c:86
 msgid "Fritz!Box URL"
 msgstr "Fritz!Box URL"
 
-#: setup.c:88
+#: setup.c:87
 msgid "Password"
 msgstr "Þifre"
 
-#: setup.c:89
+#: setup.c:88
 msgid "Country code"
 msgstr ""
 
-#: setup.c:90
+#: setup.c:89
 msgid "Region code"
 msgstr ""
 
-#: setup.c:91
+#: setup.c:90
 #, fuzzy
 msgid "React on calls"
 msgstr "Telefon gelince sesi kes"
 
-#: setup.c:92
+#: setup.c:91
 msgid "Mute on call"
 msgstr "Telefon gelince sesi kes"
 
-#: setup.c:93
+#: setup.c:92
 msgid "Pause on call"
 msgstr "Telefon gelince durakla"
 
-#: setup.c:94
+#: setup.c:93
 #, fuzzy
 msgid "Show calls"
 msgstr "Gelen aramalarý göster"
 
-#: setup.c:95
+#: setup.c:94
 #, fuzzy
 msgid "Show detailed call information"
 msgstr "Detaylý konuþma listesi"
 
-#: setup.c:96
+#: setup.c:95
 msgid "Detailed call lists"
 msgstr "Detaylý konuþma listesi"
 
-#: setup.c:97
+#: setup.c:96
 msgid "Group call lists by date"
 msgstr ""
 
-#: setup.c:98
+#: setup.c:97
 msgid "Hide main menu entry"
 msgstr "Ana menüde sakla"
 
-#: setup.c:99
+#: setup.c:98
 msgid "Setup phonebooks to use..."
 msgstr ""
 
-#: setup.c:100
+#: setup.c:99
 msgid "Restrict monitor to certain extensions"
 msgstr "Gözlenen MSN'leri sýnýrla"
 
-#: setup.c:102
+#: setup.c:101
 msgid "Number of monitored extensions"
 msgstr "Gözlenen MSN'lerinin sayýsý"
 
-#: setup.c:106
+#: setup.c:105
 msgid "Reload"
 msgstr "Tekrar yükle"
 
-#: setup.c:153
+#: setup.c:152
 msgid "Retrieving phone book"
 msgstr "Telefon defteri yükleniyor"
 
-#: setup.c:284
+#: setup.c:283
 msgid "Setup phonebooks to use"
 msgstr ""
 
-#: setup.c:300
+#: setup.c:299
 msgid "Less"
 msgstr ""
 
-#: setup.c:300
+#: setup.c:299
 msgid "More"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Fritz!Box konuþma listesi"
+#~ msgid "Please wait..."
+#~ msgstr "Lütfen bekleyin"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Bilinmeyen baðlantý arýyor"
 
-#~ msgid "Please wait..."
-#~ msgstr "Lütfen bekleyin"
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Fritz!Box konuþma listesi"
