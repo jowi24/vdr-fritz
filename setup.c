@@ -41,7 +41,6 @@ std::string cMenuSetupFritzbox::StoreMsn(){
 	std::vector<std::string>::iterator it;
 	std::string msnLine;
 
-
 	for (it = fritzboxConfig.msn.begin(); it < fritzboxConfig.msn.end(); it++){
 		msnLine += *it;
 		msnLine += ' ';

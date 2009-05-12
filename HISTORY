@@ -391,7 +391,7 @@ VDR Plugin 'fritzbox' Revision History
 - changes in libpthread++
   * added missing include in PThread++.h to fix compiler issue with g++-3.3
   
-2009: Version 1.1.6
+2009-05-12: Version 1.1.6
 - changes in libfritz++
   * Removed the default of countryCode = "49" if Tools::GetLocationSettings() fails. This task is 
   handed over to the caller, see next.
@@ -399,6 +399,8 @@ VDR Plugin 'fritzbox' Revision History
   The default parameters are used, when auto-detection in Tools::GetLocationSettings() fails. The
   new parameter locationSettingsDetected indicates whether auto-detection was successful. In this
   case, the given default values are overwritten to give the caller access to the new values.
+  * Fixed naming of local phonebook. The recommended name is now localphonebook.csv, the old name 
+  localfonbuch.csv is still accepted. The directory remains $vdrconfigdir/plugins/fritzbox/.
 - added new setup options for country code and region code. If the plugin is unable to detect 
   these automatically (e.g., with some older Fritz!Boxes) the values are taken from these setup
   options.
