@@ -7,12 +7,15 @@ msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
 "POT-Creation-Date: 2009-05-12 20:47+0200\n"
-"PO-Revision-Date: 2008-08-21 00:33+0100\n"
+"PO-Revision-Date: 2009-05-14 17:49+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: fritzbox.c:32
 msgid "Fritz!Box Plugin for AVM Fritz!Box"
@@ -80,11 +83,11 @@ msgstr "Rubrica Fritz!Box"
 
 #: menu.c:42
 msgid "nummerzoeker.com"
-msgstr ""
+msgstr "nummerzoeker.com"
 
 #: menu.c:43
 msgid "das-oertliche.de"
-msgstr ""
+msgstr "das-oertliche.de"
 
 #: menu.c:104
 msgid "Error fetching the call list"
@@ -92,7 +95,7 @@ msgstr "Errore recupero elenco chiamate"
 
 #: menu.c:122
 msgid "This phonebook is not yet available."
-msgstr "Questa rubrica non è ancora disponibile."
+msgstr "Questa rubrica non Ã¨ ancora disponibile."
 
 #: menu.c:123
 msgid "You may need to wait some minutes,"
@@ -104,7 +107,7 @@ msgstr "altrimenti ci potrebbe essere un problema di rete."
 
 #: menu.c:127
 msgid "This phonebook is not displayable"
-msgstr "Questa rubrica non è disponibile"
+msgstr "Questa rubrica non Ã¨ disponibile"
 
 #: menu.c:149
 msgid "> PB"
@@ -114,7 +117,8 @@ msgstr "> RU"
 msgid "Fritz!Box call list"
 msgstr "Elenco chiamate Fritz!Box"
 
-#: menu.c:161 setup.c:75
+#: menu.c:161
+#: setup.c:75
 msgid "incoming"
 msgstr "in arrivo"
 
@@ -122,11 +126,13 @@ msgstr "in arrivo"
 msgid "missed"
 msgstr "perse"
 
-#: menu.c:168 setup.c:80
+#: menu.c:168
+#: setup.c:80
 msgid "outgoing"
 msgstr "in uscita"
 
-#: menu.c:187 menu.c:257
+#: menu.c:187
+#: menu.c:257
 msgid "unknown"
 msgstr "sconosciuta"
 
@@ -155,7 +161,8 @@ msgstr "Durata"
 msgid "call was not accepted"
 msgstr "chiamata non accettata"
 
-#: menu.c:248 setup.c:103
+#: menu.c:248
+#: setup.c:103
 msgid "Extension"
 msgstr "Estensione MSN"
 
@@ -168,19 +175,23 @@ msgid "Caller"
 msgstr "Chiamante"
 
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:260 menu.c:341
+#: menu.c:260
+#: menu.c:341
 msgid "Button$Call"
 msgstr "Chiama"
 
-#: menu.c:282 menu.c:352
+#: menu.c:282
+#: menu.c:352
 msgid "No number to call"
 msgstr "Nessun numero da chiamare"
 
-#: menu.c:285 menu.c:355
+#: menu.c:285
+#: menu.c:355
 msgid "Pick up your phone now"
 msgstr "Prendi ora la telefonata"
 
-#: menu.c:287 menu.c:357
+#: menu.c:287
+#: menu.c:357
 msgid "Error while initiating call"
 msgstr "Errore avvio chiamata"
 
@@ -188,11 +199,13 @@ msgstr "Errore avvio chiamata"
 msgid "Phone book details"
 msgstr "Dettagli rubrica"
 
-#: menu.c:314 menu.c:320
+#: menu.c:314
+#: menu.c:320
 msgid "Name"
 msgstr "Nome"
 
-#: menu.c:315 menu.c:321
+#: menu.c:315
+#: menu.c:321
 msgid "Numbers"
 msgstr "Numeri"
 
@@ -237,9 +250,8 @@ msgid "Country code"
 msgstr "Codice internazionale"
 
 #: setup.c:89
-#, fuzzy
 msgid "Region code"
-msgstr "Codice internazionale"
+msgstr "Codice area"
 
 #: setup.c:90
 msgid "React on calls"
@@ -307,10 +319,10 @@ msgstr "Aggiungi"
 
 #~ msgid "Please wait..."
 #~ msgstr "Attendere prego..."
-
 #~ msgid "Call from unknown extension"
 #~ msgstr "Chiamata da estensione sconosciuta"
 
 #, fuzzy
 #~ msgid "Fritz!Box Notification"
 #~ msgstr "Elenco chiamate Fritz!Box"
+
