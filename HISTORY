@@ -405,6 +405,10 @@ VDR Plugin 'fritzbox' Revision History
   these automatically (e.g., with some older Fritz!Boxes) the values are taken from these setup
   options.
   (reported by Ronny [30])
+
+2009-05-: Version 1.1.7  
+- updated italian translations (provided by Diego [24])
+
   
 --- References ---
 
