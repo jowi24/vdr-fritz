@@ -58,7 +58,7 @@ FonbookEntry &OertlichesFonbook::ResolveToName(FonbookEntry &fe) {
 		*dsyslog << __FILE__ << ": sending reverse lookup request for " << Tools::NormalizeNumber(number) << " to www.dasoertliche.de" << std::endl;
 		std::string host = "www.dasoertliche.de";
 		tcpclient::HttpClient tc(host, PORT_WWW);
-		tc << "GET /?id=9999999999999999999999&form_name=detail&lastFormName=search_inv&ph=" << Tools::NormalizeNumber(number) << "&recFrom=1&hitno=0&zvo_ok=1&page=TREFFERLISTE&context=TREFFERLISTE&action=TEILNEHMER&detvert_ok=1 HTTP/1.1\nHost: www.dasoertliche.de\nAccept-Charset: ISO-8859-1\nUser-Agent: Lynx/2.8.5\nConnection: close\n\n\0";
+		tc << "GET /Controller?ciid=&district=&kgs=&plz=&zvo_ok=&form_name=search_inv&buc=&kgs=&buab=&zbuab=&ph=" << Tools::NormalizeNumber(number) << "&image= HTTP/1.1\nHost: www.dasoertliche.de\nAccept-Charset: ISO-8859-1\nUser-Agent: Lynx/2.8.5\nConnection: close\n\n\0";
 		tc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
@@ -67,7 +67,7 @@ FonbookEntry &OertlichesFonbook::ResolveToName(FonbookEntry &fe) {
 		return fe;
 	}
 	// parse answer
-	size_t start = msg.find("<div class=\"detail_top\">");
+	size_t start = msg.find("class=\"preview\">");
 	if (start == std::string::npos) {
 		*isyslog << __FILE__ << ": no entry found." << std::endl;
 		fe.setName(number);
@@ -75,7 +75,8 @@ FonbookEntry &OertlichesFonbook::ResolveToName(FonbookEntry &fe) {
 		return fe;
 	}
 	// add the length of search pattern
-	start += 24;
+	start += 16;
+
 	size_t stop  = msg.find("<", start);
 	name = msg.substr(start, stop - start);
 	// convert the string from latin1 to current system character table
