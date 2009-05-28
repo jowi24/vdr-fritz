@@ -28,8 +28,8 @@
 #include "notifyosd.h"
 #include "menu.h"
 
-static const char *VERSION        = "1.1.7";
-static const char *DESCRIPTION    = trNOOP("Fritz!Box Plugin for AVM Fritz!Box");
+static const char *VERSION        = "1.2.0";
+static const char *DESCRIPTION    = trNOOP("Fritz Plugin for AVM Fritz!Box");
 static const char *MAINMENUENTRY  = trNOOP("Fritz!Box");
 
 cPluginFritzbox::cPluginFritzbox(void)

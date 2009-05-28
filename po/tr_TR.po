@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-05-17 20:43+0200\n"
+"POT-Creation-Date: 2009-05-28 19:55+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Oktay Yolgeçen <oktay_73@yahoo.de>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: fritzbox.c:32
-msgid "Fritz!Box Plugin for AVM Fritz!Box"
+msgid "Fritz Plugin for AVM Fritz!Box"
 msgstr ""
 
 #: fritzbox.c:33
@@ -320,12 +320,12 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#~ msgid "Please wait..."
-#~ msgstr "Lütfen bekleyin"
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Fritz!Box konuþma listesi"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Bilinmeyen baðlantý arýyor"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Fritz!Box konuþma listesi"
+#~ msgid "Please wait..."
+#~ msgstr "Lütfen bekleyin"

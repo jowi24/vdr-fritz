@@ -406,7 +406,7 @@ VDR Plugin 'fritzbox' Revision History
   options.
   (reported by Ronny [30])
 
-2009-05-: Version 1.1.7  
+2009-05-28: Version 1.2.0 
 - updated italian translations (provided by Diego [24])
 - changes in libfritz++
   * Updated OertlichesFonbook to new website layout 
