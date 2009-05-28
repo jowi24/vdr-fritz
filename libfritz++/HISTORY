@@ -37,3 +37,6 @@
 2009-04-08:
 - Fixed naming of local phonebook. The recommended name is now localphonebook.csv, the old name 
   localfonbuch.csv is still accepted. The directory remains $vdrconfigdir/plugins/fritzbox/.
+  
+2009-05-18:
+- Updated OertlichesFonbook to new website layout

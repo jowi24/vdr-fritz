@@ -405,6 +405,12 @@ VDR Plugin 'fritzbox' Revision History
   these automatically (e.g., with some older Fritz!Boxes) the values are taken from these setup
   options.
   (reported by Ronny [30])
+
+2009-05-28: Version 1.2.0 
+- updated italian translations (provided by Diego [24])
+- changes in libfritz++
+  * Updated OertlichesFonbook to new website layout 
+  (fix provided by Matthias [31])
   
 --- References ---
 
@@ -445,3 +451,4 @@ VDR Plugin 'fritzbox' Revision History
 [29] Thorsten Pohl <tpohl@me.com> 
      http://vdr-portal.de/board/profile.php?userid=8029
 [30] http://www.vdr-portal.de/board/profile.php?userid=6793
+[31] http://vdr-portal.de/board/profile.php?userid=15996
