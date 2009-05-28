@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-05-03 17:56+0200\n"
+"POT-Creation-Date: 2009-05-28 19:55+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Patrice Staudt\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: fritzbox.c:32
-msgid "Fritz!Box Plugin for AVM Fritz!Box"
+msgid "Fritz Plugin for AVM Fritz!Box"
 msgstr ""
 
 #: fritzbox.c:33
@@ -122,7 +122,7 @@ msgstr "CdA"
 msgid "Fritz!Box call list"
 msgstr "Liste d'appelle de la Fritz!Box"
 
-#: menu.c:161 setup.c:76
+#: menu.c:161 setup.c:75
 msgid "incoming"
 msgstr "entrant"
 
@@ -130,7 +130,7 @@ msgstr "entrant"
 msgid "missed"
 msgstr "manqué"
 
-#: menu.c:168 setup.c:81
+#: menu.c:168 setup.c:80
 msgid "outgoing"
 msgstr "sortant"
 
@@ -163,7 +163,7 @@ msgstr "Durée"
 msgid "call was not accepted"
 msgstr "Appel n'a pas été accepté"
 
-#: menu.c:248 setup.c:104
+#: menu.c:248 setup.c:103
 msgid "Extension"
 msgstr "Extension MSN"
 
@@ -233,90 +233,90 @@ msgstr "Afficher les appels entrants"
 msgid "Outgoing call"
 msgstr "Muet lors d'un appel"
 
-#: setup.c:71
+#: setup.c:70
 msgid "any"
 msgstr ""
 
-#: setup.c:87
+#: setup.c:86
 msgid "Fritz!Box URL"
 msgstr "Url de la Fritz!Box"
 
-#: setup.c:88
+#: setup.c:87
 msgid "Password"
 msgstr "Mot de passe"
 
-#: setup.c:89
+#: setup.c:88
 msgid "Country code"
 msgstr ""
 
-#: setup.c:90
+#: setup.c:89
 msgid "Region code"
 msgstr ""
 
-#: setup.c:91
+#: setup.c:90
 #, fuzzy
 msgid "React on calls"
 msgstr "Muet lors d'un appel"
 
-#: setup.c:92
+#: setup.c:91
 msgid "Mute on call"
 msgstr "Muet lors d'un appel"
 
-#: setup.c:93
+#: setup.c:92
 msgid "Pause on call"
 msgstr "Pause pour appel"
 
-#: setup.c:94
+#: setup.c:93
 #, fuzzy
 msgid "Show calls"
 msgstr "Afficher les appels entrants"
 
-#: setup.c:95
+#: setup.c:94
 #, fuzzy
 msgid "Show detailed call information"
 msgstr "Listes détaillées d'appel"
 
-#: setup.c:96
+#: setup.c:95
 msgid "Detailed call lists"
 msgstr "Listes détaillées d'appel"
 
-#: setup.c:97
+#: setup.c:96
 msgid "Group call lists by date"
 msgstr "Groupe appels par jour"
 
-#: setup.c:98
+#: setup.c:97
 msgid "Hide main menu entry"
 msgstr "Caché dans le menu principale"
 
-#: setup.c:99
+#: setup.c:98
 msgid "Setup phonebooks to use..."
 msgstr "Configuration de répertoires téléphoniques à utiliser..."
 
-#: setup.c:100
+#: setup.c:99
 msgid "Restrict monitor to certain extensions"
 msgstr "Limiter le moniteur à certaines extensions MSNs"
 
-#: setup.c:102
+#: setup.c:101
 msgid "Number of monitored extensions"
 msgstr "Nombre d'extensions MSNs a surveillier"
 
-#: setup.c:106
+#: setup.c:105
 msgid "Reload"
 msgstr "Recharger"
 
-#: setup.c:153
+#: setup.c:152
 msgid "Retrieving phone book"
 msgstr "Recherche du carnet d'adresse"
 
-#: setup.c:284
+#: setup.c:283
 msgid "Setup phonebooks to use"
 msgstr "Configuration de répertoires téléphoniques à utiliser"
 
-#: setup.c:300
+#: setup.c:299
 msgid "Less"
 msgstr "Moins"
 
-#: setup.c:300
+#: setup.c:299
 msgid "More"
 msgstr "Plus"
 
