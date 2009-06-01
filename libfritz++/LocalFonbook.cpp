@@ -80,55 +80,54 @@ LocalFonbook::~LocalFonbook() {
 bool LocalFonbook::Initialize() {
 	setInitialized(false);
 	fonbookList.clear();
-	char* fileName;
-	int ret = asprintf(&fileName, "%s/localfonbook.csv", gConfig->getConfigDir().c_str());
-	if (ret <= 0)
-		return false;
-	if (access(fileName, F_OK) != 0) {
-		// try deprecated filename
-		free(fileName);
-		int ret = asprintf(&fileName, "%s/localfonbuch.csv", gConfig->getConfigDir().c_str());
+
+	char fileNames[3][20] = {"localphonebook.csv", "localfonbook.csv", "localfonbuch.csv"};
+	char* filePath = NULL;
+	for (size_t pos = 0; pos < 3; pos++) {
+		int ret = asprintf(&filePath, "%s/%s", gConfig->getConfigDir().c_str(), fileNames[pos]);
 		if (ret <= 0)
 			return false;
-		if (access(fileName, F_OK) == 0)
-			*isyslog << __FILE__ << ": warning, using deprecated file " << fileName << ", please rename to localfonbook.csv." << std::endl;
-	}
-	if (fileName && access(fileName, F_OK) == 0) {
-		*isyslog << "loading " << fileName << std::endl;
-		FILE *f = fopen(fileName, "r");
-		if (f) {
-			char *s;
-			ReadLine ReadLine;
-			while ((s = ReadLine.Read(f)) != NULL) {
-				if (s[0] == '#') continue;
-				char* name_buffer 	= strtok(s, ",;");
-				char* type_buffer 	= strtok(NULL, ",;");
-				char* number_buffer = strtok(NULL, ",;");
-				if (name_buffer && type_buffer && number_buffer) {
-					std::string name   		 	= name_buffer;
-					FonbookEntry::eType type   = (FonbookEntry::eType) atoi(type_buffer);
-					std::string number 			= number_buffer;
-					FonbookEntry fe(name, number, type);
-					fonbookList.push_back(fe);
-				}
-				else {
-					*esyslog << __FILE__ << ": parse error at " << s << std::endl;
-				}
-			}
-			setInitialized(true);
-			*isyslog << __FILE__ << ": read " << fonbookList.size() << " entries." << std::endl;
-			std::sort(fonbookList.begin(), fonbookList.end());
-			return true;
+		if (access(filePath, F_OK) == 0) {
+			if (pos > 0)
+				*isyslog << __FILE__ << ": warning, using deprecated file " << filePath << ", please rename to " << fileNames[0] << "." << std::endl;
+			break;
 		}
-	} else {
-		// file not available -> log preferred filename and location
-		free(fileName);
-		int ret = asprintf(&fileName, "%s/localfonbook.csv", gConfig->getConfigDir().c_str());
-		if (ret <= 0)
-			return false;
-		*esyslog << __FILE__ << ": file " << fileName << " not found." << std::endl;
+		// try deprecated filenames
+		free(filePath);
+		filePath = NULL;
 	}
-	free(fileName);
+	if (!filePath) {
+		// file not available -> log preferred filename and location
+		*esyslog << __FILE__ << ": file " << gConfig->getConfigDir().c_str() << "/" << fileNames[0] << " not found." << std::endl;
+		return false;
+	}
+	*isyslog << "loading " << filePath << std::endl;
+	FILE *f = fopen(filePath, "r");
+	free(filePath);
+	if (f) {
+		char *s;
+		ReadLine ReadLine;
+		while ((s = ReadLine.Read(f)) != NULL) {
+			if (s[0] == '#') continue;
+			char* name_buffer 	= strtok(s, ",;");
+			char* type_buffer 	= strtok(NULL, ",;");
+			char* number_buffer = strtok(NULL, ",;");
+			if (name_buffer && type_buffer && number_buffer) {
+				std::string name   		 	= name_buffer;
+				FonbookEntry::eType type   = (FonbookEntry::eType) atoi(type_buffer);
+				std::string number 			= number_buffer;
+				FonbookEntry fe(name, number, type);
+				fonbookList.push_back(fe);
+			}
+			else {
+				*esyslog << __FILE__ << ": parse error at " << s << std::endl;
+			}
+		}
+		setInitialized(true);
+		*isyslog << __FILE__ << ": read " << fonbookList.size() << " entries." << std::endl;
+		std::sort(fonbookList.begin(), fonbookList.end());
+		return true;
+	}
 	return false;
 }
 
