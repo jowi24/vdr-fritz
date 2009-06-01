@@ -36,6 +36,8 @@ trNOOP("H");
 trNOOP("M");
 //TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
 trNOOP("W");
+//TRANSLATORS: telephonebook number type: this should be emtpy (one space)
+trNOOP(" ");
 
 trNOOP("Local phone book");
 trNOOP("Fritz!Box phone book");
@@ -256,8 +258,8 @@ cMenuCallDetail::cMenuCallDetail(fritz::CallEntry *ce, cMenuFritzbox::mode mode,
 	     << (ce->remoteNumber.size() > 0 ? ce->remoteNumber :
 	                                      tr("unknown")) << "\n";
 
-	//TRANSLATORS: this is the label for the button to initiate a call
-	SetHelp(tr("Button$Call"));
+	//TRANSLATORS: these are labels for color keys in the CallDetails menu
+	SetHelp(tr("Button$Call"), tr("Button$To PB"));
 	SetText(text.str());
 	Display();
 }
@@ -285,6 +287,20 @@ eOSState cMenuCallDetail::ProcessKey (eKeys Key) {
 					Skins.Message(mtInfo, tr("Pick up your phone now"));
 				else
 					Skins.Message(mtError, tr("Error while initiating call"));
+			}
+			state = osContinue;
+			break;
+		case kGreen:
+			// add to active phonebook
+			if (ce->remoteNumber.empty())
+				Skins.Message(mtError, tr("No number to add"));
+			else
+			{
+				fritz::FonbookEntry fe(ce->remoteName, ce->remoteNumber);
+				if (fritz::FonbookManager::GetFonbookManager()->AddFonbookEntry(fe))
+					Skins.Message(mtInfo, "Added new entry to phone book");
+				else
+					Skins.Message(mtError, "Add failed");
 			}
 			state = osContinue;
 			break;

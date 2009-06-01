@@ -30,11 +30,14 @@ namespace fritz{
 class LocalFonbook : public Fonbook {
 	friend class FonbookManager;
 private:
+	char* filePath;
 	LocalFonbook();
+	void SaveToFile();
 public:
 	virtual ~LocalFonbook();
 	bool Initialize();
 	void Reload();
+	virtual bool AddFonbookEntry(FonbookEntry fe);
 };
 
 }

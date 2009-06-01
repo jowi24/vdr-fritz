@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru_RU-UTF8\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-05-28 19:55+0200\n"
+"POT-Creation-Date: 2009-06-01 17:10+0200\n"
 "PO-Revision-Date: 2008-09-09 01:48+0200\n"
 "Last-Translator: Alexander Gross\n"
 "Language-Team: russian\n"
@@ -73,145 +73,161 @@ msgstr "М"
 msgid "W"
 msgstr "Р"
 
+#. TRANSLATORS: telephonebook number type: this should be emtpy (one space)
 #: menu.c:40
+msgid " "
+msgstr ""
+
+#: menu.c:42
 msgid "Local phone book"
 msgstr "Локальный справочник"
 
-#: menu.c:41
+#: menu.c:43
 msgid "Fritz!Box phone book"
 msgstr "Телефонный справочник Fritz!Box"
 
-#: menu.c:42
+#: menu.c:44
 msgid "nummerzoeker.com"
 msgstr ""
 
-#: menu.c:43
+#: menu.c:45
 msgid "das-oertliche.de"
 msgstr ""
 
-#: menu.c:104
+#: menu.c:106
 msgid "Error fetching the call list"
 msgstr "Ошибка при запросе списка звонков"
 
-#: menu.c:122
+#: menu.c:124
 msgid "This phonebook is not yet available."
 msgstr "Телефонный справочник пока не доступен."
 
-#: menu.c:123
+#: menu.c:125
 msgid "You may need to wait some minutes,"
 msgstr "Вам возможно придеться подождать несколько минут"
 
-#: menu.c:124
+#: menu.c:126
 msgid "otherwise there may be a network problem."
 msgstr "или возникла проблема сети"
 
-#: menu.c:127
+#: menu.c:129
 msgid "This phonebook is not displayable"
 msgstr "Телефонный справочник пока не доступен "
 
-#: menu.c:149
+#: menu.c:151
 msgid "> PB"
 msgstr "> PB"
 
-#: menu.c:155
+#: menu.c:157
 msgid "Fritz!Box call list"
 msgstr "Список звонков Fritz!Box"
 
-#: menu.c:161 setup.c:75
+#: menu.c:163 setup.c:75
 msgid "incoming"
 msgstr "входящие"
 
-#: menu.c:164
+#: menu.c:166
 msgid "missed"
 msgstr "пропущенные"
 
-#: menu.c:168 setup.c:80
+#: menu.c:170 setup.c:80
 msgid "outgoing"
 msgstr "выходящие"
 
-#: menu.c:187 menu.c:257
+#: menu.c:189 menu.c:259
 msgid "unknown"
 msgstr "неизвестный"
 
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:217
+#: menu.c:219
 msgid "PB"
 msgstr "PB"
 
-#: menu.c:224
+#: menu.c:226
 msgid "Call details"
 msgstr "Подробности звонка"
 
-#: menu.c:243
+#: menu.c:245
 msgid "Date"
 msgstr "Дата"
 
-#: menu.c:244
+#: menu.c:246
 msgid "Time"
 msgstr "Время"
 
-#: menu.c:245
+#: menu.c:247
 msgid "Duration"
 msgstr "Продолжительность"
 
-#: menu.c:246
+#: menu.c:248
 msgid "call was not accepted"
 msgstr "непринятый звонок"
 
-#: menu.c:248 setup.c:103
+#: menu.c:250 setup.c:103
 msgid "Extension"
 msgstr "MSN"
 
-#: menu.c:253
+#: menu.c:255
 msgid "Callee"
 msgstr "Цель"
 
-#: menu.c:254
+#: menu.c:256
 msgid "Caller"
 msgstr "Вам звонит  "
 
+#. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:260 menu.c:341
+#: menu.c:262 menu.c:357
 msgid "Button$Call"
 msgstr "Позвонить"
 
-#: menu.c:282 menu.c:352
+#: menu.c:262
+#, fuzzy
+msgid "Button$To PB"
+msgstr "Позвонить"
+
+#: menu.c:284 menu.c:368
 msgid "No number to call"
 msgstr "Без номера звонок не возможен"
 
-#: menu.c:285 menu.c:355
+#: menu.c:287 menu.c:371
 msgid "Pick up your phone now"
 msgstr "Снять телефон сейчас"
 
-#: menu.c:287 menu.c:357
+#: menu.c:289 menu.c:373
 msgid "Error while initiating call"
 msgstr "Ошибка при соединении"
 
-#: menu.c:301
+#: menu.c:296
+#, fuzzy
+msgid "No number to add"
+msgstr "Без номера звонок не возможен"
+
+#: menu.c:317
 msgid "Phone book details"
 msgstr "Подробности справочника"
 
-#: menu.c:314 menu.c:320
+#: menu.c:330 menu.c:336
 msgid "Name"
 msgstr "Имя"
 
-#: menu.c:315 menu.c:321
+#: menu.c:331 menu.c:337
 msgid "Numbers"
 msgstr "Номера"
 
-#: menu.c:316
+#: menu.c:332
 msgid "Default"
 msgstr "По умолчанию"
 
-#: menu.c:322
+#: menu.c:338
 msgid "Private"
 msgstr "Частный"
 
-#: menu.c:323
+#: menu.c:339
 msgid "Mobile"
 msgstr "Мобильный"
 
-#: menu.c:324
+#: menu.c:340
 msgid "Business"
 msgstr "Рабочий"
 

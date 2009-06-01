@@ -289,7 +289,7 @@ cMenuSetupFritzboxFonbooks::cMenuSetupFritzboxFonbooks(std::vector<std::string> 
 	selectedFonbookPos = (int **)  malloc(fonbooks->size() * sizeof(int *));
 	fonbookTitles      = (char **) malloc(fonbooks->size() * sizeof(char *));
 	for (size_t i=0; i<fonbooks->size(); i++) {
-		int ret = asprintf(&fonbookTitles[i], "%s", (*fonbooks)[i]->GetTitle().c_str());
+		int ret = asprintf(&fonbookTitles[i], "%s", tr((*fonbooks)[i]->GetTitle().c_str()));
 		if (ret <= 0) {
 			*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
 		}

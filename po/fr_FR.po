@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-05-31 19:58+0200\n"
+"POT-Creation-Date: 2009-06-01 17:16+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Patrice Staudt\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -74,152 +74,168 @@ msgstr "M"
 msgid "W"
 msgstr "W"
 
+#. TRANSLATORS: telephonebook number type: this should be emtpy (one space)
 #: menu.c:40
+msgid " "
+msgstr ""
+
+#: menu.c:42
 #, fuzzy
 msgid "Local phone book"
 msgstr "Carnet d'adresse de la Fritz!Box"
 
-#: menu.c:41
+#: menu.c:43
 msgid "Fritz!Box phone book"
 msgstr "Carnet d'adresse de la Fritz!Box"
 
-#: menu.c:42
+#: menu.c:44
 msgid "nummerzoeker.com"
 msgstr ""
 
-#: menu.c:43
+#: menu.c:45
 msgid "das-oertliche.de"
 msgstr ""
 
-#: menu.c:104
+#: menu.c:106
 msgid "Error fetching the call list"
 msgstr "Erreur de chargement de la liste d'appel"
 
-#: menu.c:122
+#: menu.c:124
 #, fuzzy
 msgid "This phonebook is not yet available."
 msgstr "Carnet d'adresse n'est pas encore disponible"
 
-#: menu.c:123
+#: menu.c:125
 msgid "You may need to wait some minutes,"
 msgstr "Vous devrez peut-être attendre quelques minutes,"
 
-#: menu.c:124
+#: menu.c:126
 msgid "otherwise there may be a network problem."
 msgstr "Sinon il peut y avoir un problème de réseau"
 
-#: menu.c:127
+#: menu.c:129
 #, fuzzy
 msgid "This phonebook is not displayable"
 msgstr "Carnet d'adresse n'est pas encore disponible"
 
-#: menu.c:149
+#: menu.c:151
 #, fuzzy
 msgid "> PB"
 msgstr "CdA"
 
-#: menu.c:155
+#: menu.c:157
 msgid "Fritz!Box call list"
 msgstr "Liste d'appelle de la Fritz!Box"
 
-#: menu.c:161 setup.c:75
+#: menu.c:163 setup.c:75
 msgid "incoming"
 msgstr "entrant"
 
-#: menu.c:164
+#: menu.c:166
 msgid "missed"
 msgstr "manqué"
 
-#: menu.c:168 setup.c:80
+#: menu.c:170 setup.c:80
 msgid "outgoing"
 msgstr "sortant"
 
-#: menu.c:187 menu.c:257
+#: menu.c:189 menu.c:259
 msgid "unknown"
 msgstr "inconnu"
 
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:217
+#: menu.c:219
 msgid "PB"
 msgstr "CdA"
 
-#: menu.c:224
+#: menu.c:226
 msgid "Call details"
 msgstr "Détails des appels"
 
-#: menu.c:243
+#: menu.c:245
 msgid "Date"
 msgstr "Date"
 
-#: menu.c:244
+#: menu.c:246
 msgid "Time"
 msgstr "Temps"
 
-#: menu.c:245
+#: menu.c:247
 msgid "Duration"
 msgstr "Durée"
 
-#: menu.c:246
+#: menu.c:248
 msgid "call was not accepted"
 msgstr "Appel n'a pas été accepté"
 
-#: menu.c:248 setup.c:103
+#: menu.c:250 setup.c:103
 msgid "Extension"
 msgstr "Extension MSN"
 
-#: menu.c:253
+#: menu.c:255
 msgid "Callee"
 msgstr ""
 
-#: menu.c:254
+#: menu.c:256
 #, fuzzy
 msgid "Caller"
 msgstr "Appelle de"
 
+#. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:260 menu.c:341
+#: menu.c:262 menu.c:357
 #, fuzzy
 msgid "Button$Call"
 msgstr "Muet lors d'un appel"
 
-#: menu.c:282 menu.c:352
+#: menu.c:262
+#, fuzzy
+msgid "Button$To PB"
+msgstr "Muet lors d'un appel"
+
+#: menu.c:284 menu.c:368
 msgid "No number to call"
 msgstr "Aucun numéro à appeler"
 
-#: menu.c:285 menu.c:355
+#: menu.c:287 menu.c:371
 msgid "Pick up your phone now"
 msgstr "Décrocher votre téléphone maintenant"
 
-#: menu.c:287 menu.c:357
+#: menu.c:289 menu.c:373
 msgid "Error while initiating call"
 msgstr "Erreur au lancement de l'appel"
 
-#: menu.c:301
+#: menu.c:296
+#, fuzzy
+msgid "No number to add"
+msgstr "Aucun numéro à appeler"
+
+#: menu.c:317
 msgid "Phone book details"
 msgstr ""
 
-#: menu.c:314 menu.c:320
+#: menu.c:330 menu.c:336
 msgid "Name"
 msgstr ""
 
-#: menu.c:315 menu.c:321
+#: menu.c:331 menu.c:337
 msgid "Numbers"
 msgstr ""
 
-#: menu.c:316
+#: menu.c:332
 msgid "Default"
 msgstr ""
 
-#: menu.c:322
+#: menu.c:338
 msgid "Private"
 msgstr ""
 
-#: menu.c:323
+#: menu.c:339
 #, fuzzy
 msgid "Mobile"
 msgstr "Plus"
 
-#: menu.c:324
+#: menu.c:340
 msgid "Business"
 msgstr ""
 
@@ -320,12 +336,12 @@ msgstr "Moins"
 msgid "More"
 msgstr "Plus"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendez SVP..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Liste d'appelle de la Fritz!Box"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Appel d'une extension inconnue"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Liste d'appelle de la Fritz!Box"
+#~ msgid "Please wait..."
+#~ msgstr "Attendez SVP..."
