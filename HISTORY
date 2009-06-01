@@ -412,6 +412,11 @@ VDR Plugin 'fritzbox' Revision History
   * Updated OertlichesFonbook to new website layout 
   (fix provided by Matthias [31])
   
+2009-06-01: Version 1.2.1
+- Fixed naming of local phonebook. The plugin now really looks for a file called 
+  localphonebook.csv.
+  (reported by Tobias [1])
+  
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
