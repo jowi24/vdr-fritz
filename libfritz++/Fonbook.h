@@ -86,6 +86,10 @@ protected:
 	 * True, if this phonebook has displayable entries.
 	 */
 	bool displayable;
+	/**
+	 * True, if this phonebook is writeable
+	 */
+	bool writeable;
     /**
      * Data structure for storing the phonebook.
      */
@@ -111,6 +115,12 @@ public:
 	 */
 	virtual FonbookEntry *RetrieveFonbookEntry(size_t id);
 	/**
+	 * Adds a new entry to the phonebook.
+	 * @param fe a new phonebook entry
+	 * @return true, if add was sucessful
+	 */
+	virtual bool AddFonbookEntry(FonbookEntry fe) { return false; }
+	/**
 	 * Returns if it is possible to display the entries of this phonebook.
 	 * @return true, if this phonebook has displayable entries. "Reverse lookup only" phonebooks must return false here.
 	 */
@@ -120,6 +130,11 @@ public:
 	 * @return true, if this phonebook is ready to use
 	 */
 	virtual bool isInitialized() { return initialized; }
+	/**
+	 * Returns if this phonebook is writeable, e.g. entries can be added or modified.
+	 * @return true, if this phonebook is writeable
+	 */
+	virtual bool isWriteable() { return writeable; }
 	/**
 	 * Sets the initialized-status.
 	 * @param isInititalized the value initialized is set to

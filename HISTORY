@@ -416,6 +416,9 @@ VDR Plugin 'fritzbox' Revision History
 - Fixed naming of local phonebook. The plugin now really looks for a file called 
   localphonebook.csv.
   (reported by Tobias [1])
+- Fixed missing translation of phonebooks in cMenuSetupFritzboxFonbooks
+- Fixed missing translation of phonebook entries with type TYPE_NONE 
+- First implementation to add call list entries to active phonebook.
   
 --- References ---
 

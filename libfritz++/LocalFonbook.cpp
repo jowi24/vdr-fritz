@@ -22,6 +22,8 @@
 
 #include <string.h>
 #include <algorithm>
+#include <iostream>
+#include <fstream>
 #include "Tools.h"
 #include "LocalFonbook.h"
 #include "Config.h"
@@ -72,9 +74,12 @@ LocalFonbook::LocalFonbook() {
 	title = "Local phone book";
 	techId = "LOCL";
 	displayable = true;
+	writeable   = true;
+	filePath = NULL;
 }
 
 LocalFonbook::~LocalFonbook() {
+	SaveToFile();
 }
 
 bool LocalFonbook::Initialize() {
@@ -82,7 +87,6 @@ bool LocalFonbook::Initialize() {
 	fonbookList.clear();
 
 	char fileNames[3][20] = {"localphonebook.csv", "localfonbook.csv", "localfonbuch.csv"};
-	char* filePath = NULL;
 	for (size_t pos = 0; pos < 3; pos++) {
 		int ret = asprintf(&filePath, "%s/%s", gConfig->getConfigDir().c_str(), fileNames[pos]);
 		if (ret <= 0)
@@ -99,11 +103,12 @@ bool LocalFonbook::Initialize() {
 	if (!filePath) {
 		// file not available -> log preferred filename and location
 		*esyslog << __FILE__ << ": file " << gConfig->getConfigDir().c_str() << "/" << fileNames[0] << " not found." << std::endl;
+		// if no file exists, put the preferred name into filepath (for later usage)
+		asprintf(&filePath, "%s/%s", gConfig->getConfigDir().c_str(), fileNames[0]);
 		return false;
 	}
 	*isyslog << "loading " << filePath << std::endl;
 	FILE *f = fopen(filePath, "r");
-	free(filePath);
 	if (f) {
 		char *s;
 		ReadLine ReadLine;
@@ -117,7 +122,7 @@ bool LocalFonbook::Initialize() {
 				FonbookEntry::eType type   = (FonbookEntry::eType) atoi(type_buffer);
 				std::string number 			= number_buffer;
 				FonbookEntry fe(name, number, type);
-				fonbookList.push_back(fe);
+				AddFonbookEntry(fe);
 			}
 			else {
 				*esyslog << __FILE__ << ": parse error at " << s << std::endl;
@@ -133,6 +138,27 @@ bool LocalFonbook::Initialize() {
 
 void LocalFonbook::Reload() {
 	Initialize();
+}
+
+bool LocalFonbook::AddFonbookEntry(FonbookEntry fe) {
+	fonbookList.push_back(fe);
+	return true;
+}
+
+void LocalFonbook::SaveToFile() {
+	// filePath should always contain a valid content, this is just to be sure
+	if (!filePath)
+		return;
+	// open file
+	std::ofstream file(filePath, std::ios_base::trunc);
+	if (file.fail())
+		return;
+	// write all entries to the file
+	for(std::vector<FonbookEntry>::iterator it = fonbookList.begin(); it != fonbookList.end(); it++) {
+		file << (*it).getName() << ";" << (*it).getType() << ";" << (*it).getNumber() << std::endl;
+	}
+	// close file
+	file.close();
 }
 
 }

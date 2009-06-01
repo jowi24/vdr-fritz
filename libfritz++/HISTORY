@@ -44,3 +44,8 @@
 2009-05-31:
 - Fixed naming of local phonebook. The plugin now really looks for a file called 
   localphonebook.csv.
+  
+2009-06-01:
+- Provided Interface to add entries to phone books. By default, existing implementations do not 
+  support this feature.
+- Implemented adding of entries in local phone book.  

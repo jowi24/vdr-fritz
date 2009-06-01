@@ -51,7 +51,7 @@ std::string FonbookEntry::getTypeName() {
 		return "W";
 		break;
 	default:
-		return "";
+		return " ";
 	}
 }
 
@@ -61,6 +61,7 @@ Fonbook::Fonbook()
 	techId      = "BASE";
 	displayable = false;
 	initialized = false;
+	writeable   = false;
 }
 
 FonbookEntry &Fonbook::ResolveToName(FonbookEntry &fe) {
