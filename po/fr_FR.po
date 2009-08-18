@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-11 21:58+0200\n"
+"POT-Creation-Date: 2009-08-18 22:09+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Patrice Staudt\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -23,12 +23,12 @@ msgstr ""
 msgid "Fritz!Box"
 msgstr "Url de la Fritz!Box"
 
-#: fritzbox.c:157
+#: fritzbox.c:139
 #, fuzzy
 msgid "missed call"
 msgstr "manqué"
 
-#: fritzbox.c:157
+#: fritzbox.c:139
 #, fuzzy
 msgid "missed calls"
 msgstr "manqué"
@@ -336,12 +336,12 @@ msgstr "Moins"
 msgid "More"
 msgstr "Plus"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Liste d'appelle de la Fritz!Box"
+#~ msgid "Please wait..."
+#~ msgstr "Attendez SVP..."
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Appel d'une extension inconnue"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendez SVP..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Liste d'appelle de la Fritz!Box"
