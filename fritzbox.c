@@ -33,6 +33,7 @@ static const char *DESCRIPTION    = trNOOP("Fritz Plugin for AVM Fritz!Box");
 static const char *MAINMENUENTRY  = trNOOP("Fritz!Box");
 
 cPluginFritzbox::cPluginFritzbox(void)
+: cThread("Fritz Plugin Initialization")
 {
 	// Initialize any member variables here.
 	// DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
@@ -77,27 +78,8 @@ bool cPluginFritzbox::Initialize(void)
 
 bool cPluginFritzbox::Start(void)
 {
-	// first enable loggin to syslog
-	dlog = new cLogStream(cLogBuf::DEBUG);
-	elog = new cLogStream(cLogBuf::ERROR);
-	ilog = new cLogStream(cLogBuf::INFO);
-	// use logging objects with libfritz++
-	fritz::Config::SetupLogging(dlog, ilog, elog);
-
-	// init libfritz++
-	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
-			             &fritzboxConfig.locationSettingsDetected,
-			             &fritzboxConfig.countryCode, &fritzboxConfig.regionCode);
-	fritz::Config::SetupConfigDir(fritzboxConfig.configDir);
-	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
-	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
-	fritz::CallList::CreateCallList();
-
-	// Create FritzListener only if needed
-	event = new cFritzEventHandler();
-	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
-		fritz::Listener::CreateListener(event);
-	}
+	// start new thread for plugin initialization (may take some time)
+	cThread::Start();
 	return true;
 }
 
@@ -200,6 +182,30 @@ cString cPluginFritzbox::SVDRPCommand(const char *Command, const char *Option, i
 {
 	// Process SVDRP commands this plugin implements
 	return NULL;
+}
+
+void cPluginFritzbox::Action() {
+	// first enable loggin to syslog
+	dlog = new cLogStream(cLogBuf::DEBUG);
+	elog = new cLogStream(cLogBuf::ERROR);
+	ilog = new cLogStream(cLogBuf::INFO);
+	// use logging objects with libfritz++
+	fritz::Config::SetupLogging(dlog, ilog, elog);
+
+	// init libfritz++
+	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
+			&fritzboxConfig.locationSettingsDetected,
+			&fritzboxConfig.countryCode, &fritzboxConfig.regionCode);
+	fritz::Config::SetupConfigDir(fritzboxConfig.configDir);
+	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
+	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
+	fritz::CallList::CreateCallList();
+
+	// Create FritzListener only if needed
+	event = new cFritzEventHandler();
+	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
+		fritz::Listener::CreateListener(event);
+	}
 }
 
 VDRPLUGINCREATOR(cPluginFritzbox); // Don't touch this!

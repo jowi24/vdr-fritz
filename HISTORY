@@ -422,6 +422,8 @@ VDR Plugin 'fritzbox' Revision History
 - Now saving status of last known missed calls as soon as possible to avoid data loss
   if VDR does not shutdown cleanly (suggested by Keine_Ahnung [32])
   TBF 
+- Moved plugin initialization from cPluginFritzbox::Start() into a separated thread
+  to speed up VDR startup when expecting slow network links
   
 --- References ---
 

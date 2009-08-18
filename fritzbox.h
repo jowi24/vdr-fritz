@@ -31,7 +31,7 @@
 #include "setup.h"
 #include "log.h"
 
-class cPluginFritzbox : public cPlugin {
+class cPluginFritzbox : public cPlugin, cThread {
 private:
 	cFritzEventHandler *event;
 	std::string mainMenuEntry;
@@ -57,6 +57,8 @@ public:
 	virtual bool Service(const char *Id, void *Data = NULL);
 	virtual const char **SVDRPHelpPages(void);
 	virtual cString SVDRPCommand(const char *Command, const char *Option, int &ReplyCode);
+	// from cThread:
+	virtual void Action();
 };
 
 #endif /*FRITZBOX_H_*/
