@@ -419,6 +419,9 @@ VDR Plugin 'fritzbox' Revision History
 - Fixed missing translation of phonebooks in cMenuSetupFritzboxFonbooks
 - Fixed missing translation of phonebook entries with type TYPE_NONE 
 - First implementation to add call list entries to active phonebook.
+- Now saving status of last known missed calls as soon as possible to avoid data loss
+  if VDR does not shutdown cleanly (suggested by Keine_Ahnung [32])
+  TBF 
   
 --- References ---
 
@@ -460,3 +463,4 @@ VDR Plugin 'fritzbox' Revision History
      http://vdr-portal.de/board/profile.php?userid=8029
 [30] http://www.vdr-portal.de/board/profile.php?userid=6793
 [31] http://vdr-portal.de/board/profile.php?userid=15996
+[32] http://vdr-portal.de/board/profile.php?userid=18589

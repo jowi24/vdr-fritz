@@ -23,8 +23,7 @@
 #define MENU_H_
 
 #include <vdr/osdbase.h>
-//#include <CallList.h>
-//#include <FritzFonbook.h>
+#include "fritzbox.h"
 
 class cMenuFritzbox : public cOsdMenu
 {
@@ -37,8 +36,9 @@ public:
 	};
 private:
     mode currentMode;
+    cPluginFritzbox *plugin;
 public:
-	cMenuFritzbox();
+	cMenuFritzbox(cPluginFritzbox *plugin);
 	virtual ~cMenuFritzbox();
 	virtual eOSState ProcessKey (eKeys Key);
 	void DisplayFonbuch();
