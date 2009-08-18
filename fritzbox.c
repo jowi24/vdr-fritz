@@ -106,7 +106,6 @@ void cPluginFritzbox::Stop(void)
 {
 	// Store implicit setup parameters not visible / auto-detected in setup menu
 	SetupStore("ActiveFonbook",       fritzboxConfig.activeFonbookID.c_str());
-	SetupStore("LastKnownMissedCall", fritzboxConfig.lastKnownMissedCall);
 	SetupStore("CountryCode",         fritzboxConfig.countryCode.c_str());
 	SetupStore("RegionCode",          fritzboxConfig.regionCode.c_str());
 	// Stop any background activities the plugin shall perform.
@@ -170,7 +169,7 @@ cOsdObject *cPluginFritzbox::MainMenuAction(void)
 	}
 	else
 		// called by the user
-		return new cMenuFritzbox();
+		return new cMenuFritzbox(this);
 }
 
 cMenuSetupPage *cPluginFritzbox::SetupMenu(void)

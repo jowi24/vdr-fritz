@@ -45,9 +45,10 @@ trNOOP("nummerzoeker.com");
 trNOOP("das-oertliche.de");
 #endif
 
-cMenuFritzbox::cMenuFritzbox()
+cMenuFritzbox::cMenuFritzbox(cPluginFritzbox *plugin)
 :cOsdMenu("Fritz!Box", 1) // just dummy values
 {
+	this->plugin = plugin;
 	DisplayFonbuch();
 }
 
@@ -165,6 +166,8 @@ void cMenuFritzbox::DisplayCalls(fritz::CallEntry::callType ct) {
 	case fritz::CallEntry::MISSED:
 		title += tr("missed");
 		fritzboxConfig.lastKnownMissedCall = callList->LastMissedCall();
+		// try to save this change as soon as possible, that it is not lost if VDR crashes later on
+		plugin->SetupStore("LastKnownMissedCall", fritzboxConfig.lastKnownMissedCall);
 		break;
 	case fritz::CallEntry::OUTGOING:
 		title += tr("outgoing");
