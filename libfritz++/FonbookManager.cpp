@@ -107,7 +107,7 @@ FonbookManager* FonbookManager::GetFonbookManager() {
 }
 
 void FonbookManager::DeleteFonbookManager() {
-	if (me){
+	if (me) {
 		*dsyslog << __FILE__ << ": deleting Fonbook Manager" << std::endl;
 		delete me;
 		me = NULL;

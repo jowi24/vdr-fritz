@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-19 21:32+0200\n"
+"POT-Creation-Date: 2009-08-19 22:23+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Patrice Staudt\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -32,6 +32,11 @@ msgstr "manqué"
 #, fuzzy
 msgid "missed calls"
 msgstr "manqué"
+
+#: fritzbox.c:155 menu.c:125
+#, fuzzy
+msgid "This phonebook is not yet available."
+msgstr "Carnet d'adresse n'est pas encore disponible"
 
 #: fritzeventhandler.c:53
 #, fuzzy, c-format
@@ -99,11 +104,6 @@ msgstr ""
 #: menu.c:107
 msgid "Error fetching the call list"
 msgstr "Erreur de chargement de la liste d'appel"
-
-#: menu.c:125
-#, fuzzy
-msgid "This phonebook is not yet available."
-msgstr "Carnet d'adresse n'est pas encore disponible"
 
 #: menu.c:126
 msgid "You may need to wait some minutes,"
@@ -336,12 +336,12 @@ msgstr "Moins"
 msgid "More"
 msgstr "Plus"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Liste d'appelle de la Fritz!Box"
+#~ msgid "Please wait..."
+#~ msgstr "Attendez SVP..."
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Appel d'une extension inconnue"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendez SVP..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Liste d'appelle de la Fritz!Box"

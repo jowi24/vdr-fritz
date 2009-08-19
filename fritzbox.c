@@ -151,7 +151,12 @@ cOsdObject *cPluginFritzbox::MainMenuAction(void)
 	}
 	else
 		// called by the user
-		return new cMenuFritzbox(this);
+		if (this->Running()) {
+			Skins.Message(mtError, tr("This phonebook is not yet available."));
+			return NULL;
+		}
+		else
+			return new cMenuFritzbox(this);
 }
 
 cMenuSetupPage *cPluginFritzbox::SetupMenu(void)

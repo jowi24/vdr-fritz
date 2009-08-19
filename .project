@@ -3,6 +3,7 @@
 	<name>vdr-fritzbox</name>
 	<comment></comment>
 	<projects>
+		<project>vdr-core-majo</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
