@@ -165,9 +165,12 @@ void cMenuFritzbox::DisplayCalls(fritz::CallEntry::callType ct) {
 		break;
 	case fritz::CallEntry::MISSED:
 		title += tr("missed");
-		fritzboxConfig.lastKnownMissedCall = callList->LastMissedCall();
-		// try to save this change as soon as possible, that it is not lost if VDR crashes later on
-		plugin->SetupStore("LastKnownMissedCall", fritzboxConfig.lastKnownMissedCall);
+		if (fritzboxConfig.lastKnownMissedCall != callList->LastMissedCall()) {
+			fritzboxConfig.lastKnownMissedCall = callList->LastMissedCall();
+			// save this change as soon as possible, that it is not lost if VDR crashes later on
+			plugin->SetupStore("LastKnownMissedCall", fritzboxConfig.lastKnownMissedCall);
+			Setup.Save();
+		}
 		break;
 	case fritz::CallEntry::OUTGOING:
 		title += tr("outgoing");
