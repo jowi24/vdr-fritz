@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-18 22:09+0200\n"
+"POT-Creation-Date: 2009-08-19 21:32+0200\n"
 "PO-Revision-Date: 2009-05-14 17:49+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -130,104 +130,104 @@ msgstr "in arrivo"
 msgid "missed"
 msgstr "perse"
 
-#: menu.c:173 setup.c:80
+#: menu.c:176 setup.c:80
 msgid "outgoing"
 msgstr "in uscita"
 
-#: menu.c:192 menu.c:262
+#: menu.c:195 menu.c:265
 msgid "unknown"
 msgstr "sconosciuta"
 
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:222
+#: menu.c:225
 msgid "PB"
 msgstr "RU"
 
-#: menu.c:229
+#: menu.c:232
 msgid "Call details"
 msgstr "Dettagli chiamate"
 
-#: menu.c:248
+#: menu.c:251
 msgid "Date"
 msgstr "Data"
 
-#: menu.c:249
+#: menu.c:252
 msgid "Time"
 msgstr "Ora"
 
-#: menu.c:250
+#: menu.c:253
 msgid "Duration"
 msgstr "Durata"
 
-#: menu.c:251
+#: menu.c:254
 msgid "call was not accepted"
 msgstr "chiamata non accettata"
 
-#: menu.c:253 setup.c:103
+#: menu.c:256 setup.c:103
 msgid "Extension"
 msgstr "Estensione MSN"
 
-#: menu.c:258
+#: menu.c:261
 msgid "Callee"
 msgstr "Chiamato"
 
-#: menu.c:259
+#: menu.c:262
 msgid "Caller"
 msgstr "Chiamante"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:265 menu.c:360
+#: menu.c:268 menu.c:363
 msgid "Button$Call"
 msgstr "Chiama"
 
-#: menu.c:265
+#: menu.c:268
 #, fuzzy
 msgid "Button$To PB"
 msgstr "Chiama"
 
-#: menu.c:287 menu.c:371
+#: menu.c:290 menu.c:374
 msgid "No number to call"
 msgstr "Nessun numero da chiamare"
 
-#: menu.c:290 menu.c:374
+#: menu.c:293 menu.c:377
 msgid "Pick up your phone now"
 msgstr "Prendi ora la telefonata"
 
-#: menu.c:292 menu.c:376
+#: menu.c:295 menu.c:379
 msgid "Error while initiating call"
 msgstr "Errore avvio chiamata"
 
-#: menu.c:299
+#: menu.c:302
 #, fuzzy
 msgid "No number to add"
 msgstr "Nessun numero da chiamare"
 
-#: menu.c:320
+#: menu.c:323
 msgid "Phone book details"
 msgstr "Dettagli rubrica"
 
-#: menu.c:333 menu.c:339
+#: menu.c:336 menu.c:342
 msgid "Name"
 msgstr "Nome"
 
-#: menu.c:334 menu.c:340
+#: menu.c:337 menu.c:343
 msgid "Numbers"
 msgstr "Numeri"
 
-#: menu.c:335
+#: menu.c:338
 msgid "Default"
 msgstr "Predefinito"
 
-#: menu.c:341
+#: menu.c:344
 msgid "Private"
 msgstr "Privato"
 
-#: menu.c:342
+#: menu.c:345
 msgid "Mobile"
 msgstr "Cellulare"
 
-#: menu.c:343
+#: menu.c:346
 msgid "Business"
 msgstr "Affari"
 
@@ -323,12 +323,12 @@ msgstr "Elimina"
 msgid "More"
 msgstr "Aggiungi"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Elenco chiamate Fritz!Box"
+#~ msgid "Please wait..."
+#~ msgstr "Attendere prego..."
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Chiamata da estensione sconosciuta"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendere prego..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Elenco chiamate Fritz!Box"

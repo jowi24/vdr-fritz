@@ -134,8 +134,8 @@ const char *cPluginFritzbox::MainMenuEntry(void)
 {
 	std::ostringstream ssMainMenuEntry;
 	ssMainMenuEntry << tr(MAINMENUENTRY);
-	fritz::CallList *callList = fritz::CallList::getCallList();
-	if (callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) > 0) {
+	fritz::CallList *callList = fritz::CallList::getCallList(false);
+	if (callList && callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) > 0) {
 		std::string buffer = (callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) > 1) ? tr("missed calls") : tr("missed call");
 		ssMainMenuEntry << " (" << callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) << " " << buffer << ")";
 	}

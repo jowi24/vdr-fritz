@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru_RU-UTF8\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-18 22:09+0200\n"
+"POT-Creation-Date: 2009-08-19 21:32+0200\n"
 "PO-Revision-Date: 2008-09-09 01:48+0200\n"
 "Last-Translator: Alexander Gross\n"
 "Language-Team: russian\n"
@@ -130,104 +130,104 @@ msgstr "входящие"
 msgid "missed"
 msgstr "пропущенные"
 
-#: menu.c:173 setup.c:80
+#: menu.c:176 setup.c:80
 msgid "outgoing"
 msgstr "выходящие"
 
-#: menu.c:192 menu.c:262
+#: menu.c:195 menu.c:265
 msgid "unknown"
 msgstr "неизвестный"
 
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:222
+#: menu.c:225
 msgid "PB"
 msgstr "PB"
 
-#: menu.c:229
+#: menu.c:232
 msgid "Call details"
 msgstr "Подробности звонка"
 
-#: menu.c:248
+#: menu.c:251
 msgid "Date"
 msgstr "Дата"
 
-#: menu.c:249
+#: menu.c:252
 msgid "Time"
 msgstr "Время"
 
-#: menu.c:250
+#: menu.c:253
 msgid "Duration"
 msgstr "Продолжительность"
 
-#: menu.c:251
+#: menu.c:254
 msgid "call was not accepted"
 msgstr "непринятый звонок"
 
-#: menu.c:253 setup.c:103
+#: menu.c:256 setup.c:103
 msgid "Extension"
 msgstr "MSN"
 
-#: menu.c:258
+#: menu.c:261
 msgid "Callee"
 msgstr "Цель"
 
-#: menu.c:259
+#: menu.c:262
 msgid "Caller"
 msgstr "Вам звонит  "
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:265 menu.c:360
+#: menu.c:268 menu.c:363
 msgid "Button$Call"
 msgstr "Позвонить"
 
-#: menu.c:265
+#: menu.c:268
 #, fuzzy
 msgid "Button$To PB"
 msgstr "Позвонить"
 
-#: menu.c:287 menu.c:371
+#: menu.c:290 menu.c:374
 msgid "No number to call"
 msgstr "Без номера звонок не возможен"
 
-#: menu.c:290 menu.c:374
+#: menu.c:293 menu.c:377
 msgid "Pick up your phone now"
 msgstr "Снять телефон сейчас"
 
-#: menu.c:292 menu.c:376
+#: menu.c:295 menu.c:379
 msgid "Error while initiating call"
 msgstr "Ошибка при соединении"
 
-#: menu.c:299
+#: menu.c:302
 #, fuzzy
 msgid "No number to add"
 msgstr "Без номера звонок не возможен"
 
-#: menu.c:320
+#: menu.c:323
 msgid "Phone book details"
 msgstr "Подробности справочника"
 
-#: menu.c:333 menu.c:339
+#: menu.c:336 menu.c:342
 msgid "Name"
 msgstr "Имя"
 
-#: menu.c:334 menu.c:340
+#: menu.c:337 menu.c:343
 msgid "Numbers"
 msgstr "Номера"
 
-#: menu.c:335
+#: menu.c:338
 msgid "Default"
 msgstr "По умолчанию"
 
-#: menu.c:341
+#: menu.c:344
 msgid "Private"
 msgstr "Частный"
 
-#: menu.c:342
+#: menu.c:345
 msgid "Mobile"
 msgstr "Мобильный"
 
-#: menu.c:343
+#: menu.c:346
 msgid "Business"
 msgstr "Рабочий"
 
