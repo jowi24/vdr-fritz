@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-19 21:32+0200\n"
+"POT-Creation-Date: 2009-08-19 22:23+0200\n"
 "PO-Revision-Date: 2009-05-14 17:49+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -32,6 +32,10 @@ msgstr "chiamata persa"
 #: fritzbox.c:139
 msgid "missed calls"
 msgstr "chiamate perse"
+
+#: fritzbox.c:155 menu.c:125
+msgid "This phonebook is not yet available."
+msgstr "Questa rubrica non è ancora disponibile."
 
 #: fritzeventhandler.c:53
 #, c-format
@@ -97,10 +101,6 @@ msgstr "das-oertliche.de"
 #: menu.c:107
 msgid "Error fetching the call list"
 msgstr "Errore recupero elenco chiamate"
-
-#: menu.c:125
-msgid "This phonebook is not yet available."
-msgstr "Questa rubrica non è ancora disponibile."
 
 #: menu.c:126
 msgid "You may need to wait some minutes,"
@@ -323,12 +323,12 @@ msgstr "Elimina"
 msgid "More"
 msgstr "Aggiungi"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendere prego..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Elenco chiamate Fritz!Box"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Chiamata da estensione sconosciuta"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Elenco chiamate Fritz!Box"
+#~ msgid "Please wait..."
+#~ msgstr "Attendere prego..."

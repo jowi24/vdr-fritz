@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru_RU-UTF8\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-19 21:32+0200\n"
+"POT-Creation-Date: 2009-08-19 22:23+0200\n"
 "PO-Revision-Date: 2008-09-09 01:48+0200\n"
 "Last-Translator: Alexander Gross\n"
 "Language-Team: russian\n"
@@ -32,6 +32,10 @@ msgstr "пропущенный звонок"
 #: fritzbox.c:139
 msgid "missed calls"
 msgstr "пропущенные звонки"
+
+#: fritzbox.c:155 menu.c:125
+msgid "This phonebook is not yet available."
+msgstr "Телефонный справочник пока не доступен."
 
 #: fritzeventhandler.c:53
 #, c-format
@@ -97,10 +101,6 @@ msgstr ""
 #: menu.c:107
 msgid "Error fetching the call list"
 msgstr "Ошибка при запросе списка звонков"
-
-#: menu.c:125
-msgid "This phonebook is not yet available."
-msgstr "Телефонный справочник пока не доступен."
 
 #: menu.c:126
 msgid "You may need to wait some minutes,"
