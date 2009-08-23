@@ -181,7 +181,9 @@ void FritzFonbook::Action() {
 				<<	"/menus/menu2.html"
 				<<	"&var:lang="
 				<<  Tools::GetLang()
-				<<  "&var:pagename=fonbuch&var:menu=fon HTTP/1.1\n\n\0";
+				<<  "&var:pagename=fonbuch&var:menu=fon"
+				<< (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+				<< "HTTP/1.1\n\n\0";
 			tc >> msg;
 
 			size_t pos, p1, p2;

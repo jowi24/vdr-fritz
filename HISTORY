@@ -423,6 +423,11 @@ VDR Plugin 'fritzbox' Revision History
   if VDR does not shutdown cleanly (suggested by Keine_Ahnung [32])
 - Moved plugin initialization from cPluginFritzbox::Start() into a separated thread
   to speed up VDR startup when expecting slow network links
+- changes in libfritz++
+  * Implemented new login method for Fritz!Box firmware >= xx.04.74 using SIDs. This needs 
+    features from openssl library. For compiling, libssl-dev (or similar) is needed.
+- Adapting Makefile to support new features of libfritz++: 
+  Libssl is now needed to compile and/or run the plugin.
   
 --- References ---
 

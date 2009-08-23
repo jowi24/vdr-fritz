@@ -78,7 +78,9 @@ void CallList::Action() {
 			<<  Tools::GetLang()
 			<< "/menus/menu2.html&var:lang="
 			<<  Tools::GetLang()
-			<< "&var:pagename=foncalls&var:menu=fon HTTP/1.1\n\n\0";
+			<< "&var:pagename=foncalls&var:menu=fon"
+			<< (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+			<< "HTTP/1.1\n\n\0";
 			tc2 >> msg;
 			// get the URL of the CSV-File-Export
 			unsigned int urlPos   = msg.find(".csv");
@@ -90,6 +92,7 @@ void CallList::Action() {
 			tcpclient::HttpClient tc(gConfig->getUrl(), PORT_WWW);
 			tc << "GET /cgi-bin/webcm?getpage="
 			<<  csvUrl
+			<< (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
 			<< " HTTP/1.1\n\n\0";
 			tc >> msg;
 			// convert answer to current SystemCodeSet (we assume, Fritz!Box sends its answer in latin15)
