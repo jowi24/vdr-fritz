@@ -49,3 +49,7 @@
 - Provided Interface to add entries to phone books. By default, existing implementations do not 
   support this feature.
 - Implemented adding of entries in local phone book.  
+
+2009-08-23
+- Implemented new login method for Fritz!Box firmware >= xx.04.74 using SIDs. This needs 
+  features from openssl library. For compiling, libssl-dev (or similar) is needed.

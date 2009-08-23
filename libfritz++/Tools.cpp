@@ -19,6 +19,7 @@
  *
  */
 
+#include <openssl/md5.h>
 #include <string.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -247,8 +248,10 @@ std::string Tools::GetLang() {
 			for (unsigned int p=0; p<langs.size(); p++) {
 				std::string sMsg;
 				tc << "GET /cgi-bin/webcm?getpage=../html/"
-				<< langs[p]
-				         << "/menus/menu2.html HTTP/1.1\n\n";
+				   << langs[p]
+				   << "/menus/menu2.html"
+				   << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+				   << " HTTP/1.1\n\n";
 				tc >> sMsg;
 				if (sMsg.find("<html>") != std::string::npos) {
 					gConfig->setLang(langs[p]);
@@ -266,34 +269,145 @@ std::string Tools::GetLang() {
 }
 
 void Tools::Login() {
-	// no password, no login
-	if ( gConfig->getPassword().length() == 0)
-		return;
+	*dsyslog << __FILE__ << ": logging in to fritz.box." << std::endl;
 
-	std::string sMsg;
-
-	*dsyslog << __FILE__ << ": sending login request to fritz.box." << std::endl;
+	// detect if this Fritz!Box uses SIDs
+	*dsyslog << __FILE__ << ": requesting login_sid.xml from fritz.box." << std::endl;
+	std::string sXml;
 	try {
 		tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
-		tc   <<		"POST /cgi-bin/webcm HTTP/1.1\n"
-		<<  	"Content-Type: application/x-www-form-urlencoded\n"
-		<<  	"Content-Length: "
-		<<  	23 + UrlEncode(gConfig->getPassword()).size()
-		<<  	"\n\nlogin:command/password="
-		<<  	UrlEncode(gConfig->getPassword()) // append a newline here?
-		<<      "\n";
-		tc >> sMsg;
+		tc << "GET /cgi-bin/webcm?getpage=../html/login_sid.xml HTTP/1.1\n\n";
+		tc >> sXml;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
 		return;
 	}
+	if (sXml.find("<iswriteaccess>") != std::string::npos) { // login using SID
+		*dsyslog << __FILE__ << ": using new login scheme with SIDs" << std::endl;
+		// logout, drop old SID
+		*dsyslog << __FILE__ << ": dropping old SID" << std::endl;
+		try {
+			std::string sDummy;
+			tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
+			tc << "POST /cgi-bin/webcm HTTP/1.1\n"
+			   << "Content-Type: application/x-www-form-urlencoded\n"
+			   << "Content-Length: "<< 32 + gConfig->getSid().length() << "\n\n"
+			   << "sid="
+			   << gConfig->getSid()
+			   << "&security:command/logout=abc\n";
+			tc >> sDummy;
+		} catch (tcpclient::TcpException te) {
+			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
+			return;
+		}
+		// check if no password is needed (SID is directly available)
+		size_t pwdFlag = sXml.find("<iswriteaccess>");
+		if (pwdFlag == std::string::npos) {
+			*esyslog << __FILE__ << ": Error - Expected <iswriteacess> not found in login_sid.xml." << std::endl;
+			return;
+		}
+		pwdFlag += 15;
+		if (sXml[pwdFlag] == '1') {
+			// extract SID
+			size_t sidStart = sXml.find("<SID>");
+			if (sidStart == std::string::npos) {
+				*esyslog << __FILE__ << ": Error - Expected <SID> not found in login_sid.xml." << std::endl;
+				return;
+			}
+			sidStart += 5;
+			// save SID
+			gConfig->setSid(sXml.substr(sidStart, 16));
+		} else {
+			// generate response out of challenge and password
+			size_t challengeStart = sXml.find("<Challenge>");
+			if (challengeStart == std::string::npos) {
+				*esyslog << __FILE__ << ": Error - Expected <Challenge> not found in login_sid.xml." << std::endl;
+				return;
+			}
+			challengeStart += 11;
+			size_t challengeStop = sXml.find("<", challengeStart);
+            std::string challenge = sXml.substr(challengeStart, challengeStop - challengeStart);
+			std::string challengePwd = challenge + '-' + gConfig->getPassword();
+			// the box needs an md5 sum of the string "challenge-password"
+			// to make things worse, it needs this in UTF-16LE character set
+			// last but not least, for "compatibility" reasons (*LOL*) we have to replace
+			// every char > "0xFF 0x00" with "0x2e 0x00"
+			CharSetConv conv(NULL, "UTF-16LE");
+			const char *challengePwdConverted = conv.Convert(challengePwd.c_str());
+			for (size_t pos=1; pos < challengePwd.length()*2; pos+= 2)
+				if (challengePwd[pos] != 0x00) {
+					challengePwd[pos] = 0x00;
+					challengePwd[pos-1] = 0x2e;
+				}
+			unsigned char hash[16];
+			MD5((unsigned char*)challengePwdConverted, challengePwd.length()*2, hash);
+			std::stringstream response;
+			response << challenge << '-';
+			for (size_t pos=0; pos < 16; pos++) {
+				char *tmp;
+				asprintf(&tmp, "%02x", hash[pos]);
+				response << tmp;
+				free(tmp);
+			}
+			// send response to box
+			std::string sMsg;
+			try {
+				tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
+				tc << "POST /cgi-bin/webcm HTTP/1.1\n"
+				   << "Content-Type: application/x-www-form-urlencoded\n"
+				   << "Content-Length: "
+				   << response.str().size() + 59
+				   << "\n\n"
+				   << "login:command/response="
+				   << response.str()
+				   << "&getpage=../html/de/menus/menu2.html\n";
+				tc >> sMsg;
+			} catch (tcpclient::TcpException te) {
+				*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
+				return;
+			}
+			// get SID out of sMsg
+			size_t sidStart = sMsg.find("name=\"sid\"");
+			if (sidStart == std::string::npos) {
+				*esyslog << __FILE__ << ": Error - Expected sid field not found." << std::endl;
+				return;
+			}
+			sidStart = sMsg.find("value=\"", sidStart + 10) + 7;
+			size_t sidStop = sMsg.find("\"", sidStart);
+			// save SID
+			gConfig->setSid(sMsg.substr(sidStart, sidStop-sidStart));
+			*dsyslog << __FILE__ << ": login successful." << std::endl;
+		}
+	} else { // login without SID
+		*dsyslog << __FILE__ << ": using old login scheme without SIDs" << std::endl;
+		// no password, no login
+		if ( gConfig->getPassword().length() == 0)
+			return;
 
-	// determine if login was successful
-	if (sMsg.find("class=\"errorMessage\"") != std::string::npos) {
-		*esyslog << __FILE__ << ": login failed, check your password settings." << std::endl;
-		throw ToolsException(ToolsException::ERR_LOGIN_FAILED);
+		std::string sMsg;
+
+		try {
+			tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
+			tc   <<	"POST /cgi-bin/webcm HTTP/1.1\n"
+			<<  	"Content-Type: application/x-www-form-urlencoded\n"
+			<<  	"Content-Length: "
+			<<  	23 + UrlEncode(gConfig->getPassword()).size()
+			<<  	"\n\nlogin:command/password="
+			<<  	UrlEncode(gConfig->getPassword()) // append a newline here?
+			<<      "\n";
+			tc >> sMsg;
+		} catch (tcpclient::TcpException te) {
+			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
+			return;
+		}
+
+		// determine if login was successful
+		if (sMsg.find("class=\"errorMessage\"") != std::string::npos) {
+			*esyslog << __FILE__ << ": login failed, check your password settings." << std::endl;
+			throw ToolsException(ToolsException::ERR_LOGIN_FAILED);
+		}
+		*dsyslog << __FILE__ << ": login successful." << std::endl;
 	}
-	*dsyslog << __FILE__ << ": login successful." << std::endl;
 }
 
 std::string Tools::UrlEncode(std::string &s_input) {
@@ -326,12 +440,13 @@ bool Tools::InitCall(std::string &number) {
 		tc  <<	"POST /cgi-bin/webcm HTTP/1.1\n"
 		<<	"Content-Type: application/x-www-form-urlencoded\n"
 		<<	"Content-Length: "
-		<<	95 + number.length() + Tools::GetLang().length()
+		<<	95 + number.length() + Tools::GetLang().length() + (gConfig->getSid().size() ? gConfig->getSid().size() + 5 : 0)
 		<<	"\n\n"
 		<<	"getpage=../html/"
 		<<  Tools::GetLang()
 		<< "/menus/menu2.html&var%3Apagename=fonbuch&var%3Amenu=home&telcfg%3Acommand/Dial="
 		<<	number
+  	    << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
 		<<	"\n";
 		tc >> msg;
 		*isyslog << __FILE__ << ": call initiated." << std::endl;
@@ -383,7 +498,9 @@ void Tools::GetLocationSettings() {
 		<<  Tools::GetLang()
 		<< "/menus/menu2.html&var%3Alang="
 		<<  Tools::GetLang()
-		<< "&var%3Apagename=sipoptionen&var%3Amenu=fon HTTP/1.1\n\n";
+		<< "&var%3Apagename=sipoptionen&var%3Amenu=fon"
+  	    << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+        << " HTTP/1.1\n\n";
 		hc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;
@@ -436,7 +553,9 @@ void Tools::GetSipSettings(){
 		<<  Tools::GetLang()
 		<< "/menus/menu2.html&var%3Alang="
 		<<  Tools::GetLang()
-		<< "&var%3Apagename=siplist&var%3Amenu=fon HTTP/1.1\n\n";
+		<< "&var%3Apagename=siplist&var%3Amenu=fon"
+		<< (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+		<< "HTTP/1.1\n\n";
 		hc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;

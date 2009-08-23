@@ -95,7 +95,7 @@ public:
      ///< If ToCode is NULL, "UTF-8" is used.
   ~CharSetConv();
   const char *Convert(const char *From, char *To = NULL, size_t ToLength = 0);
-     ///< Converts the given Text from FromCode to ToCode (as set in the cosntructor).
+     ///< Converts the given Text from FromCode to ToCode (as set in the constructor).
      ///< If To is given, it is used to copy at most ToLength bytes of the result
      ///< (including the terminating 0) into that buffer. If To is not given,
      ///< the result is copied into a dynamically allocated buffer and is valid as

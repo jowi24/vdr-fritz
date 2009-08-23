@@ -47,6 +47,7 @@ private:
 		std::string lang;                   			// webinterface language
 		std::string url;                    			// fritz!box url
 		std::string password;               			// fritz!box web interface password
+		std::string sid;                                // SID to access boxes with firmware >= xx.04.74
 		std::string countryCode;            			// fritz!box country-code
 		std::string regionCode;             			// fritz!box region-code
 		std::vector <std::string> sipNames;				// the SIP provider names
@@ -99,6 +100,8 @@ public:
 	void setLang( std::string l )                     { mConfig.lang = l; }
 	std::string &getUrl( )                            { return mConfig.url; }
 	std::string &getPassword( )                       { return mConfig.password; }
+	std::string &getSid( )                            { return mConfig.sid; }
+	void setSid(std::string sid)                      { mConfig.sid = sid; }
 	std::string &getCountryCode( )        	          { return mConfig.countryCode; }
 	void setCountryCode( std::string cc )             { mConfig.countryCode = cc; }
 	std::string &getRegionCode( )                     { return mConfig.regionCode; }
