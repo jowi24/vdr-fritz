@@ -271,22 +271,23 @@ std::string Tools::GetLang() {
 }
 
 std::string Tools::CalculateLoginResponse(std::string challenge) {
-	std::string challengePwd = challenge + '-' + gConfig->getPassword();
+	challenge += '-' + gConfig->getPassword();
 	// the box needs an md5 sum of the string "challenge-password"
 	// to make things worse, it needs this in UTF-16LE character set
 	// last but not least, for "compatibility" reasons (*LOL*) we have to replace
 	// every char > "0xFF 0x00" with "0x2e 0x00"
 	CharSetConv conv(NULL, "UTF-16LE");
 
-	const char *challengePwdConverted = conv.Convert(challengePwd.c_str());
-	for (size_t pos=1; pos < challengePwd.length()*2; pos+= 2)
-		if (challengePwd[pos] != 0x00) {
-			challengePwd[pos] = 0x00;
-			challengePwd[pos-1] = 0x2e;
+	char challengeConverted[challenge.length()*2];
+	conv.Convert(challenge.c_str(), challengeConverted, challenge.length()*2);
+	for (size_t pos=1; pos < challenge.length()*2; pos+= 2)
+		if (challengeConverted[pos] != 0x00) {
+			challengeConverted[pos] = 0x00;
+			challengeConverted[pos-1] = 0x2e;
 		}
 
 	unsigned char hash[16];
-	MD5((unsigned char*)challengePwdConverted, challengePwd.length()*2, hash);
+	MD5((unsigned char*)challengeConverted, challenge.length()*2, hash);
 
 	std::stringstream response;
 	response << challenge << '-';
