@@ -146,6 +146,7 @@ public:
 	static pthread::Mutex* GetFritzBoxMutex() {return mutex;}
 	static std::string Tokenize(const std::string &buffer, const char delimiter, size_t pos);
 private:
+    static std::string CalculateLoginResponse(std::string challenge);
 	static std::string UrlEncode(std::string &s);
 	static pthread::Mutex* mutex;
 };

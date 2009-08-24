@@ -25,6 +25,8 @@
 #include <locale.h>
 #include <langinfo.h>
 #include <sstream>
+#include <iostream>
+#include <iomanip>
 #include <TcpClient++.h>
 #include <errno.h>
 #include "Tools.h"
@@ -268,6 +270,31 @@ std::string Tools::GetLang() {
 	return gConfig->getLang();
 }
 
+std::string Tools::CalculateLoginResponse(std::string challenge) {
+	std::string challengePwd = challenge + '-' + gConfig->getPassword();
+	// the box needs an md5 sum of the string "challenge-password"
+	// to make things worse, it needs this in UTF-16LE character set
+	// last but not least, for "compatibility" reasons (*LOL*) we have to replace
+	// every char > "0xFF 0x00" with "0x2e 0x00"
+	CharSetConv conv(NULL, "UTF-16LE");
+
+	const char *challengePwdConverted = conv.Convert(challengePwd.c_str());
+	for (size_t pos=1; pos < challengePwd.length()*2; pos+= 2)
+		if (challengePwd[pos] != 0x00) {
+			challengePwd[pos] = 0x00;
+			challengePwd[pos-1] = 0x2e;
+		}
+
+	unsigned char hash[16];
+	MD5((unsigned char*)challengePwdConverted, challengePwd.length()*2, hash);
+
+	std::stringstream response;
+	response << challenge << '-';
+	for (size_t pos=0; pos < 16; pos++)
+		response << std::hex << std::setfill('0') << std::setw(2) << hash[pos];
+	return response.str();
+}
+
 void Tools::Login() {
 	*dsyslog << __FILE__ << ": logging in to fritz.box." << std::endl;
 
@@ -327,39 +354,18 @@ void Tools::Login() {
 			challengeStart += 11;
 			size_t challengeStop = sXml.find("<", challengeStart);
             std::string challenge = sXml.substr(challengeStart, challengeStop - challengeStart);
-			std::string challengePwd = challenge + '-' + gConfig->getPassword();
-			// the box needs an md5 sum of the string "challenge-password"
-			// to make things worse, it needs this in UTF-16LE character set
-			// last but not least, for "compatibility" reasons (*LOL*) we have to replace
-			// every char > "0xFF 0x00" with "0x2e 0x00"
-			CharSetConv conv(NULL, "UTF-16LE");
-			const char *challengePwdConverted = conv.Convert(challengePwd.c_str());
-			for (size_t pos=1; pos < challengePwd.length()*2; pos+= 2)
-				if (challengePwd[pos] != 0x00) {
-					challengePwd[pos] = 0x00;
-					challengePwd[pos-1] = 0x2e;
-				}
-			unsigned char hash[16];
-			MD5((unsigned char*)challengePwdConverted, challengePwd.length()*2, hash);
-			std::stringstream response;
-			response << challenge << '-';
-			for (size_t pos=0; pos < 16; pos++) {
-				char *tmp;
-				asprintf(&tmp, "%02x", hash[pos]);
-				response << tmp;
-				free(tmp);
-			}
-			// send response to box
+            std::string response = CalculateLoginResponse(challenge);
+            // send response to box
 			std::string sMsg;
 			try {
 				tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
 				tc << "POST /cgi-bin/webcm HTTP/1.1\n"
 				   << "Content-Type: application/x-www-form-urlencoded\n"
 				   << "Content-Length: "
-				   << response.str().size() + 59
+				   << response.size() + 59
 				   << "\n\n"
 				   << "login:command/response="
-				   << response.str()
+				   << response
 				   << "&getpage=../html/de/menus/menu2.html\n";
 				tc >> sMsg;
 			} catch (tcpclient::TcpException te) {

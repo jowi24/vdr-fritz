@@ -120,6 +120,8 @@ protected:
 	std::string Read();
 public:
 	HttpClient(std::string &hostname, int port);
+	std::string Post(std::string url, std::string postdata);
+	std::string Get(std::string url);
 };
 
 }
