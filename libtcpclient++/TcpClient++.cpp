@@ -289,3 +289,20 @@ HttpClient::HttpClient(std::string &hostname, int port)
 
 }
 
+std::string HttpClient::Post(std::string url, std::string postdata) {
+	*this << "POST " << url << " HTTP/1.1\n"
+	      << "Content-Type: application/x-www-form-urlencoded\n"
+	      << "Content-Length: " << postdata.length() << "\n\n"
+	      << postdata << "\n";
+	std::string tmp;
+	*this >> tmp;
+	return tmp;
+}
+
+std::string HttpClient::Get(std::string url) {
+	*this << "GET " << url << " HTTP/1.1\n\n";
+
+	std::string tmp;
+	*this >> tmp;
+	return tmp;
+}
