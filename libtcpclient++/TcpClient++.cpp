@@ -1,7 +1,7 @@
 /*
  * libtcpclient++
  *
- * Copyright (C) 2007-2008 Joachim Wilke <vdr@joachim-wilke.de>
+ * Copyright (C) 2007-2009 Joachim Wilke <vdr@joachim-wilke.de>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,7 +34,6 @@
 
 #include <string>
 #include <sstream>
-
 #include <fstream>
 
 #include "TcpClient++.h"
@@ -46,11 +45,11 @@ using namespace tcpclient;
 
 class TraceFile {
 private:
-	std::fstream *trace;
-	static TraceFile *traceFile;
+	std::fstream          *trace;
+	static TraceFile      *traceFile;
 	static pthread::Mutex *mutex;
-	pthread::tThreadId lastTid;
-	bool lastWasWrite;
+	pthread::tThreadId    lastTid;
+	bool                  lastWasWrite;
 	TraceFile();
 public:
 	static TraceFile &getTraceFile();
@@ -74,7 +73,7 @@ TraceFile::TraceFile() {
 		trace->open("/tmp/tcpclient.trace", std::ios_base::out | std::ios_base::app);
 	}
 	lastWasWrite = false;
-	lastTid = 0;
+	lastTid      = 0;
 }
 
 TraceFile::~TraceFile() {
@@ -107,23 +106,28 @@ void TraceFile::write(std::string hostname, unsigned int port, bool isWrite, std
 }
 
 
-// ----- TcpClient ------------------------------------------------------------
+// ----- TcpClient/TcpClientBuf -----------------------------------------------
 
-TcpClient::TcpClient(std::string &hostname, int port) {
-	connected = false;
+TcpClientBuf::TcpClientBuf(std::string hostname, int port) {
+	// init controlled output sequence to have space for BUF_SIZE characters
+	setp(outputBuffer, outputBuffer + BUF_SIZE);
+	// init controlled input sequence to have no data available
+	setg(0, 0, 0);
+
+	connected      = false;
 	this->hostname = hostname;
-	this->port = port;
-	fd = -1;
+	this->port     = port;
+	fd             = -1;
 }
 
-TcpClient::~TcpClient() {
-        if (fd >= 0) {
-	        shutdown(fd, SHUT_RDWR);
-	        close(fd);
+TcpClientBuf::~TcpClientBuf() {
+	if (fd >= 0) {
+		shutdown(fd, SHUT_RDWR);
+		close(fd);
 	}
 }
 
-void TcpClient::Connect() {
+void TcpClientBuf::Connect() {
 	if (connected) {
 		close(fd);
 		connected = false;
@@ -133,7 +137,7 @@ void TcpClient::Connect() {
 
 	struct addrinfo hints;
 	memset(&hints, 0, sizeof(hints));
-	hints.ai_family = AF_INET;
+	hints.ai_family   = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
 
@@ -147,7 +151,7 @@ void TcpClient::Connect() {
 	fd = socket(PF_INET, SOCK_STREAM, 0);
 	if (fd < 0)
 		throw TcpException(TcpException::ERR_SOCKET_CREATE);
-	((sockaddr_in*)(ainfo->ai_addr))->sin_port = htons(port);
+	((sockaddr_in*)(ainfo->ai_addr))->sin_port   = htons(port);
 	((sockaddr_in*)(ainfo->ai_addr))->sin_family = AF_INET;
 
 	res = connect(fd, ainfo->ai_addr, sizeof(struct sockaddr));
@@ -186,61 +190,57 @@ void TcpClient::Connect() {
 	connected = true;
 }
 
-void TcpClient::Disconnect() {
+void TcpClientBuf::Disconnect() {
 	if (connected) {
 		close(fd);
 		connected = false;
 	}
 }
 
+void TcpClient::Disconnect() {
+	((TcpClientBuf *)rdbuf())->Disconnect();
+}
+
 // ----- Stuff for reading from socket ----------------------------------------
 
-std::string TcpClient::Receive() {
+bool TcpClientBuf::Receive() {
+	if (!connected)
+		Connect();
 	int size = 0;
-	std::string result;
 	do {
 		struct pollfd fds[1];
 		fds[0].fd = fd;
 		fds[0].events = POLLIN | POLLPRI;
 		poll(&(fds[0]), 1, 500);
-		size = recv(fd, buffer, TCP_BUF_SIZE - 1, 0);
+		size = recv(fd, inputBuffer, BUF_SIZE, 0);
 	} while (size == -1 && errno == EAGAIN);
-	if (size == 0) 	{
-		// connection was orderly closed
+	if (size <= 0) 	{
+		// connection was closed
+		setg(0, 0, 0);
 		connected = false;
 		close(fd);
-	} else if (size == -1) {
-		// there occured an error
-		connected = false;
-		close(fd);
-		throw TcpException(TcpException::ERR_SOCKET_ERROR);
+		if (size == -1) {
+			// there occurred an error
+			throw TcpException(TcpException::ERR_SOCKET_ERROR);
+		}
+		return false;
 	}
-	buffer[size] = '\0';
-	result = buffer;
+	setg(inputBuffer, inputBuffer, inputBuffer + size);
 	// trace socket readings
-	TraceFile::getTraceFile().write(hostname, port, false, result);
-	return result;
+	TraceFile::getTraceFile().write(hostname, port, false, std::string(inputBuffer, size));
+	return true;
 }
 
-std::string TcpClient::Read() {
-	if (!connected)
-		Connect();
-	return Receive();
+
+int TcpClientBuf::underflow() {
+	if (Receive())
+		return gptr()[0];
+	return EOF;
 }
 
-TcpClient &TcpClient::operator>>(std::ostringstream &ss) {
-	ss << Read();
-	return *this;
-}
+// ----- Stuff for writing to socket -------------------------------------------
 
-TcpClient &TcpClient::operator>>(std::string &s) {
-	s += Read();
-	return *this;
-}
-
-// ----- Stuff for writing to socket ------------------------------------------
-
-void TcpClient::Write(std::string s) {
+void TcpClientBuf::Write(std::string &s) {
 	if (!connected)
 		Connect();
 	int size = send(fd, s.c_str(), s.length(), 0);
@@ -253,56 +253,111 @@ void TcpClient::Write(std::string s) {
 	TraceFile::getTraceFile().write(hostname, port, true, s);
 }
 
-TcpClient &TcpClient::operator<<(std::string s) {
-	Write(s);
+void TcpClientBuf::PutBuffer() {
+	// send only, if there is data available
+	if (pbase() != pptr()) {
+		std::string data(pbase(), pptr() - pbase());
+		Write(data);
+	}
+}
+
+int TcpClientBuf::overflow(int c) {
+	PutBuffer();
+	if (c != EOF) {
+		sputc(c);
+	}
+	return 0;
+}
+
+int TcpClientBuf::sync() {
+	PutBuffer();
+	return 0;
+}
+
+std::iostream& TcpClient::operator>> (std::string &s) {
+	// read data that is available from input
+	char buffer[BUF_SIZE];
+	peek(); // wait for at least one byte
+	std::streamsize size = 0;
+	size = readsome(buffer, BUF_SIZE);
+	s.assign(buffer, size);
 	return *this;
 }
 
-TcpClient &TcpClient::operator<<(const char c[]) {
-	Write(std::string(c));
+// ----- HttpClient/HttpClientBuf ---------------------------------------------
+
+std::iostream& HttpClient::operator>> (std::string &s) {
+	// read until EOF, return complete string
+	s.clear();
+	char buffer[BUF_SIZE];
+	while (good()) {
+		read(buffer, BUF_SIZE);
+		s.append(buffer, gcount());
+	}
 	return *this;
 }
 
-TcpClient &TcpClient::operator<<(int i) {
-	std::ostringstream sData;
-	sData << i;
-	Write(sData.str());
-	return *this;
+int HttpClientBuf::sync() {
+	switch (this->state) {
+	case GET: {
+		std::string getUrl(pbase(), pptr() - pbase());
+		SetState(PLAIN);
+		std::stringstream result;
+		result << "GET "   << getUrl   << " HTTP/1.0\n"
+		       << "Host: " << hostname << "\n\n";
+		sputn(result.str().c_str(), result.str().size());
+		PutBuffer();
+		break;
+	}
+	case POST: {
+		std::string postUrl(pbase(), pptr() - pbase());
+		SetState(PLAIN);
+		std::stringstream result;
+		result << "POST "  << postUrl  << " HTTP/1.0\n"
+		       << "Host: " << hostname << "\n"; // only one \n, more header fields to come below
+		sputn(result.str().c_str(), result.str().size());
+		PutBuffer();
+		SetState(POSTDATA);
+		break;
+	}
+	case POSTDATA: {
+		std::string postData(pbase(), pptr() - pbase());
+		SetState(PLAIN);
+		std::stringstream result;
+		result << "Content-Type: application/x-www-form-urlencoded\n"
+		       << "Content-Length: " << postData.length() << "\n\n"
+		       << postData << std::endl;
+		sputn(result.str().c_str(), result.str().size());
+		PutBuffer();
+		break;
+	}
+	case PLAIN:
+		PutBuffer();
+		break;
+	}
+	return 0;
 }
 
-// ----- HttpClient ----------------------------------------------------------
-
-std::string HttpClient::Read() {
-	std::string result;
-	unsigned int length = 0;
-	if (!connected)
-		Connect();
-	do {
-		length = result.length();
-		result += Receive();
-	} while (result.length() > length);
-	return result;
+void HttpClientBuf::SetState(eState state) {
+	this->state = state;
+	switch (state) {
+	case GET:
+	case POST:
+	case POSTDATA:
+		setp(internalBuffer, internalBuffer + BUF_SIZE);
+		break;
+	case PLAIN:
+		setp(outputBuffer, outputBuffer + BUF_SIZE);
+		break;
+	}
 }
 
-HttpClient::HttpClient(std::string &hostname, int port)
-:TcpClient(hostname, port) {
-
+std::ostream& tcpclient::get(std::ostream &os) {
+	((HttpClientBuf *)os.rdbuf())->SetState(HttpClientBuf::GET);
+	return os;
 }
 
-std::string HttpClient::Post(std::string url, std::string postdata) {
-	*this << "POST " << url << " HTTP/1.1\n"
-	      << "Content-Type: application/x-www-form-urlencoded\n"
-	      << "Content-Length: " << postdata.length() << "\n\n"
-	      << postdata << "\n";
-	std::string tmp;
-	*this >> tmp;
-	return tmp;
-}
-
-std::string HttpClient::Get(std::string url) {
-	*this << "GET " << url << " HTTP/1.1\n\n";
-
-	std::string tmp;
-	*this >> tmp;
-	return tmp;
+std::ostream& tcpclient::post(std::ostream &os) {
+	((HttpClientBuf *)os.rdbuf())->SetState(HttpClientBuf::POST);
+	return os;
 }
