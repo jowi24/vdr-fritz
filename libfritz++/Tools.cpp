@@ -242,13 +242,13 @@ std::string Tools::GetLang() {
 	if ( gConfig->getLang().size() == 0) {
 		try {
 			Login();
-			tcpclient::HttpClient tc(gConfig->getUrl(), PORT_WWW);
 			std::vector<std::string> langs;
 			langs.push_back("en");
 			langs.push_back("de");
 			langs.push_back("fr");
 			for (unsigned int p=0; p<langs.size(); p++) {
 				std::string sMsg;
+				tcpclient::HttpClient tc(gConfig->getUrl(), PORT_WWW);
 				tc << tcpclient::get
 				   << "/cgi-bin/webcm?getpage=../html/"
 				   << langs[p]
@@ -272,28 +272,25 @@ std::string Tools::GetLang() {
 }
 
 std::string Tools::CalculateLoginResponse(std::string challenge) {
-	challenge += '-' + gConfig->getPassword();
+	std::string challengePwd = challenge + '-' + gConfig->getPassword();
 	// the box needs an md5 sum of the string "challenge-password"
 	// to make things worse, it needs this in UTF-16LE character set
 	// last but not least, for "compatibility" reasons (*LOL*) we have to replace
 	// every char > "0xFF 0x00" with "0x2e 0x00"
 	CharSetConv conv(NULL, "UTF-16LE");
-
-	char challengeConverted[challenge.length()*2];
-	conv.Convert(challenge.c_str(), challengeConverted, challenge.length()*2);
-	for (size_t pos=1; pos < challenge.length()*2; pos+= 2)
-		if (challengeConverted[pos] != 0x00) {
-			challengeConverted[pos] = 0x00;
-			challengeConverted[pos-1] = 0x2e;
+	char challengePwdConv[challengePwd.length()*2];
+	memcpy(challengePwdConv, conv.Convert(challengePwd.c_str()), challengePwd.length()*2);
+	for (size_t pos=1; pos < challengePwd.length()*2; pos+= 2)
+		if (challengePwdConv[pos] != 0x00) {
+			challengePwdConv[pos] = 0x00;
+			challengePwdConv[pos-1] = 0x2e;
 		}
-
 	unsigned char hash[16];
-	MD5((unsigned char*)challengeConverted, challenge.length()*2, hash);
-
+	MD5((unsigned char*)challengePwdConv, challengePwd.length()*2, hash);
 	std::stringstream response;
 	response << challenge << '-';
 	for (size_t pos=0; pos < 16; pos++)
-		response << std::hex << std::setfill('0') << std::setw(2) << hash[pos];
+		response << std::hex << std::setfill('0') << std::setw(2) << (unsigned int)hash[pos];
 	return response.str();
 }
 
