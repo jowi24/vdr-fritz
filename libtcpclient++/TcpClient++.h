@@ -1,7 +1,7 @@
 /*
  * libtcpclient++
  *
- * Copyright (C) 2007-2008 Joachim Wilke <vdr@joachim-wilke.de>
+ * Copyright (C) 2007-2009 Joachim Wilke <vdr@joachim-wilke.de>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,7 +27,9 @@
 #include <stdexcept>
 #include <PThread++.h>
 
-#define TCP_BUF_SIZE 4096
+// BUF_SIZE - buffer size of TcpClient's input/output buffers
+// Warning: This also limits maximum size for POST payload
+#define BUF_SIZE 1024
 
 namespace tcpclient {
 
@@ -91,38 +93,67 @@ public:
 	}
 };
 
-class TcpClient {
+class TcpClientBuf : public std::streambuf {
 private:
-	std::string hostname;
-	int port;
-	void Write(std::string s);
-protected:
-	char buffer[TCP_BUF_SIZE];
 	bool connected;
 	int fd;
+	void Write(std::string &s);
 	void Connect();
-	std::string Receive();
-	virtual std::string Read();
+	bool Receive();
+protected:
+	std::string hostname;
+	int port;
+	char inputBuffer[BUF_SIZE];
+	char outputBuffer[BUF_SIZE];
+	void PutBuffer();
+	// redefine overflow, underflow and sync from std::streambuf
+	int overflow(int c);
+	int underflow();
+	int	sync();
 public:
-	TcpClient(std::string &hostname, int port);
-	virtual ~TcpClient();
-	// ">>" is a blocking operation
-	TcpClient &operator>>(std::ostringstream &ss);
-	TcpClient &operator>>(std::string &s);
-	TcpClient &operator<<(std::string s);
-	TcpClient &operator<<(const char c[]);
-	TcpClient &operator<<(int i);
+	TcpClientBuf(std::string hostname, int port);
+	virtual ~TcpClientBuf();
 	void Disconnect();
 };
 
-class HttpClient : public TcpClient {
-protected:
-	std::string Read();
+class TcpClient : public std::iostream {
 public:
-	HttpClient(std::string &hostname, int port);
-	std::string Post(std::string url, std::string postdata);
-	std::string Get(std::string url);
+	TcpClient(std::string hostname, int port)
+	: std::iostream(new TcpClientBuf(hostname, port)) {}
+	TcpClient(std::string hostname, int port, TcpClientBuf *buf)
+	: std::iostream(buf) {}
+	void Disconnect();
+	std::iostream& operator>> (std::string &s);
 };
+
+class HttpClientBuf : public TcpClientBuf {
+public:
+	enum eState {
+		PLAIN,
+		GET,
+		POST,
+		POSTDATA
+	};
+private:
+	eState state;
+	char internalBuffer[BUF_SIZE];
+public:
+	HttpClientBuf(std::string hostname, int port)
+	: TcpClientBuf(hostname, port) {}
+	void SetState(eState state);
+protected:
+	int	sync();
+};
+
+class HttpClient : public TcpClient {
+public:
+	HttpClient(std::string hostname, int port = 80)
+	: TcpClient(hostname, port, new HttpClientBuf(hostname, port)) {}
+	std::iostream& operator>> (std::string &s);
+};
+
+std::ostream& get(std::ostream &os);
+std::ostream& post(std::ostream &os);
 
 }
 
