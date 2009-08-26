@@ -298,40 +298,51 @@ std::iostream& HttpClient::operator>> (std::string &s) {
 }
 
 int HttpClientBuf::sync() {
+	std::string buffer(pbase(), pptr() - pbase());
+
 	switch (this->state) {
 	case GET: {
-		std::string getUrl(pbase(), pptr() - pbase());
 		SetState(PLAIN);
+		std::string getUrl = buffer.substr(0, buffer.find('\n'));
+		std::string header = buffer.find('\n') != std::string::npos ? buffer.substr(buffer.find('\n')) : "";
+		if (header.length() == 0 || header[header.length()-1] != '\n')
+			header += "\n";
 		std::stringstream result;
 		result << "GET "   << getUrl   << " HTTP/1.0\n"
-		       << "Host: " << hostname << "\n\n";
+		       << "Host: " << hostname
+		       << header
+		       << "\n";
 		sputn(result.str().c_str(), result.str().size());
 		PutBuffer();
 		break;
 	}
 	case POST: {
-		std::string postUrl(pbase(), pptr() - pbase());
 		SetState(PLAIN);
+		std::string postUrl = buffer.substr(0, buffer.find('\n'));
+		std::string header = buffer.find('\n') != std::string::npos ? buffer.substr(buffer.find('\n')) : "";
+		if (header.length() == 0 || header[header.length()-1] != '\n')
+			header += "\n";
 		std::stringstream result;
 		result << "POST "  << postUrl  << " HTTP/1.0\n"
-		       << "Host: " << hostname << "\n"; // only one \n, more header fields to come below
+		       << "Host: " << hostname
+		       << header; // only one \n, more header fields to come below
 		sputn(result.str().c_str(), result.str().size());
 		PutBuffer();
 		SetState(POSTDATA);
 		break;
 	}
 	case POSTDATA: {
-		std::string postData(pbase(), pptr() - pbase());
 		SetState(PLAIN);
 		std::stringstream result;
 		result << "Content-Type: application/x-www-form-urlencoded\n"
-		       << "Content-Length: " << postData.length() << "\n\n"
-		       << postData << std::endl;
+		       << "Content-Length: " << buffer.length() << "\n\n"
+		       << buffer << std::endl;
 		sputn(result.str().c_str(), result.str().size());
 		PutBuffer();
 		break;
 	}
 	case PLAIN:
+	case HEADER:
 		PutBuffer();
 		break;
 	}
@@ -347,17 +358,20 @@ void HttpClientBuf::SetState(eState state) {
 		setp(internalBuffer, internalBuffer + BUF_SIZE);
 		break;
 	case PLAIN:
+	case HEADER:
 		setp(outputBuffer, outputBuffer + BUF_SIZE);
 		break;
 	}
 }
 
 std::ostream& tcpclient::get(std::ostream &os) {
+	os.flush();
 	((HttpClientBuf *)os.rdbuf())->SetState(HttpClientBuf::GET);
 	return os;
 }
 
 std::ostream& tcpclient::post(std::ostream &os) {
+	os.flush();
 	((HttpClientBuf *)os.rdbuf())->SetState(HttpClientBuf::POST);
 	return os;
 }

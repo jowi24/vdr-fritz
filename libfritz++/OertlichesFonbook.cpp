@@ -58,7 +58,10 @@ FonbookEntry &OertlichesFonbook::ResolveToName(FonbookEntry &fe) {
 		*dsyslog << __FILE__ << ": sending reverse lookup request for " << Tools::NormalizeNumber(number) << " to www.dasoertliche.de" << std::endl;
 		std::string host = "www.dasoertliche.de";
 		tcpclient::HttpClient tc(host, PORT_WWW);
-		tc << "GET /Controller?ciid=&district=&kgs=&plz=&zvo_ok=&form_name=search_inv&buc=&kgs=&buab=&zbuab=&ph=" << Tools::NormalizeNumber(number) << "&image= HTTP/1.1\nHost: www.dasoertliche.de\nAccept-Charset: ISO-8859-1\nUser-Agent: Lynx/2.8.5\nConnection: close\n\n\0";
+		tc << tcpclient::get
+		   << "/Controller?ciid=&district=&kgs=&plz=&zvo_ok=&form_name=search_inv&buc=&kgs=&buab=&zbuab=&ph=" << Tools::NormalizeNumber(number) << "&image="
+		   << "\nAccept-Charset: ISO-8859-1\nUser-Agent: Lynx/2.8.5"
+		   << std::flush;
 		tc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;

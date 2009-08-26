@@ -104,7 +104,9 @@ bool LocalFonbook::Initialize() {
 		// file not available -> log preferred filename and location
 		*esyslog << __FILE__ << ": file " << gConfig->getConfigDir().c_str() << "/" << fileNames[0] << " not found." << std::endl;
 		// if no file exists, put the preferred name into filepath (for later usage)
-		asprintf(&filePath, "%s/%s", gConfig->getConfigDir().c_str(), fileNames[0]);
+		int res = asprintf(&filePath, "%s/%s", gConfig->getConfigDir().c_str(), fileNames[0]);
+		if (res == 0)
+			return false;
 		return false;
 	}
 	*isyslog << "loading " << filePath << std::endl;

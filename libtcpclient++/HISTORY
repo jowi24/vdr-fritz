@@ -13,3 +13,4 @@
   * get - for HTTP-GET requests, accepts URL including parameters as input; flush to commit
   * post - for HTTP-POST request, accepts URL, then flush, then POST data; flush to commit
 - Added simple example for testing
+- Implemented handling of additional headers
