@@ -60,7 +60,12 @@ FonbookEntry &NummerzoekerFonbook::ResolveToName(FonbookEntry &fe) {
 		*dsyslog << __FILE__ << ": sending reverse lookup request for " << Tools::NormalizeNumber(fe.getNumber()) << " to wwwdas-oertliche.com" << std::endl;
 		std::string host = "www.nummerzoeker.com";
 		tcpclient::HttpClient tc(host, PORT_WWW);
-		tc << "GET /index.php?search=Zoeken&phonenumber=" << normNumber << "&export=csv HTTP/1.1\nHost: www.__FILE__om\nAccept-Charset: ISO-8859-1\nUser-Agent: Lynx/2.8.5\nConnection: close\n\n\0";
+		tc << tcpclient::get
+		   << "/index.php?search=Zoeken&phonenumber="
+		   << normNumber
+		   << "&export=csv"
+		   << "\nAccept-Charset: ISO-8859-1\nUser-Agent: Lynx/2.8.5"
+		   << std::flush;
 		tc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;

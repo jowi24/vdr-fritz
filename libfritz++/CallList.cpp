@@ -74,13 +74,14 @@ void CallList::Action() {
 			*dsyslog << __FILE__ << ": sending callList request." << std::endl;
 			// force an update of the fritz!box csv list and wait until all data is received
 			tcpclient::HttpClient tc2( gConfig->getUrl(), PORT_WWW);
-			tc2 << "GET /cgi-bin/webcm?getpage=../html/"
-			<<  Tools::GetLang()
-			<< "/menus/menu2.html&var:lang="
-			<<  Tools::GetLang()
-			<< "&var:pagename=foncalls&var:menu=fon"
-			<< (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-			<< "HTTP/1.1\n\n\0";
+			tc2 << tcpclient::get
+			    << "/cgi-bin/webcm?getpage=../html/"
+			    <<  Tools::GetLang()
+			    << "/menus/menu2.html&var:lang="
+			    <<  Tools::GetLang()
+			    << "&var:pagename=foncalls&var:menu=fon"
+			    << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+			    << std::flush;
 			tc2 >> msg;
 			// get the URL of the CSV-File-Export
 			unsigned int urlPos   = msg.find(".csv");
@@ -90,10 +91,11 @@ void CallList::Action() {
 			// retrieve csv list
 			msg = "";
 			tcpclient::HttpClient tc(gConfig->getUrl(), PORT_WWW);
-			tc << "GET /cgi-bin/webcm?getpage="
-			<<  csvUrl
-			<< (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-			<< " HTTP/1.1\n\n\0";
+			tc << tcpclient::get
+			   << "/cgi-bin/webcm?getpage="
+			   <<  csvUrl
+			   << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+			   << std::flush;
 			tc >> msg;
 			// convert answer to current SystemCodeSet (we assume, Fritz!Box sends its answer in latin15)
 			CharSetConv *conv = new CharSetConv("ISO-8859-15", CharSetConv::SystemCharacterTable());

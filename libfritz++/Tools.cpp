@@ -249,11 +249,12 @@ std::string Tools::GetLang() {
 			langs.push_back("fr");
 			for (unsigned int p=0; p<langs.size(); p++) {
 				std::string sMsg;
-				tc << "GET /cgi-bin/webcm?getpage=../html/"
+				tc << tcpclient::get
+				   << "/cgi-bin/webcm?getpage=../html/"
 				   << langs[p]
 				   << "/menus/menu2.html"
 				   << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-				   << " HTTP/1.1\n\n";
+				   << std::flush;
 				tc >> sMsg;
 				if (sMsg.find("<html>") != std::string::npos) {
 					gConfig->setLang(langs[p]);
@@ -304,7 +305,9 @@ void Tools::Login() {
 	std::string sXml;
 	try {
 		tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
-		tc << "GET /cgi-bin/webcm?getpage=../html/login_sid.xml HTTP/1.1\n\n";
+		tc << tcpclient::get
+		   << "/cgi-bin/webcm?getpage=../html/login_sid.xml"
+		   << std::flush;
 		tc >> sXml;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
@@ -317,12 +320,13 @@ void Tools::Login() {
 		try {
 			std::string sDummy;
 			tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
-			tc << "POST /cgi-bin/webcm HTTP/1.1\n"
-			   << "Content-Type: application/x-www-form-urlencoded\n"
-			   << "Content-Length: "<< 32 + gConfig->getSid().length() << "\n\n"
+			tc << tcpclient::post
+			   << "/cgi-bin/webcm"
+			   << std::flush
 			   << "sid="
 			   << gConfig->getSid()
-			   << "&security:command/logout=abc\n";
+			   << "&security:command/logout=abc"
+			   << std::flush;
 			tc >> sDummy;
 		} catch (tcpclient::TcpException te) {
 			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
@@ -360,14 +364,13 @@ void Tools::Login() {
 			std::string sMsg;
 			try {
 				tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
-				tc << "POST /cgi-bin/webcm HTTP/1.1\n"
-				   << "Content-Type: application/x-www-form-urlencoded\n"
-				   << "Content-Length: "
-				   << response.size() + 59
-				   << "\n\n"
+				tc << tcpclient::post
+				   << "/cgi-bin/webcm"
+				   << std::flush
 				   << "login:command/response="
 				   << response
-				   << "&getpage=../html/de/menus/menu2.html\n";
+				   << "&getpage=../html/de/menus/menu2.html"
+				   << std::flush;
 				tc >> sMsg;
 			} catch (tcpclient::TcpException te) {
 				*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
@@ -395,13 +398,12 @@ void Tools::Login() {
 
 		try {
 			tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
-			tc   <<	"POST /cgi-bin/webcm HTTP/1.1\n"
-			<<  	"Content-Type: application/x-www-form-urlencoded\n"
-			<<  	"Content-Length: "
-			<<  	23 + UrlEncode(gConfig->getPassword()).size()
-			<<  	"\n\nlogin:command/password="
-			<<  	UrlEncode(gConfig->getPassword()) // append a newline here?
-			<<      "\n";
+			tc << tcpclient::get
+			   << "/cgi-bin/webcm"
+			   << std::flush
+			   << "login:command/password="
+			   << UrlEncode(gConfig->getPassword())
+			   << std::flush;
 			tc >> sMsg;
 		} catch (tcpclient::TcpException te) {
 			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
@@ -444,17 +446,15 @@ bool Tools::InitCall(std::string &number) {
 		Login();
 		*isyslog << __FILE__ << ": sending call init request " << number.c_str() << std::endl;
 		tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
-		tc  <<	"POST /cgi-bin/webcm HTTP/1.1\n"
-		<<	"Content-Type: application/x-www-form-urlencoded\n"
-		<<	"Content-Length: "
-		<<	95 + number.length() + Tools::GetLang().length() + (gConfig->getSid().size() ? gConfig->getSid().size() + 5 : 0)
-		<<	"\n\n"
-		<<	"getpage=../html/"
-		<<  Tools::GetLang()
-		<< "/menus/menu2.html&var%3Apagename=fonbuch&var%3Amenu=home&telcfg%3Acommand/Dial="
-		<<	number
-  	    << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-		<<	"\n";
+		tc << tcpclient::post
+		   << "/cgi-bin/webcm"
+		   << std::flush
+		   << "getpage=../html/"
+		   << Tools::GetLang()
+		   << "/menus/menu2.html&var%3Apagename=fonbuch&var%3Amenu=home&telcfg%3Acommand/Dial="
+		   << number
+  	       << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+		   <<	std::flush;
 		tc >> msg;
 		*isyslog << __FILE__ << ": call initiated." << std::endl;
 	} catch (tcpclient::TcpException te) {
@@ -501,13 +501,14 @@ void Tools::GetLocationSettings() {
 	try {
 		Login();
 		tcpclient::HttpClient hc(gConfig->getUrl(), PORT_WWW);
-		hc << "GET /cgi-bin/webcm?getpage=../html/"
-		<<  Tools::GetLang()
-		<< "/menus/menu2.html&var%3Alang="
-		<<  Tools::GetLang()
-		<< "&var%3Apagename=sipoptionen&var%3Amenu=fon"
-  	    << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-        << " HTTP/1.1\n\n";
+		hc << tcpclient::get
+		   << "/cgi-bin/webcm?getpage=../html/"
+		   <<  Tools::GetLang()
+		   << "/menus/menu2.html&var%3Alang="
+		   <<  Tools::GetLang()
+		   << "&var%3Apagename=sipoptionen&var%3Amenu=fon"
+  	       << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+           << std::flush;
 		hc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;
@@ -556,13 +557,14 @@ void Tools::GetSipSettings(){
 	try {
 		Login();
 		tcpclient::HttpClient hc(gConfig->getUrl(), PORT_WWW);
-		hc << "GET /cgi-bin/webcm?getpage=../html/"
-		<<  Tools::GetLang()
-		<< "/menus/menu2.html&var%3Alang="
-		<<  Tools::GetLang()
-		<< "&var%3Apagename=siplist&var%3Amenu=fon"
-		<< (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-		<< "HTTP/1.1\n\n";
+		hc << tcpclient::get
+		   << "/cgi-bin/webcm?getpage=../html/"
+		   << Tools::GetLang()
+		   << "/menus/menu2.html&var%3Alang="
+		   << Tools::GetLang()
+		   << "&var%3Apagename=siplist&var%3Amenu=fon"
+		   << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+		   << std::flush;
 		hc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;

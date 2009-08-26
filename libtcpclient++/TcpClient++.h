@@ -132,7 +132,8 @@ public:
 		PLAIN,
 		GET,
 		POST,
-		POSTDATA
+		POSTDATA,
+		HEADER
 	};
 private:
 	eState state;
