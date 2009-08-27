@@ -395,7 +395,7 @@ void Tools::Login() {
 
 		try {
 			tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
-			tc << tcpclient::get
+			tc << tcpclient::post
 			   << "/cgi-bin/webcm"
 			   << std::flush
 			   << "login:command/password="
