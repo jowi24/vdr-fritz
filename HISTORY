@@ -412,21 +412,23 @@ VDR Plugin 'fritzbox' Revision History
   * Updated OertlichesFonbook to new website layout 
   (fix provided by Matthias [31])
   
-2009-: Version 1.x
-- Fixed naming of local phonebook. The plugin now really looks for a file called 
+2009-08-27: Version 1.3.0.
+- fixed naming of local phonebook. The plugin now really looks for a file called 
   localphonebook.csv.
   (reported by Tobias [1])
-- Fixed missing translation of phonebooks in cMenuSetupFritzboxFonbooks
-- Fixed missing translation of phonebook entries with type TYPE_NONE 
-- First implementation to add call list entries to active phonebook.
-- Now saving status of last known missed calls as soon as possible to avoid data loss
+- fixed missing translation of phonebooks in cMenuSetupFritzboxFonbooks
+- fixed missing translation of phonebook entries with type TYPE_NONE 
+- first implementation to add call list entries to active phonebook.
+- now saving status of last known missed calls as soon as possible to avoid data loss
   if VDR does not shutdown cleanly (suggested by Keine_Ahnung [32])
-- Moved plugin initialization from cPluginFritzbox::Start() into a separated thread
+- moved plugin initialization from cPluginFritzbox::Start() into a separated thread
   to speed up VDR startup when expecting slow network links
 - changes in libfritz++
   * Implemented new login method for Fritz!Box firmware >= xx.04.74 using SIDs. This needs 
     features from openssl library. For compiling, libssl-dev (or similar) is needed.
-- Adapting Makefile to support new features of libfritz++: 
+  * Fixed a warning warn_unused_result in LocalFonbook.cpp
+  * Fixed wrong HTTP-GET header in Nummerzoeker.cpp
+- adapting Makefile to support new features of libfritz++: 
   Libssl is now needed to compile and/or run the plugin.
   
 --- References ---

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-19 22:23+0200\n"
+"POT-Creation-Date: 2009-08-26 21:59+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Matthias Becker <becker.matthias@gmail.com>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -180,9 +180,8 @@ msgid "Button$Call"
 msgstr "Anrufen"
 
 #: menu.c:268
-#, fuzzy
 msgid "Button$To PB"
-msgstr "Anrufen"
+msgstr "In TB"
 
 #: menu.c:290 menu.c:374
 msgid "No number to call"
@@ -197,9 +196,8 @@ msgid "Error while initiating call"
 msgstr "Fehler beim Verbindungsaufbau"
 
 #: menu.c:302
-#, fuzzy
 msgid "No number to add"
-msgstr "Ohne Nummer kein Anruf möglich"
+msgstr "Keine Rufnummer zu Speichern"
 
 #: menu.c:323
 msgid "Phone book details"
@@ -317,12 +315,12 @@ msgstr "Telefonbücher auswählen"
 msgid "Less"
 msgstr "Weniger"
 
-#: setup.c:299
+#: setup.c:299vdr
 msgid "More"
 msgstr "Mehr"
 
-#~ msgid "Please wait..."
-#~ msgstr "Bitte warten..."
-
 #~ msgid "Fritz!Box Notification"
 #~ msgstr "Fritz!Box Information"
+
+#~ msgid "Please wait..."
+#~ msgstr "Bitte warten..."

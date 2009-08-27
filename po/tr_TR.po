@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-19 22:23+0200\n"
+"POT-Creation-Date: 2009-08-26 21:59+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Oktay Yolgeçen <oktay_73@yahoo.de>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -336,12 +336,12 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#~ msgid "Please wait..."
-#~ msgstr "Lütfen bekleyin"
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Fritz!Box konuþma listesi"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Bilinmeyen baðlantý arýyor"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Fritz!Box konuþma listesi"
+#~ msgid "Please wait..."
+#~ msgstr "Lütfen bekleyin"
