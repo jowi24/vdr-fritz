@@ -239,7 +239,7 @@ std::string Tools::GetLang() {
 	//		}
 	//	}
 	// Workaround: "Try-and-Error"
-	if ( gConfig->getLang().size() == 0) {
+	if ( gConfig && gConfig->getLang().size() == 0) {
 		try {
 			Login();
 			std::vector<std::string> langs;
@@ -248,7 +248,7 @@ std::string Tools::GetLang() {
 			langs.push_back("fr");
 			for (unsigned int p=0; p<langs.size(); p++) {
 				std::string sMsg;
-				tcpclient::HttpClient tc(gConfig->getUrl(), PORT_WWW);
+				tcpclient::HttpClient tc(gConfig->getUrl(), gConfig->getUiPort());
 				tc << tcpclient::get
 				   << "/cgi-bin/webcm?getpage=../html/"
 				   << langs[p]
@@ -394,7 +394,7 @@ void Tools::Login() {
 		std::string sMsg;
 
 		try {
-			tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
+			tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
 			tc << tcpclient::post
 			   << "/cgi-bin/webcm"
 			   << std::flush
@@ -442,7 +442,7 @@ bool Tools::InitCall(std::string &number) {
 	try {
 		Login();
 		*isyslog << __FILE__ << ": sending call init request " << number.c_str() << std::endl;
-		tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
+		tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
 		tc << tcpclient::post
 		   << "/cgi-bin/webcm"
 		   << std::flush
@@ -504,8 +504,8 @@ void Tools::GetLocationSettings() {
 		   << "/menus/menu2.html&var%3Alang="
 		   <<  Tools::GetLang()
 		   << "&var%3Apagename=sipoptionen&var%3Amenu=fon"
-  	       << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-           << std::flush;
+  	           << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
+                   << std::flush;
 		hc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;
@@ -517,7 +517,9 @@ void Tools::GetLocationSettings() {
 	size_t lkzStart = msg.find("telcfg:settings/Location/LKZ");
 	if (lkzStart == std::string::npos) {
 		*esyslog << __FILE__ << ": Parser error in GetLocationSettings(). Could not find LKZ." << std::endl;
-		*esyslog << __FILE__ << ": LKZ/OKZ not set! Resolving phone numbers may not always work." << std::endl;
+		*esyslog << __FILE__ << ": LKZ not set! Assuming 49 (Germany)." << std::endl;
+		*esyslog << __FILE__ << ": OKZ not set! Resolving phone numbers may not always work." << std::endl;
+		gConfig->setCountryCode("49");
 		return;
 	}
 	lkzStart += 37;
@@ -535,7 +537,8 @@ void Tools::GetLocationSettings() {
 	if (gConfig->getCountryCode().size() > 0) {
 		*dsyslog << __FILE__ << ": Found LKZ " << gConfig->getCountryCode() << std::endl;
 	} else {
-		*esyslog << __FILE__ << ": LKZ not set! Resolving phone numbers may not always work." << std::endl;
+		*esyslog << __FILE__ << ": LKZ not set! Assuming 49 (Germany)." << std::endl;
+		gConfig->setCountryCode("49");
 	}
 	if (gConfig->getRegionCode().size() > 0) {
 		*dsyslog << __FILE__ << ": Found OKZ " << gConfig->getRegionCode() << std::endl;
@@ -553,7 +556,7 @@ void Tools::GetSipSettings(){
 	std::string msg;
 	try {
 		Login();
-		tcpclient::HttpClient hc(gConfig->getUrl(), PORT_WWW);
+		tcpclient::HttpClient hc(gConfig->getUrl(), gConfig->getUiPort());
 		hc << tcpclient::get
 		   << "/cgi-bin/webcm?getpage=../html/"
 		   << Tools::GetLang()

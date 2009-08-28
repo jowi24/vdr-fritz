@@ -23,6 +23,10 @@
 - Renamed Tools::GetPhoneSettings() to Tools::GetLocationSettings().
 - Added resolving of SIP[0-9] to real provider names.
 
+2008-12-19:
+- removed the port defines and replaced them by two new fields in class Config to allow easier unit testing
+- default LKZ to 49 (Germany) if an error occurs
+
 2009-02-23:
 - added exception catch in Tools::GetLang() and Tools::Login()
 

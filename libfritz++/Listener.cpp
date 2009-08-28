@@ -37,7 +37,7 @@ Listener::Listener(EventHandler *event)
 :PThread("fritzlistener")
 {
 	this->event = event;
-	tcpclient = new tcpclient::TcpClient(gConfig->getUrl(), PORT_MONITOR);
+	tcpclient = new tcpclient::TcpClient(gConfig->getUrl(), gConfig->getListenerPort());
 	this->Start();
 }
 

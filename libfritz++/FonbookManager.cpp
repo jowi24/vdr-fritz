@@ -194,8 +194,6 @@ void FonbookManager::Reload() {
 	}
 }
 
-
-
 Fonbooks *FonbookManager::GetFonbooks() {
 	return &fonbooks;
 }
