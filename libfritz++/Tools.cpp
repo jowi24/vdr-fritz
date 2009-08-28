@@ -301,7 +301,7 @@ void Tools::Login() {
 	*dsyslog << __FILE__ << ": requesting login_sid.xml from fritz.box." << std::endl;
 	std::string sXml;
 	try {
-		tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
+		tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
 		tc << tcpclient::get
 		   << "/cgi-bin/webcm?getpage=../html/login_sid.xml"
 		   << std::flush;
@@ -316,7 +316,7 @@ void Tools::Login() {
 		*dsyslog << __FILE__ << ": dropping old SID" << std::endl;
 		try {
 			std::string sDummy;
-			tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
+			tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
 			tc << tcpclient::post
 			   << "/cgi-bin/webcm"
 			   << std::flush
@@ -360,7 +360,7 @@ void Tools::Login() {
             // send response to box
 			std::string sMsg;
 			try {
-				tcpclient::HttpClient tc( gConfig->getUrl(), PORT_WWW);
+				tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
 				tc << tcpclient::post
 				   << "/cgi-bin/webcm"
 				   << std::flush
@@ -497,7 +497,7 @@ void Tools::GetLocationSettings() {
 	std::string msg;
 	try {
 		Login();
-		tcpclient::HttpClient hc(gConfig->getUrl(), PORT_WWW);
+		tcpclient::HttpClient hc(gConfig->getUrl(), gConfig->getUiPort());
 		hc << tcpclient::get
 		   << "/cgi-bin/webcm?getpage=../html/"
 		   <<  Tools::GetLang()
