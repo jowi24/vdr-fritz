@@ -517,9 +517,7 @@ void Tools::GetLocationSettings() {
 	size_t lkzStart = msg.find("telcfg:settings/Location/LKZ");
 	if (lkzStart == std::string::npos) {
 		*esyslog << __FILE__ << ": Parser error in GetLocationSettings(). Could not find LKZ." << std::endl;
-		*esyslog << __FILE__ << ": LKZ not set! Assuming 49 (Germany)." << std::endl;
-		*esyslog << __FILE__ << ": OKZ not set! Resolving phone numbers may not always work." << std::endl;
-		gConfig->setCountryCode("49");
+		*esyslog << __FILE__ << ": LKZ/OKZ not set! Resolving phone numbers may not always work." << std::endl;
 		return;
 	}
 	lkzStart += 37;
@@ -537,8 +535,7 @@ void Tools::GetLocationSettings() {
 	if (gConfig->getCountryCode().size() > 0) {
 		*dsyslog << __FILE__ << ": Found LKZ " << gConfig->getCountryCode() << std::endl;
 	} else {
-		*esyslog << __FILE__ << ": LKZ not set! Assuming 49 (Germany)." << std::endl;
-		gConfig->setCountryCode("49");
+		*esyslog << __FILE__ << ": LKZ not set! Resolving phone numbers may not always work." << std::endl;
 	}
 	if (gConfig->getRegionCode().size() > 0) {
 		*dsyslog << __FILE__ << ": Found OKZ " << gConfig->getRegionCode() << std::endl;
