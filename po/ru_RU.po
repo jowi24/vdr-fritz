@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru_RU-UTF8\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-19 22:23+0200\n"
+"POT-Creation-Date: 2009-08-29 20:13+0200\n"
 "PO-Revision-Date: 2008-09-09 01:48+0200\n"
 "Last-Translator: Alexander Gross\n"
 "Language-Team: russian\n"
@@ -33,7 +33,7 @@ msgstr "пропущенный звонок"
 msgid "missed calls"
 msgstr "пропущенные звонки"
 
-#: fritzbox.c:155 menu.c:125
+#: fritzbox.c:155 menu.c:130
 msgid "This phonebook is not yet available."
 msgstr "Телефонный справочник пока не доступен."
 
@@ -98,136 +98,137 @@ msgstr ""
 msgid "das-oertliche.de"
 msgstr ""
 
-#: menu.c:107
-msgid "Error fetching the call list"
-msgstr "Ошибка при запросе списка звонков"
-
-#: menu.c:126
+#: menu.c:131 menu.c:230
 msgid "You may need to wait some minutes,"
 msgstr "Вам возможно придеться подождать несколько минут"
 
-#: menu.c:127
+#: menu.c:132 menu.c:231
 msgid "otherwise there may be a network problem."
 msgstr "или возникла проблема сети"
 
-#: menu.c:130
+#: menu.c:135
 msgid "This phonebook is not displayable"
 msgstr "Телефонный справочник пока не доступен "
 
-#: menu.c:152
+#: menu.c:157
 msgid "> PB"
 msgstr "> PB"
 
-#: menu.c:158
+#: menu.c:163
 msgid "Fritz!Box call list"
 msgstr "Список звонков Fritz!Box"
 
-#: menu.c:164 setup.c:75
+#: menu.c:169 setup.c:76 setup.c:92
 msgid "incoming"
 msgstr "входящие"
 
-#: menu.c:167
+#: menu.c:172 setup.c:102
 msgid "missed"
 msgstr "пропущенные"
 
-#: menu.c:176 setup.c:80
+#: menu.c:181 setup.c:81 setup.c:97
 msgid "outgoing"
 msgstr "выходящие"
 
-#: menu.c:195 menu.c:265
+#: menu.c:201 menu.c:276
 msgid "unknown"
 msgstr "неизвестный"
 
+#: menu.c:229
+#, fuzzy
+msgid "The call list is not yet available."
+msgstr "Телефонный справочник пока не доступен."
+
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:225
+#: menu.c:236 setup.c:87
 msgid "PB"
 msgstr "PB"
 
-#: menu.c:232
+#: menu.c:243
 msgid "Call details"
 msgstr "Подробности звонка"
 
-#: menu.c:251
+#: menu.c:262
 msgid "Date"
 msgstr "Дата"
 
-#: menu.c:252
+#: menu.c:263
 msgid "Time"
 msgstr "Время"
 
-#: menu.c:253
+#: menu.c:264
 msgid "Duration"
 msgstr "Продолжительность"
 
-#: menu.c:254
+#: menu.c:265
 msgid "call was not accepted"
 msgstr "непринятый звонок"
 
-#: menu.c:256 setup.c:103
+#: menu.c:267 setup.c:126
 msgid "Extension"
 msgstr "MSN"
 
-#: menu.c:261
+#: menu.c:272
 msgid "Callee"
 msgstr "Цель"
 
-#: menu.c:262
+#: menu.c:273
 msgid "Caller"
 msgstr "Вам звонит  "
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:268 menu.c:363
+#: menu.c:279 menu.c:374
 msgid "Button$Call"
 msgstr "Позвонить"
 
-#: menu.c:268
+#: menu.c:279
 #, fuzzy
 msgid "Button$To PB"
 msgstr "Позвонить"
 
-#: menu.c:290 menu.c:374
+#: menu.c:301 menu.c:385
 msgid "No number to call"
 msgstr "Без номера звонок не возможен"
 
-#: menu.c:293 menu.c:377
+#: menu.c:304 menu.c:388
 msgid "Pick up your phone now"
 msgstr "Снять телефон сейчас"
 
-#: menu.c:295 menu.c:379
+#: menu.c:306 menu.c:390
 msgid "Error while initiating call"
 msgstr "Ошибка при соединении"
 
-#: menu.c:302
+#: menu.c:313
 #, fuzzy
 msgid "No number to add"
 msgstr "Без номера звонок не возможен"
 
-#: menu.c:323
+#: menu.c:334
 msgid "Phone book details"
 msgstr "Подробности справочника"
 
-#: menu.c:336 menu.c:342
+#: menu.c:347 menu.c:353
 msgid "Name"
 msgstr "Имя"
 
-#: menu.c:337 menu.c:343
+#: menu.c:348 menu.c:354
 msgid "Numbers"
 msgstr "Номера"
 
-#: menu.c:338
+#: menu.c:349
 msgid "Default"
 msgstr "По умолчанию"
 
-#: menu.c:344
+#: menu.c:355
 msgid "Private"
 msgstr "Частный"
 
-#: menu.c:345
+#: menu.c:356
 msgid "Mobile"
 msgstr "Мобильный"
 
-#: menu.c:346
+#: menu.c:357
 msgid "Business"
 msgstr "Рабочий"
 
@@ -239,86 +240,94 @@ msgstr "Входящий звонок"
 msgid "Outgoing call"
 msgstr "Выходящий звонок"
 
-#: setup.c:70
+#: setup.c:71
 msgid "any"
 msgstr "все"
 
-#: setup.c:86
+#: setup.c:108
 msgid "Fritz!Box URL"
 msgstr "Адрес Fritz!Box "
 
-#: setup.c:87
+#: setup.c:109
 msgid "Password"
 msgstr "Пароль"
 
-#: setup.c:88
+#: setup.c:110
 msgid "Country code"
 msgstr ""
 
-#: setup.c:89
+#: setup.c:111
 msgid "Region code"
 msgstr ""
 
-#: setup.c:90
+#: setup.c:112
 msgid "React on calls"
 msgstr "Реагировать при звонке"
 
-#: setup.c:91
+#: setup.c:113
 msgid "Mute on call"
 msgstr "Выключить звук при звонке"
 
-#: setup.c:92
+#: setup.c:114
 msgid "Pause on call"
 msgstr "Активировать паузу при звонке"
 
-#: setup.c:93
+#: setup.c:115
 msgid "Show calls"
 msgstr "Показывать звонки"
 
-#: setup.c:94
+#: setup.c:116
 msgid "Show detailed call information"
 msgstr "Подробности звонка"
 
-#: setup.c:95
+#: setup.c:117
 msgid "Detailed call lists"
 msgstr "Подробный список звонков"
 
-#: setup.c:96
+#: setup.c:118
 msgid "Group call lists by date"
 msgstr "Группировать списки звонков по дате"
 
-#: setup.c:97
+#: setup.c:119
 msgid "Hide main menu entry"
 msgstr "Скрыть в главном меню"
 
-#: setup.c:98
+#: setup.c:120
+#, fuzzy
+msgid "Default menu"
+msgstr "По умолчанию"
+
+#: setup.c:121
 msgid "Setup phonebooks to use..."
 msgstr "Выбрать телефонные справочники ..."
 
-#: setup.c:99
+#: setup.c:122
 msgid "Restrict monitor to certain extensions"
 msgstr "Ограничить контролируемые MSNs"
 
-#: setup.c:101
+#: setup.c:124
 msgid "Number of monitored extensions"
 msgstr "Количество контролируемыx MSNs"
 
-#: setup.c:105
+#: setup.c:128
 msgid "Reload"
 msgstr "Перезагрузить"
 
-#: setup.c:152
+#: setup.c:175
 msgid "Retrieving phone book"
 msgstr "Запросить телефонный справочник"
 
-#: setup.c:283
+#: setup.c:311
 msgid "Setup phonebooks to use"
 msgstr "Выбрать телефонные справочники"
 
-#: setup.c:299
+#: setup.c:327
 msgid "Less"
 msgstr "Меньше"
 
-#: setup.c:299
+#: setup.c:327
 msgid "More"
 msgstr "Больше"
+
+#~ msgid "Error fetching the call list"
+#~ msgstr "Ошибка при запросе списка звонков"

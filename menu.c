@@ -49,7 +49,16 @@ cMenuFritzbox::cMenuFritzbox(cPluginFritzbox *plugin)
 :cOsdMenu("Fritz!Box", 1) // just dummy values
 {
 	this->plugin = plugin;
-	DisplayFonbuch();
+	switch(fritzboxConfig.defaultMenu) {
+	case FONBUCH:
+		DisplayFonbuch();
+		break;
+	case IN:
+	case OUT:
+	case MISSED:
+		DisplayCalls((fritz::CallEntry::callType)(fritzboxConfig.defaultMenu));
+		break;
+	}
 }
 
 cMenuFritzbox::~cMenuFritzbox()
@@ -101,11 +110,7 @@ eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 		case kGreen:
 		case kYellow:
 		case kBlue:
-			if (callList->isValid()) {
-				DisplayCalls((fritz::CallEntry::callType)(Key - kRed));
-			} else {
-				Skins.Message(mtError, tr("Error fetching the call list"));
-			}
+			DisplayCalls((fritz::CallEntry::callType)(Key - kRed));
 			state = osContinue;
 			break;
 		default:
@@ -182,43 +187,49 @@ void cMenuFritzbox::DisplayCalls(fritz::CallEntry::callType ct) {
 	title += ")";
 	unsigned int destWidth = 0;
 	std::string oldDate;
-	for (unsigned int pos=0; pos < callList->GetSize(ct); pos++) {
-		fritz::CallEntry *ce = callList->RetrieveEntry(ct, pos);
-		// build the menu entries
+	if (callList->isValid()) {
+		for (unsigned int pos=0; pos < callList->GetSize(ct); pos++) {
+			fritz::CallEntry *ce = callList->RetrieveEntry(ct, pos);
+			// build the menu entries
 
-		if ( !ce->MatchesFilter())
-			continue;
+			if ( !ce->MatchesFilter())
+				continue;
 
-		// show remote name, remote number or "unknown"
-		std::string sLine = ce->remoteName.length()   > 0 ? ce->remoteName   :
-						    ce->remoteNumber.length() > 0 ? ce->remoteNumber :
-			                tr("unknown");
-		// determine destWidth
-		if (destWidth < sLine.length())
-			destWidth = sLine.length();
-		// show local number if enabled
-		if (fritzboxConfig.showNumberInCallList == true) {
-			sLine += "\t" + ce->localNumber;
-		}
-		sLine = ce->time + "\t" + sLine;
-		if (fritzboxConfig.showDaySeparator == false) {
-			sLine = ce->date + " " + sLine;
-		} else {
-			if (ce->date.compare(oldDate) != 0) {
-				oldDate = ce->date;
-				Add(new cKeyOsdItem(ce->date.c_str(), osUnknown, false, pos));
+			// show remote name, remote number or "unknown"
+			std::string sLine = ce->remoteName.length()   > 0 ? ce->remoteName   :
+			ce->remoteNumber.length() > 0 ? ce->remoteNumber :
+			tr("unknown");
+			// determine destWidth
+			if (destWidth < sLine.length())
+				destWidth = sLine.length();
+			// show local number if enabled
+			if (fritzboxConfig.showNumberInCallList == true) {
+				sLine += "\t" + ce->localNumber;
 			}
+			sLine = ce->time + "\t" + sLine;
+			if (fritzboxConfig.showDaySeparator == false) {
+				sLine = ce->date + " " + sLine;
+			} else {
+				if (ce->date.compare(oldDate) != 0) {
+					oldDate = ce->date;
+					Add(new cKeyOsdItem(ce->date.c_str(), osUnknown, false, pos));
+				}
+			}
+			Add(new cKeyOsdItem(sLine.c_str(), osUnknown, true, pos));
 		}
-		Add(new cKeyOsdItem(sLine.c_str(), osUnknown, true, pos));
+		// dynamic column layout
+		// ugly dirty hack for maybe better column setup,
+		// VDR shouldn't set width in chars when using a proportional font :-(
+		destWidth++;
+		if (fritzboxConfig.showDaySeparator == false)
+			SetCols(14, destWidth);
+		else
+			SetCols(6,  destWidth);
+	} else {
+		Add(new cOsdItem(tr("The call list is not yet available."),       osUnknown, false));
+		Add(new cOsdItem(tr("You may need to wait some minutes,"),        osUnknown, false));
+		Add(new cOsdItem(tr("otherwise there may be a network problem."), osUnknown, false));
 	}
-	// dynamic column layout
-	// ugly dirty hack for maybe better column setup,
-	// VDR shouldn't set width in chars when using a proportional font :-(
-	destWidth++;
-	if (fritzboxConfig.showDaySeparator == false)
-		SetCols(14, destWidth);
-	else
-		SetCols(6,  destWidth);
 
 	SetTitle(title.c_str());
 	//TRANSLATORS: this is the short form of "phone book"

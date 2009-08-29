@@ -42,12 +42,14 @@ private:
 	char *url;
 	char *password;
 	char *directions[3];
+	char *menus[4];
 	int reactOnDirection;
 	int muteOnCall;
 	int pauseOnCall;
 	int showNumber;
 	int useNotifyOsd;
 	int hideMainMenu;
+	int defaultMenu;
 	int showNumberInCallList;
 	int showDaySeparator;
 	std::string StoreMsn(void);
@@ -113,6 +115,7 @@ public:
 	time_t lastKnownMissedCall;         // the time of the last missed call the user is aware of
 	int showDaySeparator;               // separate call lists by day
 	int hideMainMenu;                   // hide plugins' main menu entry
+	int defaultMenu;					// the menu that is displayed first when selecting the main menu entry
 	std::string activeFonbookID;        // last shown phone book
 	std::vector <std::string> msn;      // msn's we are interesed in
 	std::vector <std::string> selectedFonbookIDs; // active phone books

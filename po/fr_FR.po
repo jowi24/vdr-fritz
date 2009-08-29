@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-26 21:59+0200\n"
+"POT-Creation-Date: 2009-08-29 20:13+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Patrice Staudt\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -33,7 +33,7 @@ msgstr "manqué"
 msgid "missed calls"
 msgstr "manqué"
 
-#: fritzbox.c:155 menu.c:125
+#: fritzbox.c:155 menu.c:130
 #, fuzzy
 msgid "This phonebook is not yet available."
 msgstr "Carnet d'adresse n'est pas encore disponible"
@@ -101,141 +101,142 @@ msgstr ""
 msgid "das-oertliche.de"
 msgstr ""
 
-#: menu.c:107
-msgid "Error fetching the call list"
-msgstr "Erreur de chargement de la liste d'appel"
-
-#: menu.c:126
+#: menu.c:131 menu.c:230
 msgid "You may need to wait some minutes,"
 msgstr "Vous devrez peut-être attendre quelques minutes,"
 
-#: menu.c:127
+#: menu.c:132 menu.c:231
 msgid "otherwise there may be a network problem."
 msgstr "Sinon il peut y avoir un problème de réseau"
 
-#: menu.c:130
+#: menu.c:135
 #, fuzzy
 msgid "This phonebook is not displayable"
 msgstr "Carnet d'adresse n'est pas encore disponible"
 
-#: menu.c:152
+#: menu.c:157
 #, fuzzy
 msgid "> PB"
 msgstr "CdA"
 
-#: menu.c:158
+#: menu.c:163
 msgid "Fritz!Box call list"
 msgstr "Liste d'appelle de la Fritz!Box"
 
-#: menu.c:164 setup.c:75
+#: menu.c:169 setup.c:76 setup.c:92
 msgid "incoming"
 msgstr "entrant"
 
-#: menu.c:167
+#: menu.c:172 setup.c:102
 msgid "missed"
 msgstr "manqué"
 
-#: menu.c:176 setup.c:80
+#: menu.c:181 setup.c:81 setup.c:97
 msgid "outgoing"
 msgstr "sortant"
 
-#: menu.c:195 menu.c:265
+#: menu.c:201 menu.c:276
 msgid "unknown"
 msgstr "inconnu"
 
+#: menu.c:229
+#, fuzzy
+msgid "The call list is not yet available."
+msgstr "Carnet d'adresse n'est pas encore disponible"
+
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:225
+#: menu.c:236 setup.c:87
 msgid "PB"
 msgstr "CdA"
 
-#: menu.c:232
+#: menu.c:243
 msgid "Call details"
 msgstr "Détails des appels"
 
-#: menu.c:251
+#: menu.c:262
 msgid "Date"
 msgstr "Date"
 
-#: menu.c:252
+#: menu.c:263
 msgid "Time"
 msgstr "Temps"
 
-#: menu.c:253
+#: menu.c:264
 msgid "Duration"
 msgstr "Durée"
 
-#: menu.c:254
+#: menu.c:265
 msgid "call was not accepted"
 msgstr "Appel n'a pas été accepté"
 
-#: menu.c:256 setup.c:103
+#: menu.c:267 setup.c:126
 msgid "Extension"
 msgstr "Extension MSN"
 
-#: menu.c:261
+#: menu.c:272
 msgid "Callee"
 msgstr ""
 
-#: menu.c:262
+#: menu.c:273
 #, fuzzy
 msgid "Caller"
 msgstr "Appelle de"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:268 menu.c:363
+#: menu.c:279 menu.c:374
 #, fuzzy
 msgid "Button$Call"
 msgstr "Muet lors d'un appel"
 
-#: menu.c:268
+#: menu.c:279
 #, fuzzy
 msgid "Button$To PB"
 msgstr "Muet lors d'un appel"
 
-#: menu.c:290 menu.c:374
+#: menu.c:301 menu.c:385
 msgid "No number to call"
 msgstr "Aucun numéro à appeler"
 
-#: menu.c:293 menu.c:377
+#: menu.c:304 menu.c:388
 msgid "Pick up your phone now"
 msgstr "Décrocher votre téléphone maintenant"
 
-#: menu.c:295 menu.c:379
+#: menu.c:306 menu.c:390
 msgid "Error while initiating call"
 msgstr "Erreur au lancement de l'appel"
 
-#: menu.c:302
+#: menu.c:313
 #, fuzzy
 msgid "No number to add"
 msgstr "Aucun numéro à appeler"
 
-#: menu.c:323
+#: menu.c:334
 msgid "Phone book details"
 msgstr ""
 
-#: menu.c:336 menu.c:342
+#: menu.c:347 menu.c:353
 msgid "Name"
 msgstr ""
 
-#: menu.c:337 menu.c:343
+#: menu.c:348 menu.c:354
 msgid "Numbers"
 msgstr ""
 
-#: menu.c:338
+#: menu.c:349
 msgid "Default"
 msgstr ""
 
-#: menu.c:344
+#: menu.c:355
 msgid "Private"
 msgstr ""
 
-#: menu.c:345
+#: menu.c:356
 #, fuzzy
 msgid "Mobile"
 msgstr "Plus"
 
-#: menu.c:346
+#: menu.c:357
 msgid "Business"
 msgstr ""
 
@@ -249,99 +250,106 @@ msgstr "Afficher les appels entrants"
 msgid "Outgoing call"
 msgstr "Muet lors d'un appel"
 
-#: setup.c:70
+#: setup.c:71
 msgid "any"
 msgstr ""
 
-#: setup.c:86
+#: setup.c:108
 msgid "Fritz!Box URL"
 msgstr "Url de la Fritz!Box"
 
-#: setup.c:87
+#: setup.c:109
 msgid "Password"
 msgstr "Mot de passe"
 
-#: setup.c:88
+#: setup.c:110
 msgid "Country code"
 msgstr ""
 
-#: setup.c:89
+#: setup.c:111
 msgid "Region code"
 msgstr ""
 
-#: setup.c:90
+#: setup.c:112
 #, fuzzy
 msgid "React on calls"
 msgstr "Muet lors d'un appel"
 
-#: setup.c:91
+#: setup.c:113
 msgid "Mute on call"
 msgstr "Muet lors d'un appel"
 
-#: setup.c:92
+#: setup.c:114
 msgid "Pause on call"
 msgstr "Pause pour appel"
 
-#: setup.c:93
+#: setup.c:115
 #, fuzzy
 msgid "Show calls"
 msgstr "Afficher les appels entrants"
 
-#: setup.c:94
+#: setup.c:116
 #, fuzzy
 msgid "Show detailed call information"
 msgstr "Listes détaillées d'appel"
 
-#: setup.c:95
+#: setup.c:117
 msgid "Detailed call lists"
 msgstr "Listes détaillées d'appel"
 
-#: setup.c:96
+#: setup.c:118
 msgid "Group call lists by date"
 msgstr "Groupe appels par jour"
 
-#: setup.c:97
+#: setup.c:119
 msgid "Hide main menu entry"
 msgstr "Caché dans le menu principale"
 
-#: setup.c:98
+#: setup.c:120
+msgid "Default menu"
+msgstr ""
+
+#: setup.c:121
 msgid "Setup phonebooks to use..."
 msgstr "Configuration de répertoires téléphoniques à utiliser..."
 
-#: setup.c:99
+#: setup.c:122
 msgid "Restrict monitor to certain extensions"
 msgstr "Limiter le moniteur à certaines extensions MSNs"
 
-#: setup.c:101
+#: setup.c:124
 msgid "Number of monitored extensions"
 msgstr "Nombre d'extensions MSNs a surveillier"
 
-#: setup.c:105
+#: setup.c:128
 msgid "Reload"
 msgstr "Recharger"
 
-#: setup.c:152
+#: setup.c:175
 msgid "Retrieving phone book"
 msgstr "Recherche du carnet d'adresse"
 
-#: setup.c:283
+#: setup.c:311
 msgid "Setup phonebooks to use"
 msgstr "Configuration de répertoires téléphoniques à utiliser"
 
-#: setup.c:299
+#: setup.c:327
 msgid "Less"
 msgstr "Moins"
 
-#: setup.c:299
+#: setup.c:327
 msgid "More"
 msgstr "Plus"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Liste d'appelle de la Fritz!Box"
+#~ msgid "Error fetching the call list"
+#~ msgstr "Erreur de chargement de la liste d'appel"
+
+#~ msgid "Please wait..."
+#~ msgstr "Attendez SVP..."
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Appel d'une extension inconnue"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendez SVP..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Liste d'appelle de la Fritz!Box"
