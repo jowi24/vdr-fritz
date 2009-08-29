@@ -29,10 +29,10 @@ class cMenuFritzbox : public cOsdMenu
 {
 public:
 	enum mode {
+		FONBUCH= 0,
 		IN     = 1,
 		MISSED = 2,
 		OUT    = 3,
-		FONBUCH
 	};
 private:
     mode currentMode;

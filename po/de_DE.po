@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-26 21:59+0200\n"
+"POT-Creation-Date: 2009-08-29 20:13+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Matthias Becker <becker.matthias@gmail.com>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -30,7 +30,7 @@ msgstr "verpasster Anruf"
 msgid "missed calls"
 msgstr "verpasste Anrufe"
 
-#: fritzbox.c:155 menu.c:125
+#: fritzbox.c:155 menu.c:130
 msgid "This phonebook is not yet available."
 msgstr "Telefonbuch noch nicht verfügbar."
 
@@ -96,134 +96,134 @@ msgstr ""
 msgid "das-oertliche.de"
 msgstr ""
 
-#: menu.c:107
-msgid "Error fetching the call list"
-msgstr "Fehler beim Anfordern der Gesprächsliste"
-
-#: menu.c:126
+#: menu.c:131 menu.c:230
 msgid "You may need to wait some minutes,"
 msgstr "Der Abruf benötigt entweder noch Zeit"
 
-#: menu.c:127
+#: menu.c:132 menu.c:231
 msgid "otherwise there may be a network problem."
 msgstr "oder es besteht ein Netzwerkproblem."
 
-#: menu.c:130
+#: menu.c:135
 msgid "This phonebook is not displayable"
 msgstr "Keine anzeigbaren Einträge"
 
-#: menu.c:152
+#: menu.c:157
 msgid "> PB"
 msgstr "> TB"
 
-#: menu.c:158
+#: menu.c:163
 msgid "Fritz!Box call list"
 msgstr "Fritz!Box Gesprächsliste"
 
-#: menu.c:164 setup.c:75
+#: menu.c:169 setup.c:76 setup.c:92
 msgid "incoming"
 msgstr "eingehend"
 
-#: menu.c:167
+#: menu.c:172 setup.c:102
 msgid "missed"
 msgstr "verpasst"
 
-#: menu.c:176 setup.c:80
+#: menu.c:181 setup.c:81 setup.c:97
 msgid "outgoing"
 msgstr "ausgehend"
 
-#: menu.c:195 menu.c:265
+#: menu.c:201 menu.c:276
 msgid "unknown"
 msgstr "unbekannt"
 
+#: menu.c:229
+msgid "The call list is not yet available."
+msgstr "Gesprächsliste noch nicht verfügbar."
+
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:225
+#: menu.c:236 setup.c:87
 msgid "PB"
 msgstr "TB"
 
-#: menu.c:232
+#: menu.c:243
 msgid "Call details"
 msgstr "Anrufdetails"
 
-#: menu.c:251
+#: menu.c:262
 msgid "Date"
 msgstr "Datum"
 
-#: menu.c:252
+#: menu.c:263
 msgid "Time"
 msgstr "Uhrzeit"
 
-#: menu.c:253
+#: menu.c:264
 msgid "Duration"
 msgstr "Dauer"
 
-#: menu.c:254
+#: menu.c:265
 msgid "call was not accepted"
 msgstr "Anruf nicht angenommen"
 
-#: menu.c:256 setup.c:103
+#: menu.c:267 setup.c:126
 msgid "Extension"
 msgstr "MSN"
 
-#: menu.c:261
+#: menu.c:272
 msgid "Callee"
 msgstr "Ziel"
 
-#: menu.c:262
+#: menu.c:273
 msgid "Caller"
 msgstr "Anrufer"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:268 menu.c:363
+#: menu.c:279 menu.c:374
 msgid "Button$Call"
 msgstr "Anrufen"
 
-#: menu.c:268
+#: menu.c:279
 msgid "Button$To PB"
 msgstr "In TB"
 
-#: menu.c:290 menu.c:374
+#: menu.c:301 menu.c:385
 msgid "No number to call"
 msgstr "Ohne Nummer kein Anruf möglich"
 
-#: menu.c:293 menu.c:377
+#: menu.c:304 menu.c:388
 msgid "Pick up your phone now"
 msgstr "Telefon jetzt abnehmen"
 
-#: menu.c:295 menu.c:379
+#: menu.c:306 menu.c:390
 msgid "Error while initiating call"
 msgstr "Fehler beim Verbindungsaufbau"
 
-#: menu.c:302
+#: menu.c:313
 msgid "No number to add"
 msgstr "Keine Rufnummer zu Speichern"
 
-#: menu.c:323
+#: menu.c:334
 msgid "Phone book details"
 msgstr "Telefonbuchdetails"
 
-#: menu.c:336 menu.c:342
+#: menu.c:347 menu.c:353
 msgid "Name"
 msgstr "Name"
 
-#: menu.c:337 menu.c:343
+#: menu.c:348 menu.c:354
 msgid "Numbers"
 msgstr "Rufnummern"
 
-#: menu.c:338
+#: menu.c:349
 msgid "Default"
 msgstr "Standard"
 
-#: menu.c:344
+#: menu.c:355
 msgid "Private"
 msgstr "Privat"
 
-#: menu.c:345
+#: menu.c:356
 msgid "Mobile"
 msgstr "Mobil"
 
-#: menu.c:346
+#: menu.c:357
 msgid "Business"
 msgstr "Geschäftlich"
 
@@ -235,92 +235,99 @@ msgstr "Eingehender Anruf"
 msgid "Outgoing call"
 msgstr "Ausgehender Anruf"
 
-#: setup.c:70
+#: setup.c:71
 msgid "any"
 msgstr "alle"
 
-#: setup.c:86
+#: setup.c:108
 msgid "Fritz!Box URL"
 msgstr "Fritz!Box URL"
 
-#: setup.c:87
+#: setup.c:109
 msgid "Password"
 msgstr "Passwort"
 
-#: setup.c:88
+#: setup.c:110
 msgid "Country code"
 msgstr "Internationale Vorwahl"
 
-#: setup.c:89
+#: setup.c:111
 msgid "Region code"
 msgstr "Ortsvorwahl"
 
-#: setup.c:90
+#: setup.c:112
 msgid "React on calls"
 msgstr "Auf Anruf reagieren"
 
-#: setup.c:91
+#: setup.c:113
 msgid "Mute on call"
 msgstr "Bei Anruf stummschalten"
 
-#: setup.c:92
+#: setup.c:114
 msgid "Pause on call"
 msgstr "Bei Anruf pausieren"
 
-#: setup.c:93
+#: setup.c:115
 msgid "Show calls"
 msgstr "Anrufe anzeigen"
 
-#: setup.c:94
+#: setup.c:116
 msgid "Show detailed call information"
 msgstr "Ausführliche Anrufinformation"
 
-#: setup.c:95
+#: setup.c:117
 msgid "Detailed call lists"
 msgstr "Ausführliche Gesprächslisten"
 
-#: setup.c:96
+#: setup.c:118
 msgid "Group call lists by date"
 msgstr "Anruflisten nach Datum gruppieren"
 
-#: setup.c:97
+#: setup.c:119
 msgid "Hide main menu entry"
 msgstr "Hauptmenüeintrag verstecken"
 
-#: setup.c:98
+#: setup.c:120
+msgid "Default menu"
+msgstr "Standardansicht"
+
+#: setup.c:121
 msgid "Setup phonebooks to use..."
 msgstr "Telefonbücher auswählen..."
 
-#: setup.c:99
+#: setup.c:122
 msgid "Restrict monitor to certain extensions"
 msgstr "Überwachte MSNs einschränken"
 
-#: setup.c:101
+#: setup.c:124
 msgid "Number of monitored extensions"
 msgstr "Zahl der überwachten MSNs"
 
-#: setup.c:105
+#: setup.c:128
 msgid "Reload"
 msgstr "Neu laden"
 
-#: setup.c:152
+#: setup.c:175
 msgid "Retrieving phone book"
 msgstr "Rufe Telefonbuch ab"
 
-#: setup.c:283
+#: setup.c:311
 msgid "Setup phonebooks to use"
 msgstr "Telefonbücher auswählen"
 
-#: setup.c:299
+#: setup.c:327
 msgid "Less"
 msgstr "Weniger"
 
-#: setup.c:299vdr
+#: setup.c:327
 msgid "More"
 msgstr "Mehr"
 
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Fritz!Box Information"
+#~ msgid "Error fetching the call list"
+#~ msgstr "Fehler beim Anfordern der Gesprächsliste"
 
 #~ msgid "Please wait..."
 #~ msgstr "Bitte warten..."
+
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Fritz!Box Information"

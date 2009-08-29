@@ -383,7 +383,15 @@ void Tools::Login() {
 			size_t sidStop = sMsg.find("\"", sidStart);
 			// save SID
 			gConfig->setSid(sMsg.substr(sidStart, sidStop-sidStart));
-			*dsyslog << __FILE__ << ": login successful." << std::endl;
+			// check if SID is valid
+			bool isValidSid = false;
+			for (size_t pos=0; pos < gConfig->getSid().length(); pos++)
+				if (gConfig->getSid()[pos] != '0')
+					isValidSid = true;
+			if (isValidSid)
+				*dsyslog << __FILE__ << ": login successful." << std::endl;
+			else
+				*esyslog << __FILE__ << ": login failed!." << std::endl;
 		}
 	} else { // login without SID
 		*dsyslog << __FILE__ << ": using old login scheme without SIDs" << std::endl;

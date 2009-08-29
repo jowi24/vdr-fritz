@@ -20,6 +20,7 @@
  */
 
 #include "setup.h"
+#include "menu.h"
 #include <FonbookManager.h>
 #include <CallList.h>
 #include <Listener.h>
@@ -65,8 +66,8 @@ void cMenuSetupFritzbox::Setup(void) {
 	int current = Current();
 	// clear entries, if any
 	Clear();
-	//possible values for "React on calls"
 	int ret;
+	//possible values for "React on calls"
 	ret = asprintf(&directions[fritzboxConfig.DIRECTION_ANY], tr("any"));
 	if (ret <= 0) {
 		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
@@ -82,12 +83,33 @@ void cMenuSetupFritzbox::Setup(void) {
 		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
 		return;
 	}
+	//possible values for "Default Menu"
+	ret = asprintf(&menus[cMenuFritzbox::FONBUCH], tr("PB"));
+	if (ret <= 0) {
+		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		return;
+	}
+	ret = asprintf(&menus[cMenuFritzbox::IN], tr("incoming"));
+	if (ret <= 0) {
+		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		return;
+	}
+	ret = asprintf(&menus[cMenuFritzbox::OUT], tr("outgoing"));
+	if (ret <= 0) {
+		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		return;
+	}
+	ret = asprintf(&menus[cMenuFritzbox::MISSED], tr("missed"));
+	if (ret <= 0) {
+		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		return;
+	}
 	// build up setup menu
 	Add(new cMenuEditStrItem (tr("Fritz!Box URL"),                  		url,           			MaxFileName, tr(FileNameChars)));
 	Add(new cMenuEditStrItem (tr("Password"),                       		password, 	   			MaxFileName, tr(FileNameChars)));
 	Add(new cMenuEditStrItem (tr("Country code"),                           countryCode,            5,           "0123456789"));
 	Add(new cMenuEditStrItem (tr("Region code"),                            regionCode,             10,          "0123456789"));
-	Add(new cMenuEditStraItem(tr("React on calls"),                         &reactOnDirection,      3,           &directions[0]));
+	Add(new cMenuEditStraItem(tr("React on calls"),                         &reactOnDirection,      3,           directions  ));
 	Add(new cMenuEditBoolItem(tr("Mute on call"),                   		&muteOnCall,   			trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Pause on call"),                   		&pauseOnCall,  			trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Show calls"),            		            &showNumber,   			trVDR("no"), trVDR("yes")));
@@ -95,6 +117,7 @@ void cMenuSetupFritzbox::Setup(void) {
 	Add(new cMenuEditBoolItem(tr("Detailed call lists"),                    &showNumberInCallList, 	trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Group call lists by date"),               &showDaySeparator,      trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Hide main menu entry"), 		    		&hideMainMenu, 			trVDR("no"), trVDR("yes")));
+	Add(new cMenuEditStraItem(tr("Default menu"),                           &defaultMenu,           4,           menus       ));
 	Add(new cOsdItem         (tr("Setup phonebooks to use..."),             osUser1                                          ));
 	Add(new cMenuEditBoolItem(tr("Restrict monitor to certain extensions"), &msnFilter,    			trVDR("no"), trVDR("yes")));
 	if (msnFilter) {
@@ -182,6 +205,7 @@ void cMenuSetupFritzbox::Store(void) {
 	fritzboxConfig.showNumberInCallList = showNumberInCallList;
 	fritzboxConfig.showDaySeparator     = showDaySeparator;
 	fritzboxConfig.hideMainMenu   		= hideMainMenu;
+	fritzboxConfig.defaultMenu          = defaultMenu;
 	fritzboxConfig.msn.clear();
 	for (int i=0; i < msnCount; i++) {
 		std::string s = msn[i];
@@ -196,20 +220,20 @@ void cMenuSetupFritzbox::Store(void) {
 	while (!fritzboxConfig.regionCode.empty() && fritzboxConfig.regionCode[0] == '0')
 		fritzboxConfig.regionCode = fritzboxConfig.regionCode.substr(1);
 
-	// notify libfritz++ about possible changes
-	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
-			             &fritzboxConfig.locationSettingsDetected,
-			             &fritzboxConfig.countryCode, &fritzboxConfig.regionCode);
-	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
-	// recreate depending objects
-	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
-	fritz::CallList::CreateCallList();
-	// Recreate FritzListener only if needed
-	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
-		fritz::Listener::CreateListener(event);
-	} else {
-		fritz::Listener::DeleteListener();
-	}
+//	// notify libfritz++ about possible changes TODO
+//	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
+//			             &fritzboxConfig.locationSettingsDetected,
+//			             &fritzboxConfig.countryCode, &fritzboxConfig.regionCode);
+//	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
+//	// recreate depending objects
+//	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
+//	fritz::CallList::CreateCallList();
+//	// Recreate FritzListener only if needed
+//	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
+//		fritz::Listener::CreateListener(event);
+//	} else {
+//		fritz::Listener::DeleteListener();
+//	}
 
 	SetupStore("Url",          			url);
 	SetupStore("Password",     			fritzboxConfig.password.c_str());
@@ -221,6 +245,7 @@ void cMenuSetupFritzbox::Store(void) {
 	SetupStore("ShowNumberInCallList", 	showNumberInCallList);
 	SetupStore("ShowDaySeparator",      showDaySeparator);
 	SetupStore("HideMainMenu", 			hideMainMenu);
+	SetupStore("DefaultMenu",           defaultMenu);
 	SetupStore("MsnList",      			StoreMsn().c_str());
 	SetupStore("Fonbooks",              StoreFonbooks().c_str());
 	SetupStore("CountryCode",           fritzboxConfig.countryCode.c_str());
@@ -247,6 +272,7 @@ cMenuSetupFritzbox::cMenuSetupFritzbox(cFritzEventHandler *event)
 	showNumberInCallList = fritzboxConfig.showNumberInCallList;
 	showDaySeparator     = fritzboxConfig.showDaySeparator;
 	hideMainMenu    	 = fritzboxConfig.hideMainMenu;
+	defaultMenu			 = fritzboxConfig.defaultMenu;
 	msnCount        	 = fritzboxConfig.msn.size();
 	msnCountBefore  	 = msnCount; // needed for menu refresh
 	msnFilter       	 = fritzboxConfig.msn.empty() ? 0 : 1;
@@ -275,6 +301,8 @@ cMenuSetupFritzbox::~cMenuSetupFritzbox()
 	free(msn);
 	for (int i=0; i<3; i++)
 		free(directions[i]);
+	for (int i=0; i<4; i++)
+		free(menus[i]);
 	free(countryCode);
 	free(regionCode);
 }
@@ -390,6 +418,7 @@ sFritzboxConfig::sFritzboxConfig() {
 	lastKnownMissedCall     = 0;
 	showDaySeparator        = 1;
 	hideMainMenu    		= 0;
+	defaultMenu             = cMenuFritzbox::FONBUCH;
 	selectedFonbookIDs.push_back("FRITZ");
 	activeFonbookID         = "FRITZ";
 }
@@ -445,6 +474,7 @@ bool sFritzboxConfig::SetupParse(const char *name, const char *value) {
 	else if (!strcasecmp(name, "LastKnownMissedCall"))  lastKnownMissedCall  = atoi(value);
 	else if (!strcasecmp(name, "ShowDaySeparator"))     showDaySeparator     = atoi(value);
 	else if (!strcasecmp(name, "HideMainMenu")) 		hideMainMenu 		 = atoi(value);
+	else if (!strcasecmp(name, "DefaultMenu"))          defaultMenu          = atoi(value);
 	else if (!strcasecmp(name, "ActiveFonbook"))        activeFonbookID      = value;
 	else if (!strcasecmp(name, "MsnList"))      		return SetupParseMsn(value);
 	else if (!strcasecmp(name, "Fonbooks"))      		return SetupParseFonbooks(value);
