@@ -28,7 +28,6 @@
 #include <Listener.h>
 #include <CallList.h>
 #include "fritzeventhandler.h"
-#include "setup.h"
 #include "log.h"
 
 class cPluginFritzbox : public cPlugin, cThread {

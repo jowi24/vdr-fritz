@@ -43,8 +43,9 @@ Listener::Listener(EventHandler *event)
 
 Listener::~Listener()
 {
-	this->Cancel();
+	tcpclient->Disconnect();
 	delete tcpclient;
+	this->Cancel();
 }
 
 void Listener::CreateListener(EventHandler *event) {

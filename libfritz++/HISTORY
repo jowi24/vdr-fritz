@@ -63,3 +63,8 @@
 - Fixed a warning warn_unused_result in LocalFonbook.cpp
 - Fixed wrong HTTP-GET header in Nummerzoeker.cpp
  
+2008-08-30
+- Fixed detection of login failure in Tools::Login()
+- Improved cleanup when deleting Listener, FritzFonbook, CallList
+- Delay destructor of FritzFonbook and CallList to wait for running threads to end
+- Improved concurrent access to Fritz!Box using Tools::GetFritzBoxMutex()

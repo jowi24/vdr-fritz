@@ -118,6 +118,8 @@ TcpClientBuf::TcpClientBuf(std::string hostname, int port) {
 	this->hostname = hostname;
 	this->port     = port;
 	fd             = -1;
+
+
 }
 
 TcpClientBuf::~TcpClientBuf() {
@@ -125,6 +127,10 @@ TcpClientBuf::~TcpClientBuf() {
 		shutdown(fd, SHUT_RDWR);
 		close(fd);
 	}
+}
+
+TcpClient::~TcpClient() {
+	delete ((TcpClientBuf *)rdbuf());
 }
 
 void TcpClientBuf::Connect() {
@@ -192,7 +198,9 @@ void TcpClientBuf::Connect() {
 
 void TcpClientBuf::Disconnect() {
 	if (connected) {
+		shutdown(fd, SHUT_RDWR);
 		close(fd);
+		fd = -1;
 		connected = false;
 	}
 }
@@ -218,7 +226,8 @@ bool TcpClientBuf::Receive() {
 		// connection was closed
 		setg(0, 0, 0);
 		connected = false;
-		close(fd);
+		if (fd >= 0)
+			close(fd);
 		if (size == -1) {
 			// there occurred an error
 			throw TcpException(TcpException::ERR_SOCKET_ERROR);
@@ -277,8 +286,10 @@ int TcpClientBuf::sync() {
 std::iostream& TcpClient::operator>> (std::string &s) {
 	// read data that is available from input
 	char buffer[BUF_SIZE];
-	peek(); // wait for at least one byte
 	std::streamsize size = 0;
+	peek(); // wait for at least one byte
+//	if (!good())
+//		throw TcpException(TcpException::ERR_CONNECTION_RESET);
 	size = readsome(buffer, BUF_SIZE);
 	s.assign(buffer, size);
 	return *this;

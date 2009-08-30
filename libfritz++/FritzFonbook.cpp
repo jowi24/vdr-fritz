@@ -157,6 +157,9 @@ FritzFonbook::FritzFonbook()
 }
 
 FritzFonbook::~FritzFonbook() {
+	// don't delete the object, while the thread is still active
+	while (Active())
+		pthread::CondWait::SleepMs(100);
 }
 
 bool FritzFonbook::Initialize() {
