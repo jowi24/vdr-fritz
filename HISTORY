@@ -434,8 +434,13 @@ VDR Plugin 'fritzbox' Revision History
 2009: Version 1.3.1
 - changes in libfritz++
   * fixed detection of login failure in Tools::Login()
+  * improved cleanup when deleting Listener, FritzFonbook, CallList
+  * delay destructor of FritzFonbook and CallList to wait for running threads to end
+  * improved concurrent access to Fritz!Box using Tools::GetFritzBoxMutex()
 - added configuration option to choose default screen when calling the plugins' main 
-  menu action. (fix crash during reload after setup save)
+  menu action.
+- fixed a possible crash when changing the plugins setup
+- improved responsiveness when storing the plugins setup
   
 --- References ---
 

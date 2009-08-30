@@ -240,6 +240,7 @@ std::string Tools::GetLang() {
 	//	}
 	// Workaround: "Try-and-Error"
 	if ( gConfig && gConfig->getLang().size() == 0) {
+		Tools::GetFritzBoxMutex()->Lock();
 		try {
 			Login();
 			std::vector<std::string> langs;
@@ -259,12 +260,14 @@ std::string Tools::GetLang() {
 				if (sMsg.find("<html>") != std::string::npos) {
 					gConfig->setLang(langs[p]);
 					*dsyslog << __FILE__ << ": interface language is " << gConfig->getLang().c_str() << std::endl;
+					Tools::GetFritzBoxMutex()->Unlock();
 					return gConfig->getLang();
 				}
 			}
 		} catch (tcpclient::TcpException te) {
 			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
 		}
+		Tools::GetFritzBoxMutex()->Unlock();
 		*dsyslog << __FILE__ << ": error parsing interface language, assuming 'de'" << std::endl;
 		gConfig->setLang("de");
 	}
@@ -503,6 +506,7 @@ void Tools::GetLocationSettings() {
 //	get settings from Fritz!Box.
 	*dsyslog << __FILE__ << ": Looking up Phone Settings..." << std::endl;
 	std::string msg;
+	Tools::GetFritzBoxMutex()->Lock();
 	try {
 		Login();
 		tcpclient::HttpClient hc(gConfig->getUrl(), gConfig->getUiPort());
@@ -517,11 +521,14 @@ void Tools::GetLocationSettings() {
 		hc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;
+		Tools::GetFritzBoxMutex()->Unlock();
 		return;
 	} catch (ToolsException te) {
 		*esyslog << __FILE__ << ": cToolsException - " << te.what() << std::endl;
+		Tools::GetFritzBoxMutex()->Unlock();
 		return;
 	}
+	Tools::GetFritzBoxMutex()->Unlock();
 	size_t lkzStart = msg.find("telcfg:settings/Location/LKZ");
 	if (lkzStart == std::string::npos) {
 		*esyslog << __FILE__ << ": Parser error in GetLocationSettings(). Could not find LKZ." << std::endl;
@@ -559,6 +566,7 @@ void Tools::GetSipSettings(){
 	// ...otherwise get settings from Fritz!Box.
 	*dsyslog << __FILE__ << ": Looking up SIP Settings..." << std::endl;
 	std::string msg;
+	Tools::GetFritzBoxMutex()->Lock();
 	try {
 		Login();
 		tcpclient::HttpClient hc(gConfig->getUrl(), gConfig->getUiPort());
@@ -573,11 +581,14 @@ void Tools::GetSipSettings(){
 		hc >> msg;
 	} catch (tcpclient::TcpException te) {
 		*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;
+		Tools::GetFritzBoxMutex()->Unlock();
 		return;
 	} catch (ToolsException te) {
 		*esyslog << __FILE__ << ": cToolsException - " << te.what() << std::endl;
+		Tools::GetFritzBoxMutex()->Unlock();
 		return;
 	}
+	Tools::GetFritzBoxMutex()->Unlock();
 	std::vector<std::string> sipNames;
 
 	// check if the structure of the HTML page matches our search pattern

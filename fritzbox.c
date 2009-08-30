@@ -25,6 +25,7 @@
 #include <Listener.h>
 #include <Config.h>
 #include "fritzbox.h"
+#include "setup.h"
 #include "notifyosd.h"
 #include "menu.h"
 
@@ -78,6 +79,14 @@ bool cPluginFritzbox::Initialize(void)
 
 bool cPluginFritzbox::Start(void)
 {
+	// first enable loggin to syslog
+	dlog = new cLogStream(cLogBuf::DEBUG);
+	elog = new cLogStream(cLogBuf::ERROR);
+	ilog = new cLogStream(cLogBuf::INFO);
+	// use logging objects with libfritz++
+	fritz::Config::SetupLogging(dlog, ilog, elog);
+
+	event = new cFritzEventHandler();
 	// start new thread for plugin initialization (may take some time)
 	cThread::Start();
 	return true;
@@ -162,7 +171,7 @@ cOsdObject *cPluginFritzbox::MainMenuAction(void)
 cMenuSetupPage *cPluginFritzbox::SetupMenu(void)
 {
 	// Return a setup menu in case the plugin supports one.
-	return new cMenuSetupFritzbox(event);
+	return new cMenuSetupFritzbox(this);
 }
 
 bool cPluginFritzbox::SetupParse(const char *Name, const char *Value)
@@ -190,12 +199,6 @@ cString cPluginFritzbox::SVDRPCommand(const char *Command, const char *Option, i
 }
 
 void cPluginFritzbox::Action() {
-	// first enable loggin to syslog
-	dlog = new cLogStream(cLogBuf::DEBUG);
-	elog = new cLogStream(cLogBuf::ERROR);
-	ilog = new cLogStream(cLogBuf::INFO);
-	// use logging objects with libfritz++
-	fritz::Config::SetupLogging(dlog, ilog, elog);
 
 	// init libfritz++
 	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
@@ -207,10 +210,10 @@ void cPluginFritzbox::Action() {
 	fritz::CallList::CreateCallList();
 
 	// Create FritzListener only if needed
-	event = new cFritzEventHandler();
-	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
+	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall)
 		fritz::Listener::CreateListener(event);
-	}
+	else
+		fritz::Listener::DeleteListener();
 }
 
 VDRPLUGINCREATOR(cPluginFritzbox); // Don't touch this!

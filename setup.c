@@ -220,20 +220,7 @@ void cMenuSetupFritzbox::Store(void) {
 	while (!fritzboxConfig.regionCode.empty() && fritzboxConfig.regionCode[0] == '0')
 		fritzboxConfig.regionCode = fritzboxConfig.regionCode.substr(1);
 
-//	// notify libfritz++ about possible changes TODO
-//	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
-//			             &fritzboxConfig.locationSettingsDetected,
-//			             &fritzboxConfig.countryCode, &fritzboxConfig.regionCode);
-//	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
-//	// recreate depending objects
-//	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
-//	fritz::CallList::CreateCallList();
-//	// Recreate FritzListener only if needed
-//	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall) {
-//		fritz::Listener::CreateListener(event);
-//	} else {
-//		fritz::Listener::DeleteListener();
-//	}
+	((cThread *)fritzbox)->Start(); // re-read configuration, notify libfritz++ about changes
 
 	SetupStore("Url",          			url);
 	SetupStore("Password",     			fritzboxConfig.password.c_str());
@@ -252,9 +239,9 @@ void cMenuSetupFritzbox::Store(void) {
 	SetupStore("RegionCode",            fritzboxConfig.regionCode.c_str());
 }
 
-cMenuSetupFritzbox::cMenuSetupFritzbox(cFritzEventHandler *event)
+cMenuSetupFritzbox::cMenuSetupFritzbox(cPluginFritzbox *fritzbox)
 {
-	this->event = event;
+	this->fritzbox = fritzbox;
 	// copy setup to temporary parameters
 	msn = (char **) malloc(MAX_MSN_COUNT * sizeof(char *));
 	url             	 = strdup(fritzboxConfig.url.c_str());

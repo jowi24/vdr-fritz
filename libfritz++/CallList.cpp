@@ -50,9 +50,8 @@ void CallList::CreateCallList() {
 	me = new CallList();
 }
 
-void CallList::DeleteCallList(){
-	if (me){
-		*dsyslog << __FILE__ << ": deleting call list" << std::endl;
+void CallList::DeleteCallList() {
+	if (me) {
 		delete me;
 		me = NULL;
 	}
@@ -60,6 +59,10 @@ void CallList::DeleteCallList(){
 
 CallList::~CallList()
 {
+	// don't delete the object, while the thread is still active
+	while (Active())
+		pthread::CondWait::SleepMs(100);
+	*dsyslog << __FILE__ << ": deleting call list" << std::endl;
 }
 
 void CallList::Action() {
