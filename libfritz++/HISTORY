@@ -63,8 +63,17 @@
 - Fixed a warning warn_unused_result in LocalFonbook.cpp
 - Fixed wrong HTTP-GET header in Nummerzoeker.cpp
  
-2008-08-30
+2009-08-30
 - Fixed detection of login failure in Tools::Login()
 - Improved cleanup when deleting Listener, FritzFonbook, CallList
 - Delay destructor of FritzFonbook and CallList to wait for running threads to end
 - Improved concurrent access to Fritz!Box using Tools::GetFritzBoxMutex()
+
+2009-09-05
+- Improved detection of login type (SID or PASSWORD), which is now done only once
+- Improved Tools::Login() to avoid unneccessary logins
+- Created FritzClient to act as an facade to the FB which uses tcpclient::HttpClient.
+  FritzClient handles all communication to the FB including login. The consumer just 
+  uses one of the following methods to get information from the FB
+  * RequestCallList()
+  * ...

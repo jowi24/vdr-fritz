@@ -37,15 +37,22 @@ namespace fritz {
  * It is instantiated once automatically, a pointer gConfig is globally available.
  */
 class Config {
-
+public:
+	enum eLoginType {
+		UNKNOWN,
+		PASSWORD,
+		SID
+	};
 private:
-	struct sConfig{
-		std::string configDir;              			// path to plugins' config files (e.g., local phone book)
+	struct sConfig {
+		std::string configDir;              			// path to libraries' config files (e.g., local phone book)
 		std::string lang;                   			// webinterface language
 		std::string url;                    			// fritz!box url
-		int uiPort;						// the port of the fritz box web interface
-		int listenerPort;					// the port of the fritz box call monitor
+		int uiPort;						                // the port of the fritz box web interface
+		int listenerPort;					            // the port of the fritz box call monitor
 		std::string password;               			// fritz!box web interface password
+		time_t lastRequestTime;                         // with eLoginType::SID: time of last request sent to fritz box
+		eLoginType loginType;                           // type of login procedure
 		std::string sid;                                // SID to access boxes with firmware >= xx.04.74
 		std::string countryCode;            			// fritz!box country-code
 		std::string regionCode;             			// fritz!box region-code
@@ -53,7 +60,7 @@ private:
 		std::vector <std::string> msn;      			// msn's we are interesed in
 		std::vector <std::string> selectedFonbookIDs; 	// active phone books
 		std::string activeFonbook;						// currently selected Fonbook
-	}mConfig;
+	} mConfig;
 
 	Config( std::string url, std::string password );
 
@@ -98,9 +105,13 @@ public:
 	std::string &getLang( )                           { return mConfig.lang; }
 	void setLang( std::string l )                     { mConfig.lang = l; }
 	std::string &getUrl( )                            { return mConfig.url; }
-	int getUiPort( )				  { return mConfig.uiPort; }
-	int getListenerPort( )				  { return mConfig.listenerPort; }
+	int getUiPort( )				                  { return mConfig.uiPort; }
+	int getListenerPort( )				              { return mConfig.listenerPort; }
 	std::string &getPassword( )                       { return mConfig.password; }
+	eLoginType getLoginType( )                        { return mConfig.loginType; }
+	void setLoginType(eLoginType type)                { mConfig.loginType = type; }
+	time_t getLastRequestTime()                       { return mConfig.lastRequestTime; }
+	void updateLastRequestTime()                      { mConfig.lastRequestTime = time(NULL); }
 	std::string &getSid( )                            { return mConfig.sid; }
 	void setSid(std::string sid)                      { mConfig.sid = sid; }
 	std::string &getCountryCode( )        	          { return mConfig.countryCode; }

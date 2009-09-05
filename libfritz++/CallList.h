@@ -58,7 +58,6 @@ private:
 	std::vector<CallEntry> callListMissed;
 	std::vector<CallEntry> callListOut;
 	std::vector<CallEntry> callListAll;
-	bool callListRead;
 	time_t lastMissedCall;
 	static CallList *me;
     CallList();
@@ -75,7 +74,7 @@ public:
 	static void DeleteCallList();
     virtual ~CallList();
 	void Action();
-	bool isValid() { return callListRead; }
+	bool isValid() { return Active(); }
 	CallEntry *RetrieveEntry(CallEntry::callType type, size_t id);
 	size_t GetSize(CallEntry::callType type);
 	size_t MissedCalls(time_t since);
