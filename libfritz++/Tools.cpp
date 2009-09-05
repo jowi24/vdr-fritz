@@ -298,39 +298,52 @@ std::string Tools::CalculateLoginResponse(std::string challenge) {
 }
 
 void Tools::Login() {
-	*dsyslog << __FILE__ << ": logging in to fritz.box." << std::endl;
-
-	// detect if this Fritz!Box uses SIDs
-	*dsyslog << __FILE__ << ": requesting login_sid.xml from fritz.box." << std::endl;
-	std::string sXml;
-	try {
-		tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
-		tc << tcpclient::get
-		   << "/cgi-bin/webcm?getpage=../html/login_sid.xml"
-		   << std::flush;
-		tc >> sXml;
-	} catch (tcpclient::TcpException te) {
-		*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
+	// when using SIDs, a new login is only needed if the last request was more than 5 minutes ago
+	if (gConfig->getLoginType() == Config::SID && (time(NULL) - gConfig->getLastRequestTime() < 300)) {
 		return;
 	}
-	if (sXml.find("<iswriteaccess>") != std::string::npos) { // login using SID
-		*dsyslog << __FILE__ << ": using new login scheme with SIDs" << std::endl;
-		// logout, drop old SID
-		*dsyslog << __FILE__ << ": dropping old SID" << std::endl;
+
+	// detect type of login once
+	std::string sXml; // sXml is used twice!
+	if (gConfig->getLoginType() == Config::UNKNOWN || gConfig->getLoginType() == Config::SID) {
+		// detect if this Fritz!Box uses SIDs
+		*dsyslog << __FILE__ << ": requesting login_sid.xml from fritz.box." << std::endl;
 		try {
-			std::string sDummy;
 			tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
-			tc << tcpclient::post
-			   << "/cgi-bin/webcm"
-			   << std::flush
-			   << "sid="
-			   << gConfig->getSid()
-			   << "&security:command/logout=abc"
-			   << std::flush;
-			tc >> sDummy;
+			tc << tcpclient::get
+			<< "/cgi-bin/webcm?getpage=../html/login_sid.xml"
+			<< std::flush;
+			tc >> sXml;
 		} catch (tcpclient::TcpException te) {
 			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
 			return;
+		}
+		if (sXml.find("<iswriteaccess>") != std::string::npos)
+			gConfig->setLoginType(Config::SID);
+		else
+			gConfig->setLoginType(Config::PASSWORD);
+	}
+
+	if (gConfig->getLoginType() == Config::SID) {
+		*dsyslog << __FILE__ << ": logging in to fritz.box using SIDs." << std::endl;
+		if (gConfig->getSid().length() > 0) {
+			// logout, drop old SID (if FB has not already dropped this SID because of a timeout)
+			*dsyslog << __FILE__ << ": dropping old SID" << std::endl;
+			try {
+				std::string sDummy;
+				tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
+				tc << tcpclient::post
+				<< "/cgi-bin/webcm"
+				<< std::flush
+				<< "sid="
+				<< gConfig->getSid()
+				<< "&security:command/logout=abc"
+				<< std::flush;
+				tc >> sDummy;
+			} catch (tcpclient::TcpException te) {
+				*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
+				return;
+			}
 		}
 		// check if no password is needed (SID is directly available)
 		size_t pwdFlag = sXml.find("<iswriteaccess>");
@@ -349,6 +362,7 @@ void Tools::Login() {
 			sidStart += 5;
 			// save SID
 			gConfig->setSid(sXml.substr(sidStart, 16));
+			gConfig->updateLastRequestTime();
 		} else {
 			// generate response out of challenge and password
 			size_t challengeStart = sXml.find("<Challenge>");
@@ -391,13 +405,15 @@ void Tools::Login() {
 			for (size_t pos=0; pos < gConfig->getSid().length(); pos++)
 				if (gConfig->getSid()[pos] != '0')
 					isValidSid = true;
-			if (isValidSid)
+			if (isValidSid) {
 				*dsyslog << __FILE__ << ": login successful." << std::endl;
-			else
+				gConfig->updateLastRequestTime();
+			} else
 				*esyslog << __FILE__ << ": login failed!." << std::endl;
 		}
-	} else { // login without SID
-		*dsyslog << __FILE__ << ": using old login scheme without SIDs" << std::endl;
+	}
+	if (gConfig->getLoginType() == Config::PASSWORD) {
+		*dsyslog << __FILE__ << ": logging in to fritz.box using old scheme without SIDs." << std::endl;
 		// no password, no login
 		if ( gConfig->getPassword().length() == 0)
 			return;
