@@ -420,6 +420,7 @@ VDR Plugin 'fritzbox' Revision History
 2009-09-13: Version 1.2.2
 - changes in libfritz++
   * fixed entity decoding in FritzFonbook.cpp (reported and fix tested by Torsten [17])
+  * fixed wrong HTTP-GET header in Nummerzoeker.cpp
   
 --- References ---
 

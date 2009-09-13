@@ -47,3 +47,4 @@
 
 2009-09-13:
 - Fixed entity decoding in FritzFonbook.cpp
+- Fixed wrong HTTP-GET header in Nummerzoeker.cpp
