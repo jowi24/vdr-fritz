@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-06-01 14:17+0200\n"
+"POT-Creation-Date: 2009-09-13 13:04+0200\n"
 "PO-Revision-Date: 2009-05-14 17:49+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -307,12 +307,12 @@ msgstr "Elimina"
 msgid "More"
 msgstr "Aggiungi"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Elenco chiamate Fritz!Box"
+#~ msgid "Please wait..."
+#~ msgstr "Attendere prego..."
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Chiamata da estensione sconosciuta"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendere prego..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Elenco chiamate Fritz!Box"
