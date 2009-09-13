@@ -382,7 +382,7 @@ VDR Plugin 'fritzbox' Revision History
 - plugin classes no longer hold own references to fonbook, listener and callList. They now use the
   static getter methods.
 - fixed a possible crash when using the plugin with showNumber = pauseOnCall = muteOnCall = false.
-  (Patch provided by Andreas [26])
+  (patch provided by Andreas [26])
 - using new library feature: resolving SIP provider names, instead of signalling SIP0, ...
 
 2009-03-14: Version 1.1.5
@@ -437,6 +437,7 @@ VDR Plugin 'fritzbox' Revision History
   * improved cleanup when deleting Listener, FritzFonbook, CallList
   * delay destructor of FritzFonbook and CallList to wait for running threads to end
   * improved concurrent access to Fritz!Box using Tools::GetFritzBoxMutex()
+  * fixed entity decoding in FritzFonbook.cpp (reported and fix tested by Torsten [17])
 - added configuration option to choose default screen when calling the plugins' main 
   menu action.
 - fixed a possible crash when changing the plugins setup
@@ -464,7 +465,8 @@ VDR Plugin 'fritzbox' Revision History
 [15] Axel Naumann <axel-naumann@gmx.de>
 [16] Thomas Günther <tom@toms-cafe.de>
      http://vdr-portal.de/board/profile.php?userid=4452
-[17] http://vdr-portal.de/board/profile.php?userid=16817
+[17] Torsten Weigelt <torsten.weigelt@web.de>
+     http://vdr-portal.de/board/profile.php?userid=16817
 [18] Oliver Linsenmaier <oliver.linsenmaier@googlemail.com>
 [19] http://vdr-portal.de/board/profile.php?userid=99
 [20] http://vdr-portal.de/board/profile.php?userid=15737
