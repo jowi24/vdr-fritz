@@ -44,3 +44,6 @@
 2009-05-31:
 - Fixed naming of local phonebook. The plugin now really looks for a file called 
   localphonebook.csv.
+
+2009-09-13:
+- Fixed entity decoding in FritzFonbook.cpp

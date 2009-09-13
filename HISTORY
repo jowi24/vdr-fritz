@@ -417,6 +417,10 @@ VDR Plugin 'fritzbox' Revision History
   localphonebook.csv.
   (reported by Tobias [1])
   
+2009-09-13: Version 1.2.2
+- changes in libfritz++
+  * fixed entity decoding in FritzFonbook.cpp (reported and fix tested by Torsten [17])
+  
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
@@ -439,7 +443,8 @@ VDR Plugin 'fritzbox' Revision History
 [15] Axel Naumann <axel-naumann@gmx.de>
 [16] Thomas Günther <tom@toms-cafe.de>
      http://vdr-portal.de/board/profile.php?userid=4452
-[17] http://vdr-portal.de/board/profile.php?userid=16817
+[17] Torsten Weigelt <torsten.weigelt@web.de>
+     http://vdr-portal.de/board/profile.php?userid=16817
 [18] Oliver Linsenmaier <oliver.linsenmaier@googlemail.com>
 [19] http://vdr-portal.de/board/profile.php?userid=99
 [20] http://vdr-portal.de/board/profile.php?userid=15737
