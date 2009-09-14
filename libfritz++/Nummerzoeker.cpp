@@ -57,7 +57,7 @@ FonbookEntry &NummerzoekerFonbook::ResolveToName(FonbookEntry &fe) {
 
 	std::string msg;
 	try {
-		*dsyslog << __FILE__ << ": sending reverse lookup request for " << Tools::NormalizeNumber(fe.getNumber()) << " to wwwdas-oertliche.com" << std::endl;
+		*dsyslog << __FILE__ << ": sending reverse lookup request for " << Tools::NormalizeNumber(fe.getNumber()) << " to www.nummerzoeker.com" << std::endl;
 		std::string host = "www.nummerzoeker.com";
 		tcpclient::HttpClient tc(host);
 		tc << tcpclient::get

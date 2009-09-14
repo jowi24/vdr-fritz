@@ -54,22 +54,22 @@
   support this feature.
 - Implemented adding of entries in local phone book.  
 
-2009-08-23
+2009-08-23:
 - Implemented new login method for Fritz!Box firmware >= xx.04.74 using SIDs. This needs 
   features from openssl library. For compiling, libssl-dev (or similar) is needed.
   
-2009-08-26
+2009-08-26:
 - Adapted to new tcpclient++
 - Fixed a warning warn_unused_result in LocalFonbook.cpp
 - Fixed wrong HTTP-GET header in Nummerzoeker.cpp
  
-2009-08-30
+2009-08-30:
 - Fixed detection of login failure in Tools::Login()
 - Improved cleanup when deleting Listener, FritzFonbook, CallList
 - Delay destructor of FritzFonbook and CallList to wait for running threads to end
 - Improved concurrent access to Fritz!Box using Tools::GetFritzBoxMutex()
 
-2009-09-05
+2009-09-05:
 - Improved detection of login type (SID or PASSWORD), which is now done only once
 - Improved Tools::Login() to avoid unneccessary logins
 - Created FritzClient to act as an facade to the FB which uses tcpclient::HttpClient.
@@ -78,5 +78,5 @@
   * RequestCallList()
   * ...
 
-2009-09-13
+2009-09-13:
 - Fixed entity decoding in FritzFonbook.cpp
