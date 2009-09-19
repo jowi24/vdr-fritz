@@ -83,7 +83,7 @@ public:
 	static void DeleteCallList();
     virtual ~CallList();
 	void Action();
-	bool isValid() { return Active(); }
+	bool isValid() { return !Active(); }
 	CallEntry *RetrieveEntry(CallEntry::eCallType type, size_t id);
 	size_t GetSize(CallEntry::eCallType type);
 	size_t MissedCalls(time_t since);

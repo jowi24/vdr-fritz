@@ -56,7 +56,7 @@ cMenuFritzbox::cMenuFritzbox(cPluginFritzbox *plugin)
 	case IN:
 	case OUT:
 	case MISSED:
-		DisplayCalls((fritz::CallEntry::callType)(fritzboxConfig.defaultMenu));
+		DisplayCalls((fritz::CallEntry::eCallType)(fritzboxConfig.defaultMenu));
 		break;
 	}
 }
@@ -110,7 +110,7 @@ eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 		case kGreen:
 		case kYellow:
 		case kBlue:
-			DisplayCalls((fritz::CallEntry::callType)(Key - kRed));
+			DisplayCalls((fritz::CallEntry::eCallType)(Key - kRed));
 			state = osContinue;
 			break;
 		default:
@@ -158,7 +158,7 @@ void cMenuFritzbox::DisplayFonbuch() {
 	Display();
 }
 
-void cMenuFritzbox::DisplayCalls(fritz::CallEntry::callType ct) {
+void cMenuFritzbox::DisplayCalls(fritz::CallEntry::eCallType ct) {
 	currentMode = (mode) ct;
 	std::string title=tr("Fritz!Box call list");
 	fritz::CallList *callList = fritz::CallList::getCallList();
