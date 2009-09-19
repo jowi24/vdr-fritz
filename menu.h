@@ -42,7 +42,7 @@ public:
 	virtual ~cMenuFritzbox();
 	virtual eOSState ProcessKey (eKeys Key);
 	void DisplayFonbuch();
-	void DisplayCalls(fritz::CallEntry::callType ct);
+	void DisplayCalls(fritz::CallEntry::eCallType ct);
 };
 
 class cMenuCallDetail : public cOsdMenu
