@@ -38,8 +38,6 @@ void Config::Setup(std::string hostname, std::string password,
 	if (gConfig)
 		delete gConfig;
 	gConfig = new Config( hostname, password);
-	// detect interface language of fritz box
-	Tools::GetLang();
 	// preload phone settings from Fritz!Box
 	Tools::GetLocationSettings();
 	if (gConfig->getCountryCode().empty() || gConfig->getRegionCode().empty()) {

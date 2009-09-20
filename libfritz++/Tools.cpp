@@ -19,16 +19,14 @@
  *
  */
 
-#include <openssl/md5.h>
 #include <string.h>
 #include <stdlib.h>
 #include <locale.h>
 #include <langinfo.h>
 #include <sstream>
 #include <iostream>
-#include <iomanip>
-#include <TcpClient++.h>
 #include <errno.h>
+#include "FritzClient.h"
 #include "Tools.h"
 #include "Config.h"
 
@@ -174,8 +172,6 @@ const char *CharSetConv::Convert(const char *From, char *To, size_t ToLength)
 	return From;
 }
 
-pthread::Mutex* Tools::mutex = new pthread::Mutex();
-
 Tools::Tools()
 {
 }
@@ -197,295 +193,6 @@ bool Tools::MatchesMsnFilter(const std::string &number){
 	}
 	// no match
 	return false;
-}
-
-std::string Tools::GetLang() {
-	// TODO: this does "not always" work for fw 29.04.67 (behaves indeterministically)
-	//	if ( gConfig->getLang().size() == 0) {
-	//		std::string sMsg;
-	//		*dsyslog << __FILE__ << ": detecting fritz.box interface language..." << std::endl;
-	//		tcpclient::HttpClient tc(gConfig->getUrl(), PORT_WWW);
-	//		tc << "GET /cgi-bin/webcm?getpage=../html/index_inhalt.html&var:loginDone=0 HTTP/1.1\n\n";
-	//		tc >> sMsg;
-	//
-	//		// determine language of webinterface
-	//		size_t p = sMsg.find("name=\"var:lang\"");
-	//		if (p != std::string::npos) {
-	//			p += 16; // skip lang-tag
-	//			size_t langStart = sMsg.find('"', p);
-	//			size_t langStop  = sMsg.find('"', ++langStart);
-	//			if (langStart != std::string::npos && langStop != std::string::npos) {
-	//				gConfig->setLang( sMsg.substr(langStart, langStop - langStart) );
-	//				*dsyslog << __FILE__ << ": interface language is " << gConfig->getLang().c_str() << std::endl;
-	//			}
-	//		}
-	//		// if detection was not successful (newer firmware versions)
-	//		if ( gConfig->getLang().size() == 0) {
-	//			// alternative detection method
-	//			p = sMsg.find("/js/jsl.js");
-	//			if (p != std::string::npos) {
-	//				size_t langStart = sMsg.rfind('/', p-1)+1;
-	//				size_t langStop = p;
-	//				if (langStart != std::string::npos) {
-	//					gConfig->setLang( sMsg.substr(langStart, langStop - langStart) );
-	//					*dsyslog << __FILE__ << ": interface language is " << gConfig->getLang().c_str() << std::endl;
-	//				}
-	//			}
-	//		}
-	//		// fallback if detection was unsuccessful
-	//		if ( gConfig->getLang().size() == 0) {
-	//			gConfig->getLang() = "de";
-	//			*dsyslog << __FILE__ << ": error parsing interface language, assuming 'de'" << std::endl;
-	//		}
-	//	}
-	// Workaround: "Try-and-Error"
-	if ( gConfig && gConfig->getLang().size() == 0) {
-		Tools::GetFritzBoxMutex()->Lock();
-		try {
-			Login();
-			std::vector<std::string> langs;
-			langs.push_back("en");
-			langs.push_back("de");
-			langs.push_back("fr");
-			for (unsigned int p=0; p<langs.size(); p++) {
-				std::string sMsg;
-				tcpclient::HttpClient tc(gConfig->getUrl(), gConfig->getUiPort());
-				tc << tcpclient::get
-				   << "/cgi-bin/webcm?getpage=../html/"
-				   << langs[p]
-				   << "/menus/menu2.html"
-				   << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-				   << std::flush;
-				tc >> sMsg;
-				if (sMsg.find("<html>") != std::string::npos) {
-					gConfig->setLang(langs[p]);
-					*dsyslog << __FILE__ << ": interface language is " << gConfig->getLang().c_str() << std::endl;
-					Tools::GetFritzBoxMutex()->Unlock();
-					return gConfig->getLang();
-				}
-			}
-		} catch (tcpclient::TcpException te) {
-			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
-		}
-		Tools::GetFritzBoxMutex()->Unlock();
-		*dsyslog << __FILE__ << ": error parsing interface language, assuming 'de'" << std::endl;
-		gConfig->setLang("de");
-	}
-	return gConfig->getLang();
-}
-
-std::string Tools::CalculateLoginResponse(std::string challenge) {
-	std::string challengePwd = challenge + '-' + gConfig->getPassword();
-	// the box needs an md5 sum of the string "challenge-password"
-	// to make things worse, it needs this in UTF-16LE character set
-	// last but not least, for "compatibility" reasons (*LOL*) we have to replace
-	// every char > "0xFF 0x00" with "0x2e 0x00"
-	CharSetConv conv(NULL, "UTF-16LE");
-	char challengePwdConv[challengePwd.length()*2];
-	memcpy(challengePwdConv, conv.Convert(challengePwd.c_str()), challengePwd.length()*2);
-	for (size_t pos=1; pos < challengePwd.length()*2; pos+= 2)
-		if (challengePwdConv[pos] != 0x00) {
-			challengePwdConv[pos] = 0x00;
-			challengePwdConv[pos-1] = 0x2e;
-		}
-	unsigned char hash[16];
-	MD5((unsigned char*)challengePwdConv, challengePwd.length()*2, hash);
-	std::stringstream response;
-	response << challenge << '-';
-	for (size_t pos=0; pos < 16; pos++)
-		response << std::hex << std::setfill('0') << std::setw(2) << (unsigned int)hash[pos];
-	return response.str();
-}
-
-void Tools::Login() {
-	// when using SIDs, a new login is only needed if the last request was more than 5 minutes ago
-	if (gConfig->getLoginType() == Config::SID && (time(NULL) - gConfig->getLastRequestTime() < 300)) {
-		return;
-	}
-
-	// detect type of login once
-	std::string sXml; // sXml is used twice!
-	if (gConfig->getLoginType() == Config::UNKNOWN || gConfig->getLoginType() == Config::SID) {
-		// detect if this Fritz!Box uses SIDs
-		*dsyslog << __FILE__ << ": requesting login_sid.xml from fritz.box." << std::endl;
-		try {
-			tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
-			tc << tcpclient::get
-			<< "/cgi-bin/webcm?getpage=../html/login_sid.xml"
-			<< std::flush;
-			tc >> sXml;
-		} catch (tcpclient::TcpException te) {
-			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
-			return;
-		}
-		if (sXml.find("<iswriteaccess>") != std::string::npos)
-			gConfig->setLoginType(Config::SID);
-		else
-			gConfig->setLoginType(Config::PASSWORD);
-	}
-
-	if (gConfig->getLoginType() == Config::SID) {
-		*dsyslog << __FILE__ << ": logging in to fritz.box using SIDs." << std::endl;
-		if (gConfig->getSid().length() > 0) {
-			// logout, drop old SID (if FB has not already dropped this SID because of a timeout)
-			*dsyslog << __FILE__ << ": dropping old SID" << std::endl;
-			try {
-				std::string sDummy;
-				tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
-				tc << tcpclient::post
-				<< "/cgi-bin/webcm"
-				<< std::flush
-				<< "sid="
-				<< gConfig->getSid()
-				<< "&security:command/logout=abc"
-				<< std::flush;
-				tc >> sDummy;
-			} catch (tcpclient::TcpException te) {
-				*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
-				return;
-			}
-		}
-		// check if no password is needed (SID is directly available)
-		size_t pwdFlag = sXml.find("<iswriteaccess>");
-		if (pwdFlag == std::string::npos) {
-			*esyslog << __FILE__ << ": Error - Expected <iswriteacess> not found in login_sid.xml." << std::endl;
-			return;
-		}
-		pwdFlag += 15;
-		if (sXml[pwdFlag] == '1') {
-			// extract SID
-			size_t sidStart = sXml.find("<SID>");
-			if (sidStart == std::string::npos) {
-				*esyslog << __FILE__ << ": Error - Expected <SID> not found in login_sid.xml." << std::endl;
-				return;
-			}
-			sidStart += 5;
-			// save SID
-			gConfig->setSid(sXml.substr(sidStart, 16));
-			gConfig->updateLastRequestTime();
-		} else {
-			// generate response out of challenge and password
-			size_t challengeStart = sXml.find("<Challenge>");
-			if (challengeStart == std::string::npos) {
-				*esyslog << __FILE__ << ": Error - Expected <Challenge> not found in login_sid.xml." << std::endl;
-				return;
-			}
-			challengeStart += 11;
-			size_t challengeStop = sXml.find("<", challengeStart);
-            std::string challenge = sXml.substr(challengeStart, challengeStop - challengeStart);
-            std::string response = CalculateLoginResponse(challenge);
-            // send response to box
-			std::string sMsg;
-			try {
-				tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
-				tc << tcpclient::post
-				   << "/cgi-bin/webcm"
-				   << std::flush
-				   << "login:command/response="
-				   << response
-				   << "&getpage=../html/de/menus/menu2.html"
-				   << std::flush;
-				tc >> sMsg;
-			} catch (tcpclient::TcpException te) {
-				*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
-				return;
-			}
-			// get SID out of sMsg
-			size_t sidStart = sMsg.find("name=\"sid\"");
-			if (sidStart == std::string::npos) {
-				*esyslog << __FILE__ << ": Error - Expected sid field not found." << std::endl;
-				return;
-			}
-			sidStart = sMsg.find("value=\"", sidStart + 10) + 7;
-			size_t sidStop = sMsg.find("\"", sidStart);
-			// save SID
-			gConfig->setSid(sMsg.substr(sidStart, sidStop-sidStart));
-			// check if SID is valid
-			bool isValidSid = false;
-			for (size_t pos=0; pos < gConfig->getSid().length(); pos++)
-				if (gConfig->getSid()[pos] != '0')
-					isValidSid = true;
-			if (isValidSid) {
-				*dsyslog << __FILE__ << ": login successful." << std::endl;
-				gConfig->updateLastRequestTime();
-			} else
-				*esyslog << __FILE__ << ": login failed!." << std::endl;
-		}
-	}
-	if (gConfig->getLoginType() == Config::PASSWORD) {
-		*dsyslog << __FILE__ << ": logging in to fritz.box using old scheme without SIDs." << std::endl;
-		// no password, no login
-		if ( gConfig->getPassword().length() == 0)
-			return;
-
-		std::string sMsg;
-
-		try {
-			tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
-			tc << tcpclient::post
-			   << "/cgi-bin/webcm"
-			   << std::flush
-			   << "login:command/password="
-			   << UrlEncode(gConfig->getPassword())
-			   << std::flush;
-			tc >> sMsg;
-		} catch (tcpclient::TcpException te) {
-			*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
-			return;
-		}
-
-		// determine if login was successful
-		if (sMsg.find("class=\"errorMessage\"") != std::string::npos) {
-			*esyslog << __FILE__ << ": login failed, check your password settings." << std::endl;
-			throw ToolsException(ToolsException::ERR_LOGIN_FAILED);
-		}
-		*dsyslog << __FILE__ << ": login successful." << std::endl;
-	}
-}
-
-std::string Tools::UrlEncode(std::string &s_input) {
-	std::string result;
-	std::string s;
-	std::string hex = "0123456789abcdef";
-	CharSetConv *conv = new CharSetConv(CharSetConv::SystemCharacterTable(), "ISO-8859-15");
-	s = conv->Convert(s_input.c_str());
-	delete(conv);
-	for (unsigned int i=0; i<s.length(); i++) {
-		if( ('a' <= s[i] && s[i] <= 'z')
-				|| ('A' <= s[i] && s[i] <= 'Z')
-				|| ('0' <= s[i] && s[i] <= '9') ) {
-			result += s[i];
-		} else {
-			result += '%';
-			result += hex[(unsigned char) s[i] >> 4];
-			result += hex[(unsigned char) s[i] & 0x0f];
-		}
-	}
-	return result;
-}
-
-bool Tools::InitCall(std::string &number) {
-	std::string msg;
-	try {
-		Login();
-		*isyslog << __FILE__ << ": sending call init request " << number.c_str() << std::endl;
-		tcpclient::HttpClient tc( gConfig->getUrl(), gConfig->getUiPort());
-		tc << tcpclient::post
-		   << "/cgi-bin/webcm"
-		   << std::flush
-		   << "getpage=../html/"
-		   << Tools::GetLang()
-		   << "/menus/menu2.html&var%3Apagename=fonbuch&var%3Amenu=home&telcfg%3Acommand/Dial="
-		   << number
-  	       << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-		   <<	std::flush;
-		tc >> msg;
-		*isyslog << __FILE__ << ": call initiated." << std::endl;
-	} catch (tcpclient::TcpException te) {
-		*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
-		return false;
-	}
-	return true;
 }
 
 std::string Tools::NormalizeNumber(std::string number) {
@@ -519,32 +226,10 @@ int Tools::CompareNormalized(std::string number1, std::string number2) {
 }
 
 void Tools::GetLocationSettings() {
-//	get settings from Fritz!Box.
-	*dsyslog << __FILE__ << ": Looking up Phone Settings..." << std::endl;
-	std::string msg;
-	Tools::GetFritzBoxMutex()->Lock();
-	try {
-		Login();
-		tcpclient::HttpClient hc(gConfig->getUrl(), gConfig->getUiPort());
-		hc << tcpclient::get
-		   << "/cgi-bin/webcm?getpage=../html/"
-		   <<  Tools::GetLang()
-		   << "/menus/menu2.html&var%3Alang="
-		   <<  Tools::GetLang()
-		   << "&var%3Apagename=sipoptionen&var%3Amenu=fon"
-  	           << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-                   << std::flush;
-		hc >> msg;
-	} catch (tcpclient::TcpException te) {
-		*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;
-		Tools::GetFritzBoxMutex()->Unlock();
-		return;
-	} catch (ToolsException te) {
-		*esyslog << __FILE__ << ": cToolsException - " << te.what() << std::endl;
-		Tools::GetFritzBoxMutex()->Unlock();
-		return;
-	}
-	Tools::GetFritzBoxMutex()->Unlock();
+	//	get settings from Fritz!Box.
+	FritzClient fc;
+	std::string msg = fc.RequestLocationSettings();
+
 	size_t lkzStart = msg.find("telcfg:settings/Location/LKZ");
 	if (lkzStart == std::string::npos) {
 		*esyslog << __FILE__ << ": Parser error in GetLocationSettings(). Could not find LKZ." << std::endl;
@@ -575,36 +260,14 @@ void Tools::GetLocationSettings() {
 	}
 }
 
-void Tools::GetSipSettings(){
+void Tools::GetSipSettings() {
 	// if SIP settings are already set, exit here...
 	if ( gConfig->getSipNames().size() > 0 )
 		return;
 	// ...otherwise get settings from Fritz!Box.
-	*dsyslog << __FILE__ << ": Looking up SIP Settings..." << std::endl;
-	std::string msg;
-	Tools::GetFritzBoxMutex()->Lock();
-	try {
-		Login();
-		tcpclient::HttpClient hc(gConfig->getUrl(), gConfig->getUiPort());
-		hc << tcpclient::get
-		   << "/cgi-bin/webcm?getpage=../html/"
-		   << Tools::GetLang()
-		   << "/menus/menu2.html&var%3Alang="
-		   << Tools::GetLang()
-		   << "&var%3Apagename=siplist&var%3Amenu=fon"
-		   << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-		   << std::flush;
-		hc >> msg;
-	} catch (tcpclient::TcpException te) {
-		*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;
-		Tools::GetFritzBoxMutex()->Unlock();
-		return;
-	} catch (ToolsException te) {
-		*esyslog << __FILE__ << ": cToolsException - " << te.what() << std::endl;
-		Tools::GetFritzBoxMutex()->Unlock();
-		return;
-	}
-	Tools::GetFritzBoxMutex()->Unlock();
+	FritzClient fc;
+	std::string msg = fc.RequestSipSettings();
+
 	std::vector<std::string> sipNames;
 
 	// check if the structure of the HTML page matches our search pattern

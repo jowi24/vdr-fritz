@@ -23,14 +23,27 @@
 #define FRITZCLIENT_H_
 
 #include <stdlib.h>
+#include <PThread++.h>
+#include "Tools.h"
+#include <TcpClient++.h>
 
 namespace fritz {
 
 class FritzClient {
+private:
+	static pthread::Mutex* mutex;
+    std::string CalculateLoginResponse(std::string challenge);
+	std::string UrlEncode(std::string &s);
+	void Login() throw(tcpclient::TcpException);
+	std::string GetLang() throw(tcpclient::TcpException);
 public:
 	FritzClient ();
 	virtual ~FritzClient();
+	bool InitCall(std::string &number);
+	std::string RequestLocationSettings();
+	std::string RequestSipSettings();
 	std::string RequestCallList();
+	std::string RequestFonbook();
 };
 
 }

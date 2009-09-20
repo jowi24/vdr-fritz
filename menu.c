@@ -24,7 +24,7 @@
 #include <vdr/menu.h>
 #include <vdr/status.h>
 #include "FonbookManager.h"
-#include "Tools.h"
+#include "FritzClient.h"
 #include "menu.h"
 #include "setup.h"
 
@@ -300,7 +300,8 @@ eOSState cMenuCallDetail::ProcessKey (eKeys Key) {
 			if (ce->remoteNumber.empty()) {
 				Skins.Message(mtError, tr("No number to call"));
 			} else {
-				if (fritz::Tools::InitCall(ce->remoteNumber))
+				fritz::FritzClient fc;
+				if (fc.InitCall(ce->remoteNumber))
 					Skins.Message(mtInfo, tr("Pick up your phone now"));
 				else
 					Skins.Message(mtError, tr("Error while initiating call"));
@@ -384,7 +385,8 @@ eOSState cMenuFonbuchDetail::ProcessKey (eKeys Key) {
 			if (numbers[Current() - 1].empty()) {
 				Skins.Message(mtError, tr("No number to call"));
 			} else {
-				if (fritz::Tools::InitCall(numbers[Current() - 1]))
+				fritz::FritzClient fc;
+				if (fc.InitCall(numbers[Current() - 1]))
 					Skins.Message(mtInfo, tr("Pick up your phone now"));
 				else
 					Skins.Message(mtError, tr("Error while initiating call"));

@@ -436,8 +436,10 @@ VDR Plugin 'fritzbox' Revision History
   * fixed detection of login failure in Tools::Login()
   * improved cleanup when deleting Listener, FritzFonbook, CallList
   * delay destructor of FritzFonbook and CallList to wait for running threads to end
-  * improved concurrent access to Fritz!Box using Tools::GetFritzBoxMutex()
+  * improved concurrent access to Fritz!Box using new FritzClient class
   * fixed entity decoding in FritzFonbook.cpp (reported and fix tested by Torsten [17])
+  * improved detection of login type (SID or PASSWORD), which is now done only once
+  * improved login to Fritz!Box to avoid unneccessary logins
 - added configuration option to choose default screen when calling the plugins' main 
   menu action.
 - fixed a possible crash when changing the plugins setup
