@@ -23,6 +23,7 @@
 #include <algorithm>
 #include <sstream>
 #include "FritzFonbook.h"
+#include "FritzClient.h"
 #include "Tools.h"
 #include <TcpClient++.h>
 #include "Config.h"
@@ -167,118 +168,89 @@ bool FritzFonbook::Initialize() {
 }
 
 void FritzFonbook::Action() {
-	unsigned int retry_delay = RETRY_DELAY / 2;
-	std::string msg;
-	Tools::GetFritzBoxMutex()->Lock();
-	do {
-		try {
-			retry_delay = retry_delay > 1800 ? 3600 : retry_delay * 2;
-			setInitialized(false);
-			fonbookList.clear();
+	setInitialized(false);
+	fonbookList.clear();
 
-			Tools::Login();
-			*dsyslog << __FILE__ << ": sending fonbook request." << std::endl;
-			tcpclient::HttpClient tc(gConfig->getUrl(), gConfig->getUiPort());
-			tc << tcpclient::get
-			   << "/cgi-bin/webcm?getpage=../html/"
-			   << Tools::GetLang()
-			   << "/menus/menu2.html"
-			   << "&var:lang="
-			   << Tools::GetLang()
-			   << "&var:pagename=fonbuch&var:menu=fon"
-			   << (gConfig->getSid().size() ? "&sid=" : "") << gConfig->getSid()
-			   << std::flush;
-			tc >> msg;
+	FritzClient fc;
+	std::string msg = fc.RequestFonbook();
 
-			size_t pos, p1, p2;
-			// determine charset (default for old firmware versions is iso-8859-15)
-			std::string charset = "ISO-8859-15";
-			pos = msg.find("<meta http-equiv=content-type");
-			if (pos != std::string::npos) {
-				pos = msg.find("charset=", pos);
-				if (pos != std::string::npos)
-					charset = msg.substr(pos+8, msg.find('"', pos)-pos-8);
-			}
-			*dsyslog << __FILE__ << ": using charset " << charset << std::endl;
+	size_t pos, p1, p2;
+	// determine charset (default for old firmware versions is iso-8859-15)
+	std::string charset = "ISO-8859-15";
+	pos = msg.find("<meta http-equiv=content-type");
+	if (pos != std::string::npos) {
+		pos = msg.find("charset=", pos);
+		if (pos != std::string::npos)
+			charset = msg.substr(pos+8, msg.find('"', pos)-pos-8);
+	}
+	*dsyslog << __FILE__ << ": using charset " << charset << std::endl;
 
-			CharSetConv *conv = new CharSetConv(charset.c_str(), CharSetConv::SystemCharacterTable());
-			const char *s_converted = conv->Convert(msg.c_str());
-			msg = s_converted;
-			delete (conv);
+	CharSetConv *conv = new CharSetConv(charset.c_str(), CharSetConv::SystemCharacterTable());
+	const char *s_converted = conv->Convert(msg.c_str());
+	msg = s_converted;
+	delete (conv);
 
-			// parse answer
-			pos = 0;
-			int count = 0;
-			// parser for old format
-			const std::string tag("(TrFon(");
-			while ((p1 = msg.find(tag, pos)) != std::string::npos) {
-				p1 += 7; // points to the first "
-				int nameStart     = msg.find(',', p1)          +3;
-				int nameStop      = msg.find('"', nameStart)   -1;
-				int numberStart   = msg.find(',', nameStop)    +3;
-				int numberStop    = msg.find('"', numberStart) -1;
-				if (msg[nameStart] == '!') // skip '!' char, older firmware versions use to mark VIPs
-					nameStart++;
-				std::string namePart = msg.substr(nameStart, nameStop - nameStart+1);
-				std::string namePart2 = convertEntities(namePart);
-				std::string numberPart = msg.substr(numberStart, numberStop - numberStart+1);
-				if (namePart2.length() && numberPart.length()) {
-					FonbookEntry fe(namePart2, numberPart, FonbookEntry::TYPE_NONE);
-					fonbookList.push_back(fe);
-					//*dsyslog << __FILE__ << ": (%s / %s)", fe.number.c_str(), fe.name.c_str() << std::endl;
-				}
-				pos = p1+10;
-				count++;
-			}
-			// parser for new format
-			pos = 0;
-			const std::string tag2("TrFonName(");
-			const std::string tag3("TrFonNr("	);
-			while ((p2 = msg.find(tag3, pos)) != std::string::npos) {
-				int typeStart     = p2 + 9;
-				int numberStart   = msg.find(',', p2)    +3;
-				int typeStop      = numberStart - 5;
-				int numberStop    = msg.find('"', numberStart) -1;
-				p1 = msg.rfind(tag2, p2);
-				p1 += 7; // points to the first "
-				int nameStart     = msg.find(',', p1)          +3;
-				int nameStop      = msg.find('"', nameStart)   -1;
-				std::string namePart   = msg.substr(nameStart, nameStop - nameStart+1);
-				std::string namePart2  = convertEntities(namePart);
-				std::string numberPart = msg.substr(numberStart, numberStop - numberStart+1);
-
-				std::string typePart   = msg.substr(typeStart, typeStop - typeStart+1);
-				FonbookEntry::eType type = FonbookEntry::TYPE_NONE;
-				if      (typePart.compare("home") == 0)
-					type = FonbookEntry::TYPE_HOME;
-				else if (typePart.compare("mobile") == 0)
-					type = FonbookEntry::TYPE_MOBILE;
-				else if (typePart.compare("work") == 0)
-					type = FonbookEntry::TYPE_WORK;
-
-				if (namePart2.length() && numberPart.length()) {
-					FonbookEntry fe(namePart2, numberPart, type);
-					fonbookList.push_back(fe);
-					//*dsyslog << __FILE__ << ": (%s / %s / %i)", fe.number.c_str(), fe.name.c_str(), fe.type << std::endl;
-				}
-				pos = p2+10;
-				count++;
-			}
-			*isyslog << __FILE__ << ": read " << count << " entries." << std::endl;
-			setInitialized(true);
-		} catch (tcpclient::TcpException te) {
-			//cFritzTools::getFritzBoxMutex()->Unlock();
-			*esyslog << __FILE__ << ": cTcpException - " << te.what() << std::endl;
-			*esyslog << __FILE__ << ": waiting " << retry_delay << " seconds before retrying" << std::endl;
-			sleep(retry_delay); // delay a possible retry
-		} catch (ToolsException te) {
-			//cFritzTools::getFritzBoxMutex()->Unlock();
-			*esyslog << __FILE__ << ": cToolsException - " << te.what() << std::endl;
-			*esyslog << __FILE__ << ": waiting " << retry_delay << " seconds before retrying" << std::endl;
-			sleep(retry_delay); // delay a possible retry
+	// parse answer
+	pos = 0;
+	int count = 0;
+	// parser for old format
+	const std::string tag("(TrFon(");
+	while ((p1 = msg.find(tag, pos)) != std::string::npos) {
+		p1 += 7; // points to the first "
+		int nameStart     = msg.find(',', p1)          +3;
+		int nameStop      = msg.find('"', nameStart)   -1;
+		int numberStart   = msg.find(',', nameStop)    +3;
+		int numberStop    = msg.find('"', numberStart) -1;
+		if (msg[nameStart] == '!') // skip '!' char, older firmware versions use to mark VIPs
+			nameStart++;
+		std::string namePart = msg.substr(nameStart, nameStop - nameStart+1);
+		std::string namePart2 = convertEntities(namePart);
+		std::string numberPart = msg.substr(numberStart, numberStop - numberStart+1);
+		if (namePart2.length() && numberPart.length()) {
+			FonbookEntry fe(namePart2, numberPart, FonbookEntry::TYPE_NONE);
+			fonbookList.push_back(fe);
+			//*dsyslog << __FILE__ << ": (%s / %s)", fe.number.c_str(), fe.name.c_str() << std::endl;
 		}
-	} while (!isInitialized());
-	Tools::GetFritzBoxMutex()->Unlock();
+		pos = p1+10;
+		count++;
+	}
+	// parser for new format
+	pos = 0;
+	const std::string tag2("TrFonName(");
+	const std::string tag3("TrFonNr("	);
+	while ((p2 = msg.find(tag3, pos)) != std::string::npos) {
+		int typeStart     = p2 + 9;
+		int numberStart   = msg.find(',', p2)    +3;
+		int typeStop      = numberStart - 5;
+		int numberStop    = msg.find('"', numberStart) -1;
+		p1 = msg.rfind(tag2, p2);
+		p1 += 7; // points to the first "
+		int nameStart     = msg.find(',', p1)          +3;
+		int nameStop      = msg.find('"', nameStart)   -1;
+		std::string namePart   = msg.substr(nameStart, nameStop - nameStart+1);
+		std::string namePart2  = convertEntities(namePart);
+		std::string numberPart = msg.substr(numberStart, numberStop - numberStart+1);
+
+		std::string typePart   = msg.substr(typeStart, typeStop - typeStart+1);
+		FonbookEntry::eType type = FonbookEntry::TYPE_NONE;
+		if      (typePart.compare("home") == 0)
+			type = FonbookEntry::TYPE_HOME;
+		else if (typePart.compare("mobile") == 0)
+			type = FonbookEntry::TYPE_MOBILE;
+		else if (typePart.compare("work") == 0)
+			type = FonbookEntry::TYPE_WORK;
+
+		if (namePart2.length() && numberPart.length()) {
+			FonbookEntry fe(namePart2, numberPart, type);
+			fonbookList.push_back(fe);
+			//*dsyslog << __FILE__ << ": (%s / %s / %i)", fe.number.c_str(), fe.name.c_str(), fe.type << std::endl;
+		}
+		pos = p2+10;
+		count++;
+	}
+	*isyslog << __FILE__ << ": read " << count << " entries." << std::endl;
+	setInitialized(true);
+
 	std::sort(fonbookList.begin(), fonbookList.end());
 }
 

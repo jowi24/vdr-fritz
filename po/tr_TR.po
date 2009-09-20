@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-08-29 20:13+0200\n"
+"POT-Creation-Date: 2009-09-20 18:12+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Oktay Yolgeçen <oktay_73@yahoo.de>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -15,26 +15,26 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-9\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: fritzbox.c:32
+#: fritzbox.c:33
 msgid "Fritz Plugin for AVM Fritz!Box"
 msgstr ""
 
-#: fritzbox.c:33
+#: fritzbox.c:34
 #, fuzzy
 msgid "Fritz!Box"
 msgstr "Fritz!Box URL"
 
-#: fritzbox.c:139
+#: fritzbox.c:148
 #, fuzzy
 msgid "missed call"
 msgstr "kaçýrýlan"
 
-#: fritzbox.c:139
+#: fritzbox.c:148
 #, fuzzy
 msgid "missed calls"
 msgstr "kaçýrýlan"
 
-#: fritzbox.c:155 menu.c:130
+#: fritzbox.c:164 menu.c:130
 #, fuzzy
 msgid "This phonebook is not yet available."
 msgstr "Telefon defteri mevcut deðil"
@@ -65,6 +65,10 @@ msgstr "ISDN"
 msgid "VoIP"
 msgstr "VoIP"
 
+#: fritzfonbuch.c:155 menu.c:43
+msgid "Fritz!Box phone book"
+msgstr "Fritz!Box telefon defteri"
+
 #. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
 #: menu.c:34
 msgid "H"
@@ -88,10 +92,6 @@ msgstr ""
 #: menu.c:42
 #, fuzzy
 msgid "Local phone book"
-msgstr "Fritz!Box telefon defteri"
-
-#: menu.c:43
-msgid "Fritz!Box phone book"
 msgstr "Fritz!Box telefon defteri"
 
 #: menu.c:44
@@ -185,7 +185,7 @@ msgstr "Arayan numara"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:279 menu.c:374
+#: menu.c:279 menu.c:375
 #, fuzzy
 msgid "Button$Call"
 msgstr "Telefon gelince sesi kes"
@@ -195,48 +195,48 @@ msgstr "Telefon gelince sesi kes"
 msgid "Button$To PB"
 msgstr "Telefon gelince sesi kes"
 
-#: menu.c:301 menu.c:385
+#: menu.c:301 menu.c:386
 msgid "No number to call"
 msgstr "Numarasýz arama imkansýz"
 
-#: menu.c:304 menu.c:388
+#: menu.c:305 menu.c:390
 msgid "Pick up your phone now"
 msgstr "Telefonu þimdi kaldýrýn"
 
-#: menu.c:306 menu.c:390
+#: menu.c:307 menu.c:392
 msgid "Error while initiating call"
 msgstr "Baglantý hatasý"
 
-#: menu.c:313
+#: menu.c:314
 #, fuzzy
 msgid "No number to add"
 msgstr "Numarasýz arama imkansýz"
 
-#: menu.c:334
+#: menu.c:335
 msgid "Phone book details"
 msgstr ""
 
-#: menu.c:347 menu.c:353
+#: menu.c:348 menu.c:354
 msgid "Name"
 msgstr ""
 
-#: menu.c:348 menu.c:354
+#: menu.c:349 menu.c:355
 msgid "Numbers"
 msgstr ""
 
-#: menu.c:349
+#: menu.c:350
 msgid "Default"
 msgstr ""
 
-#: menu.c:355
+#: menu.c:356
 msgid "Private"
 msgstr ""
 
-#: menu.c:356
+#: menu.c:357
 msgid "Mobile"
 msgstr ""
 
-#: menu.c:357
+#: menu.c:358
 msgid "Business"
 msgstr ""
 
@@ -329,15 +329,15 @@ msgstr "Tekrar yükle"
 msgid "Retrieving phone book"
 msgstr "Telefon defteri yükleniyor"
 
-#: setup.c:311
+#: setup.c:298
 msgid "Setup phonebooks to use"
 msgstr ""
 
-#: setup.c:327
+#: setup.c:314
 msgid "Less"
 msgstr ""
 
-#: setup.c:327
+#: setup.c:314
 msgid "More"
 msgstr ""
 

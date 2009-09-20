@@ -109,46 +109,17 @@ public:
   static void SetSystemCharacterTable(const char *CharacterTable);
   };
 
-class ToolsException : public std::exception {
-public:
-	enum errorCode {
-		ERR_LOGIN_FAILED,
-	} errcode;
-
-	ToolsException(errorCode errcode) {
-		this->errcode = errcode;
-	}
-
-	virtual const char* what() const throw() {
-		switch (errcode) {
-		case ERR_LOGIN_FAILED:
-			return "Login failed.";
-		default:
-			return "Unknown cToolsException happened.";
-		}
-
-	}
-};
-
 class Tools
 {
 public:
 	Tools();
 	virtual ~Tools();
 	static bool MatchesMsnFilter(const std::string &number);
-	static std::string GetLang();
-	static void Login();
-	static bool InitCall(std::string &number);
 	static std::string NormalizeNumber(std::string number);
 	static int CompareNormalized(std::string number1, std::string number2);
 	static void GetLocationSettings();
 	static void GetSipSettings();
-	static pthread::Mutex* GetFritzBoxMutex() {return mutex;}
 	static std::string Tokenize(const std::string &buffer, const char delimiter, size_t pos);
-private:
-    static std::string CalculateLoginResponse(std::string challenge);
-	static std::string UrlEncode(std::string &s);
-	static pthread::Mutex* mutex;
 };
 
 }
