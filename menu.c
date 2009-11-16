@@ -322,6 +322,9 @@ eOSState cMenuCallDetail::ProcessKey (eKeys Key) {
 			}
 			state = osContinue;
 			break;
+		case kOk:
+			state = osBack;
+			break;
 		default:
 			break;
 		}
@@ -392,6 +395,9 @@ eOSState cMenuFonbuchDetail::ProcessKey (eKeys Key) {
 					Skins.Message(mtError, tr("Error while initiating call"));
 			}
 			state = osContinue;
+			break;
+		case kOk:
+			state = osBack;
 			break;
 		default:
 			break;

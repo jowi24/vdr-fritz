@@ -444,6 +444,9 @@ VDR Plugin 'fritzbox' Revision History
   menu action.
 - fixed a possible crash when changing the plugins setup
 - improved responsiveness when storing the plugins setup
+- both detail screens (call details and phonebook entry details) can now be closed with
+  OK button, too
+  (patch provided by Uwe [33]) 
   
 --- References ---
 
@@ -487,3 +490,6 @@ VDR Plugin 'fritzbox' Revision History
 [30] http://www.vdr-portal.de/board/profile.php?userid=6793
 [31] http://vdr-portal.de/board/profile.php?userid=15996
 [32] http://vdr-portal.de/board/profile.php?userid=18589
+[33] Uwe <egal@egal-vdr.de> 
+     http://vdr-portal.de/board/profile.php?userid=862
+     		
