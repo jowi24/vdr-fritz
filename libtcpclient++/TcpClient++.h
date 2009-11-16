@@ -111,14 +111,14 @@ protected:
 	int underflow();
 	int	sync();
 public:
-	TcpClientBuf(std::string hostname, int port);
+	TcpClientBuf(std::string hostname, int port) throw(tcpclient::TcpException);
 	virtual ~TcpClientBuf();
 	void Disconnect();
 };
 
 class TcpClient : public std::iostream {
 public:
-	TcpClient(std::string hostname, int port)
+	TcpClient(std::string hostname, int port) throw(tcpclient::TcpException)
 	: std::iostream(new TcpClientBuf(hostname, port)) {}
 	TcpClient(std::string hostname, int port, TcpClientBuf *buf)
 	: std::iostream(buf) {}

@@ -440,6 +440,9 @@ VDR Plugin 'fritzbox' Revision History
   * fixed entity decoding in FritzFonbook.cpp (reported and fix tested by Torsten [17])
   * improved detection of login type (SID or PASSWORD), which is now done only once
   * improved login to Fritz!Box to avoid unneccessary logins
+  * fixed TcpClient to throw correct exceptions on connect
+    this fixes detection of disabled call monitor, the corresponding hint "dial #96*5*" 
+    is now shown in syslog again  
 - added configuration option to choose default screen when calling the plugins' main 
   menu action.
 - fixed a possible crash when changing the plugins setup
@@ -447,6 +450,8 @@ VDR Plugin 'fritzbox' Revision History
 - both detail screens (call details and phonebook entry details) can now be closed with
   OK button, too
   (patch provided by Uwe [33]) 
+
+
   
 --- References ---
 
