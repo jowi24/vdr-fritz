@@ -108,7 +108,7 @@ void TraceFile::write(std::string hostname, unsigned int port, bool isWrite, std
 
 // ----- TcpClient/TcpClientBuf -----------------------------------------------
 
-TcpClientBuf::TcpClientBuf(std::string hostname, int port) {
+TcpClientBuf::TcpClientBuf(std::string hostname, int port) throw(tcpclient::TcpException) {
 	// init controlled output sequence to have space for BUF_SIZE characters
 	setp(outputBuffer, outputBuffer + BUF_SIZE);
 	// init controlled input sequence to have no data available
@@ -119,7 +119,7 @@ TcpClientBuf::TcpClientBuf(std::string hostname, int port) {
 	this->port     = port;
 	fd             = -1;
 
-
+	Connect();
 }
 
 TcpClientBuf::~TcpClientBuf() {
@@ -288,8 +288,8 @@ std::iostream& TcpClient::operator>> (std::string &s) {
 	char buffer[BUF_SIZE];
 	std::streamsize size = 0;
 	peek(); // wait for at least one byte
-//	if (!good())
-//		throw TcpException(TcpException::ERR_CONNECTION_RESET);
+	if (!good())
+		throw TcpException(TcpException::ERR_CONNECTION_RESET);
 	size = readsome(buffer, BUF_SIZE);
 	s.assign(buffer, size);
 	return *this;

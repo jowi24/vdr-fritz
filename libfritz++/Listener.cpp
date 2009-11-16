@@ -37,7 +37,7 @@ Listener::Listener(EventHandler *event)
 :PThread("fritzlistener")
 {
 	this->event = event;
-	tcpclient = new tcpclient::TcpClient(gConfig->getUrl(), gConfig->getListenerPort());
+	tcpclient = NULL;
 	this->Start();
 }
 
@@ -70,6 +70,8 @@ void Listener::Action() {
 	unsigned int retry_delay = RETRY_DELAY / 2;
 	while (true) {
 		try {
+			if (!tcpclient)
+				tcpclient = new tcpclient::TcpClient(gConfig->getUrl(), gConfig->getListenerPort());
 			retry_delay = retry_delay > 1800 ? 3600 : retry_delay * 2;
 			while (true) {
 				*dsyslog << __FILE__ << ": Waiting for a message." << std::endl;
@@ -188,7 +190,7 @@ void Listener::Action() {
 			if (te.errcode == tcpclient::TcpException::ERR_HOST_NOT_REACHABLE || te.errcode == tcpclient::TcpException::ERR_CONNECTION_REFUSED) {
 				*esyslog << __FILE__ << ": Make sure to enable the Fritz!Box call monitor by dialing #96*5* once." << std::endl;
 			}
-			tcpclient->Disconnect();
+			//tcpclient->Disconnect();
 		}
 		*esyslog << __FILE__ << ": waiting " << retry_delay << " seconds before retrying" << std::endl;
 		sleep(retry_delay); // delay the retry

@@ -14,3 +14,6 @@
   * post - for HTTP-POST request, accepts URL, then flush, then POST data; flush to commit
 - Added simple example for testing
 - Implemented handling of additional headers
+
+2009-11-16
+- TcpClient now performs Connect() already in the constructor, therefore may throw a TcpExecption 
