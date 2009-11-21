@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-09-20 18:12+0200\n"
+"POT-Creation-Date: 2009-11-16 20:18+0100\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Oktay Yolgeçen <oktay_73@yahoo.de>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -185,7 +185,7 @@ msgstr "Arayan numara"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:279 menu.c:375
+#: menu.c:279 menu.c:378
 #, fuzzy
 msgid "Button$Call"
 msgstr "Telefon gelince sesi kes"
@@ -195,15 +195,15 @@ msgstr "Telefon gelince sesi kes"
 msgid "Button$To PB"
 msgstr "Telefon gelince sesi kes"
 
-#: menu.c:301 menu.c:386
+#: menu.c:301 menu.c:389
 msgid "No number to call"
 msgstr "Numarasýz arama imkansýz"
 
-#: menu.c:305 menu.c:390
+#: menu.c:305 menu.c:393
 msgid "Pick up your phone now"
 msgstr "Telefonu þimdi kaldýrýn"
 
-#: menu.c:307 menu.c:392
+#: menu.c:307 menu.c:395
 msgid "Error while initiating call"
 msgstr "Baglantý hatasý"
 
@@ -212,31 +212,31 @@ msgstr "Baglantý hatasý"
 msgid "No number to add"
 msgstr "Numarasýz arama imkansýz"
 
-#: menu.c:335
+#: menu.c:338
 msgid "Phone book details"
 msgstr ""
 
-#: menu.c:348 menu.c:354
+#: menu.c:351 menu.c:357
 msgid "Name"
 msgstr ""
 
-#: menu.c:349 menu.c:355
+#: menu.c:352 menu.c:358
 msgid "Numbers"
 msgstr ""
 
-#: menu.c:350
+#: menu.c:353
 msgid "Default"
 msgstr ""
 
-#: menu.c:356
+#: menu.c:359
 msgid "Private"
 msgstr ""
 
-#: menu.c:357
+#: menu.c:360
 msgid "Mobile"
 msgstr ""
 
-#: menu.c:358
+#: menu.c:361
 msgid "Business"
 msgstr ""
 

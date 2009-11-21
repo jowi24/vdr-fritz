@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-09-20 18:12+0200\n"
+"POT-Creation-Date: 2009-11-16 20:18+0100\n"
 "PO-Revision-Date: 2009-05-14 17:49+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -178,7 +178,7 @@ msgstr "Chiamante"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:279 menu.c:375
+#: menu.c:279 menu.c:378
 msgid "Button$Call"
 msgstr "Chiama"
 
@@ -187,15 +187,15 @@ msgstr "Chiama"
 msgid "Button$To PB"
 msgstr "Chiama"
 
-#: menu.c:301 menu.c:386
+#: menu.c:301 menu.c:389
 msgid "No number to call"
 msgstr "Nessun numero da chiamare"
 
-#: menu.c:305 menu.c:390
+#: menu.c:305 menu.c:393
 msgid "Pick up your phone now"
 msgstr "Prendi ora la telefonata"
 
-#: menu.c:307 menu.c:392
+#: menu.c:307 menu.c:395
 msgid "Error while initiating call"
 msgstr "Errore avvio chiamata"
 
@@ -204,31 +204,31 @@ msgstr "Errore avvio chiamata"
 msgid "No number to add"
 msgstr "Nessun numero da chiamare"
 
-#: menu.c:335
+#: menu.c:338
 msgid "Phone book details"
 msgstr "Dettagli rubrica"
 
-#: menu.c:348 menu.c:354
+#: menu.c:351 menu.c:357
 msgid "Name"
 msgstr "Nome"
 
-#: menu.c:349 menu.c:355
+#: menu.c:352 menu.c:358
 msgid "Numbers"
 msgstr "Numeri"
 
-#: menu.c:350
+#: menu.c:353
 msgid "Default"
 msgstr "Predefinito"
 
-#: menu.c:356
+#: menu.c:359
 msgid "Private"
 msgstr "Privato"
 
-#: menu.c:357
+#: menu.c:360
 msgid "Mobile"
 msgstr "Cellulare"
 
-#: menu.c:358
+#: menu.c:361
 msgid "Business"
 msgstr "Affari"
 
