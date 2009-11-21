@@ -97,3 +97,6 @@
   * fixed TcpClient to throw correct exceptions on connect. This fixes detection 
     of disabled call monitor, the corresponding hint "dial #96*5*" is now shown in 
     syslog again
+
+2009-11-21:
+- Improved matching of phone numbers: Fritz!Box control codes *xxx# are now ignored.

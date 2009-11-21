@@ -443,6 +443,8 @@ VDR Plugin 'fritzbox' Revision History
   * fixed TcpClient to throw correct exceptions on connect
     this fixes detection of disabled call monitor, the corresponding hint "dial #96*5*" 
     is now shown in syslog again  
+  * improved matching of phone numbers: Fritz!Box control codes *xxx# are now ignored.
+    (suggested by koronth [34])
 - added configuration option to choose default screen when calling the plugins' main 
   menu action.
 - fixed a possible crash when changing the plugins setup
@@ -451,8 +453,7 @@ VDR Plugin 'fritzbox' Revision History
   OK button, too
   (patch provided by Uwe [33]) 
 
-
-  
+ 
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
@@ -497,4 +498,5 @@ VDR Plugin 'fritzbox' Revision History
 [32] http://vdr-portal.de/board/profile.php?userid=18589
 [33] Uwe <egal@egal-vdr.de> 
      http://vdr-portal.de/board/profile.php?userid=862
+[34] http://www.vdr-portal.de/board/profile.php?userid=25271
      		
