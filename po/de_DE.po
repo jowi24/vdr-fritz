@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-09-20 18:12+0200\n"
+"POT-Creation-Date: 2009-11-16 20:18+0100\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Matthias Becker <becker.matthias@gmail.com>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -175,7 +175,7 @@ msgstr "Anrufer"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:279 menu.c:375
+#: menu.c:279 menu.c:378
 msgid "Button$Call"
 msgstr "Anrufen"
 
@@ -183,15 +183,15 @@ msgstr "Anrufen"
 msgid "Button$To PB"
 msgstr "In TB"
 
-#: menu.c:301 menu.c:386
+#: menu.c:301 menu.c:389
 msgid "No number to call"
 msgstr "Ohne Nummer kein Anruf möglich"
 
-#: menu.c:305 menu.c:390
+#: menu.c:305 menu.c:393
 msgid "Pick up your phone now"
 msgstr "Telefon jetzt abnehmen"
 
-#: menu.c:307 menu.c:392
+#: menu.c:307 menu.c:395
 msgid "Error while initiating call"
 msgstr "Fehler beim Verbindungsaufbau"
 
@@ -199,31 +199,31 @@ msgstr "Fehler beim Verbindungsaufbau"
 msgid "No number to add"
 msgstr "Keine Rufnummer zu Speichern"
 
-#: menu.c:335
+#: menu.c:338
 msgid "Phone book details"
 msgstr "Telefonbuchdetails"
 
-#: menu.c:348 menu.c:354
+#: menu.c:351 menu.c:357
 msgid "Name"
 msgstr "Name"
 
-#: menu.c:349 menu.c:355
+#: menu.c:352 menu.c:358
 msgid "Numbers"
 msgstr "Rufnummern"
 
-#: menu.c:350
+#: menu.c:353
 msgid "Default"
 msgstr "Standard"
 
-#: menu.c:356
+#: menu.c:359
 msgid "Private"
 msgstr "Privat"
 
-#: menu.c:357
+#: menu.c:360
 msgid "Mobile"
 msgstr "Mobil"
 
-#: menu.c:358
+#: menu.c:361
 msgid "Business"
 msgstr "Geschäftlich"
 
