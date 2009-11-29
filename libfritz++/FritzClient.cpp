@@ -21,6 +21,7 @@
 
 #include <openssl/md5.h>
 #include <iomanip>
+#include <cstring>
 
 #include "Config.h"
 #include "FritzClient.h"
