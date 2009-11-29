@@ -453,6 +453,11 @@ VDR Plugin 'fritzbox' Revision History
   OK button, too
   (patch provided by Uwe [33]) 
 
+2009-11-XX: Version 1.3.2
+- changes in libfritz++
+  * added missing include <cstring> in FritzClient.cpp
+    (patch provided by hotzenplotz5 [35])
+
  
 --- References ---
 
@@ -499,4 +504,5 @@ VDR Plugin 'fritzbox' Revision History
 [33] Uwe <egal@egal-vdr.de> 
      http://vdr-portal.de/board/profile.php?userid=862
 [34] http://www.vdr-portal.de/board/profile.php?userid=25271
+[35] http://vdr-portal.de/board/profile.php?userid=2951
      		
