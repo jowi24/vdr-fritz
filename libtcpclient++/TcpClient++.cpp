@@ -123,10 +123,7 @@ TcpClientBuf::TcpClientBuf(std::string hostname, int port) throw(tcpclient::TcpE
 }
 
 TcpClientBuf::~TcpClientBuf() {
-	if (fd >= 0) {
-		shutdown(fd, SHUT_RDWR);
-		close(fd);
-	}
+	Disconnect();
 }
 
 TcpClient::~TcpClient() {
@@ -191,7 +188,7 @@ void TcpClientBuf::Connect() {
 		}
 
 	}
-	freeaddrinfo(ainfo);
+	freeaddrinfo(ainfo); //TODO: memleak in case of exception
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 	connected = true;
 }
@@ -203,10 +200,6 @@ void TcpClientBuf::Disconnect() {
 		fd = -1;
 		connected = false;
 	}
-}
-
-void TcpClient::Disconnect() {
-	((TcpClientBuf *)rdbuf())->Disconnect();
 }
 
 // ----- Stuff for reading from socket ----------------------------------------

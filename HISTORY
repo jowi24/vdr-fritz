@@ -457,6 +457,10 @@ VDR Plugin 'fritzbox' Revision History
 - changes in libfritz++
   * added missing include <cstring> in FritzClient.cpp
     (patch provided by hotzenplotz5 [35])
+  * fixed retry delay calculation in case of connection refused
+  * simplified implementation of connection disconnect
+    this possibly fixes a crash when changing the plugins setup with FB call monitor disabled
+    (reported by Frank [36])
 
  
 --- References ---
@@ -498,11 +502,12 @@ VDR Plugin 'fritzbox' Revision History
 [28] http://vdr-portal.de/board/profile.php?userid=1450
 [29] Thorsten Pohl <tpohl@me.com> 
      http://vdr-portal.de/board/profile.php?userid=8029
-[30] http://www.vdr-portal.de/board/profile.php?userid=6793
+[30] http://vdr-portal.de/board/profile.php?userid=6793
 [31] http://vdr-portal.de/board/profile.php?userid=15996
 [32] http://vdr-portal.de/board/profile.php?userid=18589
 [33] Uwe <egal@egal-vdr.de> 
      http://vdr-portal.de/board/profile.php?userid=862
-[34] http://www.vdr-portal.de/board/profile.php?userid=25271
+[34] http://vdr-portal.de/board/profile.php?userid=25271
 [35] http://vdr-portal.de/board/profile.php?userid=2951
-     		
+[36] Frank (hummingbird_de)
+     http://vdr-portal.de/board/profile.php?userid=715

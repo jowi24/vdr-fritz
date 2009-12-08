@@ -123,7 +123,6 @@ public:
 	TcpClient(std::string hostname, int port, TcpClientBuf *buf)
 	: std::iostream(buf) {}
 	virtual ~TcpClient();
-	void Disconnect();
 	std::iostream& operator>> (std::string &s);
 };
 
