@@ -43,7 +43,6 @@ Listener::Listener(EventHandler *event)
 
 Listener::~Listener()
 {
-	tcpclient->Disconnect();
 	delete tcpclient;
 	this->Cancel();
 }
@@ -70,9 +69,9 @@ void Listener::Action() {
 	unsigned int retry_delay = RETRY_DELAY / 2;
 	while (true) {
 		try {
+			retry_delay = retry_delay > 1800 ? 3600 : retry_delay * 2;
 			if (!tcpclient)
 				tcpclient = new tcpclient::TcpClient(gConfig->getUrl(), gConfig->getListenerPort());
-			retry_delay = retry_delay > 1800 ? 3600 : retry_delay * 2;
 			while (true) {
 				*dsyslog << __FILE__ << ": Waiting for a message." << std::endl;
 				//data.erase();
