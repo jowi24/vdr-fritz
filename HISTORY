@@ -453,7 +453,7 @@ VDR Plugin 'fritzbox' Revision History
   OK button, too
   (patch provided by Uwe [33]) 
 
-2009-11-XX: Version 1.3.2
+2010-01-02: Version 1.3.2
 - changes in libfritz++
   * added missing include <cstring> in FritzClient.cpp
     (patch provided by hotzenplotz5 [35])
@@ -461,6 +461,7 @@ VDR Plugin 'fritzbox' Revision History
   * simplified implementation of connection disconnect
     this possibly fixes a crash when changing the plugins setup with FB call monitor disabled
     (reported by Frank [36])
+- updated italian translations (provided by Diego [24])
 
  
 --- References ---
