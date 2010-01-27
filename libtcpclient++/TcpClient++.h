@@ -96,6 +96,7 @@ public:
 class TcpClientBuf : public std::streambuf {
 private:
 	bool connected;
+	pthread::Mutex mutex;
 	int fd;
 	void Write(std::string &s);
 	void Connect();
@@ -120,7 +121,7 @@ class TcpClient : public std::iostream {
 public:
 	TcpClient(std::string hostname, int port) throw(tcpclient::TcpException)
 	: std::iostream(new TcpClientBuf(hostname, port)) {}
-	TcpClient(std::string hostname, int port, TcpClientBuf *buf)
+	TcpClient(TcpClientBuf *buf)
 	: std::iostream(buf) {}
 	virtual ~TcpClient();
 	std::iostream& operator>> (std::string &s);
@@ -139,8 +140,7 @@ private:
 	eState state;
 	char internalBuffer[BUF_SIZE];
 public:
-	HttpClientBuf(std::string hostname, int port)
-	: TcpClientBuf(hostname, port) {}
+	HttpClientBuf(std::string hostname, int port);
 	void SetState(eState state);
 protected:
 	int	sync();
@@ -149,7 +149,7 @@ protected:
 class HttpClient : public TcpClient {
 public:
 	HttpClient(std::string hostname, int port = 80)
-	: TcpClient(hostname, port, new HttpClientBuf(hostname, port)) {}
+	: TcpClient(new HttpClientBuf(hostname, port)) {}
 	std::iostream& operator>> (std::string &s);
 };
 

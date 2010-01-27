@@ -32,14 +32,15 @@ std::ostream *dsyslog = &std::clog;
 std::ostream *isyslog = &std::cout;
 std::ostream *esyslog = &std::cerr;
 
-void Config::Setup(std::string hostname, std::string password,
+bool Config::Setup(std::string hostname, std::string password,
 		           bool *locationSettingsDetected,
 				   std::string *countryCode, std::string *regionCode) {
+
 	if (gConfig)
 		delete gConfig;
 	gConfig = new Config( hostname, password);
 	// preload phone settings from Fritz!Box
-	Tools::GetLocationSettings();
+	bool validPassword = Tools::GetLocationSettings();
 	if (gConfig->getCountryCode().empty() || gConfig->getRegionCode().empty()) {
 		if (locationSettingsDetected)
 			*locationSettingsDetected = false;
@@ -58,9 +59,18 @@ void Config::Setup(std::string hostname, std::string password,
 
 	// fetch SIP provider names
 	Tools::GetSipSettings();
+
+	return validPassword;
 }
 
-void Config::SetupMsnFilter( std::vector <std::string> vMsn){
+void Config::SetupPorts ( size_t listener, size_t ui ) {
+	if (gConfig) {
+		gConfig->mConfig.listenerPort = listener;
+		gConfig->mConfig.uiPort = ui;
+	}
+}
+
+void Config::SetupMsnFilter( std::vector <std::string> vMsn) {
 	if (gConfig)
 		gConfig->mConfig.msn = vMsn;
 }
