@@ -74,9 +74,15 @@ public:
 	 * @param Sets the default value for countryCode. If locationSettingsDetected == true, this returns the detected countryCode.
 	 * @param Sets the default value for regionCode. If locationSettingsDetected == true, this returns the detected regionCode.
 	 */
-	void static Setup( std::string hostname="fritz.box", std::string password="",
+	bool static Setup( std::string hostname="fritz.box", std::string password="",
 			           bool *locationSettingsDetected = NULL,
 			           std::string *countryCode = NULL, std::string *regionCode = NULL);
+	/**
+	 * Sets arbitrary ports for connections to the Fritz!Box's listener and webinterface.
+	 * @param the port to connect to the listener
+	 * @param the port to connect to the webinterface
+	 */
+	void static SetupPorts ( size_t listener = 1012, size_t ui = 80 );
 	/**
 	 * Establishes MSN filtering.
 	 * An MsnFilter enables the library to only notify the application on
@@ -84,7 +90,7 @@ public:
 	 * needed if filtering is wanted. Default is no filtering.
 	 * @param the list of MSNs to filter on
 	 */
-	void static SetupMsnFilter(  std::vector <std::string> vMsn );
+	void static SetupMsnFilter( std::vector <std::string> vMsn );
 	/**
 	 * Modifies logging channels.
 	 * As default, logging of libfritz++ actions is performed using default c++
