@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-01-06 15:58+0100\n"
+"POT-Creation-Date: 2010-02-14 11:24+0100\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Matthias Becker <becker.matthias@gmail.com>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -30,9 +30,24 @@ msgstr "verpasster Anruf"
 msgid "missed calls"
 msgstr "verpasste Anrufe"
 
-#: fritzbox.c:164 menu.c:130
+#: fritzbox.c:164 menu.c:113
 msgid "This phonebook is not yet available."
 msgstr "Telefonbuch noch nicht verfügbar."
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
+#: fritzbox.c:223
+msgid "H"
+msgstr "T"
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
+#: fritzbox.c:226
+msgid "M"
+msgstr "H"
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
+#: fritzbox.c:229
+msgid "W"
+msgstr "F"
 
 # c-format
 #: fritzeventhandler.c:53
@@ -48,182 +63,162 @@ msgstr "Anruf"
 msgid "Call from"
 msgstr "Anruf von"
 
-#: fritzeventhandler.c:103
+#: fritzeventhandler.c:102 libfritz++/Listener.cpp:107
 msgid "POTS"
 msgstr "analog"
 
-#: fritzeventhandler.c:110
+#: fritzeventhandler.c:109 libfritz++/Listener.cpp:108
 msgid "ISDN"
 msgstr "ISDN"
 
-#: fritzeventhandler.c:111
+#: fritzeventhandler.c:110
 msgid "VoIP"
 msgstr "VoIP"
 
-#: fritzfonbuch.c:155 menu.c:43
+#: fritzfonbuch.c:155 libfritz++/FritzFonbook.cpp:154
 msgid "Fritz!Box phone book"
 msgstr "Fritz!Box Telefonbuch"
 
-#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
-#: menu.c:34
-msgid "H"
-msgstr "T"
-
-#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
-#: menu.c:36
-msgid "M"
-msgstr "H"
-
-#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
-#: menu.c:38
-msgid "W"
-msgstr "F"
-
-#. TRANSLATORS: telephonebook number type: this should be emtpy (one space)
-#: menu.c:40
-msgid " "
-msgstr " "
-
-#: menu.c:42
-msgid "Local phone book"
-msgstr "Lokales Telefonbuch"
-
-#: menu.c:44
-msgid "nummerzoeker.com"
-msgstr ""
-
-#: menu.c:45
-msgid "das-oertliche.de"
-msgstr ""
-
-#: menu.c:131 menu.c:230
-msgid "You may need to wait some minutes,"
-msgstr "Der Abruf benötigt entweder noch Zeit"
-
-#: menu.c:132 menu.c:231
-msgid "otherwise there may be a network problem."
-msgstr "oder es besteht ein Netzwerkproblem."
-
-#: menu.c:135
-msgid "This phonebook is not displayable"
-msgstr "Keine anzeigbaren Einträge"
-
-#: menu.c:157
-msgid "> PB"
-msgstr "> TB"
-
-#: menu.c:163
-msgid "Fritz!Box call list"
-msgstr "Fritz!Box Gesprächsliste"
-
-#: menu.c:169 setup.c:76 setup.c:92
-msgid "incoming"
-msgstr "eingehend"
-
-#: menu.c:172 setup.c:102
-msgid "missed"
-msgstr "verpasst"
-
-#: menu.c:181 setup.c:81 setup.c:97
-msgid "outgoing"
-msgstr "ausgehend"
-
-#: menu.c:201 menu.c:276
+#: libfritz++/CallList.cpp:169 menu.c:184 menu.c:259
 msgid "unknown"
 msgstr "unbekannt"
 
-#: menu.c:229
+#: libfritz++/LocalFonbook.cpp:74
+msgid "Local phone book"
+msgstr "Lokales Telefonbuch"
+
+#: libfritz++/Nummerzoeker.cpp:33
+msgid "nummerzoeker.com"
+msgstr ""
+
+#: libfritz++/OertlichesFonbook.cpp:33
+msgid "das-oertliche.de"
+msgstr ""
+
+#: menu.c:114 menu.c:213
+msgid "You may need to wait some minutes,"
+msgstr "Der Abruf benötigt entweder noch Zeit"
+
+#: menu.c:115 menu.c:214
+msgid "otherwise there may be a network problem."
+msgstr "oder es besteht ein Netzwerkproblem."
+
+#: menu.c:118
+msgid "This phonebook is not displayable"
+msgstr "Keine anzeigbaren Einträge"
+
+#: menu.c:140
+msgid "> PB"
+msgstr "> TB"
+
+#: menu.c:146
+msgid "Fritz!Box call list"
+msgstr "Fritz!Box Gesprächsliste"
+
+#: menu.c:152 setup.c:76 setup.c:92
+msgid "incoming"
+msgstr "eingehend"
+
+#: menu.c:155 setup.c:102
+msgid "missed"
+msgstr "verpasst"
+
+#: menu.c:164 setup.c:81 setup.c:97
+msgid "outgoing"
+msgstr "ausgehend"
+
+#: menu.c:212
 msgid "The call list is not yet available."
 msgstr "Gesprächsliste noch nicht verfügbar."
 
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:236 setup.c:87
+#: menu.c:219 setup.c:87
 msgid "PB"
 msgstr "TB"
 
-#: menu.c:243
+#: menu.c:226
 msgid "Call details"
 msgstr "Anrufdetails"
 
-#: menu.c:262
+#: menu.c:245
 msgid "Date"
 msgstr "Datum"
 
-#: menu.c:263
+#: menu.c:246
 msgid "Time"
 msgstr "Uhrzeit"
 
-#: menu.c:264
+#: menu.c:247
 msgid "Duration"
 msgstr "Dauer"
 
-#: menu.c:265
+#: menu.c:248
 msgid "call was not accepted"
 msgstr "Anruf nicht angenommen"
 
-#: menu.c:267 setup.c:126
+#: menu.c:250 setup.c:126
 msgid "Extension"
 msgstr "MSN"
 
-#: menu.c:272
+#: menu.c:255
 msgid "Callee"
 msgstr "Ziel"
 
-#: menu.c:273
+#: menu.c:256
 msgid "Caller"
 msgstr "Anrufer"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:279 menu.c:378
+#: menu.c:262 menu.c:361
 msgid "Button$Call"
 msgstr "Anrufen"
 
-#: menu.c:279
+#: menu.c:262
 msgid "Button$To PB"
 msgstr "In TB"
 
-#: menu.c:301 menu.c:389
+#: menu.c:284 menu.c:372
 msgid "No number to call"
 msgstr "Ohne Nummer kein Anruf möglich"
 
-#: menu.c:305 menu.c:393
+#: menu.c:288 menu.c:376
 msgid "Pick up your phone now"
 msgstr "Telefon jetzt abnehmen"
 
-#: menu.c:307 menu.c:395
+#: menu.c:290 menu.c:378
 msgid "Error while initiating call"
 msgstr "Fehler beim Verbindungsaufbau"
 
-#: menu.c:314
+#: menu.c:297
 msgid "No number to add"
 msgstr "Keine Rufnummer zu Speichern"
 
-#: menu.c:338
+#: menu.c:321
 msgid "Phone book details"
 msgstr "Telefonbuchdetails"
 
-#: menu.c:351 menu.c:357
+#: menu.c:334 menu.c:340
 msgid "Name"
 msgstr "Name"
 
-#: menu.c:352 menu.c:358
+#: menu.c:335 menu.c:341
 msgid "Numbers"
 msgstr "Rufnummern"
 
-#: menu.c:353
+#: menu.c:336
 msgid "Default"
 msgstr "Standard"
 
-#: menu.c:359
+#: menu.c:342
 msgid "Private"
 msgstr "Privat"
 
-#: menu.c:360
+#: menu.c:343
 msgid "Mobile"
 msgstr "Mobil"
 
-#: menu.c:361
+#: menu.c:344
 msgid "Business"
 msgstr "Geschäftlich"
 
@@ -323,11 +318,14 @@ msgstr "Weniger"
 msgid "More"
 msgstr "Mehr"
 
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Fritz!Box Information"
+#~ msgid "Error fetching the call list"
+#~ msgstr "Fehler beim Anfordern der Gesprächsliste"
 
 #~ msgid "Please wait..."
 #~ msgstr "Bitte warten..."
 
-#~ msgid "Error fetching the call list"
-#~ msgstr "Fehler beim Anfordern der Gesprächsliste"
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Fritz!Box Information"
+
+#~ msgid " "
+#~ msgstr " "

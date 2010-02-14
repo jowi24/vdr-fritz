@@ -57,7 +57,6 @@ public:
 	std::string getNumber() const { return number; }
 	eType getType() const { return type; }
 	void setType(eType type) { this->type = type; }
-	std::string getTypeName();
 	bool operator<(const FonbookEntry & fe) const;
 };
 
@@ -164,7 +163,7 @@ public:
 	 * the plugin's setup.
 	 * @return the technical id
 	 */
-	virtual std::string &GetTechId() { return techId; }
+	virtual std::string GetTechId() { return techId; }
 	/**
 	 * Sorts the phonebook's entries by the given element and in given order.
 	 * @param the element used for sorting

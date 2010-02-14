@@ -68,8 +68,7 @@ std::string cFritzEventHandler::ComposeCallMessage() {
 	return rMsg;
 }
 
-
-void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string remoteType, std::string localParty, std::string medium, std::string mediumName) {
+void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, fritz::FonbookEntry::eType remoteType, std::string localParty, std::string medium, std::string mediumName) {
 
 	if (fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_ANY) {
 		if (outgoing && fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_OUT)
@@ -115,9 +114,9 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 		callInfo->isOutgoing   = outgoing;
 		callInfo->remoteNumber = remoteNumber;
 		callInfo->remoteName   = remoteName;
-		if (remoteType.size() > 0) {
+		if (cPluginFritzbox::FonbookEntryToName(remoteType).size() > 0) {
 			callInfo->remoteName += " ";
-			callInfo->remoteName += tr(remoteType.c_str());
+			callInfo->remoteName += cPluginFritzbox::FonbookEntryToName(remoteType);
 		}
 		callInfo->localNumber  = localParty;
 		callInfo->medium       = mediumName;

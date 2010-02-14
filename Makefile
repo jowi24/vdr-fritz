@@ -113,8 +113,8 @@ I18Npot   = $(PODIR)/$(PLUGIN).pot
 %.mo: %.po
 	msgfmt -c -o $@ $<
 
-$(I18Npot): $(wildcard *.c)
-	xgettext -C -cTRANSLATORS --no-wrap -F -k -ktr -ktrNOOP --msgid-bugs-address='<vdr@joachim-wilke.de>' -o $@ $^
+$(I18Npot): $(wildcard *.c) $(wildcard libfritz++/*.cpp)
+	xgettext -C -cTRANSLATORS --no-wrap -F -k -ktr -ktrNOOP -kI18N_NOOP --msgid-bugs-address='<vdr@joachim-wilke.de>' -o $@ $^
 
 %.po: $(I18Npot)
 	msgmerge -U --no-wrap -F --backup=none -q $@ $<

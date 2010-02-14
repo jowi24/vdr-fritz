@@ -34,7 +34,6 @@ private:
 	int displayedConnId;
 	fritz::sCallInfo *callInfo;
 
-
 public:
 	cFritzEventHandler();
 	virtual ~cFritzEventHandler();
@@ -42,7 +41,7 @@ public:
 	fritz::sCallInfo *GetCallInfo() { return callInfo; }
 	std::string ComposeCallMessage();
 
-	virtual void HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, std::string remoteType, std::string localParty, std::string medium, std::string mediumName);
+	virtual void HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, fritz::FonbookEntry::eType remoteType, std::string localParty, std::string medium, std::string mediumName);
 	virtual void HandleConnect(int connId);
 	virtual void HandleDisconnect(int connId, std::string duration);
 };
