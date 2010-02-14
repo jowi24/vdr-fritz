@@ -464,7 +464,19 @@ VDR Plugin 'fritzbox' Revision History
 - updated italian translations (provided by Diego [24])
 
 2010-xx-xx: Version 1.3.3
-
+- changes in libfritz++ and libtcpclient++
+  * Fixed missing initialization of HttpClientBuf::state
+  * Improved thread safety in TcpClient: 
+    deleting TcpClient while reading from stream in another thread caused memory corruption
+  * Improved destructor of Listener to allow proper cleanup of thread
+  * Fixed some warnings about ununsed parameters in base-classes and empty implementations
+  * removed FonbookEntry::getTypeName() as this is something the consumer has to take care about
+  * introduced I18N_NOOP macro, this allows application that use libfritz++ to identify strings 
+    delivered by the library (e.g., using xgettext) they should localize
+- the changes in libfritz++ and libtcpclient++ should improve overall plugin stability
+  especially at shutdown and configuration changes
+- removed some translation hints which are now provided by libfritz++ directly
+- implemented cPluginFritzbox::FonbookEntryToName to adapt to changes in libfritz++
  
 --- References ---
 

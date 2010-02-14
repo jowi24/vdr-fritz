@@ -103,6 +103,11 @@ void Listener::Action() {
 					// partC => called Id (remote)
 					// partD => medium (POTS, SIP[1-9], ISDN, ...)
 
+#if 0 // some strings sent from the FB, made available to xgettext
+					I18N_NOOP("POTS");
+					I18N_NOOP("ISDN");
+#endif
+
 					// an '#' can be appended to outgoing calls by the phone, so delete it
 					if (partC[partC.length()-1] == '#')
 						partC = partC.substr(0, partC.length()-1);
@@ -120,7 +125,7 @@ void Listener::Action() {
 						else
 							mediumName = partD;
 						// notify application
-						if (event) event->HandleCall(true, connId, partC, fe.getName(), fe.getTypeName(), partB, partD, mediumName);
+						if (event) event->HandleCall(true, connId, partC, fe.getName(), fe.getType(), partB, partD, mediumName);
 						activeConnections.push_back(connId);
 					}
 
@@ -142,7 +147,7 @@ void Listener::Action() {
 						else
 							mediumName = partC;
 						// notify application
-						if (event) event->HandleCall(false, connId, partA, fe.getName(), fe.getTypeName(), partB, partC, mediumName);
+						if (event) event->HandleCall(false, connId, partA, fe.getName(), fe.getType(), partB, partC, mediumName);
 						activeConnections.push_back(connId);
 					}
 				} else if (type.compare("CONNECT") == 0) {

@@ -28,23 +28,6 @@
 #include "menu.h"
 #include "setup.h"
 
-#ifdef NOT_DEFINED
-// some translations of strings provided by libfritz++
-//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
-trNOOP("H");
-//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
-trNOOP("M");
-//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
-trNOOP("W");
-//TRANSLATORS: telephonebook number type: this should be emtpy (one space)
-trNOOP(" ");
-
-trNOOP("Local phone book");
-trNOOP("Fritz!Box phone book");
-trNOOP("nummerzoeker.com");
-trNOOP("das-oertliche.de");
-#endif
-
 cMenuFritzbox::cMenuFritzbox(cPluginFritzbox *plugin)
 :cOsdMenu("Fritz!Box", 1) // just dummy values
 {
@@ -141,7 +124,7 @@ void cMenuFritzbox::DisplayFonbuch() {
 			if (fe) {
 				// build the menu entries
 				char *line;
-				int ret = asprintf(&line,"%s\t%s\t%s", lastName == fe->getName() ? "" : fe->getName().c_str(), tr(fe->getTypeName().c_str()), fe->getNumber().c_str());
+				int ret = asprintf(&line,"%s\t%s\t%s", lastName == fe->getName() ? "" : fe->getName().c_str(), tr(cPluginFritzbox::FonbookEntryToName(fe->getType()).c_str()), fe->getNumber().c_str());
 				if (ret <= 0) {
 					*elog << __FILE__ << ": Error allocating line buffer for cOsdItem." << std::endl;
 					continue;
@@ -251,9 +234,9 @@ cMenuCallDetail::cMenuCallDetail(fritz::CallEntry *ce, cMenuFritzbox::mode mode,
 	if (ce->remoteName.size() == 0 && ce->remoteNumber.size() > 0) {
 		if (fe.getName().compare(ce->remoteNumber) != 0) {
 			ce->remoteName = fe.getName();
-			if (fe.getTypeName().size() > 0) {
+			if (cPluginFritzbox::FonbookEntryToName(fe.getType()).size() > 0) {
 				ce->remoteName += " ";
-				ce->remoteName += tr(fe.getTypeName().c_str());
+				ce->remoteName += tr(cPluginFritzbox::FonbookEntryToName(fe.getType()).c_str());
 			}
 		}
 	}

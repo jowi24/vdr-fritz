@@ -216,4 +216,22 @@ void cPluginFritzbox::Action() {
 		fritz::Listener::DeleteListener();
 }
 
+std::string cPluginFritzbox::FonbookEntryToName(const fritz::FonbookEntry::eType type) {
+	switch (type) {
+	case fritz::FonbookEntry::TYPE_HOME:
+		//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
+		return tr("H");
+	case fritz::FonbookEntry::TYPE_MOBILE:
+		//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
+		return tr("M");
+	case fritz::FonbookEntry::TYPE_WORK:
+		//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
+		return tr("W");
+	default:
+		return "";
+	}
+}
+
+
+
 VDRPLUGINCREATOR(cPluginFritzbox); // Don't touch this!

@@ -58,6 +58,9 @@ public:
 	virtual cString SVDRPCommand(const char *Command, const char *Option, int &ReplyCode);
 	// from cThread:
 	virtual void Action();
+	// various things
+	static std::string FonbookEntryToName(const fritz::FonbookEntry::eType type);
+
 };
 
 #endif /*FRITZBOX_H_*/
