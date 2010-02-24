@@ -1,7 +1,7 @@
 /*
  * libfritz++
  *
- * Copyright (C) 2007-2008 Joachim Wilke <vdr@joachim-wilke.de>
+ * Copyright (C) 2007-2010 Joachim Wilke <libfritz@joachim-wilke.de>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,6 +26,13 @@
 #include <iostream>
 #include <vector>
 #include <string>
+
+#define NAMESPACE "libfritz++"
+#define LOCATOR "[" << NAMESPACE << std::string(__FILE__, std::string(__FILE__).rfind('/'), std::string::npos) \
+                << ":" << __LINE__ << "] "
+#define DBG(x) *::fritz::dsyslog << LOCATOR << x << std::endl;
+#define INF(x) *::fritz::isyslog << LOCATOR << x << std::endl;
+#define ERR(x) *::fritz::esyslog << LOCATOR << x << std::endl;
 
 #define RETRY_DELAY 60
 
