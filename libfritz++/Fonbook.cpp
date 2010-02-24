@@ -1,7 +1,7 @@
 /*
  * libfritz++
  *
- * Copyright (C) 2007-2008 Joachim Wilke <vdr@joachim-wilke.de>
+ * Copyright (C) 2007-2010 Joachim Wilke <libfritz@joachim-wilke.de>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +60,7 @@ public:
 			return (ascending ? (fe1.getNumber() < fe2.getNumber()) : (fe1.getNumber() > fe2.getNumber()));
 			break;
 		default:
-			*esyslog << __FILE__ << ": invalid element given for sorting." << std::endl;
+			ERR("invalid element given for sorting.");
 			return false;
 		}
 	}

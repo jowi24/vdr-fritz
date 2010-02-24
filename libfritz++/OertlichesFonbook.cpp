@@ -1,7 +1,7 @@
 /*
  * libfritz++
  *
- * Copyright (C) 2007-2008 Joachim Wilke <vdr@joachim-wilke.de>
+ * Copyright (C) 2007-2010 Joachim Wilke <libfritz@joachim-wilke.de>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -55,7 +55,7 @@ FonbookEntry &OertlichesFonbook::ResolveToName(FonbookEntry &fe) {
 	std::string msg;
 	std::string name;
 	try {
-		*dsyslog << __FILE__ << ": sending reverse lookup request for " << Tools::NormalizeNumber(number) << " to www.dasoertliche.de" << std::endl;
+		DBG("sending reverse lookup request for " << Tools::NormalizeNumber(number) << " to www.dasoertliche.de");
 		std::string host = "www.dasoertliche.de";
 		tcpclient::HttpClient tc(host);
 		tc << tcpclient::get
@@ -64,7 +64,7 @@ FonbookEntry &OertlichesFonbook::ResolveToName(FonbookEntry &fe) {
 		   << std::flush;
 		tc >> msg;
 	} catch (tcpclient::TcpException te) {
-		*esyslog << __FILE__ << ": Exception - " << te.what() << std::endl;
+		ERR("Exception - " << te.what());
 		fe.setName(number);
 		fe.setType(FonbookEntry::TYPE_NONE);
 		return fe;
@@ -72,7 +72,7 @@ FonbookEntry &OertlichesFonbook::ResolveToName(FonbookEntry &fe) {
 	// parse answer
 	size_t start = msg.find("class=\"preview\">");
 	if (start == std::string::npos) {
-		*isyslog << __FILE__ << ": no entry found." << std::endl;
+		INF("no entry found.");
 		fe.setName(number);
 		fe.setType(FonbookEntry::TYPE_NONE);
 		return fe;
@@ -87,7 +87,7 @@ FonbookEntry &OertlichesFonbook::ResolveToName(FonbookEntry &fe) {
 	const char *s_converted = conv->Convert(name.c_str());
 	name = s_converted;
 	delete (conv);
-	*isyslog << __FILE__ << ": resolves to " << name.c_str() << std::endl;
+	INF("resolves to " << name.c_str());
 	fe.setName(name);
 	fe.setType(FonbookEntry::TYPE_NONE);
 	return fe;

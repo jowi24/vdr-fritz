@@ -139,5 +139,20 @@
 - fixed sorting issue in calllist by putting remoteNumber / "unknown" into the remoteName field
 - "unknown" call list entries are now always sorted to beginning of the list
 
-2010-02-97:
+2010-02-07:
 - addes a missing redefinition of GetTechId() in class FonbookManager
+
+2010-02-16:
+- modified logging to handle full path filenames cause by cmake in __FILE__.
+  Provided new logging macros DBG, INF, ERR
+- Removed dependency to OpenSSL due to licensing issues, 
+  using copy of MD5 implementation from GNU coreutils 5.93
+  
+2010-02-19:
+- Removed md5.[h,c] in favor of libgcrypt, libfritz++ now needs libgcrypt's 
+  development header "gcrypt.h" to compile
+  
+2010-02-20:
+- Added a missing call to Login() in FritzClient::InitCall()
+- Do not initiate a call if no number is given in FritzClient::InitCall()
+  
