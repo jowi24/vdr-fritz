@@ -86,12 +86,12 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 
 	connIdList.push_back(connId);
 	if (fritzboxConfig.muteOnCall && !cDevice::PrimaryDevice()->IsMute()) {
-		*ilog << __FILE__ << ": " << (outgoing ? "outgoing": "incoming") << " call, muting." << std::endl;
+		INF((outgoing ? "outgoing": "incoming") << " call, muting.");
 		cDevice::PrimaryDevice()->ToggleMute();
 		muted = true;
 	}
 	if (fritzboxConfig.pauseOnCall && !paused && control && currPlay) {
-		*ilog << __FILE__ <<": " << (outgoing ? "outgoing": "incoming") << " call, pressing kPause." << std::endl;
+		INF((outgoing ? "outgoing": "incoming") << " call, pressing kPause.");
 		cRemote::Put(kPause);
 		paused = true;
 	}
@@ -122,7 +122,7 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 		callInfo->medium       = mediumName;
 		// trigger notification using own osd
 		if (fritzboxConfig.useNotifyOsd && !cNotifyOsd::isOpen()) {
-			*dlog << __FILE__ << ": triggering NotifyOsd" << std::endl;
+			DBG("triggering NotifyOsd");
 			cRemote::CallPlugin(fritzboxConfig.pluginName.c_str());
 		}
 	}
@@ -154,13 +154,13 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 	connIdList.remove(connId);
 	// unmute, if applicable
 	if (connIdList.empty() && muted && cDevice::PrimaryDevice()->IsMute()) {
-		*ilog << __FILE__ << ": Finished all incoming calls, unmuting." << std::endl;
+		INF("Finished all incoming calls, unmuting.");
 		cDevice::PrimaryDevice()->ToggleMute();
 		muted = false;
 	}
 	// unpause, if applicable
 	if (connIdList.empty() && paused && control && currPlay == false) {
-		*ilog << __FILE__ << ": Finished all incoming calls, pressing kPlay." << std::endl;
+		INF("Finished all incoming calls, pressing kPlay.");
 		cRemote::Put(kPlay); // this is an ugly workaround, but it should work
 		cRemote::Put(kPlay);
 		paused = false;

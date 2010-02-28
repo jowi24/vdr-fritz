@@ -195,7 +195,7 @@ VDR Plugin 'fritzbox' Revision History
 
 2008-02-02: Version 0.0.11
 - fixed the "#96*5*"-code in README.de
-  (reported by Hans Jürgen [22])
+  (reported by Hans Jï¿½rgen [22])
 - fixed request-URL of das-oertliche.de
   (patch provided by Reinhard [11])
 - now always unlocking FritzBoxMutex even when an exception is thrown
@@ -313,7 +313,7 @@ VDR Plugin 'fritzbox' Revision History
   (provided by neptunvasja [6])
   
 2008-08-20: Version 1.1.2
-- changed name of "Das Örtliche"-Fonbuch to "das-oertliche.de". New internet 
+- changed name of "Das ï¿½rtliche"-Fonbuch to "das-oertliche.de". New internet 
   ressources should follow this naming scheme.
   (based on a bug report of ronnykornexl [30])
 - fixed dasoertliche.de fonbuch by adding a user-agent to the http request, which
@@ -473,11 +473,19 @@ VDR Plugin 'fritzbox' Revision History
   * removed FonbookEntry::getTypeName() as this is something the consumer has to take care about
   * introduced I18N_NOOP macro, this allows application that use libfritz++ to identify strings 
     delivered by the library (e.g., using xgettext) they should localize
+  * removed dependency to OpenSSL due to licensing issues, libfritz++ now needs libgcrypt's 
+    development header "gcrypt.h" to compile
+  * modified logging to handle full path filenames cause by cmake in __FILE__.
+    Provided new logging macros DBG, INF, ERR
+  * Fixed a possible issue with "thread-safety" of TcpClient, a TcpClient object can now 
+    be deleted out of another thread while running
 - the changes in libfritz++ and libtcpclient++ should improve overall plugin stability
   especially at shutdown and configuration changes
 - removed some translation hints which are now provided by libfritz++ directly
 - implemented cPluginFritzbox::FonbookEntryToName to adapt to changes in libfritz++
- 
+- linking to libgcrypt instead of openssl now because of licensing issues
+- adapted logging to libfritz++
+
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
@@ -498,7 +506,7 @@ VDR Plugin 'fritzbox' Revision History
 [13] Oktay Yolgecen <Oktay_73@yahoo.de>
 [14] http://vdr-portal.de/board/profile.php?userid=1551
 [15] Axel Naumann <axel-naumann@gmx.de>
-[16] Thomas Günther <tom@toms-cafe.de>
+[16] Thomas Gï¿½nther <tom@toms-cafe.de>
      http://vdr-portal.de/board/profile.php?userid=4452
 [17] Torsten Weigelt <torsten.weigelt@web.de>
      http://vdr-portal.de/board/profile.php?userid=16817
@@ -506,7 +514,7 @@ VDR Plugin 'fritzbox' Revision History
 [19] http://vdr-portal.de/board/profile.php?userid=99
 [20] http://vdr-portal.de/board/profile.php?userid=15737
 [21] http://vdr-portal.de/board/profile.php?userid=8904
-[22] Hans Jürgen Meier <Hans-Juergen@Kalmei.de>
+[22] Hans Jï¿½rgen Meier <Hans-Juergen@Kalmei.de>
 [23] http://vdr-portal.de/board/profile.php?userid=272	
 [24] Diego Pierotto <vdr-italian@tiscali.it>
      http://vdr-italia.phpbb24.com/portal.php

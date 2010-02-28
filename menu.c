@@ -126,7 +126,7 @@ void cMenuFritzbox::DisplayFonbuch() {
 				char *line;
 				int ret = asprintf(&line,"%s\t%s\t%s", lastName == fe->getName() ? "" : fe->getName().c_str(), cPluginFritzbox::FonbookEntryToName(fe->getType()).c_str(), fe->getNumber().c_str());
 				if (ret <= 0) {
-					*elog << __FILE__ << ": Error allocating line buffer for cOsdItem." << std::endl;
+					ERR("Error allocating line buffer for cOsdItem.");
 					continue;
 				}
 				if (fe->getName().length() > nameWidth)
