@@ -158,6 +158,7 @@
 
 2010-02-24:
 - Fixed LOCATOR macro to support cmake and make
- 
+
 2010-02-25:
 - Implemented FritzClient::getCurrentIP and FritzClient::reconnectISP
+ 
