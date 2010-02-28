@@ -127,10 +127,6 @@ TcpClientBuf::~TcpClientBuf() {
 	mutex.Lock(); // proceed only when any activity is done
 }
 
-TcpClient::~TcpClient() {
-	delete ((TcpClientBuf *)rdbuf());
-}
-
 void TcpClientBuf::Connect() {
 	if (connected) {
 		close(fd);
@@ -281,6 +277,11 @@ int TcpClientBuf::overflow(int c) {
 int TcpClientBuf::sync() {
 	PutBuffer();
 	return 0;
+}
+
+
+TcpClient::~TcpClient() {
+	delete ((TcpClientBuf *)rdbuf());
 }
 
 std::iostream& TcpClient::operator>> (std::string &s) {
