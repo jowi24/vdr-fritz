@@ -51,7 +51,7 @@ DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 ### libfritz++
 LIBFRITZ = libfritz++
 INCLUDES += -I$(LIBFRITZ)
-LIBS += $(LIBFRITZ)/$(LIBFRITZ).a -lssl
+LIBS += $(LIBFRITZ)/$(LIBFRITZ).a -lgcrypt
 
 ### libpthread++
 LIBPTHREAD = libpthread++

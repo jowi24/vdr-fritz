@@ -44,12 +44,12 @@ cNotifyOsd::cNotifyOsd(cFritzEventHandler *event) {
 	tmpLine = callInfo->remoteName;
 	if (tmpLine.size() > 0)
 		lines.push_back(tmpLine);
-	*dlog << __FILE__ << ": showing OSD with call information, " << (int) lines.size() << " lines" << std::endl;
+	DBG("showing OSD with call information, " << (int) lines.size() << " lines");
 	cStatus::MsgOsdStatusMessage(event->ComposeCallMessage().c_str());
 }
 
 cNotifyOsd::~cNotifyOsd() {
-	*dlog << __FILE__ << ": closing OSD" << std::endl;
+	DBG("closing OSD");
 	cStatus::MsgOsdStatusMessage(NULL);
 	open = false;
 	delete osd;

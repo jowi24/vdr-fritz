@@ -70,38 +70,38 @@ void cMenuSetupFritzbox::Setup(void) {
 	//possible values for "React on calls"
 	ret = asprintf(&directions[fritzboxConfig.DIRECTION_ANY], tr("any"));
 	if (ret <= 0) {
-		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
 	}
 	ret = asprintf(&directions[fritzboxConfig.DIRECTION_IN],  tr("incoming"));
 	if (ret <= 0) {
-		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
 	}
 	ret = asprintf(&directions[fritzboxConfig.DIRECTION_OUT], tr("outgoing"));
 	if (ret <= 0) {
-		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
 	}
 	//possible values for "Default Menu"
 	ret = asprintf(&menus[cMenuFritzbox::FONBUCH], tr("PB"));
 	if (ret <= 0) {
-		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
 	}
 	ret = asprintf(&menus[cMenuFritzbox::IN], tr("incoming"));
 	if (ret <= 0) {
-		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
 	}
 	ret = asprintf(&menus[cMenuFritzbox::OUT], tr("outgoing"));
 	if (ret <= 0) {
-		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
 	}
 	ret = asprintf(&menus[cMenuFritzbox::MISSED], tr("missed"));
 	if (ret <= 0) {
-		*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
 	}
 	// build up setup menu
@@ -306,7 +306,7 @@ cMenuSetupFritzboxFonbooks::cMenuSetupFritzboxFonbooks(std::vector<std::string> 
 	for (size_t i=0; i<fonbooks->size(); i++) {
 		int ret = asprintf(&fonbookTitles[i], "%s", tr((*fonbooks)[i]->GetTitle().c_str()));
 		if (ret <= 0) {
-			*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+			ERR("Error allocating linebuffer for cOsdItem.");
 		}
 		selectedFonbookPos[i] = (int *) malloc(sizeof(int));
 	}
@@ -337,7 +337,7 @@ void cMenuSetupFritzboxFonbooks::Setup(void) {
 		char *numberStr;
 		int ret = asprintf(&numberStr, "%i.", (int) (i+1));
 		if (ret <= 0) {
-			*elog << __FILE__ << ": Error allocating linebuffer for cOsdItem." << std::endl;
+			ERR("Error allocating linebuffer for cOsdItem.");
 				return;
 			}
 		size_t pos = 0;

@@ -43,13 +43,13 @@ void cLogBuf::PutBuffer(void)
 
 		switch (type) {
 		case INFO:
-			isyslog("vdr-fritzbox - %s", buffer);
+			isyslog("%s", buffer);
 			break;
 		case ERROR:
-			esyslog("vdr-fritzbox - %s", buffer);
+			esyslog("%s", buffer);
 			break;
 		case DEBUG:
-			dsyslog("vdr-fritzbox - %s", buffer);
+			dsyslog("%s", buffer);
 			break;
 		}
 
