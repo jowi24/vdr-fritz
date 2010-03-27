@@ -485,6 +485,7 @@ VDR Plugin 'fritzbox' Revision History
 - implemented cPluginFritzbox::FonbookEntryToName to adapt to changes in libfritz++
 - linking to libgcrypt instead of openssl now because of licensing issues
 - adapted logging to libfritz++
+- adapted Makefile to VDR >= 1.7.13 
 
 --- References ---
 
