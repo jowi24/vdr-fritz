@@ -463,7 +463,7 @@ VDR Plugin 'fritzbox' Revision History
     (reported by Frank [36])
 - updated italian translations (provided by Diego [24])
 
-2010-xx-xx: Version 1.3.3
+2010-05-30: Version 1.3.3
 - changes in libfritz++ and libtcpclient++
   * Fixed missing initialization of HttpClientBuf::state
   * Improved thread safety in TcpClient: 
@@ -480,7 +480,7 @@ VDR Plugin 'fritzbox' Revision History
   * Fixed a possible issue with "thread-safety" of TcpClient, a TcpClient object can now 
     be deleted out of another thread while running
 - the changes in libfritz++ and libtcpclient++ should improve overall plugin stability
-  especially at shutdown and configuration changes
+  especially at shutdown and configuration changes (thx to Torsten [17] and Marcus [21] for testing)
 - removed some translation hints which are now provided by libfritz++ directly
 - implemented cPluginFritzbox::FonbookEntryToName to adapt to changes in libfritz++
 - linking to libgcrypt instead of openssl now because of licensing issues
