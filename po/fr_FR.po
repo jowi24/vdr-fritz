@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-03-27 16:56+0100\n"
+"POT-Creation-Date: 2010-03-31 21:32+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Patrice Staudt\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -336,15 +336,15 @@ msgstr "Moins"
 msgid "More"
 msgstr "Plus"
 
-#~ msgid "Error fetching the call list"
-#~ msgstr "Erreur de chargement de la liste d'appel"
-
-#~ msgid "Please wait..."
-#~ msgstr "Attendez SVP..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Liste d'appelle de la Fritz!Box"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Appel d'une extension inconnue"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Liste d'appelle de la Fritz!Box"
+#~ msgid "Please wait..."
+#~ msgstr "Attendez SVP..."
+
+#~ msgid "Error fetching the call list"
+#~ msgstr "Erreur de chargement de la liste d'appel"
