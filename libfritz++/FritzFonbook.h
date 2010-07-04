@@ -24,16 +24,18 @@
 #define FRITZFONBUCH_H_
 
 #include <PThread++.h>
-#include "Fonbook.h"
+#include "XmlFonbook.h"
 
 namespace fritz{
 
-class FritzFonbook : public pthread::PThread, public Fonbook {
+class FritzFonbook : public pthread::PThread, public XmlFonbook {
 			friend class FonbookManager;
 private:
 	FritzFonbook();
+	void ParseHtmlFonbook(std::string *msg);
+	virtual void Save();
 public:
-	~FritzFonbook();
+	virtual ~FritzFonbook();
 	bool Initialize();
 	void Action();
 	void Reload();
