@@ -29,7 +29,7 @@
 #include "notifyosd.h"
 
 cFritzEventHandler::cFritzEventHandler() {
-	muted  = false;
+	muted = false;
 	paused = false;
 	displayedConnId = -1;
 	callInfo = NULL;
@@ -50,17 +50,22 @@ std::string cFritzEventHandler::ComposeCallMessage() {
 	char *msg;
 	// compose the message to be displayed
 	if (callInfo->isOutgoing == true) {
-		ret = asprintf(&msg, tr("Calling %s [%s]"), callInfo->remoteName.c_str(), medium.c_str());
-		if (ret <= 0) return rMsg;
+		ret = asprintf(&msg, tr("Calling %s [%s]"),
+				callInfo->remoteName.c_str(), medium.c_str());
+		if (ret <= 0)
+			return rMsg;
 	} else {
 		if (callInfo->remoteNumber.size() == 0) {
 			// unknown caller
 			ret = asprintf(&msg, "%s [%s]", tr("Call"), medium.c_str());
-			if (ret <= 0) return rMsg;
+			if (ret <= 0)
+				return rMsg;
 		} else {
 			// known caller
-			ret = asprintf(&msg, "%s %s [%s]", tr("Call from"), callInfo->remoteName.c_str(), medium.c_str());
-			if (ret <= 0) return rMsg;
+			ret = asprintf(&msg, "%s %s [%s]", tr("Call from"),
+					callInfo->remoteName.c_str(), medium.c_str());
+			if (ret <= 0)
+				return rMsg;
 		}
 	}
 	rMsg = msg;
@@ -68,12 +73,17 @@ std::string cFritzEventHandler::ComposeCallMessage() {
 	return rMsg;
 }
 
-void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, fritz::FonbookEntry::eType remoteType, std::string localParty, std::string medium, std::string mediumName) {
+void cFritzEventHandler::HandleCall(bool outgoing, int connId,
+		std::string remoteNumber, std::string remoteName,
+		fritz::FonbookEntry::eType remoteType, std::string localParty,
+		std::string medium, std::string mediumName) {
 
 	if (fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_ANY) {
-		if (outgoing && fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_OUT)
+		if (outgoing && fritzboxConfig.reactOnDirection
+				!= fritzboxConfig.DIRECTION_OUT)
 			return;
-		if (!outgoing && fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_IN)
+		if (!outgoing && fritzboxConfig.reactOnDirection
+				!= fritzboxConfig.DIRECTION_IN)
 			return;
 	}
 
@@ -95,7 +105,7 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 		cRemote::Put(kPause);
 		paused = true;
 	}
-	if (medium.compare(mediumName) == 0){
+	if (medium.compare(mediumName) == 0) {
 		if (mediumName.find("SIP") != std::string::npos)
 			mediumName.replace(0, 3, "VoIP ");
 		if (mediumName.find("POTS") != std::string::npos)
@@ -111,15 +121,16 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 #endif
 
 		callInfo = new fritz::sCallInfo();
-		callInfo->isOutgoing   = outgoing;
+		callInfo->isOutgoing = outgoing;
 		callInfo->remoteNumber = remoteNumber;
-		callInfo->remoteName   = remoteName;
-		if (cPluginFritzbox::FonbookEntryToName(remoteType).size() > 0) {
+		callInfo->remoteName = remoteName;
+		if (cPluginFritzbox::FonbookEntryTypeToName(remoteType).size() > 0) {
 			callInfo->remoteName += " ";
-			callInfo->remoteName += cPluginFritzbox::FonbookEntryToName(remoteType);
+			callInfo->remoteName += cPluginFritzbox::FonbookEntryTypeToName(
+					remoteType);
 		}
-		callInfo->localNumber  = localParty;
-		callInfo->medium       = mediumName;
+		callInfo->localNumber = localParty;
+		callInfo->medium = mediumName;
 		// trigger notification using own osd
 		if (fritzboxConfig.useNotifyOsd && !cNotifyOsd::isOpen()) {
 			DBG("triggering NotifyOsd");
@@ -130,7 +141,7 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId, std::string remot
 
 void cFritzEventHandler::HandleConnect(int connId) {
 	if (displayedConnId == connId) {
-		delete(callInfo);
+		delete (callInfo);
 		callInfo = NULL;
 		displayedConnId = -1;
 	}
@@ -146,7 +157,7 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 
 	// stop call notification
 	if (displayedConnId == connId) {
-		delete(callInfo);
+		delete (callInfo);
 		callInfo = NULL;
 		displayedConnId = -1;
 	}
@@ -158,11 +169,13 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 		cDevice::PrimaryDevice()->ToggleMute();
 		muted = false;
 	}
-	// unpause, if applicable
+	// resume, if applicable
 	if (connIdList.empty() && paused && control && currPlay == false) {
-		INF("Finished all incoming calls, pressing kPlay.");
-		cRemote::Put(kPlay); // this is an ugly workaround, but it should work
-		cRemote::Put(kPlay);
+		if (fritzboxConfig.resumeAfterCall) {
+			INF("Finished all incoming calls, pressing kPlay.");
+			cRemote::Put(kPlay); // this is an ugly workaround, but it should work
+			cRemote::Put(kPlay);
+		}
 		paused = false;
 	}
 }

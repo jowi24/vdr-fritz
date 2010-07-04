@@ -73,12 +73,12 @@ void cMenuSetupFritzbox::Setup(void) {
 		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
 	}
-	ret = asprintf(&directions[fritzboxConfig.DIRECTION_IN],  tr("incoming"));
+	ret = asprintf(&directions[fritzboxConfig.DIRECTION_IN],  tr("only incoming"));
 	if (ret <= 0) {
 		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
 	}
-	ret = asprintf(&directions[fritzboxConfig.DIRECTION_OUT], tr("outgoing"));
+	ret = asprintf(&directions[fritzboxConfig.DIRECTION_OUT], tr("only outgoing"));
 	if (ret <= 0) {
 		ERR("Error allocating linebuffer for cOsdItem.");
 		return;
@@ -111,7 +111,9 @@ void cMenuSetupFritzbox::Setup(void) {
 	Add(new cMenuEditStrItem (tr("Region code"),                            regionCode,             10,          "0123456789"));
 	Add(new cMenuEditStraItem(tr("React on calls"),                         &reactOnDirection,      3,           directions  ));
 	Add(new cMenuEditBoolItem(tr("Mute on call"),                   		&muteOnCall,   			trVDR("no"), trVDR("yes")));
-	Add(new cMenuEditBoolItem(tr("Pause on call"),                   		&pauseOnCall,  			trVDR("no"), trVDR("yes")));
+	Add(new cMenuEditBoolItem(tr("Pause on call"),   	             		&pauseOnCall,  			trVDR("no"), trVDR("yes")));
+	if (pauseOnCall)
+		Add(new cMenuEditBoolItem(tr("Resume after call"),            		&resumeAfterCall,		trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Show calls"),            		            &showNumber,   			trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Show detailed call information"),         &useNotifyOsd,          trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Detailed call lists"),                    &showNumberInCallList, 	trVDR("no"), trVDR("yes")));
@@ -166,6 +168,10 @@ eOSState cMenuSetupFritzbox::ProcessKey(eKeys Key) {
 			Setup();
 			msnCountBefore = msnCount;
 		}
+		if (pauseOnCall != pauseOnCallBefore) {
+			Setup();
+			pauseOnCallBefore = pauseOnCall;
+		}
 	}
 
 	if (state == osUnknown) {
@@ -200,6 +206,7 @@ void cMenuSetupFritzbox::Store(void) {
 	fritzboxConfig.reactOnDirection     = reactOnDirection;
 	fritzboxConfig.muteOnCall     		= muteOnCall;
 	fritzboxConfig.pauseOnCall     		= pauseOnCall;
+	fritzboxConfig.resumeAfterCall 		= resumeAfterCall;
 	fritzboxConfig.showNumber     		= showNumber;
 	fritzboxConfig.useNotifyOsd         = useNotifyOsd;
 	fritzboxConfig.showNumberInCallList = showNumberInCallList;
@@ -227,6 +234,7 @@ void cMenuSetupFritzbox::Store(void) {
 	SetupStore("ReactOnDirection",      reactOnDirection);
 	SetupStore("MuteOnCall",   			muteOnCall);
 	SetupStore("PauseOnCall",  			pauseOnCall);
+	SetupStore("ResumeAfterCall",       resumeAfterCall);
 	SetupStore("ShowNumber",   			showNumber);
 	SetupStore("UseNotifyOsd",          useNotifyOsd);
 	SetupStore("ShowNumberInCallList", 	showNumberInCallList);
@@ -254,6 +262,8 @@ cMenuSetupFritzbox::cMenuSetupFritzbox(cPluginFritzbox *fritzbox)
 	reactOnDirection     = fritzboxConfig.reactOnDirection;
 	muteOnCall      	 = fritzboxConfig.muteOnCall;
 	pauseOnCall      	 = fritzboxConfig.pauseOnCall;
+	pauseOnCallBefore    = pauseOnCall;
+	resumeAfterCall      = fritzboxConfig.resumeAfterCall;
 	showNumber      	 = fritzboxConfig.showNumber;
 	useNotifyOsd         = fritzboxConfig.useNotifyOsd;
 	showNumberInCallList = fritzboxConfig.showNumberInCallList;
@@ -399,6 +409,7 @@ sFritzboxConfig::sFritzboxConfig() {
 	reactOnDirection        = DIRECTION_IN;
 	muteOnCall      		= 0;
 	pauseOnCall      		= 0;
+	resumeAfterCall         = 1;
 	showNumber      		= 1;
 	useNotifyOsd            = 0;
 	showNumberInCallList    = 0;
@@ -455,6 +466,7 @@ bool sFritzboxConfig::SetupParse(const char *name, const char *value) {
 	else if (!strcasecmp(name, "ReactOnDirection"))     reactOnDirection     = atoi(value);
 	else if (!strcasecmp(name, "MuteOnCall"))   		muteOnCall   		 = atoi(value);
 	else if (!strcasecmp(name, "PauseOnCall"))   		pauseOnCall   		 = atoi(value);
+	else if (!strcasecmp(name, "ResumeAfterCall"))      resumeAfterCall      = atoi(value);
 	else if (!strcasecmp(name, "ShowNumber"))   		showNumber   		 = atoi(value);
 	else if (!strcasecmp(name, "UseNotifyOsd"))         useNotifyOsd         = atoi(value);
 	else if (!strcasecmp(name, "ShowNumberInCallList")) showNumberInCallList = atoi(value);

@@ -51,6 +51,8 @@ private:
 	int reactOnDirection;
 	int muteOnCall;
 	int pauseOnCall;
+	int pauseOnCallBefore;
+	int resumeAfterCall;
 	int showNumber;
 	int useNotifyOsd;
 	int hideMainMenu;
@@ -114,6 +116,7 @@ public:
 	int reactOnDirection;               // what type of calls are we interested in (eDirection)?
 	int muteOnCall;                     // mute audio on calls
 	int pauseOnCall;                    // pause playback on calls
+	int resumeAfterCall;                // resume playback after all calls have finished
 	int showNumber;                     // show notification on osd on calls
 	int useNotifyOsd;                   // use the extended notification osd and not Skins.Message
 	int showNumberInCallList;           // simple or extended details in call lists

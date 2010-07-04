@@ -59,7 +59,7 @@ public:
 	// from cThread:
 	virtual void Action();
 	// various things
-	static std::string FonbookEntryToName(const fritz::FonbookEntry::eType type);
+	static std::string FonbookEntryTypeToName(const fritz::FonbookEntry::eType type);
 
 };
 
