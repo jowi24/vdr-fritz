@@ -487,6 +487,32 @@ VDR Plugin 'fritzbox' Revision History
 - adapted logging to libfritz++
 - adapted Makefile to VDR >= 1.7.13 
 
+2010-07-04: Version 1.3.4
+- changes in libfritz++ 
+  * now parsing the Fritz Box's phone book via xml export file (if available)
+  * FritzFonbook is now writeable, if FB xml import is available 
+    (firmware >= xx.04.76 needed)
+  * phone book entries now have the additional fields "quickdial", "vanity", 
+    "priority", "important"
+  * Fixed decoding of entities in xml phone book parser
+  * Modified FonbookEntry class: one FonbookEntry now holds all numbers of a 
+    person: Changed construction of FonbookEntrys accordingly, Changed interface 
+    of Fonbook::ResolveToName, Adapted FritzFonbook's parser, Adapted LocalFonbook's parser,
+    Adapted ResolveToName in NummerzoekerFonbook and OertlichesFonbook
+  * Adapted local phonebook to use the same xml format, new FB versions use.
+    Existing csv phone books are converted to xml automagically, entries 
+    with TYPE_NONE are converted to TYPE_HOME
+  * Updated OertlichesFonbook to website changes
+    (patch provided by [38])
+- adapted to changes in libfritz++
+  Note: not all new features of libfritz++ are currently used in the plugin
+- added setup option "Resume after call"
+  Up to now the setup option "Pause on call" included both, stopping *and* resuming playback on the 
+  corresponding call events. This has been splitted now. "Pause on call" now only controls playback
+  stopping. "Resume after call" controls, if VDR resumes a previously stopped playback after all
+  calls have been finished. The old behaviour is preserved on upgrade.
+  (suggested by Zimbo [37])
+
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
@@ -535,3 +561,5 @@ VDR Plugin 'fritzbox' Revision History
 [35] http://vdr-portal.de/board/profile.php?userid=2951
 [36] Frank (hummingbird_de)
      http://vdr-portal.de/board/profile.php?userid=715
+[37] http://vdr-portal.de/board/profile.php?userid=415     
+[38] http://vdr-portal.de/board/profile.php?userid=12632	

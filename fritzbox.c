@@ -29,7 +29,7 @@
 #include "notifyosd.h"
 #include "menu.h"
 
-static const char *VERSION        = "1.3.3";
+static const char *VERSION        = "1.3.4";
 static const char *DESCRIPTION    = trNOOP("Fritz Plugin for AVM Fritz!Box");
 static const char *MAINMENUENTRY  = trNOOP("Fritz!Box");
 
@@ -216,7 +216,7 @@ void cPluginFritzbox::Action() {
 		fritz::Listener::DeleteListener();
 }
 
-std::string cPluginFritzbox::FonbookEntryToName(const fritz::FonbookEntry::eType type) {
+std::string cPluginFritzbox::FonbookEntryTypeToName(const fritz::FonbookEntry::eType type) {
 	switch (type) {
 	case fritz::FonbookEntry::TYPE_HOME:
 		//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"

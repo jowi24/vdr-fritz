@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-03-31 21:32+0200\n"
+"POT-Creation-Date: 2010-07-04 19:34+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Matthias Becker <becker.matthias@gmail.com>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -55,35 +55,36 @@ msgstr "F"
 msgid "Calling %s [%s]"
 msgstr "Rufe %s an [%s]"
 
-#: fritzeventhandler.c:58
+#: fritzeventhandler.c:60
 msgid "Call"
 msgstr "Anruf"
 
-#: fritzeventhandler.c:62
+#: fritzeventhandler.c:65
 msgid "Call from"
 msgstr "Anruf von"
 
-#: fritzeventhandler.c:102 libfritz++/Listener.cpp:107
+#: fritzeventhandler.c:112 libfritz++/Listener.cpp:107
 msgid "POTS"
 msgstr "analog"
 
-#: fritzeventhandler.c:109 libfritz++/Listener.cpp:108
+#: fritzeventhandler.c:119 libfritz++/Listener.cpp:108
 msgid "ISDN"
 msgstr "ISDN"
 
-#: fritzeventhandler.c:110
+#: fritzeventhandler.c:120
 msgid "VoIP"
 msgstr "VoIP"
 
-#: fritzfonbuch.c:155 libfritz++/FritzFonbook.cpp:154
+#: fritzfonbuch.c:155 libfritz++/FritzFonbook.cpp:34
 msgid "Fritz!Box phone book"
 msgstr "Fritz!Box Telefonbuch"
 
-#: libfritz++/CallList.cpp:169 menu.c:184 menu.c:259
+#: libfritz++/CallList.cpp:169 libfritz++/FritzClient.cpp:485 menu.c:188
+#: menu.c:257
 msgid "unknown"
 msgstr "unbekannt"
 
-#: libfritz++/LocalFonbook.cpp:74
+#: libfritz++/LocalFonbook.cpp:73
 msgid "Local phone book"
 msgstr "Lokales Telefonbuch"
 
@@ -95,11 +96,11 @@ msgstr ""
 msgid "das-oertliche.de"
 msgstr ""
 
-#: menu.c:114 menu.c:213
+#: menu.c:114 menu.c:217
 msgid "You may need to wait some minutes,"
 msgstr "Der Abruf benötigt entweder noch Zeit"
 
-#: menu.c:115 menu.c:214
+#: menu.c:115 menu.c:218
 msgid "otherwise there may be a network problem."
 msgstr "oder es besteht ein Netzwerkproblem."
 
@@ -107,118 +108,118 @@ msgstr "oder es besteht ein Netzwerkproblem."
 msgid "This phonebook is not displayable"
 msgstr "Keine anzeigbaren Einträge"
 
-#: menu.c:140
+#: menu.c:144
 msgid "> PB"
 msgstr "> TB"
 
-#: menu.c:146
+#: menu.c:150
 msgid "Fritz!Box call list"
 msgstr "Fritz!Box Gesprächsliste"
 
-#: menu.c:152 setup.c:76 setup.c:92
+#: menu.c:156 setup.c:92
 msgid "incoming"
 msgstr "eingehend"
 
-#: menu.c:155 setup.c:102
+#: menu.c:159 setup.c:102
 msgid "missed"
 msgstr "verpasst"
 
-#: menu.c:164 setup.c:81 setup.c:97
+#: menu.c:168 setup.c:97
 msgid "outgoing"
 msgstr "ausgehend"
 
-#: menu.c:212
+#: menu.c:216
 msgid "The call list is not yet available."
 msgstr "Gesprächsliste noch nicht verfügbar."
 
 #. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:219 setup.c:87
+#: menu.c:223 setup.c:87
 msgid "PB"
 msgstr "TB"
 
-#: menu.c:226
+#: menu.c:230
 msgid "Call details"
 msgstr "Anrufdetails"
 
-#: menu.c:245
+#: menu.c:244
 msgid "Date"
 msgstr "Datum"
 
-#: menu.c:246
+#: menu.c:245
 msgid "Time"
 msgstr "Uhrzeit"
 
-#: menu.c:247
+#: menu.c:246
 msgid "Duration"
 msgstr "Dauer"
 
-#: menu.c:248
+#: menu.c:247
 msgid "call was not accepted"
 msgstr "Anruf nicht angenommen"
 
-#: menu.c:250 setup.c:126
+#: menu.c:249 setup.c:128
 msgid "Extension"
 msgstr "MSN"
 
-#: menu.c:255
+#: menu.c:254
 msgid "Callee"
 msgstr "Ziel"
 
-#: menu.c:256
+#: menu.c:255
 msgid "Caller"
 msgstr "Anrufer"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:262 menu.c:361
+#: menu.c:260 menu.c:353
 msgid "Button$Call"
 msgstr "Anrufen"
 
-#: menu.c:262
+#: menu.c:260
 msgid "Button$To PB"
 msgstr "In TB"
 
-#: menu.c:284 menu.c:372
+#: menu.c:282 menu.c:372
 msgid "No number to call"
 msgstr "Ohne Nummer kein Anruf möglich"
 
-#: menu.c:288 menu.c:376
+#: menu.c:286 menu.c:376
 msgid "Pick up your phone now"
 msgstr "Telefon jetzt abnehmen"
 
-#: menu.c:290 menu.c:378
+#: menu.c:288 menu.c:378
 msgid "Error while initiating call"
 msgstr "Fehler beim Verbindungsaufbau"
 
-#: menu.c:297
+#: menu.c:295
 msgid "No number to add"
 msgstr "Keine Rufnummer zu Speichern"
 
-#: menu.c:321
+#: menu.c:320
 msgid "Phone book details"
 msgstr "Telefonbuchdetails"
 
-#: menu.c:334 menu.c:340
+#: menu.c:328 menu.c:332
 msgid "Name"
 msgstr "Name"
 
-#: menu.c:335 menu.c:341
+#: menu.c:329 menu.c:333
 msgid "Numbers"
 msgstr "Rufnummern"
 
-#: menu.c:336
+#: menu.c:330
 msgid "Default"
 msgstr "Standard"
 
-#: menu.c:342
+#: menu.c:334
 msgid "Private"
 msgstr "Privat"
 
-#: menu.c:343
+#: menu.c:335
 msgid "Mobile"
 msgstr "Mobil"
 
-#: menu.c:344
+#: menu.c:336
 msgid "Business"
 msgstr "Geschäftlich"
 
@@ -233,6 +234,14 @@ msgstr "Ausgehender Anruf"
 #: setup.c:71
 msgid "any"
 msgstr "alle"
+
+#: setup.c:76
+msgid "only incoming"
+msgstr "nur eingehend"
+
+#: setup.c:81
+msgid "only outgoing"
+msgstr "nur ausgehend"
 
 #: setup.c:108
 msgid "Fritz!Box URL"
@@ -260,61 +269,65 @@ msgstr "Bei Anruf stummschalten"
 
 #: setup.c:114
 msgid "Pause on call"
-msgstr "Bei Anruf pausieren"
+msgstr "Bei Anruf Wiedergabe pausieren"
 
-#: setup.c:115
+#: setup.c:116
+msgid "Resume after call"
+msgstr "Nach Anruf Wiedergabe fortsetzen"
+
+#: setup.c:117
 msgid "Show calls"
 msgstr "Anrufe anzeigen"
 
-#: setup.c:116
+#: setup.c:118
 msgid "Show detailed call information"
 msgstr "Ausführliche Anrufinformation"
 
-#: setup.c:117
+#: setup.c:119
 msgid "Detailed call lists"
 msgstr "Ausführliche Gesprächslisten"
 
-#: setup.c:118
+#: setup.c:120
 msgid "Group call lists by date"
 msgstr "Anruflisten nach Datum gruppieren"
 
-#: setup.c:119
+#: setup.c:121
 msgid "Hide main menu entry"
 msgstr "Hauptmenüeintrag verstecken"
 
-#: setup.c:120
+#: setup.c:122
 msgid "Default menu"
 msgstr "Standardansicht"
 
-#: setup.c:121
+#: setup.c:123
 msgid "Setup phonebooks to use..."
 msgstr "Telefonbücher auswählen..."
 
-#: setup.c:122
+#: setup.c:124
 msgid "Restrict monitor to certain extensions"
 msgstr "Überwachte MSNs einschränken"
 
-#: setup.c:124
+#: setup.c:126
 msgid "Number of monitored extensions"
 msgstr "Zahl der überwachten MSNs"
 
-#: setup.c:128
+#: setup.c:130
 msgid "Reload"
 msgstr "Neu laden"
 
-#: setup.c:175
+#: setup.c:181
 msgid "Retrieving phone book"
 msgstr "Rufe Telefonbuch ab"
 
-#: setup.c:298
+#: setup.c:308
 msgid "Setup phonebooks to use"
 msgstr "Telefonbücher auswählen"
 
-#: setup.c:314
+#: setup.c:324
 msgid "Less"
 msgstr "Weniger"
 
-#: setup.c:314
+#: setup.c:324
 msgid "More"
 msgstr "Mehr"
 
