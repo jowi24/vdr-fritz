@@ -1,4 +1,4 @@
-				/*
+/*
  * libfritz++
  *
  * Copyright (C) 2007-2010 Joachim Wilke <libfritz@joachim-wilke.de>
