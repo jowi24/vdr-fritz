@@ -19,134 +19,14 @@
  *
  */
 
-#include <string.h>
 #include <algorithm>
 #include <sstream>
 #include "FritzFonbook.h"
 #include "FritzClient.h"
-#include "Tools.h"
-#include <TcpClient++.h>
 #include "Config.h"
+#include <TcpClient++.h>
 
 namespace fritz {
-
-// this array contains characters encoded with ISO-8859-15, take care when editing this file
-const char *Entities[97][2] = {
-	{"&nbsp;",  " "},
-	{"&iexcl;", "¡"},
-	{"&cent;",  "¢"},
-	{"&pound;", "£"},
-	{"&curren;","¤"},
-	{"&yen;",   "¥"},
-	{"&brvbar;","¦"},
-	{"&sect;",  "§"},
-	{"&uml;",   "¨"},
-	{"&copy;",  "©"},
-	{"&ordf;",  "ª"},
-	{"&laquo;", "«"},
-	{"&not;",   "¬"},
-	{"&shy;",   "­"},
-	{"&reg;",   "®"},
-	{"&macr;",  "¯"},
-	{"&deg;",   "°"},
-	{"&plusmn;","±"},
-	{"&sup2;",  "²"},
-	{"&sup3;",  "³"},
-	{"&acute;", "´"},
-	{"&micro;", "µ"},
-	{"&para;",  "¶"},
-	{"&middot;","·"},
-	{"&cedil;", "¸"},
-	{"&sup1;",  "¹"},
-	{"&ordm;",  "º"},
-	{"&raquo;", "»"},
-	{"&frac14;","¼"},
-	{"&frac12;","½"},
-	{"&frac34;","¾"},
-	{"&iquest;","¿"},
-	{"&Agrave;","À"},
-	{"&Aacute;","Á"},
-	{"&Acirc;", "Â"},
-	{"&Atilde;","Ã"},
-	{"&Auml;",  "Ä"},
-	{"&Aring;", "Å"},
-	{"&AElig;", "Æ"},
-	{"&Ccedil;","Ç"},
-	{"&Egrave;","È"},
-	{"&Eacute;","É"},
-	{"&Ecirc;", "Ê"},
-	{"&Euml;",  "Ë"},
-	{"&Igrave;","Ì"},
-	{"&Iacute;","Í"},
-	{"&Icirc;", "Î"},
-	{"&Iuml;",  "Ï"},
-	{"&ETH;",   "Ð"},
-	{"&Ntilde;","Ñ"},
-	{"&Ograve;","Ò"},
-	{"&Oacute;","Ó"},
-	{"&Ocirc;", "Ô"},
-	{"&Otilde;","Õ"},
-	{"&Ouml;",  "Ö"},
-	{"&times;", "×"},
-	{"&Oslash;","Ø"},
-	{"&Ugrave;","Ù"},
-	{"&Uacute;","Ú"},
-	{"&Ucirc;", "Û"},
-	{"&Uuml;",  "Ü"},
-	{"&Yacute;","Ý"},
-	{"&THORN;", "Þ"},
-	{"&szlig;", "ß"},
-	{"&agrave;","à"},
-	{"&aacute;","á"},
-	{"&acirc;", "â"},
-	{"&atilde;","ã"},
-	{"&auml;",  "ä"},
-	{"&aring;", "å"},
-	{"&aelig;", "æ"},
-	{"&ccedil;","ç"},
-	{"&egrave;","è"},
-	{"&eacute;","é"},
-	{"&ecirc;", "ê"},
-	{"&euml;",  "ë"},
-	{"&igrave;","ì"},
-	{"&iacute;","í"},
-	{"&icirc;", "î"},
-	{"&iuml;",  "ï"},
-	{"&eth;",   "ð"},
-	{"&ntilde;","ñ"},
-	{"&ograve;","ò"},
-	{"&oacute;","ó"},
-	{"&ocirc;", "ô"},
-	{"&otilde;","õ"},
-	{"&ouml;",  "ö"},
-	{"&divide;","÷"},
-	{"&oslash;","ø"},
-	{"&ugrave;","ù"},
-	{"&uacute;","ú"},
-	{"&ucirc;", "û"},
-	{"&uuml;",  "ü"},
-	{"&yacute;","ý"},
-	{"&thorn;", "þ"},
-	{"&yuml;",  "ÿ"},
-	{"&amp;",   "&"},
-};
-
-std::string &convertEntities(std::string &s) {
-	if (s.find("&") != std::string::npos) {
-		// convert the entities from iso-8859-15 to current system character table
-		CharSetConv *conv = new CharSetConv("ISO-8859-15", CharSetConv::SystemCharacterTable());
-
-		for (int i=0; i<97; i++) {
-			std::string::size_type pos = s.find(Entities[i][0]);
-			if (pos != std::string::npos) {
-				s.replace(pos, strlen(Entities[i][0]), conv->Convert(Entities[i][1]));
-				i--; //search for the same entity again
-			}
-		}
-		delete (conv);
-	}
-	return s;
-}
 
 FritzFonbook::FritzFonbook()
 :PThread("FritzFonbook")
@@ -161,6 +41,7 @@ FritzFonbook::~FritzFonbook() {
 	// don't delete the object, while the thread is still active
 	while (Active())
 		pthread::CondWait::SleepMs(100);
+	Save(); //TODO
 }
 
 bool FritzFonbook::Initialize() {
@@ -174,20 +55,34 @@ void FritzFonbook::Action() {
 	FritzClient fc;
 	std::string msg = fc.RequestFonbook();
 
-	size_t pos, p1, p2;
+	if (msg.find("<?xml") == std::string::npos)
+		ParseHtmlFonbook(&msg);
+	else {
+		ParseXmlFonbook(&msg);
+		writeable = true; // we can write xml back to the FB
+	}
+
+	setInitialized(true);
+
+	std::sort(fonbookList.begin(), fonbookList.end());
+}
+
+void FritzFonbook::ParseHtmlFonbook(std::string *msg) {
+	DBG("Parsing fonbook using html parser.")
 	// determine charset (default for old firmware versions is iso-8859-15)
+	size_t pos;
 	std::string charset = "ISO-8859-15";
-	pos = msg.find("<meta http-equiv=content-type");
+	pos = msg->find("<meta http-equiv=content-type");
 	if (pos != std::string::npos) {
-		pos = msg.find("charset=", pos);
+		pos = msg->find("charset=", pos);
 		if (pos != std::string::npos)
-			charset = msg.substr(pos+8, msg.find('"', pos)-pos-8);
+			charset = msg->substr(pos+8, msg->find('"', pos)-pos-8);
 	}
 	DBG("using charset " << charset);
 
 	CharSetConv *conv = new CharSetConv(charset.c_str(), CharSetConv::SystemCharacterTable());
-	const char *s_converted = conv->Convert(msg.c_str());
-	msg = s_converted;
+	const char *s_converted = conv->Convert(msg->c_str());
+	std::string msgConv = s_converted;
 	delete (conv);
 
 	// parse answer
@@ -195,67 +90,76 @@ void FritzFonbook::Action() {
 	int count = 0;
 	// parser for old format
 	const std::string tag("(TrFon(");
-	while ((p1 = msg.find(tag, pos)) != std::string::npos) {
-		p1 += 7; // points to the first "
-		int nameStart     = msg.find(',', p1)          +3;
-		int nameStop      = msg.find('"', nameStart)   -1;
-		int numberStart   = msg.find(',', nameStop)    +3;
-		int numberStop    = msg.find('"', numberStart) -1;
-		if (msg[nameStart] == '!') // skip '!' char, older firmware versions use to mark VIPs
+	while ((pos = msgConv.find(tag, pos)) != std::string::npos) {
+		pos += 7; // points to the first "
+		int nameStart     = msgConv.find(',', pos)          +3;
+		int nameStop      = msgConv.find('"', nameStart)   -1;
+		int numberStart   = msgConv.find(',', nameStop)    +3;
+		int numberStop    = msgConv.find('"', numberStart) -1;
+		if (msgConv[nameStart] == '!') // skip '!' char, older firmware versions use to mark important
 			nameStart++;
-		std::string namePart = msg.substr(nameStart, nameStop - nameStart+1);
+		std::string namePart = msgConv.substr(nameStart, nameStop - nameStart+1);
 		std::string namePart2 = convertEntities(namePart);
-		std::string numberPart = msg.substr(numberStart, numberStop - numberStart+1);
+		std::string numberPart = msgConv.substr(numberStart, numberStop - numberStart+1);
 		if (namePart2.length() && numberPart.length()) {
-			FonbookEntry fe(namePart2, numberPart, FonbookEntry::TYPE_NONE);
+			FonbookEntry fe(namePart2, false); // TODO: important is not parsed here
+			fe.addNumber(numberPart, FonbookEntry::TYPE_NONE);
 			fonbookList.push_back(fe);
 			//DBG("(%s / %s)", fe.number.c_str(), fe.name.c_str());
 		}
-		pos = p1+10;
+		pos += 10;
 		count++;
 	}
 	// parser for new format
 	pos = 0;
-	const std::string tag2("TrFonName(");
-	const std::string tag3("TrFonNr("	);
-	while ((p2 = msg.find(tag3, pos)) != std::string::npos) {
-		int typeStart     = p2 + 9;
-		int numberStart   = msg.find(',', p2)    +3;
-		int typeStop      = numberStart - 5;
-		int numberStop    = msg.find('"', numberStart) -1;
-		p1 = msg.rfind(tag2, p2);
-		p1 += 7; // points to the first "
-		int nameStart     = msg.find(',', p1)          +3;
-		int nameStop      = msg.find('"', nameStart)   -1;
-		std::string namePart   = msg.substr(nameStart, nameStop - nameStart+1);
-		std::string namePart2  = convertEntities(namePart);
-		std::string numberPart = msg.substr(numberStart, numberStop - numberStart+1);
 
-		std::string typePart   = msg.substr(typeStart, typeStop - typeStart+1);
-		FonbookEntry::eType type = FonbookEntry::TYPE_NONE;
-		if      (typePart.compare("home") == 0)
-			type = FonbookEntry::TYPE_HOME;
-		else if (typePart.compare("mobile") == 0)
-			type = FonbookEntry::TYPE_MOBILE;
-		else if (typePart.compare("work") == 0)
-			type = FonbookEntry::TYPE_WORK;
+	const std::string tagName("TrFonName(");
+	const std::string tagNumber("TrFonNr("  );
+	// iterate over all tagNames
+	while ((pos = msgConv.find(tagName, ++pos)) != std::string::npos) {
+		int nameStart     = msgConv.find(',', pos+7)          +3;
+		int nameStop      = msgConv.find('"', nameStart)   -1;
+		std::string namePart   = msgConv.substr(nameStart, nameStop - nameStart+1);
+		std::string namePartConv  = convertEntities(namePart);
+		FonbookEntry fe(namePartConv, false); // TODO: important is not parsed here
 
-		if (namePart2.length() && numberPart.length()) {
-			FonbookEntry fe(namePart2, numberPart, type);
-			fonbookList.push_back(fe);
-			//DBG("(%s / %s / %i)", fe.number.c_str(), fe.name.c_str(), fe.type);
+		size_t posInner = pos;
+		// iterate over all tagNumbers between two tagNames
+		while ((posInner = msgConv.find(tagNumber, ++posInner)) != std::string::npos && posInner < msgConv.find(tagName, pos+1)) {
+			int typeStart     = posInner + 9;
+			int numberStart   = msgConv.find(',', posInner)    +3;
+			int typeStop      = numberStart - 5;
+			int numberStop    = msgConv.find('"', numberStart) -1;
+			std::string numberPart = msgConv.substr(numberStart, numberStop - numberStart+1);
+			std::string typePart   = msgConv.substr(typeStart, typeStop - typeStart+1);
+			FonbookEntry::eType type = FonbookEntry::TYPE_NONE;
+			if      (typePart.compare("home")   == 0)
+				type = FonbookEntry::TYPE_HOME;
+			else if (typePart.compare("mobile") == 0)
+				type = FonbookEntry::TYPE_MOBILE;
+			else if (typePart.compare("work")   == 0)
+				type = FonbookEntry::TYPE_WORK;
+
+			if (namePartConv.length() && numberPart.length()) {
+				fe.addNumber(numberPart, type); // TODO: quickdial, vanity and priority not parsed here
+				//DBG("(%s / %s / %i)", fe.number.c_str(), fe.name.c_str(), fe.type);
+			}
+			count++;
 		}
-		pos = p2+10;
-		count++;
+		fonbookList.push_back(fe);
 	}
-	INF("read " << count << " entries.");
-	setInitialized(true);
-
-	std::sort(fonbookList.begin(), fonbookList.end());
+	INF("read " << fonbookList.size() << " entries.");
 }
 
 void FritzFonbook::Reload() {
 	this->Start();
 }
 
+void FritzFonbook::Save() {
+	if (writeable) {
+		INF("Uploading phonebook to Fritz!Box.");
+		FritzClient fc;
+		fc.WriteFonbook(SerializeToXml());
+	}
+}
 }

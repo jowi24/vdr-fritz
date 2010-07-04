@@ -26,12 +26,13 @@
 #include <string>
 #include <vector>
 
-namespace fritz{
+namespace fritz {
 
 /**
  * General telephonebook entry.
- * This definies the class, to be used by every telephonebook implementation.
+ * This defines the class, to be used by every phone book implementation.
  */
+
 
 class FonbookEntry {
 public:
@@ -39,26 +40,79 @@ public:
 		TYPE_NONE,
 		TYPE_HOME,
 		TYPE_MOBILE,
-		TYPE_WORK
+		TYPE_WORK,
+		TYPES_COUNT
 	};
+
 	enum eElements {
 		ELEM_NAME   = 0,
 		ELEM_TYPE   = 1,
 		ELEM_NUMBER = 2,
+		ELEM_IMPORTANT,
+		ELEM_QUICKDIAL,
+		ELEM_VANITY,
+		ELEM_PRIORITY,
+		ELEMS_COUNT
+	};
+	struct sNumber {
+		std::string number;
+		std::string quickdial;
+		std::string vanity;
+		int priority;
 	};
 private:
 	std::string name;
-	std::string number;
-	eType type;
+	bool important;
+	sNumber numbers[TYPES_COUNT];
 public:
-	FonbookEntry(std::string name, std::string number, eType type = TYPE_NONE);
+	/*
+	 * Constructs a new FonbookEntry object
+	 * @param name Full name of contact
+	 * @param important Whether contact is flagged as important
+	 */
+	FonbookEntry(std::string name, bool important = false);
+	/**
+	 * Adds new number to this contact
+	 * @param number The number to be added
+	 * @param type The number type
+	 * @param quickdial The quickdial extension
+	 * @param vanity The vanity extension
+	 * @param prority '1' marks the default number of this contact, otherwise 0
+	 */
+	void addNumber(std::string number, eType type = TYPE_NONE, std::string quickdial = "", std::string vanity = "", int priority = 0);
 	std::string getName() const { return name; }
 	void setName(std::string name) { this->name = name; }
-	std::string getNumber() const { return number; }
-	eType getType() const { return type; }
-	void setType(eType type) { this->type = type; }
+	std::string getNumber(eType type) const { return numbers[type].number; }
+	void setNumber(std::string number, eType type) { numbers[type].number = number; }
+	bool isImportant() { return important; }
+	void setImportant(bool important) { this->important = important; }
+	eType getDefaultType();
+	void setDefaultType(eType type);
+	std::string getQuickdialFormatted(eType type = TYPES_COUNT);
+	std::string getQuickdial(eType type = TYPES_COUNT);
+	void setQuickdial(std::string quickdial, eType type = TYPES_COUNT);
+	std::string getVanity(eType type = TYPES_COUNT);
+	std::string getVanityFormatted(eType type = TYPES_COUNT);
+	void setVanity(std::string vanity, eType type = TYPES_COUNT);
+	int getPriority(eType type) { return numbers[type].priority; }
+	void setPrioriy(int priority, eType type) { numbers[type].priority = priority; }
 	bool operator<(const FonbookEntry & fe) const;
+	/*
+	 * Get number of typed numbers (TYPE_NONE is ignored)
+	 * @return count of different numbers available
+	 */
+	size_t getSize();
 };
+
+inline FonbookEntry::eType& operator++(FonbookEntry::eType& t) {
+	return t = static_cast<FonbookEntry::eType>(static_cast<int>(t) + 1);
+}
+inline FonbookEntry::eType operator++(FonbookEntry::eType& t, int) {
+	FonbookEntry::eType tmp(t);
+	++t;
+	return tmp;
+}
+
 
 /**
  * General telephonebook base class.
@@ -78,6 +132,10 @@ protected:
 	 * Subclasses must make their constructor private, too.
 	 */
 	Fonbook();
+	/**
+	 * Method to persist contents of the phone book (if writeable)
+	 */
+	virtual void Save() {}
 	/**
 	 * The descriptive title of this phonebook.
 	 */
@@ -99,7 +157,11 @@ protected:
      */
 	std::vector<FonbookEntry> fonbookList;
 public:
-	virtual ~Fonbook() {}
+	struct sResolveResult {
+		std::string name;
+		FonbookEntry::eType type;
+	};
+	virtual ~Fonbook() { Save(); }
 	/**
 	 * Take action to fill phonebook with content.
 	 * Initialize() may be called more than once per session.
@@ -107,21 +169,21 @@ public:
 	 */
 	virtual bool Initialize(void) { return true; }
 	/**
-	 * Resolves the number given in the FonbookEntry to the corresponding name.
-	 * @param the fe containing the number the number to resolve
-	 * @return the same fe containing resolved name or the number, if unsuccesful
+	 * Resolves the number given to the corresponding name.
+	 * @param number to resolve
+	 * @return resolved name and type or the number, if unsuccessful
 	 */
-	virtual FonbookEntry &ResolveToName(FonbookEntry &fe);
+	virtual sResolveResult ResolveToName(std::string number);
 	/**
 	 * Returns a specific telephonebook entry.
 	 * @param id unique identifier of the requested entry
-	 * @return the entry with key id or NULL, if unsuccesful
+	 * @return the entry with key id or NULL, if unsuccessful
 	 */
 	virtual FonbookEntry *RetrieveFonbookEntry(size_t id);
 	/**
 	 * Adds a new entry to the phonebook.
 	 * @param fe a new phonebook entry
-	 * @return true, if add was sucessful
+	 * @return true, if add was successful
 	 */
 	virtual bool AddFonbookEntry(FonbookEntry fe __attribute__((unused))) { return false; }
 	/**
