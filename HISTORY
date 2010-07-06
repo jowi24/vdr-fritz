@@ -422,6 +422,17 @@ VDR Plugin 'fritzbox' Revision History
   * fixed entity decoding in FritzFonbook.cpp (reported and fix tested by Torsten [17])
   * fixed wrong HTTP-GET header in Nummerzoeker.cpp
   
+2010-07-06: Version 1.2.3
+- changes in libfritz++
+  * improved matching of phone numbers: Fritz!Box control codes *xxx# are now ignored.
+    (suggested by koronth [34])
+  * Updated OertlichesFonbook to website changes
+    (patch provided by [38])
+- both detail screens (call details and phonebook entry details) can now be closed with
+  OK button, too
+  (patch provided by Uwe [33]) 
+
+  
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164

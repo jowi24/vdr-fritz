@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-07-06 12:50+0200\n"
+"POT-Creation-Date: 2010-07-06 13:32+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Patrice Staudt\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -177,49 +177,49 @@ msgid "Caller"
 msgstr "Appelle de"
 
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:260 menu.c:341
+#: menu.c:260 menu.c:344
 #, fuzzy
 msgid "Button$Call"
 msgstr "Muet lors d'un appel"
 
-#: menu.c:282 menu.c:352
+#: menu.c:282 menu.c:355
 msgid "No number to call"
 msgstr "Aucun numéro à appeler"
 
-#: menu.c:285 menu.c:355
+#: menu.c:285 menu.c:358
 msgid "Pick up your phone now"
 msgstr "Décrocher votre téléphone maintenant"
 
-#: menu.c:287 menu.c:357
+#: menu.c:287 menu.c:360
 msgid "Error while initiating call"
 msgstr "Erreur au lancement de l'appel"
 
-#: menu.c:301
+#: menu.c:304
 msgid "Phone book details"
 msgstr ""
 
-#: menu.c:314 menu.c:320
+#: menu.c:317 menu.c:323
 msgid "Name"
 msgstr ""
 
-#: menu.c:315 menu.c:321
+#: menu.c:318 menu.c:324
 msgid "Numbers"
 msgstr ""
 
-#: menu.c:316
+#: menu.c:319
 msgid "Default"
 msgstr ""
 
-#: menu.c:322
+#: menu.c:325
 msgid "Private"
 msgstr ""
 
-#: menu.c:323
+#: menu.c:326
 #, fuzzy
 msgid "Mobile"
 msgstr "Plus"
 
-#: menu.c:324
+#: menu.c:327
 msgid "Business"
 msgstr ""
 
@@ -320,12 +320,12 @@ msgstr "Moins"
 msgid "More"
 msgstr "Plus"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Liste d'appelle de la Fritz!Box"
+#~ msgid "Please wait..."
+#~ msgstr "Attendez SVP..."
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Appel d'une extension inconnue"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendez SVP..."
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Liste d'appelle de la Fritz!Box"

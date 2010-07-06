@@ -48,3 +48,8 @@
 2009-09-13:
 - Fixed entity decoding in FritzFonbook.cpp
 - Fixed wrong HTTP-GET header in Nummerzoeker.cpp
+
+2010-07-06:
+- Improved matching of phone numbers: Fritz!Box control codes *xxx# are now ignored.
+- Updated OertlichesFonbook to website changes.
+

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru_RU-UTF8\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2009-05-28 19:55+0200\n"
+"POT-Creation-Date: 2010-07-06 13:32+0200\n"
 "PO-Revision-Date: 2008-09-09 01:48+0200\n"
 "Last-Translator: Alexander Gross\n"
 "Language-Team: russian\n"
@@ -171,47 +171,47 @@ msgid "Caller"
 msgstr "Вам звонит  "
 
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:260 menu.c:341
+#: menu.c:260 menu.c:344
 msgid "Button$Call"
 msgstr "Позвонить"
 
-#: menu.c:282 menu.c:352
+#: menu.c:282 menu.c:355
 msgid "No number to call"
 msgstr "Без номера звонок не возможен"
 
-#: menu.c:285 menu.c:355
+#: menu.c:285 menu.c:358
 msgid "Pick up your phone now"
 msgstr "Снять телефон сейчас"
 
-#: menu.c:287 menu.c:357
+#: menu.c:287 menu.c:360
 msgid "Error while initiating call"
 msgstr "Ошибка при соединении"
 
-#: menu.c:301
+#: menu.c:304
 msgid "Phone book details"
 msgstr "Подробности справочника"
 
-#: menu.c:314 menu.c:320
+#: menu.c:317 menu.c:323
 msgid "Name"
 msgstr "Имя"
 
-#: menu.c:315 menu.c:321
+#: menu.c:318 menu.c:324
 msgid "Numbers"
 msgstr "Номера"
 
-#: menu.c:316
+#: menu.c:319
 msgid "Default"
 msgstr "По умолчанию"
 
-#: menu.c:322
+#: menu.c:325
 msgid "Private"
 msgstr "Частный"
 
-#: menu.c:323
+#: menu.c:326
 msgid "Mobile"
 msgstr "Мобильный"
 
-#: menu.c:324
+#: menu.c:327
 msgid "Business"
 msgstr "Рабочий"
 

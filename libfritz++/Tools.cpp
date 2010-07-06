@@ -343,6 +343,12 @@ bool Tools::InitCall(std::string &number) {
 }
 
 std::string Tools::NormalizeNumber(std::string number) {
+	// Remove Fritz!Box control codes *xyz# if used
+	if (number[0] == '*') {
+		size_t hashPos = number.find('#');
+		if (hashPos != std::string::npos)
+			number.erase(0, hashPos + 1);
+	}
 	// Only for Germany: Remove Call-By-Call Provider Selection Codes 010(0)xx
 	if ( gConfig->getCountryCode() == "49") {
 		if (number[0] == '0' && number[1] == '1' && number[2] == '0') {
