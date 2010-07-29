@@ -168,15 +168,18 @@ Fonbook::Fonbook()
 
 Fonbook::sResolveResult Fonbook::ResolveToName(std::string number) {
 	sResolveResult result;
-	for (unsigned int pos=0; pos < fonbookList.size(); pos++)
-		for (int type=0; type < FonbookEntry::TYPES_COUNT; type++)
-			if (Tools::CompareNormalized(number, fonbookList[pos].getNumber((FonbookEntry::eType)type)) == 0) {
-				result.name = fonbookList[pos].getName();
-				result.type = (FonbookEntry::eType) type;
-				return result;
-			}
 	result.name = number;
 	result.type = FonbookEntry::TYPE_NONE;
+	if (number.length() > 0)
+		for (unsigned int pos=0; pos < fonbookList.size(); pos++)
+			for (int type=0; type < FonbookEntry::TYPES_COUNT; type++) {
+				std::string fonbookNumber = fonbookList[pos].getNumber((FonbookEntry::eType)type);
+				if (fonbookNumber.length() > 0 && Tools::CompareNormalized(number, fonbookNumber) == 0) {
+					result.name = fonbookList[pos].getName();
+					result.type = (FonbookEntry::eType) type;
+					return result;
+				}
+			}
 	return result;
 }
 

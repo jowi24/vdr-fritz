@@ -513,6 +513,13 @@ VDR Plugin 'fritzbox' Revision History
   calls have been finished. The old behaviour is preserved on upgrade.
   (suggested by Zimbo [37])
 
+2010-07-29: Version 1.3.5
+- changes in libfritz++
+  * Fixed resolving of calls from unknown caller
+    (reported by Honky 	[39]
+  * Code cleanup in Listener, OertlichesFonbook and Nummerzoeker
+
+
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
@@ -562,4 +569,6 @@ VDR Plugin 'fritzbox' Revision History
 [36] Frank (hummingbird_de)
      http://vdr-portal.de/board/profile.php?userid=715
 [37] http://vdr-portal.de/board/profile.php?userid=415     
-[38] http://vdr-portal.de/board/profile.php?userid=12632	
+[38] http://vdr-portal.de/board/profile.php?userid=12632
+[39] http://vdr-portal.de/board/profile.php?userid=25383
+		
