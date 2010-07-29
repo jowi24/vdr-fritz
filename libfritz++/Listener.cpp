@@ -134,7 +134,6 @@ void Listener::Action() {
 
 					if ( Tools::MatchesMsnFilter(partB) ) {
 						// do reverse lookup
-						std::string remoteName;
 						Fonbook::sResolveResult result = FonbookManager::GetFonbook()->ResolveToName(partA);
 						// resolve SIP names
 						std::string mediumName;

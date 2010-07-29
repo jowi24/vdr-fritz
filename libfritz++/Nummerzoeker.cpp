@@ -51,7 +51,7 @@ Fonbook::sResolveResult NummerzoekerFonbook::ResolveToName(std::string number) {
 
 	// resolve only NL phone numbers
 	std::string normNumber = Tools::NormalizeNumber(number);
-	if (normNumber.find("0031") != 0)
+	if (number.length() == 0 || normNumber.find("0031") != 0)
 		return result;
 
 	// __FILE__om works only with national number: remove 0031 prefix, add 0

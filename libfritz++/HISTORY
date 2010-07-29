@@ -190,3 +190,7 @@
 2010-07-04:
 - Updated OertlichesFonbook to website changes
 - Added XmlFonbook.cpp to Makefile
+
+2010-07-29:
+- Fixed resolving of calls from unknown caller
+- Code cleanup in Listener, OertlichesFonbook and Nummerzoeker

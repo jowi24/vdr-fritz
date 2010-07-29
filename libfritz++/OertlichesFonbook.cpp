@@ -49,8 +49,8 @@ Fonbook::sResolveResult OertlichesFonbook::ResolveToName(std::string number) {
 	result.name = number;
 	result.type = FonbookEntry::TYPE_NONE;
 
-	// resolve only german phone numbers
-	if (Tools::NormalizeNumber(number).find("0049") != 0)
+	// resolve only (german) phone numbers
+	if (number.length() == 0 || Tools::NormalizeNumber(number).find("0049") != 0)
 		return result;
 
 	std::string msg;
