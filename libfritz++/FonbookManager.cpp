@@ -24,6 +24,7 @@
 #include "FonbookManager.h"
 #include "FritzFonbook.h"
 #include "OertlichesFonbook.h"
+#include "TelLocalChFonbook.h"
 #include "Nummerzoeker.h"
 #include "LocalFonbook.h"
 #include "Config.h"
@@ -37,6 +38,7 @@ FonbookManager::FonbookManager()
 	// create all fonbooks
 	fonbooks.push_back(new FritzFonbook());
 	fonbooks.push_back(new OertlichesFonbook());
+	fonbooks.push_back(new TelLocalChFonbook());
 	fonbooks.push_back(new NummerzoekerFonbook());
 	fonbooks.push_back(new LocalFonbook());
 	// initialize the fonbooks that are used

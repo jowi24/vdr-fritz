@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru_RU-UTF8\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-07-29 20:11+0200\n"
+"POT-Creation-Date: 2010-07-30 19:20+0200\n"
 "PO-Revision-Date: 2008-09-09 01:48+0200\n"
 "Last-Translator: Alexander Gross\n"
 "Language-Team: russian\n"
@@ -96,6 +96,10 @@ msgstr ""
 
 #: libfritz++/OertlichesFonbook.cpp:33
 msgid "das-oertliche.de"
+msgstr ""
+
+#: libfritz++/TelLocalChFonbook.cpp:33
+msgid "tel.local.ch"
 msgstr ""
 
 #: menu.c:114 menu.c:217
