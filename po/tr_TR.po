@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-07-29 20:11+0200\n"
+"POT-Creation-Date: 2010-07-30 19:20+0200\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Oktay Yolgeçen <oktay_73@yahoo.de>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -100,6 +100,10 @@ msgstr ""
 
 #: libfritz++/OertlichesFonbook.cpp:33
 msgid "das-oertliche.de"
+msgstr ""
+
+#: libfritz++/TelLocalChFonbook.cpp:33
+msgid "tel.local.ch"
 msgstr ""
 
 #: menu.c:114 menu.c:217
@@ -351,15 +355,15 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#~ msgid "Error fetching the call list"
-#~ msgstr "Konuþma listesi yüklenemedi"
-
-#~ msgid "Please wait..."
-#~ msgstr "Lütfen bekleyin"
+#, fuzzy
+#~ msgid "Fritz!Box Notification"
+#~ msgstr "Fritz!Box konuþma listesi"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Bilinmeyen baðlantý arýyor"
 
-#, fuzzy
-#~ msgid "Fritz!Box Notification"
-#~ msgstr "Fritz!Box konuþma listesi"
+#~ msgid "Please wait..."
+#~ msgstr "Lütfen bekleyin"
+
+#~ msgid "Error fetching the call list"
+#~ msgstr "Konuþma listesi yüklenemedi"

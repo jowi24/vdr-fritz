@@ -194,3 +194,7 @@
 2010-07-29:
 - Fixed resolving of calls from unknown caller
 - Code cleanup in Listener, OertlichesFonbook and Nummerzoeker
+
+2010-07-30:
+- Added tel.local.ch phonebook
+
