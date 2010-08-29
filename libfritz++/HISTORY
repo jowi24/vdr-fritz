@@ -198,3 +198,5 @@
 2010-07-30:
 - Added tel.local.ch phonebook
 
+2010-08-29:
+- Added missing initialization of libgcrypt

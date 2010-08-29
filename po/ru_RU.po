@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru_RU-UTF8\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-07-30 19:20+0200\n"
+"POT-Creation-Date: 2010-08-29 19:54+0200\n"
 "PO-Revision-Date: 2008-09-09 01:48+0200\n"
 "Last-Translator: Alexander Gross\n"
 "Language-Team: russian\n"
@@ -81,7 +81,7 @@ msgstr "VoIP"
 msgid "Fritz!Box phone book"
 msgstr "Телефонный справочник Fritz!Box"
 
-#: libfritz++/CallList.cpp:169 libfritz++/FritzClient.cpp:485 menu.c:188
+#: libfritz++/CallList.cpp:169 libfritz++/FritzClient.cpp:490 menu.c:188
 #: menu.c:257
 msgid "unknown"
 msgstr "неизвестный"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "das-oertliche.de"
 msgstr ""
 
-#: libfritz++/TelLocalChFonbook.cpp:33
+#: libfritz++/TelLocalChFonbook.cpp:34
 msgid "tel.local.ch"
 msgstr ""
 
