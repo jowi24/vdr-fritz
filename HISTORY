@@ -523,7 +523,8 @@ VDR Plugin 'fritzbox' Revision History
 - changes in libfritz++
   * Added tel.local.ch phonebook
     (patch provided by Christian [40]
-
+  * Added missing initialization of libgcrypt
+  
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164

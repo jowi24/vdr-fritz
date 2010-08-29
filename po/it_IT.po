@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-07-30 19:20+0200\n"
+"POT-Creation-Date: 2010-08-29 19:54+0200\n"
 "PO-Revision-Date: 2009-12-31 17:52+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -81,7 +81,7 @@ msgstr "VoIP"
 msgid "Fritz!Box phone book"
 msgstr "Rubrica Fritz!Box"
 
-#: libfritz++/CallList.cpp:169 libfritz++/FritzClient.cpp:485 menu.c:188
+#: libfritz++/CallList.cpp:169 libfritz++/FritzClient.cpp:490 menu.c:188
 #: menu.c:257
 msgid "unknown"
 msgstr "sconosciuta"
@@ -98,7 +98,7 @@ msgstr "nummerzoeker.com"
 msgid "das-oertliche.de"
 msgstr "das-oertliche.de"
 
-#: libfritz++/TelLocalChFonbook.cpp:33
+#: libfritz++/TelLocalChFonbook.cpp:34
 msgid "tel.local.ch"
 msgstr ""
 

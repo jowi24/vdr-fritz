@@ -49,6 +49,11 @@ pthread::Mutex* FritzClient::mutex = new pthread::Mutex();
 
 FritzClient::FritzClient() {
 	mutex->Lock();
+	// init libgcrypt
+	gcry_check_version (NULL);
+    // disable secure memory
+    gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
+    gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
 }
 
 FritzClient::~FritzClient() {
