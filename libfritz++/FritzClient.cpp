@@ -202,7 +202,7 @@ bool FritzClient::Login() throw(tcpclient::TcpException) {
 				gConfig->updateLastRequestTime();
 				return true;
 			} else {
-				ERR("login failed!.");
+				ERR("login failed, check your password settings!.");
 				return false;
 			}
 		}
