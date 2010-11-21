@@ -34,6 +34,7 @@ class cPluginFritzbox : public cPlugin, cThread {
 private:
 	cFritzEventHandler *event;
 	std::string mainMenuEntry;
+	bool logPersonalInfo;
 
 public:
 	cPluginFritzbox(void);
