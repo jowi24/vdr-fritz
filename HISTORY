@@ -526,6 +526,7 @@ VDR Plugin 'fritzbox' Revision History
   * Added missing initialization of libgcrypt
   * Sensitive Information like passwords, phone numbers, etc. are no longer 
     logged by default.
+    (suggested by C-3PO [41])
 - The new command line option --log-personal-info re-enables logging all information  
   
 --- References ---
@@ -581,5 +582,5 @@ VDR Plugin 'fritzbox' Revision History
 [39] http://vdr-portal.de/board/profile.php?userid=25383
 [40] Christian Richter <cr@crichter.net>
      http://vdr-portal.de/board/profile.php?userid=12424
-     
+[41] http://vdr-portal.de/board/profile.php?userid=12003     
 		
