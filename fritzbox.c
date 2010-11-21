@@ -20,6 +20,8 @@
  */
 
 #include <vector>
+#include <unistd.h>
+#include <getopt.h>
 #include <vdr/remote.h>
 #include <FonbookManager.h>
 #include <Listener.h>
@@ -40,6 +42,7 @@ cPluginFritzbox::cPluginFritzbox(void)
 	// DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
 	// VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
 	event = NULL;
+	logPersonalInfo = false;
 }
 
 cPluginFritzbox::~cPluginFritzbox()
@@ -61,13 +64,31 @@ const char *cPluginFritzbox::Description(void)
 const char *cPluginFritzbox::CommandLineHelp(void)
 {
 	// Return a string that describes all known command line options.
-	return NULL;
+	return "  -p,   --log-personal-info      log personal information (e.g. passwords, phone numbers, ...)\n";
 }
 
 bool cPluginFritzbox::ProcessArgs(int argc, char *argv[])
 {
 	// Implement command line argument processing here if applicable.
-	return true;
+    static struct option long_options[] = {
+            { "log-personal-info", no_argument, NULL, 'p' },
+            { NULL }
+    };
+
+    int c;
+    while ((c = getopt_long(argc, argv, "p", long_options, NULL)) != -1) {
+    switch (c) {
+        case 'p':
+				DBG("Logging personal information requested");
+				logPersonalInfo = true;
+                break;
+        default:
+                ERR("unknown comand line option" << (char)c);
+                return false;
+        }
+    }
+
+    return true;
 }
 
 bool cPluginFritzbox::Initialize(void)
@@ -203,7 +224,7 @@ void cPluginFritzbox::Action() {
 	// init libfritz++
 	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
 			&fritzboxConfig.locationSettingsDetected,
-			&fritzboxConfig.countryCode, &fritzboxConfig.regionCode);
+			&fritzboxConfig.countryCode, &fritzboxConfig.regionCode, logPersonalInfo);
 	fritz::Config::SetupConfigDir(fritzboxConfig.configDir);
 	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
 	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);

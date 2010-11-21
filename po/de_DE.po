@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-08-29 19:54+0200\n"
+"POT-Creation-Date: 2010-11-21 19:25+0100\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Matthias Becker <becker.matthias@gmail.com>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -14,38 +14,38 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: fritzbox.c:33
+#: fritzbox.c:35
 msgid "Fritz Plugin for AVM Fritz!Box"
 msgstr "Fritz Plugin für die AVM Fritz!Box"
 
-#: fritzbox.c:34
+#: fritzbox.c:36
 msgid "Fritz!Box"
 msgstr "Fritz!Box"
 
-#: fritzbox.c:148
+#: fritzbox.c:168
 msgid "missed call"
 msgstr "verpasster Anruf"
 
-#: fritzbox.c:148
+#: fritzbox.c:168
 msgid "missed calls"
 msgstr "verpasste Anrufe"
 
-#: fritzbox.c:164 menu.c:113
+#: fritzbox.c:184 menu.c:113
 msgid "This phonebook is not yet available."
 msgstr "Telefonbuch noch nicht verfügbar."
 
 #. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
-#: fritzbox.c:223
+#: fritzbox.c:243
 msgid "H"
 msgstr "T"
 
 #. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
-#: fritzbox.c:226
+#: fritzbox.c:246
 msgid "M"
 msgstr "H"
 
 #. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
-#: fritzbox.c:229
+#: fritzbox.c:249
 msgid "W"
 msgstr "F"
 
@@ -63,11 +63,11 @@ msgstr "Anruf"
 msgid "Call from"
 msgstr "Anruf von"
 
-#: fritzeventhandler.c:112 libfritz++/Listener.cpp:107
+#: fritzeventhandler.c:112 libfritz++/Listener.cpp:111
 msgid "POTS"
 msgstr "analog"
 
-#: fritzeventhandler.c:119 libfritz++/Listener.cpp:108
+#: fritzeventhandler.c:119 libfritz++/Listener.cpp:112
 msgid "ISDN"
 msgstr "ISDN"
 
@@ -94,10 +94,6 @@ msgstr ""
 
 #: libfritz++/OertlichesFonbook.cpp:33
 msgid "das-oertliche.de"
-msgstr ""
-
-#: libfritz++/TelLocalChFonbook.cpp:34
-msgid "tel.local.ch"
 msgstr ""
 
 #: menu.c:114 menu.c:217
@@ -335,14 +331,14 @@ msgstr "Weniger"
 msgid "More"
 msgstr "Mehr"
 
-#~ msgid "Error fetching the call list"
-#~ msgstr "Fehler beim Anfordern der Gesprächsliste"
-
-#~ msgid "Please wait..."
-#~ msgstr "Bitte warten..."
+#~ msgid " "
+#~ msgstr " "
 
 #~ msgid "Fritz!Box Notification"
 #~ msgstr "Fritz!Box Information"
 
-#~ msgid " "
-#~ msgstr " "
+#~ msgid "Please wait..."
+#~ msgstr "Bitte warten..."
+
+#~ msgid "Error fetching the call list"
+#~ msgstr "Fehler beim Anfordern der Gesprächsliste"
