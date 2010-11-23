@@ -1,0 +1,9 @@
+[submodule "libfritz++"]
+	path = libfritz++
+	url = git@git.mx2.eu:libfritz++.git
+[submodule "libtcpclient++"]
+	path = libtcpclient++
+	url = git@git.mx2.eu:libtcpclient++.git
+[submodule "libpthread++"]
+	path = libpthread++
+	url = git@git.mx2.eu:libpthread++.git
