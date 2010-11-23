@@ -432,6 +432,7 @@ VDR Plugin 'fritzbox' Revision History
   OK button, too
   (patch provided by Uwe [33]) 
 
+- Fix parsing SIP provider names
   
 --- References ---
 
