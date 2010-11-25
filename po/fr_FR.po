@@ -6,360 +6,286 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: 2010-11-21 19:25+0100\n"
+"POT-Creation-Date: 2010-11-25 12:50+0100\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Patrice Staudt\n"
 "Language-Team: <vdr@linuxtv.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: fritzbox.c:35
-msgid "Fritz Plugin for AVM Fritz!Box"
-msgstr ""
-
-#: fritzbox.c:36
-#, fuzzy
-msgid "Fritz!Box"
-msgstr "Url de la Fritz!Box"
-
-#: fritzbox.c:168
-#, fuzzy
-msgid "missed call"
-msgstr "manqué"
-
-#: fritzbox.c:168
-#, fuzzy
-msgid "missed calls"
-msgstr "manqué"
-
-#: fritzbox.c:184 menu.c:113
-#, fuzzy
-msgid "This phonebook is not yet available."
-msgstr "Carnet d'adresse n'est pas encore disponible"
-
-#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
-#: fritzbox.c:243
-msgid "H"
-msgstr "H"
-
-#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
-#: fritzbox.c:246
-msgid "M"
-msgstr "M"
-
-#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
-#: fritzbox.c:249
-msgid "W"
-msgstr "W"
-
-#: fritzeventhandler.c:53
-#, fuzzy, c-format
-msgid "Calling %s [%s]"
-msgstr "Appelle de"
-
-#: fritzeventhandler.c:60
-#, fuzzy
-msgid "Call"
-msgstr "Appelle de"
-
-#: fritzeventhandler.c:65
-msgid "Call from"
-msgstr "Appelle de"
-
-#: fritzeventhandler.c:112 libfritz++/Listener.cpp:111
-msgid "POTS"
-msgstr "analogue"
-
-#: fritzeventhandler.c:119 libfritz++/Listener.cpp:112
-msgid "ISDN"
-msgstr "Numéris"
-
-#: fritzeventhandler.c:120
-msgid "VoIP"
-msgstr "Voix sur IP"
-
-#: fritzfonbuch.c:155 libfritz++/FritzFonbook.cpp:34
-msgid "Fritz!Box phone book"
-msgstr "Carnet d'adresse de la Fritz!Box"
-
-#: libfritz++/CallList.cpp:169 libfritz++/FritzClient.cpp:490 menu.c:188
-#: menu.c:257
-msgid "unknown"
-msgstr "inconnu"
-
-#: libfritz++/LocalFonbook.cpp:73
-#, fuzzy
-msgid "Local phone book"
-msgstr "Carnet d'adresse de la Fritz!Box"
-
-#: libfritz++/Nummerzoeker.cpp:33
-msgid "nummerzoeker.com"
-msgstr ""
-
-#: libfritz++/OertlichesFonbook.cpp:33
-msgid "das-oertliche.de"
-msgstr ""
-
-#: menu.c:114 menu.c:217
-msgid "You may need to wait some minutes,"
-msgstr "Vous devrez peut-être attendre quelques minutes,"
-
-#: menu.c:115 menu.c:218
-msgid "otherwise there may be a network problem."
-msgstr "Sinon il peut y avoir un problème de réseau"
-
-#: menu.c:118
-#, fuzzy
-msgid "This phonebook is not displayable"
-msgstr "Carnet d'adresse n'est pas encore disponible"
-
-#: menu.c:144
 #, fuzzy
 msgid "> PB"
 msgstr "CdA"
 
-#: menu.c:150
-msgid "Fritz!Box call list"
-msgstr "Liste d'appelle de la Fritz!Box"
-
-#: menu.c:156 setup.c:92
-msgid "incoming"
-msgstr "entrant"
-
-#: menu.c:159 setup.c:102
-msgid "missed"
-msgstr "manqué"
-
-#: menu.c:168 setup.c:97
-msgid "outgoing"
-msgstr "sortant"
-
-#: menu.c:216
-#, fuzzy
-msgid "The call list is not yet available."
-msgstr "Carnet d'adresse n'est pas encore disponible"
-
-#. TRANSLATORS: this is the short form of "phone book"
-#: menu.c:223 setup.c:87
-msgid "PB"
-msgstr "CdA"
-
-#: menu.c:230
-msgid "Call details"
-msgstr "Détails des appels"
-
-#: menu.c:244
-msgid "Date"
-msgstr "Date"
-
-#: menu.c:245
-msgid "Time"
-msgstr "Temps"
-
-#: menu.c:246
-msgid "Duration"
-msgstr "Durée"
-
-#: menu.c:247
-msgid "call was not accepted"
-msgstr "Appel n'a pas été accepté"
-
-#: menu.c:249 setup.c:128
-msgid "Extension"
-msgstr "Extension MSN"
-
-#: menu.c:254
-msgid "Callee"
+msgid "Business"
 msgstr ""
-
-#: menu.c:255
-#, fuzzy
-msgid "Caller"
-msgstr "Appelle de"
 
 #. TRANSLATORS: these are labels for color keys in the CallDetails menu
 #. TRANSLATORS: this is the label for the button to initiate a call
-#: menu.c:260 menu.c:353
 #, fuzzy
 msgid "Button$Call"
 msgstr "Muet lors d'un appel"
 
-#: menu.c:260
 #, fuzzy
 msgid "Button$To PB"
 msgstr "Muet lors d'un appel"
 
-#: menu.c:282 menu.c:372
-msgid "No number to call"
-msgstr "Aucun numéro à appeler"
-
-#: menu.c:286 menu.c:376
-msgid "Pick up your phone now"
-msgstr "Décrocher votre téléphone maintenant"
-
-#: menu.c:288 menu.c:378
-msgid "Error while initiating call"
-msgstr "Erreur au lancement de l'appel"
-
-#: menu.c:295
 #, fuzzy
-msgid "No number to add"
-msgstr "Aucun numéro à appeler"
+msgid "Call"
+msgstr "Appelle de"
 
-#: menu.c:320
-msgid "Phone book details"
+msgid "Call details"
+msgstr "Détails des appels"
+
+msgid "Call from"
+msgstr "Appelle de"
+
+msgid "Callee"
 msgstr ""
 
-#: menu.c:328 menu.c:332
-msgid "Name"
+#, fuzzy
+msgid "Caller"
+msgstr "Appelle de"
+
+#, fuzzy, c-format
+msgid "Calling %s [%s]"
+msgstr "Appelle de"
+
+msgid "Country code"
 msgstr ""
 
-#: menu.c:329 menu.c:333
-msgid "Numbers"
-msgstr ""
+msgid "Date"
+msgstr "Date"
 
-#: menu.c:330
 msgid "Default"
 msgstr ""
 
-#: menu.c:334
-msgid "Private"
+msgid "Default menu"
 msgstr ""
 
-#: menu.c:335
+msgid "Detailed call lists"
+msgstr "Listes détaillées d'appel"
+
+msgid "Duration"
+msgstr "Durée"
+
+msgid "Error while initiating call"
+msgstr "Erreur au lancement de l'appel"
+
+msgid "Extension"
+msgstr "Extension MSN"
+
+msgid "Fritz Plugin for AVM Fritz!Box"
+msgstr ""
+
 #, fuzzy
-msgid "Mobile"
-msgstr "Plus"
+msgid "Fritz!Box"
+msgstr "Url de la Fritz!Box"
 
-#: menu.c:336
-msgid "Business"
-msgstr ""
+msgid "Fritz!Box URL"
+msgstr "Url de la Fritz!Box"
 
-#: notifyosd.c:37
+msgid "Fritz!Box call list"
+msgstr "Liste d'appelle de la Fritz!Box"
+
+msgid "Fritz!Box phone book"
+msgstr "Carnet d'adresse de la Fritz!Box"
+
+msgid "Group call lists by date"
+msgstr "Groupe appels par jour"
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
+msgid "H"
+msgstr "H"
+
+msgid "Hide main menu entry"
+msgstr "Caché dans le menu principale"
+
+msgid "ISDN"
+msgstr "Numéris"
+
 #, fuzzy
 msgid "Incoming call"
 msgstr "Afficher les appels entrants"
 
-#: notifyosd.c:37
+msgid "Less"
+msgstr "Moins"
+
+#, fuzzy
+msgid "Local phone book"
+msgstr "Carnet d'adresse de la Fritz!Box"
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
+msgid "M"
+msgstr "M"
+
+#, fuzzy
+msgid "Mobile"
+msgstr "Plus"
+
+msgid "More"
+msgstr "Plus"
+
+msgid "Mute on call"
+msgstr "Muet lors d'un appel"
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "No number to add"
+msgstr "Aucun numéro à appeler"
+
+msgid "No number to call"
+msgstr "Aucun numéro à appeler"
+
+msgid "Number of monitored extensions"
+msgstr "Nombre d'extensions MSNs a surveillier"
+
+msgid "Numbers"
+msgstr ""
+
 #, fuzzy
 msgid "Outgoing call"
 msgstr "Muet lors d'un appel"
 
-#: setup.c:71
-msgid "any"
-msgstr ""
+#. TRANSLATORS: this is the short form of "phone book"
+msgid "PB"
+msgstr "CdA"
 
-#: setup.c:76
-#, fuzzy
-msgid "only incoming"
-msgstr "entrant"
+msgid "POTS"
+msgstr "analogue"
 
-#: setup.c:81
-#, fuzzy
-msgid "only outgoing"
-msgstr "sortant"
-
-#: setup.c:108
-msgid "Fritz!Box URL"
-msgstr "Url de la Fritz!Box"
-
-#: setup.c:109
 msgid "Password"
 msgstr "Mot de passe"
 
-#: setup.c:110
-msgid "Country code"
+msgid "Pause on call"
+msgstr "Pause pour appel"
+
+msgid "Phone book details"
 msgstr ""
 
-#: setup.c:111
-msgid "Region code"
+msgid "Pick up your phone now"
+msgstr "Décrocher votre téléphone maintenant"
+
+msgid "Private"
 msgstr ""
 
-#: setup.c:112
 #, fuzzy
 msgid "React on calls"
 msgstr "Muet lors d'un appel"
 
-#: setup.c:113
-msgid "Mute on call"
-msgstr "Muet lors d'un appel"
+msgid "Region code"
+msgstr ""
 
-#: setup.c:114
-msgid "Pause on call"
-msgstr "Pause pour appel"
+msgid "Reload"
+msgstr "Recharger"
 
-#: setup.c:116
+msgid "Restrict monitor to certain extensions"
+msgstr "Limiter le moniteur à certaines extensions MSNs"
+
 msgid "Resume after call"
 msgstr ""
 
-#: setup.c:117
+msgid "Retrieving phone book"
+msgstr "Recherche du carnet d'adresse"
+
+msgid "Setup phonebooks to use"
+msgstr "Configuration de répertoires téléphoniques à utiliser"
+
+msgid "Setup phonebooks to use..."
+msgstr "Configuration de répertoires téléphoniques à utiliser..."
+
 #, fuzzy
 msgid "Show calls"
 msgstr "Afficher les appels entrants"
 
-#: setup.c:118
 #, fuzzy
 msgid "Show detailed call information"
 msgstr "Listes détaillées d'appel"
 
-#: setup.c:119
-msgid "Detailed call lists"
-msgstr "Listes détaillées d'appel"
+#, fuzzy
+msgid "The call list is not yet available."
+msgstr "Carnet d'adresse n'est pas encore disponible"
 
-#: setup.c:120
-msgid "Group call lists by date"
-msgstr "Groupe appels par jour"
+#, fuzzy
+msgid "This phonebook is not displayable"
+msgstr "Carnet d'adresse n'est pas encore disponible"
 
-#: setup.c:121
-msgid "Hide main menu entry"
-msgstr "Caché dans le menu principale"
+#, fuzzy
+msgid "This phonebook is not yet available."
+msgstr "Carnet d'adresse n'est pas encore disponible"
 
-#: setup.c:122
-msgid "Default menu"
+msgid "Time"
+msgstr "Temps"
+
+msgid "VoIP"
+msgstr "Voix sur IP"
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
+msgid "W"
+msgstr "W"
+
+msgid "You may need to wait some minutes,"
+msgstr "Vous devrez peut-être attendre quelques minutes,"
+
+msgid "any"
 msgstr ""
 
-#: setup.c:123
-msgid "Setup phonebooks to use..."
-msgstr "Configuration de répertoires téléphoniques à utiliser..."
+msgid "call was not accepted"
+msgstr "Appel n'a pas été accepté"
 
-#: setup.c:124
-msgid "Restrict monitor to certain extensions"
-msgstr "Limiter le moniteur à certaines extensions MSNs"
+msgid "das-oertliche.de"
+msgstr ""
 
-#: setup.c:126
-msgid "Number of monitored extensions"
-msgstr "Nombre d'extensions MSNs a surveillier"
+msgid "incoming"
+msgstr "entrant"
 
-#: setup.c:130
-msgid "Reload"
-msgstr "Recharger"
+msgid "missed"
+msgstr "manqué"
 
-#: setup.c:181
-msgid "Retrieving phone book"
-msgstr "Recherche du carnet d'adresse"
+#, fuzzy
+msgid "missed call"
+msgstr "manqué"
 
-#: setup.c:308
-msgid "Setup phonebooks to use"
-msgstr "Configuration de répertoires téléphoniques à utiliser"
+#, fuzzy
+msgid "missed calls"
+msgstr "manqué"
 
-#: setup.c:324
-msgid "Less"
-msgstr "Moins"
+msgid "nummerzoeker.com"
+msgstr ""
 
-#: setup.c:324
-msgid "More"
-msgstr "Plus"
+#, fuzzy
+msgid "only incoming"
+msgstr "entrant"
 
-#~ msgid "Error fetching the call list"
-#~ msgstr "Erreur de chargement de la liste d'appel"
+#, fuzzy
+msgid "only outgoing"
+msgstr "sortant"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendez SVP..."
+msgid "otherwise there may be a network problem."
+msgstr "Sinon il peut y avoir un problème de réseau"
+
+msgid "outgoing"
+msgstr "sortant"
+
+msgid "tel.local.ch"
+msgstr ""
+
+msgid "unknown"
+msgstr "inconnu"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Appel d'une extension inconnue"
 
+#~ msgid "Error fetching the call list"
+#~ msgstr "Erreur de chargement de la liste d'appel"
+
 #, fuzzy
 #~ msgid "Fritz!Box Notification"
 #~ msgstr "Liste d'appelle de la Fritz!Box"
+
+#~ msgid "Please wait..."
+#~ msgstr "Attendez SVP..."
