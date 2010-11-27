@@ -57,17 +57,12 @@ DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 ### libfritz++
 LIBFRITZ = libfritz++
 INCLUDES += -I$(LIBFRITZ)
-LIBS += $(LIBFRITZ)/$(LIBFRITZ).a -lgcrypt
-
-### libpthread++
-LIBPTHREAD = libpthread++
-INCLUDES += -I$(LIBPTHREAD)
-LIBS += $(LIBPTHREAD)/$(LIBPTHREAD).a
+LIBS += $(LIBFRITZ)/$(LIBFRITZ).a -lgcrypt -lccgnu2
 
 ### libtcpclient++
 LIBTCPCLIENT = libtcpclient++
 INCLUDES += -I$(LIBTCPCLIENT)
-LIBS += $(LIBTCPCLIENT)/$(LIBTCPCLIENT).a 
+LIBS += $(LIBTCPCLIENT)/$(LIBTCPCLIENT).a -lccgnu2
 
 
 ### The object files (add further files here):
@@ -81,15 +76,12 @@ all: libvdr-$(PLUGIN).so i18n
 libvdr-$(PLUGIN).so: $(OBJS) libfritz 
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LIBS) -o $@
 	
-libfritz: libtcpclient libpthread
+libfritz: libtcpclient
 	$(MAKE) -C $(LIBFRITZ)	
 	
 libtcpclient:
 	$(MAKE) -C $(LIBTCPCLIENT)
 	
-libpthread:
-	$(MAKE) -C $(LIBPTHREAD)
-
 %.o: %.c
 	$(CXX) $(CXXFLAGS) -c $(DEFINES) $(INCLUDES) $<
 
@@ -106,7 +98,6 @@ clean:
 	@-rm -f $(OBJS) $(DEPFILE) *.so *.tgz core* *~
 	@-make -C $(LIBFRITZ) clean
 	@-make -C $(LIBTCPCLIENT) clean
-	@-make -C $(LIBPTHREAD) clean
 
 ### Internationalization (I18N):
 
