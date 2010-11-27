@@ -1,6 +1,3 @@
-[submodule "libpthread++"]
-	path = libpthread++
-	url = git://git.joachim-wilke.de/libpthread++.git
 [submodule "libfritz++"]
 	path = libfritz++
 	url = git://git.joachim-wilke.de/libfritz++.git
