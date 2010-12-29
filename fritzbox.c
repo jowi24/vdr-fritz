@@ -222,9 +222,8 @@ cString cPluginFritzbox::SVDRPCommand(const char *Command, const char *Option, i
 void cPluginFritzbox::Action() {
 
 	// init libfritz++
-	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password,
-			&fritzboxConfig.locationSettingsDetected,
-			&fritzboxConfig.countryCode, &fritzboxConfig.regionCode, logPersonalInfo);
+	fritz::Config::Setup(fritzboxConfig.url, fritzboxConfig.password, logPersonalInfo);
+	fritz::Config::Init(&fritzboxConfig.locationSettingsDetected, &fritzboxConfig.countryCode, &fritzboxConfig.regionCode);
 	fritz::Config::SetupConfigDir(fritzboxConfig.configDir);
 	fritz::Config::SetupMsnFilter(fritzboxConfig.msn);
 	fritz::FonbookManager::CreateFonbookManager(fritzboxConfig.selectedFonbookIDs, fritzboxConfig.activeFonbookID);
