@@ -432,7 +432,11 @@ VDR Plugin 'fritzbox' Revision History
   OK button, too
   (patch provided by Uwe [33]) 
 
-- Fix parsing SIP provider names
+2010-12-29: Version 1.2.4
+- changes in libfritz++
+  * Fix parsing SIP provider names
+  * Updated OertlichesFonbook to website changes
+  (patch provided by Kurt Wanner [32])
   
 --- References ---
 
@@ -475,3 +479,4 @@ VDR Plugin 'fritzbox' Revision History
      http://vdr-portal.de/board/profile.php?userid=8029
 [30] http://www.vdr-portal.de/board/profile.php?userid=6793
 [31] http://vdr-portal.de/board/profile.php?userid=15996
+[32] Kurt Wanner <kurt@wanner.me>
