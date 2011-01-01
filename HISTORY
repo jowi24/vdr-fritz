@@ -519,7 +519,7 @@ VDR Plugin 'fritzbox' Revision History
     (reported by Honky 	[39]
   * Code cleanup in Listener, OertlichesFonbook and Nummerzoeker
 
-2010-08-xx: Version 1.3.6
+2011-01-01: Version 1.3.6
 - changes in libfritz++
   * Added tel.local.ch phonebook
     (patch provided by Christian [40]
@@ -527,8 +527,19 @@ VDR Plugin 'fritzbox' Revision History
   * Sensitive Information like passwords, phone numbers, etc. are no longer 
     logged by default.
     (suggested by C-3PO [41])
+  * Moved from libpthread++ to libccgnu2
+  * First steps in migrating to socket implementation of common c++
+    -> To compile vdr-fritz, development header files of the gnu common c++ library 
+    are needed!
+  * Splitted Config::Setup into Config::Setup and Config::Init
+  * Fix reverse lookup in OertlichesFonbook
+    (patch provided by Kurt Wanner [43])
+  * Add missing include to XmlFonbook
+    (reported by Richard Bos [42])
 - The new command line option --log-personal-info re-enables logging all information  
-  
+- Migration to gnu common c++ library should fix a possible crash at plugin shutdown
+- Fix parsing SIP provider names
+
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
@@ -549,7 +560,7 @@ VDR Plugin 'fritzbox' Revision History
 [13] Oktay Yolgecen <Oktay_73@yahoo.de>
 [14] http://vdr-portal.de/board/profile.php?userid=1551
 [15] Axel Naumann <axel-naumann@gmx.de>
-[16] Thomas Gï¿½nther <tom@toms-cafe.de>
+[16] Thomas Günther <tom@toms-cafe.de>
      http://vdr-portal.de/board/profile.php?userid=4452
 [17] Torsten Weigelt <torsten.weigelt@web.de>
      http://vdr-portal.de/board/profile.php?userid=16817
@@ -557,7 +568,7 @@ VDR Plugin 'fritzbox' Revision History
 [19] http://vdr-portal.de/board/profile.php?userid=99
 [20] http://vdr-portal.de/board/profile.php?userid=15737
 [21] http://vdr-portal.de/board/profile.php?userid=8904
-[22] Hans Jï¿½rgen Meier <Hans-Juergen@Kalmei.de>
+[22] Hans Jürgen Meier <Hans-Juergen@Kalmei.de>
 [23] http://vdr-portal.de/board/profile.php?userid=272	
 [24] Diego Pierotto <vdr-italian@tiscali.it>
      http://vdr-italia.phpbb24.com/portal.php
@@ -582,5 +593,8 @@ VDR Plugin 'fritzbox' Revision History
 [39] http://vdr-portal.de/board/profile.php?userid=25383
 [40] Christian Richter <cr@crichter.net>
      http://vdr-portal.de/board/profile.php?userid=12424
-[41] http://vdr-portal.de/board/profile.php?userid=12003     
+[41] http://vdr-portal.de/board/profile.php?userid=12003    
+[42] Richard Bos <ml@radoeka.nl>
+[43] Kurt Wanner <kurt@wanner.me>
+
 		
