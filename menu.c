@@ -257,7 +257,7 @@ cMenuCallDetail::cMenuCallDetail(fritz::CallEntry *ce, cMenuFritzbox::mode mode,
 	     << (ce->remoteNumber.size() > 0 ? ce->remoteNumber : tr("unknown")) << "\n";
 
 	//TRANSLATORS: these are labels for color keys in the CallDetails menu
-	SetHelp(tr("Button$Call"), tr("Button$To PB"));
+	SetHelp(tr("Button$Call")/*, tr("Button$To PB")*/); // TODO: implement feature
 	SetText(text.str());
 	Display();
 }

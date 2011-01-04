@@ -29,10 +29,6 @@ msgid "Button$Call"
 msgstr "Telefon gelince sesi kes"
 
 #, fuzzy
-msgid "Button$To PB"
-msgstr "Telefon gelince sesi kes"
-
-#, fuzzy
 msgid "Call"
 msgstr "Arayan numara"
 
@@ -275,6 +271,10 @@ msgstr ""
 
 msgid "unknown"
 msgstr "mechul"
+
+#, fuzzy
+#~ msgid "Button$To PB"
+#~ msgstr "Telefon gelince sesi kes"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Bilinmeyen baðlantý arýyor"

@@ -28,10 +28,6 @@ msgstr "Рабочий"
 msgid "Button$Call"
 msgstr "Позвонить"
 
-#, fuzzy
-msgid "Button$To PB"
-msgstr "Позвонить"
-
 msgid "Call"
 msgstr "Звонок"
 
@@ -263,6 +259,10 @@ msgstr ""
 
 msgid "unknown"
 msgstr "неизвестный"
+
+#, fuzzy
+#~ msgid "Button$To PB"
+#~ msgstr "Позвонить"
 
 #~ msgid "Error fetching the call list"
 #~ msgstr "Ошибка при запросе списка звонков"
