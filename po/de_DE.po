@@ -25,9 +25,6 @@ msgstr "Geschäftlich"
 msgid "Button$Call"
 msgstr "Anrufen"
 
-msgid "Button$To PB"
-msgstr "In TB"
-
 msgid "Call"
 msgstr "Anruf"
 
@@ -258,6 +255,9 @@ msgstr "unbekannt"
 
 #~ msgid " "
 #~ msgstr " "
+
+#~ msgid "Button$To PB"
+#~ msgstr "In TB"
 
 #~ msgid "Error fetching the call list"
 #~ msgstr "Fehler beim Anfordern der Gesprächsliste"

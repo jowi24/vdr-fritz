@@ -28,10 +28,6 @@ msgid "Button$Call"
 msgstr "Muet lors d'un appel"
 
 #, fuzzy
-msgid "Button$To PB"
-msgstr "Muet lors d'un appel"
-
-#, fuzzy
 msgid "Call"
 msgstr "Appelle de"
 
@@ -275,6 +271,10 @@ msgstr ""
 
 msgid "unknown"
 msgstr "inconnu"
+
+#, fuzzy
+#~ msgid "Button$To PB"
+#~ msgstr "Muet lors d'un appel"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Appel d'une extension inconnue"

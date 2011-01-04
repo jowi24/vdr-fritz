@@ -28,9 +28,6 @@ msgstr "Affari"
 msgid "Button$Call"
 msgstr "Chiama"
 
-msgid "Button$To PB"
-msgstr "A PB"
-
 msgid "Call"
 msgstr "Chiama"
 
@@ -262,6 +259,9 @@ msgstr "sconosciuta"
 
 #~ msgid " "
 #~ msgstr " "
+
+#~ msgid "Button$To PB"
+#~ msgstr "A PB"
 
 #~ msgid "Call from unknown extension"
 #~ msgstr "Chiamata da estensione sconosciuta"
