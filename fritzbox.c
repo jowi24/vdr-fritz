@@ -121,9 +121,7 @@ void cPluginFritzbox::Stop(void)
 	SetupStore("CountryCode",         fritzboxConfig.countryCode.c_str());
 	SetupStore("RegionCode",          fritzboxConfig.regionCode.c_str());
 	// Stop any background activities the plugin shall perform.
-	fritz::Listener::DeleteListener();
-	fritz::CallList::DeleteCallList();
-	fritz::FonbookManager::DeleteFonbookManager();
+	fritz::Config::Shutdown();
 	if (event)
 		delete event;
 	if (dlog)
@@ -232,8 +230,6 @@ void cPluginFritzbox::Action() {
 	// Create FritzListener only if needed
 	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall)
 		fritz::Listener::CreateListener(event);
-	else
-		fritz::Listener::DeleteListener();
 }
 
 std::string cPluginFritzbox::FonbookEntryTypeToName(const fritz::FonbookEntry::eType type) {

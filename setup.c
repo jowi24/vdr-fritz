@@ -189,6 +189,10 @@ eOSState cMenuSetupFritzbox::ProcessKey(eKeys Key) {
 }
 
 void cMenuSetupFritzbox::Store(void) {
+
+	fritzbox->Cancel();        // stop any pending initialization
+	fritz::Config::Shutdown(); // clean up before changing the configuration
+
 	fritzboxConfig.url            		= url;
 	int i = 0;
 	// only store the password if it was changed
