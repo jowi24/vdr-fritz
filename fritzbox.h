@@ -31,6 +31,7 @@
 #include "log.h"
 
 class cPluginFritzbox : public cPlugin, cThread {
+	friend class cMenuSetupFritzbox;
 private:
 	cFritzEventHandler *event;
 	std::string mainMenuEntry;
