@@ -1,4 +1,4 @@
-#Sun Nov 21 13:51:41 CET 2010
+#Wed Jan 05 19:57:27 CET 2011
 eclipse.preferences.version=1
 environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\="\:" name\="VDRDIR" operation\="append" value\="${workspace_loc}/vdr"/>\n</environment>\n
-environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\="\:" name\="VDR_DIR" operation\="append" value\="${workspace_loc}/vdr"/>\n<variable delimiter\="\:" name\="VDRDIR" operation\="append" value\="${workspace_loc}/vdr"/>\n</environment>\n
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\="\:" name\="CXXFLAGS" operation\="append" value\="-g -ggdb -O0"/>\n<variable delimiter\="\:" name\="VDRDIR" operation\="append" value\="${workspace_loc}/vdr"/>\n</environment>\n
