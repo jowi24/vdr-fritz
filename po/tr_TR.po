@@ -52,6 +52,10 @@ msgstr "Arayan numara"
 msgid "Country code"
 msgstr ""
 
+#, fuzzy
+msgid "Data not yet available."
+msgstr "Telefon defteri mevcut deðil"
+
 msgid "Date"
 msgstr ""
 

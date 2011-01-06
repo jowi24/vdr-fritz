@@ -48,6 +48,9 @@ msgstr "Rufe %s an [%s]"
 msgid "Country code"
 msgstr "Internationale Vorwahl"
 
+msgid "Data not yet available."
+msgstr "Daten noch nicht verfügbar."
+
 msgid "Date"
 msgstr "Datum"
 
