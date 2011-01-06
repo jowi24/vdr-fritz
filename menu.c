@@ -54,13 +54,13 @@ eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 
 	eOSState state = cOsdMenu::ProcessKey(Key);
 	fritz::CallEntry *ce = NULL;
-	cKeyOsdItem* currentKeyItem = (cKeyOsdItem*) this->Get(Current());
+	cKeyOsdItem* currentKeyItem = dynamic_cast<cKeyOsdItem*>(this->Get(Current()));
 	if (state == osUnknown) {
 		switch (Key) {
 		case kOk:
 			switch (currentMode) {
 			case FONBUCH:
-				if (Current() >= 0 && fonbook->isDisplayable() && fonbook->isInitialized())
+				if (currentKeyItem && fonbook->isDisplayable() && fonbook->isInitialized())
 					state = AddSubMenu(new cMenuFonbuchDetail(fonbook->RetrieveFonbookEntry(currentKeyItem->key)));
 				break;
 			case IN:
