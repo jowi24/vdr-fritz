@@ -50,6 +50,10 @@ msgstr "Звонит %s [%s]"
 msgid "Country code"
 msgstr ""
 
+#, fuzzy
+msgid "Data not yet available."
+msgstr "Телефонный справочник пока не доступен."
+
 msgid "Date"
 msgstr "Дата"
 

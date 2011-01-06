@@ -50,6 +50,10 @@ msgstr "Chiamata %s [%s]"
 msgid "Country code"
 msgstr "Codice internazionale"
 
+#, fuzzy
+msgid "Data not yet available."
+msgstr "Elenco chiamate non ancora disponibile."
+
 msgid "Date"
 msgstr "Data"
 

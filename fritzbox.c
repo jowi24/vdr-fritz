@@ -180,7 +180,7 @@ cOsdObject *cPluginFritzbox::MainMenuAction(void)
 	else
 		// called by the user
 		if (this->Running()) {
-			Skins.Message(mtError, tr("This phonebook is not yet available."));
+			Skins.Message(mtError, tr("Data not yet available."));
 			return NULL;
 		}
 		else

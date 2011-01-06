@@ -51,6 +51,10 @@ msgstr "Appelle de"
 msgid "Country code"
 msgstr ""
 
+#, fuzzy
+msgid "Data not yet available."
+msgstr "Carnet d'adresse n'est pas encore disponible"
+
 msgid "Date"
 msgstr "Date"
 
