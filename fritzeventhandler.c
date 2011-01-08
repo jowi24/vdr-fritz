@@ -31,19 +31,45 @@
 cFritzEventHandler::cFritzEventHandler() {
 	muted = false;
 	paused = false;
-	displayedConnId = -1;
-	callInfo = NULL;
-
+	getCallInfoCalled = false;
 }
 
 cFritzEventHandler::~cFritzEventHandler() {
 
 }
 
-std::string cFritzEventHandler::ComposeCallMessage() {
+fritz::sCallInfo *cFritzEventHandler::GetCallInfo(int connId) {
+	getCallInfoCalled = true;
+	sConnection &connection = connections[connId];
+	return connection.callInfo;
+}
+
+// returns a vector of call ids of calls pending for display
+std::vector<int> cFritzEventHandler::GetPendingCallIds() {
+	std::vector<int> ids;
+	for (std::map<int, sConnection>::iterator it = connections.begin(); it != connections.end(); it++) {
+		if (static_cast<sConnection>((*it).second).callInfo) {
+			ids.push_back((*it).first);
+		}
+	}
+	return ids;
+}
+
+void cFritzEventHandler::NotificationDone(int connId) {
+	sConnection &connection = connections[connId];
+	connection.displayed = true;
+	if (connection.state == sConnection::IDLE) {
+		delete connection.callInfo;
+		connection.callInfo = NULL;
+		connections.erase(connId);
+	}
+}
+
+std::string cFritzEventHandler::ComposeCallMessage(int connId) {
 	std::string rMsg;
 	int ret;
 	// medium gets MSN appended if ISDN is used
+	fritz::sCallInfo *callInfo = connections[connId].callInfo;
 	std::string medium = callInfo->medium;
 	if (callInfo->medium.find("ISDN") != std::string::npos)
 		medium += " " + callInfo->localNumber;
@@ -94,7 +120,7 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 		control->GetReplayMode(currPlay, currForw, currSpeed);
 	}
 
-	connIdList.push_back(connId);
+//	connIdList.push_back(connId);
 	if (fritzboxConfig.muteOnCall && !cDevice::PrimaryDevice()->IsMute()) {
 		INF((outgoing ? "outgoing": "incoming") << " call, muting.");
 		cDevice::PrimaryDevice()->ToggleMute();
@@ -113,14 +139,14 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 	}
 	if (fritzboxConfig.showNumber) {
 		// save the message into "message", MainThreadHook or MainMenuAction will take care of it
-		displayedConnId = connId;
+//		displayedConnId = connId;
 #ifdef DO_NOT_SET
 		// trigger translation of string coming from the Fritz!Box - do not compile!
 		trNOOP("ISDN")
 		trNOOP("VoIP")
 #endif
 
-		callInfo = new fritz::sCallInfo();
+		fritz::sCallInfo *callInfo = new fritz::sCallInfo();
 		callInfo->isOutgoing = outgoing;
 		callInfo->remoteNumber = remoteNumber;
 		callInfo->remoteName = remoteName;
@@ -131,6 +157,13 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 		}
 		callInfo->localNumber = localParty;
 		callInfo->medium = mediumName;
+
+		sConnection connection;
+		connection.displayed = false;
+		connection.state = sConnection::RINGING;
+		connection.callInfo = callInfo;
+		connections.insert(std::pair<int, sConnection>(connId, connection));
+
 		// trigger notification using own osd
 		if (fritzboxConfig.useNotifyOsd && !cNotifyOsd::isOpen()) {
 			DBG("triggering NotifyOsd");
@@ -140,10 +173,11 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 }
 
 void cFritzEventHandler::HandleConnect(int connId) {
-	if (displayedConnId == connId) {
-		delete (callInfo);
-		callInfo = NULL;
-		displayedConnId = -1;
+	sConnection &connection = connections[connId];
+	connection.state = sConnection::ACTIVE;
+	if (connection.displayed) {
+		delete connection.callInfo;
+		connection.callInfo = NULL;
 	}
 }
 
@@ -156,21 +190,27 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 	}
 
 	// stop call notification
-	if (displayedConnId == connId) {
-		delete (callInfo);
-		callInfo = NULL;
-		displayedConnId = -1;
+	sConnection &connection = connections[connId];
+	connection.state = sConnection::IDLE;
+	if (connection.displayed) {
+		delete connection.callInfo;
+		connection.callInfo = NULL;
+		// remove current connection from list
+		connections.erase(connId);
 	}
-	// remove current connection from list
-	connIdList.remove(connId);
+	bool activeCallsPending = false;
+	for (std::map<int, sConnection>::iterator it = connections.begin(); it != connections.end(); it++) {
+		if (static_cast<sConnection>((*it).second).state != sConnection::IDLE)
+			activeCallsPending = true;
+	}
 	// unmute, if applicable
-	if (connIdList.empty() && muted && cDevice::PrimaryDevice()->IsMute()) {
+	if (!activeCallsPending && muted && cDevice::PrimaryDevice()->IsMute()) {
 		INF("Finished all incoming calls, unmuting.");
 		cDevice::PrimaryDevice()->ToggleMute();
 		muted = false;
 	}
 	// resume, if applicable
-	if (connIdList.empty() && paused && control && currPlay == false) {
+	if (!activeCallsPending && paused && control && currPlay == false) {
 		if (fritzboxConfig.resumeAfterCall) {
 			INF("Finished all incoming calls, pressing kPlay.");
 			cRemote::Put(kPlay); // this is an ugly workaround, but it should work
