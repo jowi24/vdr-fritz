@@ -32,20 +32,7 @@ cNotifyOsd::cNotifyOsd(cFritzEventHandler *event) {
 	this->event = event;
 	open = true;
 
-	fritz::sCallInfo *callInfo = event->GetCallInfo();
-	// 1: In- or Outgoing call? + [medium]
-	std::string tmpLine = callInfo->isOutgoing ? tr("Outgoing call") : tr("Incoming call");
-	tmpLine += " [" + callInfo->medium;
-	if (callInfo->medium.find("ISDN") != std::string::npos)
-		tmpLine += " " + callInfo->localNumber;
-	tmpLine += "]";
-	lines.push_back(tmpLine);
-	// 2: remote party (only if information available)
-	tmpLine = callInfo->remoteName;
-	if (tmpLine.size() > 0)
-		lines.push_back(tmpLine);
-	DBG("showing OSD with call information, " << (int) lines.size() << " lines");
-	cStatus::MsgOsdStatusMessage(event->ComposeCallMessage().c_str());
+	GenerateOsdText();
 }
 
 cNotifyOsd::~cNotifyOsd() {
@@ -53,6 +40,33 @@ cNotifyOsd::~cNotifyOsd() {
 	cStatus::MsgOsdStatusMessage(NULL);
 	open = false;
 	delete osd;
+}
+
+void cNotifyOsd::GenerateOsdText() {
+	lines.clear();
+	std::vector<int> ids = event->GetPendingCallIds();
+	for (std::vector<int>::iterator it = ids.begin(); it < ids.end(); it++) {
+		if (!event->GetCallInfo(*it))
+			continue;
+		fritz::sCallInfo callInfo = *(event->GetCallInfo(*it));
+		event->NotificationDone(*it);
+		// 0: separation betwenn multiple calls
+		if (it != ids.begin())
+			lines.push_back("");
+		// 1: In- or Outgoing call? + [medium]
+		std::string tmpLine = callInfo.isOutgoing ? tr("Outgoing call") : tr("Incoming call");
+		tmpLine += " [" + callInfo.medium;
+		if (callInfo.medium.find("ISDN") != std::string::npos)
+			tmpLine += " " + callInfo.localNumber;
+		tmpLine += "]";
+		lines.push_back(tmpLine);
+		// 2: remote party (only if information available)
+		tmpLine = callInfo.remoteName;
+		if (tmpLine.size() > 0)
+			lines.push_back(tmpLine);
+		cStatus::MsgOsdStatusMessage(event->ComposeCallMessage(*it).c_str());
+	}
+	DBG("showing OSD with call information, " << (int) lines.size() << " lines");
 }
 
 void cNotifyOsd::Show(void) {
@@ -125,8 +139,11 @@ eOSState cNotifyOsd::ProcessKey(eKeys Key) {
 			state = osBack;
 			break;
 		case kNone:
-			if (!event->GetCallInfo())
+			//TODO: show at least n seconds
+			if (event->GetPendingCallIds().size() == 0)
 				state = osBack;
+			else
+				GenerateOsdText();
 		default:
 			break;
 		}

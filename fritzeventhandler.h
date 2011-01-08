@@ -23,6 +23,7 @@
 #define FRITZEVENTHANDLER_H_
 
 #include <string>
+#include <map>
 #include <list>
 #include <Listener.h>
 
@@ -30,16 +31,31 @@ class cFritzEventHandler : public fritz::EventHandler {
 private:
 	bool muted;
 	bool paused;
-	std::list<int> connIdList;
-	int displayedConnId;
-	fritz::sCallInfo *callInfo;
+//	std::list<int> connIdList;
+//	int displayedConnId;
+//	fritz::sCallInfo *callInfo;
+	bool getCallInfoCalled;
+
+	struct sConnection {
+		enum eConnState {
+			IDLE,
+			RINGING,
+			ACTIVE
+		} state;
+		fritz::sCallInfo *callInfo;
+		bool displayed;
+	};
+	// connId -> sConnection
+	std::map<int, sConnection> connections;
 
 public:
 	cFritzEventHandler();
 	virtual ~cFritzEventHandler();
 
-	fritz::sCallInfo *GetCallInfo() { return callInfo; }
-	std::string ComposeCallMessage();
+	std::vector<int> GetPendingCallIds();
+	fritz::sCallInfo *GetCallInfo(int connId);
+	void NotificationDone(int connId);
+	std::string ComposeCallMessage(int connId);
 
 	virtual void HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, fritz::FonbookEntry::eType remoteType, std::string localParty, std::string medium, std::string mediumName);
 	virtual void HandleConnect(int connId);

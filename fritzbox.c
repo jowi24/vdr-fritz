@@ -140,9 +140,14 @@ void cPluginFritzbox::Housekeeping(void)
 void cPluginFritzbox::MainThreadHook(void)
 {
 	if (!fritzboxConfig.useNotifyOsd && event) {
-		fritz::sCallInfo *callInfo = event->GetCallInfo();
-		if (callInfo)
-			Skins.Message(mtInfo, event->ComposeCallMessage().c_str());
+		std::vector<int> ids = event->GetPendingCallIds();
+		for (std::vector<int>::iterator it = ids.begin(); it < ids.end(); it++) {
+			fritz::sCallInfo *callInfo = event->GetCallInfo((*it));
+			if (callInfo) {
+				Skins.Message(mtInfo, event->ComposeCallMessage(*it).c_str());
+				event->NotificationDone(*it);
+			}
+		}
 	}
 }
 
@@ -173,7 +178,7 @@ const char *cPluginFritzbox::MainMenuEntry(void)
 
 cOsdObject *cPluginFritzbox::MainMenuAction(void)
 {
-	if (event && event->GetCallInfo()) {
+	if (event && event->GetPendingCallIds().size() && !cNotifyOsd::isOpen()) {
 		// called by cRemote::CallPlugin
 		return new cNotifyOsd(event);
 	}

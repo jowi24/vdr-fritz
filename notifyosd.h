@@ -38,6 +38,7 @@ private:
 public:
 	cNotifyOsd(cFritzEventHandler *event);
 	virtual ~cNotifyOsd();
+	void GenerateOsdText();
 	virtual void Show(void);
 	virtual eOSState ProcessKey(eKeys Key);
 	static bool isOpen() { return open; }
