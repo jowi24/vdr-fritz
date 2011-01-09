@@ -58,10 +58,11 @@ std::vector<int> cFritzEventHandler::GetPendingCallIds() {
 void cFritzEventHandler::NotificationDone(int connId) {
 	sConnection &connection = connections[connId];
 	connection.displayed = true;
-	if (connection.state == sConnection::IDLE) {
+	if (connection.state != sConnection::RINGING) {
 		delete connection.callInfo;
 		connection.callInfo = NULL;
-		connections.erase(connId);
+		if (connection.state == sConnection::IDLE)
+			connections.erase(connId);
 	}
 }
 
@@ -174,6 +175,7 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 
 void cFritzEventHandler::HandleConnect(int connId) {
 	sConnection &connection = connections[connId];
+	//TODO: mutexes around shared variables
 	connection.state = sConnection::ACTIVE;
 	if (connection.displayed) {
 		delete connection.callInfo;
@@ -193,8 +195,10 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 	sConnection &connection = connections[connId];
 	connection.state = sConnection::IDLE;
 	if (connection.displayed) {
-		delete connection.callInfo;
-		connection.callInfo = NULL;
+		if (connection.callInfo) {
+			delete connection.callInfo;
+			connection.callInfo = NULL;
+		}
 		// remove current connection from list
 		connections.erase(connId);
 	}

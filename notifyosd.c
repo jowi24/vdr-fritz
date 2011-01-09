@@ -31,6 +31,7 @@ cNotifyOsd::cNotifyOsd(cFritzEventHandler *event) {
 	font = cFont::GetFont(fontOsd);
 	this->event = event;
 	open = true;
+	osd = NULL;
 
 	GenerateOsdText();
 }
@@ -42,8 +43,8 @@ cNotifyOsd::~cNotifyOsd() {
 	delete osd;
 }
 
-void cNotifyOsd::GenerateOsdText() {
-	lines.clear();
+bool cNotifyOsd::GenerateOsdText() {
+	std::vector<std::string> lines;
 	std::vector<int> ids = event->GetPendingCallIds();
 	for (std::vector<int>::iterator it = ids.begin(); it < ids.end(); it++) {
 		if (!event->GetCallInfo(*it))
@@ -66,7 +67,12 @@ void cNotifyOsd::GenerateOsdText() {
 			lines.push_back(tmpLine);
 		cStatus::MsgOsdStatusMessage(event->ComposeCallMessage(*it).c_str());
 	}
-	DBG("showing OSD with call information, " << (int) lines.size() << " lines");
+	if (lines != this->lines) {
+		DBG("showing OSD with call information, " << (int) lines.size() << " lines");
+		this->lines = lines;
+		return true;
+	} else
+		return false;
 }
 
 void cNotifyOsd::Show(void) {
@@ -116,6 +122,8 @@ void cNotifyOsd::Show(void) {
 	top  = cOsd::OsdTop()  + cOsd::OsdHeight() - height - verticalOffset;
 
 	// defines upper left corner of osd
+	if (osd)
+		delete osd;
 	osd = cOsdProvider::NewOsd(left, top);
 	// defines drawing area and color depth
 	tArea Area = { 0, 0, width-1, height-1, colorDepth };
@@ -142,8 +150,10 @@ eOSState cNotifyOsd::ProcessKey(eKeys Key) {
 			//TODO: show at least n seconds
 			if (event->GetPendingCallIds().size() == 0)
 				state = osBack;
-			else
-				GenerateOsdText();
+			else {
+				if (GenerateOsdText())
+					Show();
+			}
 		default:
 			break;
 		}
