@@ -47,9 +47,10 @@ bool cNotifyOsd::GenerateOsdText() {
 	std::vector<std::string> lines;
 	std::vector<int> ids = event->GetPendingCallIds();
 	for (std::vector<int>::iterator it = ids.begin(); it < ids.end(); it++) {
-		if (!event->GetCallInfo(*it))
+		fritz::sCallInfo callInfo = event->GetCallInfo(*it);
+		if (callInfo.localNumber.length() == 0)
 			continue;
-		fritz::sCallInfo callInfo = *(event->GetCallInfo(*it));
+		cStatus::MsgOsdStatusMessage(event->ComposeCallMessage(*it).c_str());
 		event->NotificationDone(*it);
 		// 0: separation betwenn multiple calls
 		if (it != ids.begin())
@@ -65,7 +66,6 @@ bool cNotifyOsd::GenerateOsdText() {
 		tmpLine = callInfo.remoteName;
 		if (tmpLine.size() > 0)
 			lines.push_back(tmpLine);
-		cStatus::MsgOsdStatusMessage(event->ComposeCallMessage(*it).c_str());
 	}
 	if (lines != this->lines) {
 		DBG("showing OSD with call information, " << (int) lines.size() << " lines");

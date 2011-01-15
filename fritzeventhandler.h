@@ -25,15 +25,13 @@
 #include <string>
 #include <map>
 #include <list>
+#include <vdr/thread.h>
 #include <Listener.h>
 
 class cFritzEventHandler : public fritz::EventHandler {
 private:
 	bool muted;
 	bool paused;
-//	std::list<int> connIdList;
-//	int displayedConnId;
-//	fritz::sCallInfo *callInfo;
 	bool getCallInfoCalled;
 
 	struct sConnection {
@@ -47,13 +45,13 @@ private:
 	};
 	// connId -> sConnection
 	std::map<int, sConnection> connections;
-
+	cMutex mutex;
 public:
 	cFritzEventHandler();
 	virtual ~cFritzEventHandler();
 
 	std::vector<int> GetPendingCallIds();
-	fritz::sCallInfo *GetCallInfo(int connId);
+	fritz::sCallInfo GetCallInfo(int connId);
 	void NotificationDone(int connId);
 	std::string ComposeCallMessage(int connId);
 
