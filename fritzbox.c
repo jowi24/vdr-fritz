@@ -142,8 +142,8 @@ void cPluginFritzbox::MainThreadHook(void)
 	if (!fritzboxConfig.useNotifyOsd && event) {
 		std::vector<int> ids = event->GetPendingCallIds();
 		for (std::vector<int>::iterator it = ids.begin(); it < ids.end(); it++) {
-			fritz::sCallInfo *callInfo = event->GetCallInfo((*it));
-			if (callInfo) {
+			fritz::sCallInfo callInfo = event->GetCallInfo(*it);
+			if (callInfo.localNumber.length() > 0) {
 				Skins.Message(mtInfo, event->ComposeCallMessage(*it).c_str());
 				event->NotificationDone(*it);
 			}

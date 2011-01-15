@@ -38,24 +38,34 @@ cFritzEventHandler::~cFritzEventHandler() {
 
 }
 
-fritz::sCallInfo *cFritzEventHandler::GetCallInfo(int connId) {
+fritz::sCallInfo cFritzEventHandler::GetCallInfo(int connId) {
 	getCallInfoCalled = true;
-	sConnection &connection = connections[connId];
-	return connection.callInfo;
+	fritz::sCallInfo callInfo;
+	mutex.Lock();
+	if (connections.find(connId) != connections.end()) {
+		sConnection &connection = connections[connId];
+		if (connection.callInfo)
+			callInfo = *(connection.callInfo);
+	}
+	mutex.Unlock();
+	return callInfo;
 }
 
 // returns a vector of call ids of calls pending for display
 std::vector<int> cFritzEventHandler::GetPendingCallIds() {
 	std::vector<int> ids;
+	mutex.Lock();
 	for (std::map<int, sConnection>::iterator it = connections.begin(); it != connections.end(); it++) {
 		if (static_cast<sConnection>((*it).second).callInfo) {
 			ids.push_back((*it).first);
 		}
 	}
+	mutex.Unlock();
 	return ids;
 }
 
 void cFritzEventHandler::NotificationDone(int connId) {
+	mutex.Lock();
 	sConnection &connection = connections[connId];
 	connection.displayed = true;
 	if (connection.state != sConnection::RINGING) {
@@ -64,12 +74,14 @@ void cFritzEventHandler::NotificationDone(int connId) {
 		if (connection.state == sConnection::IDLE)
 			connections.erase(connId);
 	}
+	mutex.Unlock();
 }
 
 std::string cFritzEventHandler::ComposeCallMessage(int connId) {
 	std::string rMsg;
 	int ret;
 	// medium gets MSN appended if ISDN is used
+	mutex.Lock();
 	fritz::sCallInfo *callInfo = connections[connId].callInfo;
 	std::string medium = callInfo->medium;
 	if (callInfo->medium.find("ISDN") != std::string::npos)
@@ -79,22 +91,29 @@ std::string cFritzEventHandler::ComposeCallMessage(int connId) {
 	if (callInfo->isOutgoing == true) {
 		ret = asprintf(&msg, tr("Calling %s [%s]"),
 				callInfo->remoteName.c_str(), medium.c_str());
-		if (ret <= 0)
+		if (ret <= 0) {
+			mutex.Unlock();
 			return rMsg;
+		}
 	} else {
 		if (callInfo->remoteNumber.size() == 0) {
 			// unknown caller
 			ret = asprintf(&msg, "%s [%s]", tr("Call"), medium.c_str());
-			if (ret <= 0)
+			if (ret <= 0) {
+				mutex.Unlock();
 				return rMsg;
+			}
 		} else {
 			// known caller
 			ret = asprintf(&msg, "%s %s [%s]", tr("Call from"),
 					callInfo->remoteName.c_str(), medium.c_str());
-			if (ret <= 0)
+			if (ret <= 0) {
+				mutex.Unlock();
 				return rMsg;
+			}
 		}
 	}
+	mutex.Unlock();
 	rMsg = msg;
 	free(msg);
 	return rMsg;
@@ -121,7 +140,6 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 		control->GetReplayMode(currPlay, currForw, currSpeed);
 	}
 
-//	connIdList.push_back(connId);
 	if (fritzboxConfig.muteOnCall && !cDevice::PrimaryDevice()->IsMute()) {
 		INF((outgoing ? "outgoing": "incoming") << " call, muting.");
 		cDevice::PrimaryDevice()->ToggleMute();
@@ -163,7 +181,9 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 		connection.displayed = false;
 		connection.state = sConnection::RINGING;
 		connection.callInfo = callInfo;
+		mutex.Lock();
 		connections.insert(std::pair<int, sConnection>(connId, connection));
+		mutex.Unlock();
 
 		// trigger notification using own osd
 		if (fritzboxConfig.useNotifyOsd && !cNotifyOsd::isOpen()) {
@@ -174,13 +194,14 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 }
 
 void cFritzEventHandler::HandleConnect(int connId) {
+	mutex.Lock();
 	sConnection &connection = connections[connId];
-	//TODO: mutexes around shared variables
 	connection.state = sConnection::ACTIVE;
 	if (connection.displayed) {
 		delete connection.callInfo;
 		connection.callInfo = NULL;
 	}
+	mutex.Unlock();
 }
 
 void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
@@ -192,6 +213,7 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 	}
 
 	// stop call notification
+	mutex.Lock();
 	sConnection &connection = connections[connId];
 	connection.state = sConnection::IDLE;
 	if (connection.displayed) {
@@ -207,6 +229,7 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 		if (static_cast<sConnection>((*it).second).state != sConnection::IDLE)
 			activeCallsPending = true;
 	}
+	mutex.Unlock();
 	// unmute, if applicable
 	if (!activeCallsPending && muted && cDevice::PrimaryDevice()->IsMute()) {
 		INF("Finished all incoming calls, unmuting.");
