@@ -34,6 +34,7 @@ cNotifyOsd::cNotifyOsd(cFritzEventHandler *event) {
 	osd = NULL;
 
 	GenerateOsdText();
+	lastUpdate = time(NULL);
 }
 
 cNotifyOsd::~cNotifyOsd() {
@@ -147,12 +148,15 @@ eOSState cNotifyOsd::ProcessKey(eKeys Key) {
 			state = osBack;
 			break;
 		case kNone:
-			//TODO: show at least n seconds
-			if (event->GetPendingCallIds().size() == 0)
-				state = osBack;
-			else {
-				if (GenerateOsdText())
-					Show();
+			if (time(NULL) - lastUpdate > Setup.OSDMessageTime) {
+				if (event->GetPendingCallIds().size() == 0)
+					state = osBack;
+				else {
+					if (GenerateOsdText()) {
+						lastUpdate = time(NULL);
+						Show();
+					}
+				}
 			}
 		default:
 			break;
