@@ -35,6 +35,7 @@ private:
 	cFritzEventHandler *event;
 	static bool open;
 	std::vector<std::string> lines;
+	time_t lastUpdate;
 public:
 	cNotifyOsd(cFritzEventHandler *event);
 	virtual ~cNotifyOsd();
