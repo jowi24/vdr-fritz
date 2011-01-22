@@ -540,6 +540,38 @@ VDR Plugin 'fritzbox' Revision History
 - Migration to gnu common c++ library should fix a possible crash at plugin shutdown
 - Fix parsing SIP provider names
 
+2011-01-22: Version 1.3.7
+- changes in libfritz++
+  * Add Config::Shutdown() to gracefully shutdown the library
+    This can be used for re-inits as well as on program exit
+  * Improve checks when parsing result list in OertlichesFonbook
+    Check that at most one result is returned
+    (reported by Honky [39])
+  * Fix parser of OertlichesFonbook again
+  * Keep current call list as long as possible on reload
+    Current call list is now cleared after the new call list
+    has been parsed (Fixes #514)
+  * Fix XmlFonbook parser
+    XmlFonbook Parser was not aware of empty <number /> tags
+    (reported by Richard Bos [42] and Achim Bohnet [44])
+  * Fix retry delay calculation in Listener
+- Disable "Add to PB" green key until this feature is implemented
+- Adapt to new library function Config::Shutdown()
+  * This fixes changing the configuration at runtime. The library is now
+    shutdown before the configuration is changed and setup again afterwards
+- Change message on entering the plugins main menu in case initialization is 
+  still running
+- Fix segfault in empty call list menu
+  Pressing ok in an uninitialized call list no longer segfaults
+  (reported by SvenS [45])
+- Improved handling situations with multiple calls
+  If detailed call information osd is enabled, the osd shows multiple calls 
+  simultaneously. The traditional osd shows multiple calls sequentially. Calls 
+  are no longer lost.
+- Fixed a possible segfault on signalling incoming and outgoing calls
+- Showing osd messages at least Setup.OSDMessageTimeout seconds
+
+
 --- References ---
 
 [ 1] http://vdr-portal.de/board/profile.php?userid=7164
@@ -590,11 +622,15 @@ VDR Plugin 'fritzbox' Revision History
      http://vdr-portal.de/board/profile.php?userid=715
 [37] http://vdr-portal.de/board/profile.php?userid=415     
 [38] http://vdr-portal.de/board/profile.php?userid=12632
-[39] http://vdr-portal.de/board/profile.php?userid=25383
+[39] Honky
+     http://vdr-portal.de/board/profile.php?userid=25383
 [40] Christian Richter <cr@crichter.net>
      http://vdr-portal.de/board/profile.php?userid=12424
 [41] http://vdr-portal.de/board/profile.php?userid=12003    
 [42] Richard Bos <ml@radoeka.nl>
 [43] Kurt Wanner <kurt@wanner.me>
+[44] Achim Bohnet <allee@kubuntu.org>
+[45] SvenS
+     http://vdr-portal.de/board/profile.php?userid=404
 
 		
