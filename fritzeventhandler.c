@@ -232,14 +232,14 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 	mutex.Unlock();
 	// unmute, if applicable
 	if (!activeCallsPending && muted && cDevice::PrimaryDevice()->IsMute()) {
-		INF("Finished all incoming calls, unmuting.");
+		INF("Finished all calls, unmuting.");
 		cDevice::PrimaryDevice()->ToggleMute();
 		muted = false;
 	}
 	// resume, if applicable
-	if (!activeCallsPending && paused && control && currPlay == false) {
-		if (fritzboxConfig.resumeAfterCall) {
-			INF("Finished all incoming calls, pressing kPlay.");
+	if (!activeCallsPending && paused) {
+		if (fritzboxConfig.resumeAfterCall && control && currPlay == false) {
+			INF("Finished all calls, pressing kPlay.");
 			cRemote::Put(kPlay); // this is an ugly workaround, but it should work
 			cRemote::Put(kPlay);
 		}
