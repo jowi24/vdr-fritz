@@ -59,12 +59,6 @@ LIBFRITZ = libfritz++
 INCLUDES += -I$(LIBFRITZ)
 LIBS += $(LIBFRITZ)/$(LIBFRITZ).a -lgcrypt -lccgnu2
 
-### libtcpclient++
-LIBTCPCLIENT = libtcpclient++
-INCLUDES += -I$(LIBTCPCLIENT)
-LIBS += $(LIBTCPCLIENT)/$(LIBTCPCLIENT).a -lccgnu2
-
-
 ### The object files (add further files here):
 
 OBJS = $(PLUGIN).o fritzeventhandler.o log.o menu.o notifyosd.o setup.o	  
@@ -76,11 +70,8 @@ all: libvdr-$(PLUGIN).so i18n
 libvdr-$(PLUGIN).so: $(OBJS) libfritz 
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LIBS) -o $@
 	
-libfritz: libtcpclient
+libfritz:
 	$(MAKE) -C $(LIBFRITZ)	
-	
-libtcpclient:
-	$(MAKE) -C $(LIBTCPCLIENT)
 	
 %.o: %.c
 	$(CXX) $(CXXFLAGS) -c $(DEFINES) $(INCLUDES) $<
@@ -97,7 +88,6 @@ clean:
 	@-rm -f $(PODIR)/*.mo $(PODIR)/*.pot
 	@-rm -f $(OBJS) $(DEPFILE) *.so *.tgz core* *~
 	@-make -C $(LIBFRITZ) clean
-	@-make -C $(LIBTCPCLIENT) clean
 
 ### Internationalization (I18N):
 
