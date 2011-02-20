@@ -58,9 +58,9 @@ public:
 class cMenuFonbuchDetail : public cOsdMenu
 {
 private:
-	fritz::FonbookEntry *fe;
+	const fritz::FonbookEntry *fe;
 public:
-	cMenuFonbuchDetail(fritz::FonbookEntry *fe);
+	cMenuFonbuchDetail(const fritz::FonbookEntry *fe);
 	virtual eOSState ProcessKey (eKeys Key);
 };
 

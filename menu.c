@@ -119,21 +119,21 @@ void cMenuFritzbox::DisplayFonbuch() {
 	}
 	else {
 		for (size_t pos=0; pos < fonbook->GetFonbookSize(); pos++) {
-			fritz::FonbookEntry *fe = fonbook->RetrieveFonbookEntry(pos);
+			const fritz::FonbookEntry *fe = fonbook->RetrieveFonbookEntry(pos);
 			if (fe) {
 				bool firstEntry = true;
 				for (fritz::FonbookEntry::eType type = fritz::FonbookEntry::TYPE_HOME; type < fritz::FonbookEntry::TYPES_COUNT; type++) {
-					if (fe->getNumber(type).empty())
+					if (fe->GetNumber(type).empty())
 						continue;
 					// build the menu entries
 					char *line;
-					int ret = asprintf(&line,"%s\t%s\t%s", !firstEntry ? "" : fe->getName().c_str(), cPluginFritzbox::FonbookEntryTypeToName(type).c_str(), fe->getNumber(type).c_str());
+					int ret = asprintf(&line,"%s\t%s\t%s", !firstEntry ? "" : fe->GetName().c_str(), cPluginFritzbox::FonbookEntryTypeToName(type).c_str(), fe->GetNumber(type).c_str());
 					if (ret <= 0) {
 						ERR("Error allocating line buffer for cOsdItem.");
 						continue;
 					}
-					if (fe->getName().length() > nameWidth)
-						nameWidth = fe->getName().length();
+					if (fe->GetName().length() > nameWidth)
+						nameWidth = fe->GetName().length();
 					Add(new cKeyOsdItem(line, osUnknown, true, pos));
 					firstEntry = false;
 				}
@@ -296,11 +296,9 @@ eOSState cMenuCallDetail::ProcessKey (eKeys Key) {
 			else
 			{
 				fritz::FonbookEntry fe(ce->remoteName);
-				fe.addNumber(ce->remoteNumber);
-				if (fritz::FonbookManager::GetFonbookManager()->AddFonbookEntry(fe))
-					Skins.Message(mtInfo, "Added new entry to phone book");
-				else
-					Skins.Message(mtError, "Add failed");
+				fe.AddNumber(ce->remoteNumber);
+				fritz::FonbookManager::GetFonbookManager()->AddFonbookEntry(fe);
+				Skins.Message(mtInfo, "Added new entry to phone book");
 			}
 			state = osContinue;
 			break;
@@ -316,7 +314,7 @@ eOSState cMenuCallDetail::ProcessKey (eKeys Key) {
 
 // cMenuFonbuchDetail *********************************************************
 
-cMenuFonbuchDetail::cMenuFonbuchDetail(fritz::FonbookEntry *fe)
+cMenuFonbuchDetail::cMenuFonbuchDetail(const fritz::FonbookEntry *fe)
 :cOsdMenu(tr("Phone book details"), 15)
 {
 	this->fe = fe;
@@ -324,16 +322,16 @@ cMenuFonbuchDetail::cMenuFonbuchDetail(fritz::FonbookEntry *fe)
 	std::ostringstream sText;
 	// if a number of TYPE_NONE is given, a simple version of the details screen is shown
 	// this type is set, e.g., with old Fritz!Boxes
-	if (fe->getNumber(fritz::FonbookEntry::TYPE_NONE).length() > 0) {
-	  sText << tr("Name")          << "\t" << fe->getName()      				   << "\n"
+	if (fe->GetNumber(fritz::FonbookEntry::TYPE_NONE).length() > 0) {
+	  sText << tr("Name")          << "\t" << fe->GetName()      				   << "\n"
 	        << tr("Numbers")       << "\t\n"
-		    << tr("Default")       << "\t" << fe->getNumber(fritz::FonbookEntry::TYPE_NONE) << "\n";
+		    << tr("Default")       << "\t" << fe->GetNumber(fritz::FonbookEntry::TYPE_NONE) << "\n";
 	} else {
-	  sText << tr("Name")          << "\t" << fe->getName()      				   << "\n"
+	  sText << tr("Name")          << "\t" << fe->GetName()      				   << "\n"
 	        << tr("Numbers")       << "\t\n"
-		    << tr("Private")       << "\t" << fe->getNumber(fritz::FonbookEntry::TYPE_HOME)    << "\n"
-		    << tr("Mobile")        << "\t" << fe->getNumber(fritz::FonbookEntry::TYPE_MOBILE)  << "\n"
-		    << tr("Business")      << "\t" << fe->getNumber(fritz::FonbookEntry::TYPE_WORK)    << "\n";
+		    << tr("Private")       << "\t" << fe->GetNumber(fritz::FonbookEntry::TYPE_HOME)    << "\n"
+		    << tr("Mobile")        << "\t" << fe->GetNumber(fritz::FonbookEntry::TYPE_MOBILE)  << "\n"
+		    << tr("Business")      << "\t" << fe->GetNumber(fritz::FonbookEntry::TYPE_WORK)    << "\n";
 	}
 	std::string text = sText.str();
 	std::string::size_type pos = 0;
@@ -361,11 +359,11 @@ eOSState cMenuFonbuchDetail::ProcessKey (eKeys Key) {
 		switch (Key) {
 		case kRed:
 			// determine which number to call
-			if (fe->getNumber(fritz::FonbookEntry::TYPE_NONE).length() > 0){
-				numberToCall = fe->getNumber(fritz::FonbookEntry::TYPE_NONE);
+			if (fe->GetNumber(fritz::FonbookEntry::TYPE_NONE).length() > 0){
+				numberToCall = fe->GetNumber(fritz::FonbookEntry::TYPE_NONE);
 			}
 			else {
-				numberToCall = fe->getNumber(static_cast<fritz::FonbookEntry::eType>(Current() - 1));
+				numberToCall = fe->GetNumber(static_cast<fritz::FonbookEntry::eType>(Current() - 1));
 			}
 			// initiate a call
 			if (numberToCall.empty()) {
