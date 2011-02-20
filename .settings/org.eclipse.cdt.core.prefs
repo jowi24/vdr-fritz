@@ -1,4 +1,17 @@
-#Wed Jan 05 19:57:27 CET 2011
+#Fri Jan 28 17:45:02 CET 2011
 eclipse.preferences.version=1
-environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\="\:" name\="VDRDIR" operation\="append" value\="${workspace_loc}/vdr"/>\n</environment>\n
-environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\="\:" name\="CXXFLAGS" operation\="append" value\="-g -ggdb -O0"/>\n<variable delimiter\="\:" name\="VDRDIR" operation\="append" value\="${workspace_loc}/vdr"/>\n</environment>\n
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978=
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728=
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728/CXXFLAGS/delimiter=\:
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728/CXXFLAGS/operation=append
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728/CXXFLAGS/value=-g -ggdb -O0
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728/VDRDIR/delimiter=\:
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728/VDRDIR/operation=append
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728/VDRDIR/value=${workspace_loc}/vdr
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728/append=true
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978.1123872728/appendContributed=true
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978/VDRDIR/delimiter=\:
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978/VDRDIR/operation=append
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978/VDRDIR/value=${workspace_loc}/vdr
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978/append=true
+environment/project/preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.1204179978/appendContributed=true
