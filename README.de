@@ -9,13 +9,28 @@ Download unter:              http://www.joachim-wilke.de/vdr-fritz.htm
 
 Lizenzinformationen sind in der Datei COPYING enthalten.
 
+** Hinweis: Die englischsprachige HISTORY Datei kann ggf. Informationen über neue
+Funktionen beinhalten, die in dieser Dokumentation noch nicht eingepflegt sind. **
+
+--<----------------------------------------------------------------------------
+
+Installation:
+
+Das Fritz Plugin unterscheidet sich nicht wesentlich von anderen Plugins für den
+VDR. Das meiste der VDR-Dokumentation zu Plugins gilt auch hier. Zusätzlich sind
+lediglich die folgende Bibliotheks-Abhängigkeiten zu beachten:  
+  - GCrypt Bibliothek (libgcrypt)
+  - Gnu Common CPP Bibliothek (libccgnu2, libccext2)
+
+--<----------------------------------------------------------------------------
+  
 Beschreibung:
 
 * Anrufsignalisierung
 
 Das Fritz!Box Plugin verbindet sich mit der Fritz!Box um über eingehende
-Anrufe zu informieren. Dabei kann das Plugin VDR stummschalten und 
-die Wiedergabe anhalten.
+oder ausgehende Anrufe zu informieren. Dabei kann das Plugin VDR stummschalten 
+und die Wiedergabe anhalten.
 
 Um diese Funktion zu nutzen, muss die Fritz!Box einmalig aktiviert werden,
 indem von einem der angeschlossenen Telefone "#96*5*" gewählt wird. Dies 
@@ -28,6 +43,9 @@ oder ähnliches zu aktivieren.
 Um nicht bei jedem Anruf benachrichtigt zu werden, lässt sich eine Liste
 von MSNs anlegen bei denen man benachrichtigt werden möchte. Max. 22 
 solcher MSNs sind möglich.
+
+Alle Einstellungen bezüglich der Anrufsignalisierung können im 
+Einstellungsmenu des Plugins direkt im VDR durchgeführt werden.
 
 * Telefonbücher
 
@@ -51,6 +69,11 @@ Dieses Telefonbuch versucht eine Rückwärtsauflösung über die Webseite
 das-oertliche.de. Da dieses Telefonbuch keine eigentlichen Einträge
 besitzt, kann es nicht im Hauptmenu des Plugins angezeigt werden.
 
+-> nummerzoeker phone book / tel.local.ch phone book
+
+Wie das-oertliche.de, jedoch für Telefonnummern aus den Niederlanden und 
+der Schweiz.
+
 * Fritz!Box Anrufliste
 
 Über die Farbtasten lassen sich die drei Anruflisten der Fritz!Box 
@@ -60,7 +83,36 @@ verpassten Anrufe und [Blau] die Liste der ausgehenden Anrufe.
 Mit [OK] öffnet sich ein Menu mit den Details. Mit [Rot] kann der Anrufer 
 zurückgerufen werden.
 
+--<----------------------------------------------------------------------------
 
-Hinweis: Dieses Plugin wurden mit der Fritz!Box Fon WLAN 7170 FW 29.04.29 
-getestet. Eine ausführliche Liste findet sich auf der Projektseite. Wir freuen
- uns über Rückmeldung zu (Miss)-Erfolg mit anderen Firmware-Versionen und Geräten.
+Kommandozeilenoptionen:
+
+-> Anonymisierung der Log-Dateien
+
+Das Plugin protokolliert Statusinformationen in das System Log (syslog). 
+Normalerweise werden dabei sensitive Informationen, wie Telefonnummern, 
+anonymisiert dargestellt. Über den Parameter '-p' kann diese Anonymisierung 
+abgeschaltet werden.
+
+-> Benutzerdefinierte Befehle bei Anrufen ausführen
+
+Mit Hilfe des Parameters '-c cmd' kann ein Befehl oder Skript festgelegt werden,
+welches bei ein- und ausgehenden Anrufen ausgeführt wird. Das Plugin ruft 'cmd'
+abhängig von der Art des Anrufs mit zusätzlichen Parametern auf: 
+* Bei ein- und ausgehenden Anrufen:
+  - cmd CALL [OUT|IN] <connection_id> <remote_number> <remote_name> <local_party> <medium> <medium_name>
+* Nach Aufbau der Verbindung:
+  - cmd CONNECT <connection_id>  
+* Bei Gesprächsende:
+  - cmd DISCONNECT <connection_id> <duration>
+* Sobald alle laufenden Gespräche beendet sind:
+  - cmd FINISHED
+Ein Beispiel-Skript befindet sich in template/on-call.sh.
+
+--<----------------------------------------------------------------------------
+
+Hinweis: Dieses Plugin wurde ursprünglich mit der Fritz!Box Fon WLAN 7170 
+FW 29.04.29 getestet. Eine ausführliche Liste findet sich auf der Projektseite. 
+Wir freuen uns über Rückmeldung zu (Miss)-Erfolg mit anderen Firmware-Versionen 
+und Geräten.
+ 
