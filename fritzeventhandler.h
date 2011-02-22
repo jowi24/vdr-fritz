@@ -33,6 +33,7 @@ private:
 	bool muted;
 	bool paused;
 	bool getCallInfoCalled;
+	std::string onCallCmd;
 
 	struct sConnection {
 		enum eConnState {
@@ -46,8 +47,9 @@ private:
 	// connId -> sConnection
 	std::map<int, sConnection> connections;
 	cMutex mutex;
+	void Exec(const std::ostream & url) const;
 public:
-	cFritzEventHandler();
+	cFritzEventHandler(std::string onCallCmd);
 	virtual ~cFritzEventHandler();
 
 	std::vector<int> GetPendingCallIds();

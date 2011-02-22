@@ -36,6 +36,7 @@ private:
 	cFritzEventHandler *event;
 	std::string mainMenuEntry;
 	bool logPersonalInfo;
+	std::string onCallCmd;
 
 public:
 	cPluginFritzbox(void);
