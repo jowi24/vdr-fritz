@@ -64,26 +64,32 @@ const char *cPluginFritzbox::Description(void)
 const char *cPluginFritzbox::CommandLineHelp(void)
 {
 	// Return a string that describes all known command line options.
-	return "  -p,   --log-personal-info      log personal information (e.g. passwords, phone numbers, ...)\n";
+	return "  -p,     --log-personal-info   log personal information (e.g. passwords, phone numbers, ...)\n"
+	       "  -c cmd, --on-call=cmd         call cmd on incoming or outgoing call events (see README)\n";
 }
 
 bool cPluginFritzbox::ProcessArgs(int argc, char *argv[])
 {
 	// Implement command line argument processing here if applicable.
     static struct option long_options[] = {
-            { "log-personal-info", no_argument, NULL, 'p' },
+            { "log-personal-info", no_argument,       NULL, 'p' },
+            { "on-call",           required_argument, NULL, 'c' },
             { NULL }
     };
 
     int c;
-    while ((c = getopt_long(argc, argv, "p", long_options, NULL)) != -1) {
+    while ((c = getopt_long(argc, argv, "pc:", long_options, NULL)) != -1) {
     switch (c) {
         case 'p':
-				DBG("Logging personal information requested");
 				logPersonalInfo = true;
+				DBG("Logging personal information requested");
                 break;
+        case 'c':
+        		onCallCmd = optarg;
+        		DBG("User defined command " << onCallCmd << " registered");
+        		break;
         default:
-                ERR("unknown comand line option" << (char)c);
+                ERR("unknown command line option" << (char)c);
                 return false;
         }
     }
@@ -100,14 +106,14 @@ bool cPluginFritzbox::Initialize(void)
 
 bool cPluginFritzbox::Start(void)
 {
-	// first enable loggin to syslog
+	// first enable logging to syslog
 	dlog = new cLogStream(cLogBuf::DEBUG);
 	elog = new cLogStream(cLogBuf::ERROR);
 	ilog = new cLogStream(cLogBuf::INFO);
 	// use logging objects with libfritz++
 	fritz::Config::SetupLogging(dlog, ilog, elog);
 
-	event = new cFritzEventHandler();
+	event = new cFritzEventHandler(onCallCmd);
 	// start new thread for plugin initialization (may take some time)
 	cThread::Start();
 	return true;

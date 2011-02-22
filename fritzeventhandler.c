@@ -22,16 +22,18 @@
 #include <vdr/remote.h>
 #include <vdr/player.h>
 #include <vdr/skins.h>
+#include <vdr/thread.h>
 
 #include <Fonbook.h>
 #include "setup.h"
 #include "fritzeventhandler.h"
 #include "notifyosd.h"
 
-cFritzEventHandler::cFritzEventHandler() {
+cFritzEventHandler::cFritzEventHandler(std::string onCallCmd) {
 	muted = false;
 	paused = false;
 	getCallInfoCalled = false;
+	this->onCallCmd = onCallCmd;
 }
 
 cFritzEventHandler::~cFritzEventHandler() {
@@ -191,6 +193,13 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 			cRemote::CallPlugin(fritzboxConfig.pluginName.c_str());
 		}
 	}
+
+	Exec(std::stringstream().flush() << onCallCmd << " CALL "
+			                         << (outgoing ? "OUT " : "IN ")
+			                         << connId << " "
+			                         << remoteNumber << " \"" << remoteName << "\" "
+			                         << localParty << " "
+			                         << medium << " \"" << mediumName << "\"");
 }
 
 void cFritzEventHandler::HandleConnect(int connId) {
@@ -202,6 +211,7 @@ void cFritzEventHandler::HandleConnect(int connId) {
 		connection.callInfo = NULL;
 	}
 	mutex.Unlock();
+	Exec(std::stringstream().flush() << onCallCmd << " CONNECT " << connId);
 }
 
 void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
@@ -245,4 +255,13 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 		}
 		paused = false;
 	}
+
+	Exec(std::stringstream().flush() << onCallCmd << " DISCONNECT " << connId << " " << duration);
+	if (!activeCallsPending)
+		Exec(std::stringstream().flush() << onCallCmd << " FINISHED");
+}
+
+void cFritzEventHandler::Exec(const std::ostream & cmd) const {
+	const std::stringstream &sCmd = static_cast<const std::stringstream&>(cmd);
+	SystemExec(sCmd.str().c_str(), false);
 }
