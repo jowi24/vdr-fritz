@@ -6,16 +6,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"PO-Revision-Date: 2009-12-31 17:52+0100\n"
+"PO-Revision-Date: 2011-03-05 16:29+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"POT-Creation-Date: \n"
 
 msgid "> PB"
 msgstr "> RU"
@@ -50,9 +51,8 @@ msgstr "Chiamata %s [%s]"
 msgid "Country code"
 msgstr "Codice internazionale"
 
-#, fuzzy
 msgid "Data not yet available."
-msgstr "Elenco chiamate non ancora disponibile."
+msgstr "Dati non ancora disponibili."
 
 msgid "Date"
 msgstr "Data"
@@ -178,7 +178,7 @@ msgid "Restrict monitor to certain extensions"
 msgstr "Restringi controllo estensioni MSN"
 
 msgid "Resume after call"
-msgstr ""
+msgstr "Riprendi dopo chiamata"
 
 msgid "Retrieving phone book"
 msgstr "Recupero rubrica"
@@ -241,13 +241,11 @@ msgstr "chiamate perse"
 msgid "nummerzoeker.com"
 msgstr "nummerzoeker.com"
 
-#, fuzzy
 msgid "only incoming"
-msgstr "in arrivo"
+msgstr "solo in arrivo"
 
-#, fuzzy
 msgid "only outgoing"
-msgstr "in uscita"
+msgstr "solo in uscita"
 
 msgid "otherwise there may be a network problem."
 msgstr "altrimenti ci potrebbe essere un problema di rete."
@@ -256,26 +254,23 @@ msgid "outgoing"
 msgstr "in uscita"
 
 msgid "tel.local.ch"
-msgstr ""
+msgstr "tel.local.ch"
 
 msgid "unknown"
 msgstr "sconosciuta"
 
 #~ msgid " "
 #~ msgstr " "
-
 #~ msgid "Button$To PB"
 #~ msgstr "A PB"
-
 #~ msgid "Call from unknown extension"
 #~ msgstr "Chiamata da estensione sconosciuta"
-
 #~ msgid "Error fetching the call list"
 #~ msgstr "Errore recupero elenco chiamate"
 
 #, fuzzy
 #~ msgid "Fritz!Box Notification"
 #~ msgstr "Elenco chiamate Fritz!Box"
-
 #~ msgid "Please wait..."
 #~ msgstr "Attendere prego..."
+
