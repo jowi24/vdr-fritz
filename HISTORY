@@ -537,6 +537,7 @@ VDR Plugin 'fritzbox' Revision History
   * Add missing include to XmlFonbook
     (reported by Richard Bos [42])
 - The new command line option --log-personal-info re-enables logging all information  
+  (Suggested by C-3PO [41])
 - Migration to gnu common c++ library should fix a possible crash at plugin shutdown
 - Fix parsing SIP provider names
 
@@ -597,11 +598,27 @@ VDR Plugin 'fritzbox' Revision History
   Pause was not reset correctly under certain circumstances.
 - Removed tcpclient++, fully using libcommoncpp now
 - Add command line option for an on-call command (parameter -c 'cmd')
-  Implements #571 [VDR]
+  Implements #571 [VDR], suggested by Alexander [48].
 - Updated README and README.de
 - Updated italian translations
   Provided by Diego [24]
 - Fix translation of 'unknown' in call list 
+
+2011-03-11: Version 1.3.9
+- changes in libfritz++
+  * Remove translatable string 'unknown' from CallList
+  * Fix compile error with libcommoncpp2 / IPv6
+  * Add some debug output regarding threading
+  * Remove calls to exit() at end of threads
+  * Shortened time the lock to FritzClient is held by
+    FritzFonbook and CallList
+- Fix translation of 'unknown' in call list
+- Fix an issue with missing mutex releases at the
+  end of CallList and FritzFonbook threads
+  Fixes #551 [VDR]
+  Reported by hrueger [46], Bert [47], Honky [39].
+  Thanks for debugging and testing support!
+- Speedup phone book and call list initialization
 
 --- References ---
 
@@ -669,5 +686,7 @@ Contributors:
 [44] Achim Bohnet <allee@kubuntu.org>
 [45] SvenS
      http://vdr-portal.de/board/profile.php?userid=404
-
-		
+[46] Hartmut
+     http://vdr-portal.de/board/profile.php?userid=15636
+[47] http://vdr-portal.de/board/profile.php?userid=2579
+[48] Alexander <alexander@chocholaty.de>
