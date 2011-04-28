@@ -1,6 +1,6 @@
 #!/bin/bash
 
-case "$1" 
+case "$1" in
   CALL)
     # handle incoming or outgoing calls
   ;;
