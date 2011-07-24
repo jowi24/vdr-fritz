@@ -43,6 +43,7 @@ cPluginFritzbox::cPluginFritzbox(void)
 	// VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
 	event = NULL;
 	logPersonalInfo = false;
+	migratePassword = false;
 }
 
 cPluginFritzbox::~cPluginFritzbox()
@@ -126,6 +127,11 @@ void cPluginFritzbox::Stop(void)
 	SetupStore("ActiveFonbook",       fritzboxConfig.activeFonbookID.c_str());
 	SetupStore("CountryCode",         fritzboxConfig.countryCode.c_str());
 	SetupStore("RegionCode",          fritzboxConfig.regionCode.c_str());
+	// Migrate old setup parameters
+	if (migratePassword) {
+		SetupStore("EncodedPassword", fritzboxConfig.string2hex(fritzboxConfig.password).c_str());
+		SetupStore("Password",        "");
+	}
 	// Stop any background activities the plugin shall perform.
 	fritz::Config::Shutdown();
 	if (event)
@@ -207,6 +213,15 @@ cMenuSetupPage *cPluginFritzbox::SetupMenu(void)
 bool cPluginFritzbox::SetupParse(const char *Name, const char *Value)
 {
 	// Parse your own setup parameters and store their values.
+	if (!strcasecmp(Name, "Password")) {
+		if (fritzboxConfig.password.size() > 0) {
+			migratePassword = true;
+			return true;
+		}
+		if (strlen(Value) > 0) {
+			migratePassword = true;
+		}
+	}
 	return fritzboxConfig.SetupParse(Name, Value);
 }
 

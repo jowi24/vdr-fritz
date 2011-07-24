@@ -37,7 +37,7 @@ private:
 	std::string mainMenuEntry;
 	bool logPersonalInfo;
 	std::string onCallCmd;
-
+	bool migratePassword;
 public:
 	cPluginFritzbox(void);
 	virtual ~cPluginFritzbox();
