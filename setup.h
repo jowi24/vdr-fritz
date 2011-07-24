@@ -105,6 +105,8 @@ public:
 	bool SetupParseMsn(const char *value);
 	bool SetupParseFonbooks(const char *value);
 	bool SetupParse(const char *Name, const char *Value);
+	std::string string2hex(std::string input);
+	std::string hex2string(std::string input);
 	std::string configDir;              // path to plugins' config files (e.g., local phone book)
 	std::string pluginName;             // name of this plugin (e.g., for cRemote::CallPlugin)
 	std::string lang;                   // webinterface language

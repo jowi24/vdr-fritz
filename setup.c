@@ -234,7 +234,8 @@ void cMenuSetupFritzbox::Store(void) {
 	((cThread *)fritzbox)->Start(); // re-read configuration, notify libfritz++ about changes
 
 	SetupStore("Url",          			url);
-	SetupStore("Password",     			fritzboxConfig.password.c_str());
+	SetupStore("Password",     			""); // has been migrated to EncodedPassword
+	SetupStore("EncodedPassword",       fritzboxConfig.string2hex(fritzboxConfig.password).c_str());
 	SetupStore("ReactOnDirection",      reactOnDirection);
 	SetupStore("MuteOnCall",   			muteOnCall);
 	SetupStore("PauseOnCall",  			pauseOnCall);
@@ -466,7 +467,8 @@ bool sFritzboxConfig::SetupParseFonbooks(const char *value){
 
 bool sFritzboxConfig::SetupParse(const char *name, const char *value) {
 	if      (!strcasecmp(name, "Url"))          		url          		 = value;
-	else if (!strcasecmp(name, "Password"))     		password     		 = value;
+	else if (!strcasecmp(name, "Password"))	            password             = value;
+	else if (!strcasecmp(name, "EncodedPassword"))      password             = hex2string(value);
 	else if (!strcasecmp(name, "ReactOnDirection"))     reactOnDirection     = atoi(value);
 	else if (!strcasecmp(name, "MuteOnCall"))   		muteOnCall   		 = atoi(value);
 	else if (!strcasecmp(name, "PauseOnCall"))   		pauseOnCall   		 = atoi(value);
@@ -485,4 +487,23 @@ bool sFritzboxConfig::SetupParse(const char *name, const char *value) {
 	else if (!strcasecmp(name, "RegionCode"))           regionCode           = value;
 	else return false;
 	return true;
+}
+
+std::string sFritzboxConfig::string2hex(std::string input) {
+	std::stringstream output;
+	for (std::string::iterator it = input.begin(); it < input.end(); it++)
+		output << std::hex << static_cast<int>(*it);
+	return output.str();
+}
+
+std::string sFritzboxConfig::hex2string(std::string input) {
+	std::stringstream output;
+	for (std::string::iterator it = input.begin(); it < input.end(); it += 2) {
+		std::stringstream buffer;
+		int value;
+		buffer << it[0] << it[1] ;
+		buffer >> std::hex >> value;
+		output << static_cast<char>(value);
+	}
+	return output.str();
 }
