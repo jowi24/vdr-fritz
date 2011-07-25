@@ -33,6 +33,9 @@
 
 sFritzboxConfig fritzboxConfig;
 
+// possible characters for Fritz!Box password, according to web interface
+const char *PasswordChars = "abcdefghijklmnopqrstuvwxyz0123456789 !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+
 // set logging objects
 std::ostream *dlog = &std::clog;
 std::ostream *ilog = &std::cout;
@@ -106,7 +109,7 @@ void cMenuSetupFritzbox::Setup(void) {
 	}
 	// build up setup menu
 	Add(new cMenuEditStrItem (tr("Fritz!Box URL"),                  		url,           			MaxFileName, tr(FileNameChars)));
-	Add(new cMenuEditStrItem (tr("Password"),                       		password, 	   			MaxFileName, tr(FileNameChars)));
+	Add(new cMenuEditStrItem (tr("Password"),                       		password, 	   			MaxFileName, PasswordChars));
 	Add(new cMenuEditStrItem (tr("Country code"),                           countryCode,            5,           "0123456789"));
 	Add(new cMenuEditStrItem (tr("Region code"),                            regionCode,             10,          "0123456789"));
 	Add(new cMenuEditStraItem(tr("React on calls"),                         &reactOnDirection,      3,           directions  ));
