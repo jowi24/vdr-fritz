@@ -258,17 +258,17 @@ void cPluginFritzbox::Action() {
 		fritz::Listener::CreateListener(event);
 }
 
-std::string cPluginFritzbox::FonbookEntryTypeToName(const fritz::FonbookEntry::eType type) {
+std::string cPluginFritzbox::FonbookEntryTypeToName(const fritz::FonbookEntry::eType type, bool longName) {
 	switch (type) {
 	case fritz::FonbookEntry::TYPE_HOME:
 		//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
-		return tr("H");
+		return longName ? tr("Private") : tr("H");
 	case fritz::FonbookEntry::TYPE_MOBILE:
 		//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
-		return tr("M");
+		return longName ? tr("Mobile") : tr("M");
 	case fritz::FonbookEntry::TYPE_WORK:
 		//TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
-		return tr("W");
+		return longName ? tr("Business") : tr("W");
 	default:
 		return "";
 	}
