@@ -126,7 +126,7 @@ void cMenuSetupFritzbox::Setup(void) {
 	Add(new cOsdItem         (tr("Setup phonebooks to use..."),             osUser1                                          ));
 	Add(new cMenuEditBoolItem(tr("Restrict monitor to certain extensions"), &msnFilter,    			trVDR("no"), trVDR("yes")));
 	if (msnFilter) {
-		Add(new cMenuEditIntItem (tr("Number of monitored extensions"), &msnCount, 1, MAX_MSN_COUNT));
+		Add(new cMenuEditIntItem (tr("Number of monitored extensions"), &msnCount, 0, MAX_MSN_COUNT));
 		for (int p = 0; p < msnCount; p++)
 			Add(new cMenuEditStrItem(tr("Extension"), msn[p], MaxFileName, "1234567890"));
 	}
