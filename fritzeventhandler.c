@@ -22,6 +22,7 @@
 #include <vdr/remote.h>
 #include <vdr/player.h>
 #include <vdr/skins.h>
+#include <vdr/shutdown.h>
 #include <vdr/thread.h>
 
 #include <Fonbook.h>
@@ -142,16 +143,20 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 		control->GetReplayMode(currPlay, currForw, currSpeed);
 	}
 
+	// check for muting
 	if (fritzboxConfig.muteOnCall && !cDevice::PrimaryDevice()->IsMute()) {
 		INF((outgoing ? "outgoing": "incoming") << " call, muting.");
 		cDevice::PrimaryDevice()->ToggleMute();
 		muted = true;
 	}
-	if (fritzboxConfig.pauseOnCall && !paused && control && currPlay) {
+	// check for pausing replay or live tv
+	if (fritzboxConfig.pauseOnCall && !paused &&
+	    ((control && currPlay) || (fritzboxConfig.pauseLive && !ShutdownHandler.IsUserInactive()))) {
 		INF((outgoing ? "outgoing": "incoming") << " call, pressing kPause.");
 		cRemote::Put(kPause);
 		paused = true;
 	}
+
 	if (medium.compare(mediumName) == 0) {
 		if (mediumName.find("SIP") != std::string::npos)
 			mediumName.replace(0, 3, "VoIP ");
