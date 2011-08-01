@@ -114,6 +114,8 @@ void cMenuSetupFritzbox::Setup(void) {
 	Add(new cMenuEditStrItem (tr("Region code"),                            regionCode,             10,          "0123456789"));
 	Add(new cMenuEditStraItem(tr("React on calls"),                         &reactOnDirection,      3,           directions  ));
 	Add(new cMenuEditBoolItem(tr("Mute on call"),                   		&muteOnCall,   			trVDR("no"), trVDR("yes")));
+	if (muteOnCall)
+		Add(new cMenuEditBoolItem(tr("Mute only after connect"),            &muteAfterConnect,      trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Pause on call"),   	             		&pauseOnCall,  			trVDR("no"), trVDR("yes")));
 	if (pauseOnCall) {
 		Add(new cMenuEditBoolItem(tr("Pause live tv"),                      &pauseLive,             trVDR("no"), trVDR("yes")));
@@ -177,6 +179,10 @@ eOSState cMenuSetupFritzbox::ProcessKey(eKeys Key) {
 			Setup();
 			pauseOnCallBefore = pauseOnCall;
 		}
+		if (muteOnCall != muteOnCallBefore) {
+			Setup();
+			muteOnCallBefore = muteOnCall;
+		}
 	}
 
 	if (state == osUnknown) {
@@ -214,6 +220,7 @@ void cMenuSetupFritzbox::Store(void) {
 	//
 	fritzboxConfig.reactOnDirection     = reactOnDirection;
 	fritzboxConfig.muteOnCall     		= muteOnCall;
+	fritzboxConfig.muteAfterConnect     = muteAfterConnect;
 	fritzboxConfig.pauseOnCall     		= pauseOnCall;
 	fritzboxConfig.pauseLive            = pauseLive;
 	fritzboxConfig.resumeAfterCall 		= resumeAfterCall;
@@ -244,6 +251,7 @@ void cMenuSetupFritzbox::Store(void) {
 	SetupStore("EncodedPassword",       fritzboxConfig.string2hex(fritzboxConfig.password).c_str());
 	SetupStore("ReactOnDirection",      reactOnDirection);
 	SetupStore("MuteOnCall",   			muteOnCall);
+	SetupStore("MuteAfterConnect",      muteAfterConnect);
 	SetupStore("PauseOnCall",  			pauseOnCall);
 	SetupStore("PauseLive",             pauseLive);
 	SetupStore("ResumeAfterCall",       resumeAfterCall);
@@ -273,6 +281,8 @@ cMenuSetupFritzbox::cMenuSetupFritzbox(cPluginFritzbox *fritzbox)
 	}
 	reactOnDirection     = fritzboxConfig.reactOnDirection;
 	muteOnCall      	 = fritzboxConfig.muteOnCall;
+	muteOnCallBefore     = muteOnCall;
+	muteAfterConnect     = fritzboxConfig.muteAfterConnect;
 	pauseOnCall      	 = fritzboxConfig.pauseOnCall;
 	pauseOnCallBefore    = pauseOnCall;
 	pauseLive            = fritzboxConfig.pauseLive;
@@ -421,6 +431,7 @@ sFritzboxConfig::sFritzboxConfig() {
 	regionCode              = "";
 	reactOnDirection        = DIRECTION_IN;
 	muteOnCall      		= 0;
+	muteAfterConnect        = 0;
 	pauseOnCall      		= 0;
 	pauseLive               = 0;
 	resumeAfterCall         = 1;
@@ -480,6 +491,7 @@ bool sFritzboxConfig::SetupParse(const char *name, const char *value) {
 	else if (!strcasecmp(name, "EncodedPassword"))      password             = hex2string(value);
 	else if (!strcasecmp(name, "ReactOnDirection"))     reactOnDirection     = atoi(value);
 	else if (!strcasecmp(name, "MuteOnCall"))   		muteOnCall   		 = atoi(value);
+	else if (!strcasecmp(name, "MuteAfterConnect"))     muteAfterConnect   	 = atoi(value);
 	else if (!strcasecmp(name, "PauseOnCall"))   		pauseOnCall   		 = atoi(value);
 	else if (!strcasecmp(name, "PauseLive"))            pauseLive            = atoi(value);
 	else if (!strcasecmp(name, "ResumeAfterCall"))      resumeAfterCall      = atoi(value);
