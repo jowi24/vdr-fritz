@@ -144,7 +144,7 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 	}
 
 	// check for muting
-	if (fritzboxConfig.muteOnCall && !cDevice::PrimaryDevice()->IsMute()) {
+	if (fritzboxConfig.muteOnCall && !fritzboxConfig.muteAfterConnect && !cDevice::PrimaryDevice()->IsMute()) {
 		INF((outgoing ? "outgoing": "incoming") << " call, muting.");
 		cDevice::PrimaryDevice()->ToggleMute();
 		muted = true;
@@ -208,6 +208,13 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 }
 
 void cFritzEventHandler::HandleConnect(int connId) {
+	// check for muting
+	if (fritzboxConfig.muteOnCall && fritzboxConfig.muteAfterConnect && !cDevice::PrimaryDevice()->IsMute()) {
+		INF("muting connected call");
+		cDevice::PrimaryDevice()->ToggleMute();
+		muted = true;
+	}
+
 	mutex.Lock();
 	sConnection &connection = connections[connId];
 	connection.state = sConnection::ACTIVE;
