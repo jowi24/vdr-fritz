@@ -115,8 +115,10 @@ void cMenuSetupFritzbox::Setup(void) {
 	Add(new cMenuEditStraItem(tr("React on calls"),                         &reactOnDirection,      3,           directions  ));
 	Add(new cMenuEditBoolItem(tr("Mute on call"),                   		&muteOnCall,   			trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Pause on call"),   	             		&pauseOnCall,  			trVDR("no"), trVDR("yes")));
-	if (pauseOnCall)
+	if (pauseOnCall) {
+		Add(new cMenuEditBoolItem(tr("Pause live tv"),                      &pauseLive,             trVDR("no"), trVDR("yes")));
 		Add(new cMenuEditBoolItem(tr("Resume after call"),            		&resumeAfterCall,		trVDR("no"), trVDR("yes")));
+	}
 	Add(new cMenuEditBoolItem(tr("Show calls"),            		            &showNumber,   			trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Show detailed call information"),         &useNotifyOsd,          trVDR("no"), trVDR("yes")));
 	Add(new cMenuEditBoolItem(tr("Detailed call lists"),                    &showNumberInCallList, 	trVDR("no"), trVDR("yes")));
@@ -213,6 +215,7 @@ void cMenuSetupFritzbox::Store(void) {
 	fritzboxConfig.reactOnDirection     = reactOnDirection;
 	fritzboxConfig.muteOnCall     		= muteOnCall;
 	fritzboxConfig.pauseOnCall     		= pauseOnCall;
+	fritzboxConfig.pauseLive            = pauseLive;
 	fritzboxConfig.resumeAfterCall 		= resumeAfterCall;
 	fritzboxConfig.showNumber     		= showNumber;
 	fritzboxConfig.useNotifyOsd         = useNotifyOsd;
@@ -242,6 +245,7 @@ void cMenuSetupFritzbox::Store(void) {
 	SetupStore("ReactOnDirection",      reactOnDirection);
 	SetupStore("MuteOnCall",   			muteOnCall);
 	SetupStore("PauseOnCall",  			pauseOnCall);
+	SetupStore("PauseLive",             pauseLive);
 	SetupStore("ResumeAfterCall",       resumeAfterCall);
 	SetupStore("ShowNumber",   			showNumber);
 	SetupStore("UseNotifyOsd",          useNotifyOsd);
@@ -271,6 +275,7 @@ cMenuSetupFritzbox::cMenuSetupFritzbox(cPluginFritzbox *fritzbox)
 	muteOnCall      	 = fritzboxConfig.muteOnCall;
 	pauseOnCall      	 = fritzboxConfig.pauseOnCall;
 	pauseOnCallBefore    = pauseOnCall;
+	pauseLive            = fritzboxConfig.pauseLive;
 	resumeAfterCall      = fritzboxConfig.resumeAfterCall;
 	showNumber      	 = fritzboxConfig.showNumber;
 	useNotifyOsd         = fritzboxConfig.useNotifyOsd;
@@ -417,6 +422,7 @@ sFritzboxConfig::sFritzboxConfig() {
 	reactOnDirection        = DIRECTION_IN;
 	muteOnCall      		= 0;
 	pauseOnCall      		= 0;
+	pauseLive               = 0;
 	resumeAfterCall         = 1;
 	showNumber      		= 1;
 	useNotifyOsd            = 0;
@@ -475,6 +481,7 @@ bool sFritzboxConfig::SetupParse(const char *name, const char *value) {
 	else if (!strcasecmp(name, "ReactOnDirection"))     reactOnDirection     = atoi(value);
 	else if (!strcasecmp(name, "MuteOnCall"))   		muteOnCall   		 = atoi(value);
 	else if (!strcasecmp(name, "PauseOnCall"))   		pauseOnCall   		 = atoi(value);
+	else if (!strcasecmp(name, "PauseLive"))            pauseLive            = atoi(value);
 	else if (!strcasecmp(name, "ResumeAfterCall"))      resumeAfterCall      = atoi(value);
 	else if (!strcasecmp(name, "ShowNumber"))   		showNumber   		 = atoi(value);
 	else if (!strcasecmp(name, "UseNotifyOsd"))         useNotifyOsd         = atoi(value);
