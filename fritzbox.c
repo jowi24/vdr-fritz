@@ -239,7 +239,7 @@ void cPluginFritzbox::Action() {
 	fritz::CallList::CreateCallList();
 
 	// Create FritzListener only if needed
-	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall)
+	if (fritzboxConfig.showNumber || fritzboxConfig.pauseOnCall || fritzboxConfig.muteOnCall || onCallCmd.size())
 		fritz::Listener::CreateListener(event);
 }
 
