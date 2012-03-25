@@ -616,12 +616,43 @@ VDR Plugin 'fritzbox' Revision History
 - Fix an issue with missing mutex releases at the
   end of CallList and FritzFonbook threads
   Fixes #551 [VDR]
-  Reported by hrueger [46], Bert [47], Honky [39].
+  (reported by hrueger [46], Bert [47], Honky [39])
   Thanks for debugging and testing support!
 - Speedup phone book and call list initialization
 
 2011-04-17: Version 1.4.0
-- new stable version, no changes to 1.3.9
+- New stable version, no changes to 1.3.9
+
+2012-03-25: Version 1.5.0 (list also includes changes of 1.4.1 and 1.4.2)
+- New development branch, stable branch 1.4.x is still maintained
+- Changes in libfritz++
+  * speedup initialization
+  * Fix resolve in OertlichesFonbook
+  * Provide Doxyfile for documentation generation
+  * Fix compiler warnings -Wsign-compare and -Wswitch
+- Save password Hex-encoded in configuration
+  * also works around a problem if password contains '#'
+  (reported by Fridi [49])
+- Fix templates/on-call.sh
+  * Added a missing 'in' to the case part
+  (reported by theonlychriss [50])
+- Fix set of characters possible in Fritz!Box password
+  * Some characters were missing (e.g., !)
+  * Some characters were not allowed
+  (reported by Tommy.Z [51])
+- Adapt to more flexible Fritz!Box phone books
+  (e.g. containing more than one number of the same type per name)
+- Fix possible crash setting msn filter count to zero
+- Fix calling script on call events with OSD notification turned off
+  (reported by Christian Holder [52])
+- Lookup based phone books now cache lookups in memory
+  (based on code by Christian Holder [52])
+- Add option to pause live tv
+  Fixes #506 [VDR]
+- Add option to mute only after connect
+  (Requested by derdoc [53])
+  
+
 
 --- References ---
 
@@ -693,3 +724,12 @@ Contributors:
      http://vdr-portal.de/board/profile.php?userid=15636
 [47] http://vdr-portal.de/board/profile.php?userid=2579
 [48] Alexander <alexander@chocholaty.de>
+[49] Fridi
+     http://www.vdr-portal.de/user/5231-fridi/
+[50] theonlycriss
+     http://www.vdr-portal.de/user/3200-theonlychriss/
+[51] Tommy.Z
+     http://www.vdr-portal.de/user/165-tommy-z/
+[52] Christian Holder <chris@hchris.selfip.com>
+[53] derdoc
+     http://www.vdr-portal.de/user/28286-derdoc/
