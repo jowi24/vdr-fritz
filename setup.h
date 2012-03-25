@@ -50,8 +50,11 @@ private:
 	char *menus[4];
 	int reactOnDirection;
 	int muteOnCall;
+	int muteOnCallBefore;
+	int muteAfterConnect;
 	int pauseOnCall;
 	int pauseOnCallBefore;
+	int pauseLive;
 	int resumeAfterCall;
 	int showNumber;
 	int useNotifyOsd;
@@ -117,7 +120,9 @@ public:
 	std::string regionCode;             // fritz!box region-code
 	int reactOnDirection;               // what type of calls are we interested in (eDirection)?
 	int muteOnCall;                     // mute audio on calls
+	int muteAfterConnect;               // mute only after call connects
 	int pauseOnCall;                    // pause playback on calls
+	int pauseLive;                      // pause livetv on calls, too
 	int resumeAfterCall;                // resume playback after all calls have finished
 	int showNumber;                     // show notification on osd on calls
 	int useNotifyOsd;                   // use the extended notification osd and not Skins.Message
