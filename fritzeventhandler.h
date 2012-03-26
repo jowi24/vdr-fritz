@@ -31,6 +31,7 @@
 class cFritzEventHandler : public fritz::EventHandler {
 private:
 	bool muted;
+	int volumeLevel;
 	bool paused;
 	bool getCallInfoCalled;
 	std::string onCallCmd;
@@ -49,6 +50,8 @@ private:
 	cMutex mutex;
 	void Exec(const std::ostream & url) const;
 	bool CareForCall(bool outgoing);
+	void DoMute();
+	void DoUnmute();
 public:
 	cFritzEventHandler(std::string onCallCmd = "");
 	virtual ~cFritzEventHandler();

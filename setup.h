@@ -52,6 +52,7 @@ private:
 	int muteOnCall;
 	int muteOnCallBefore;
 	int muteAfterConnect;
+	int muteVolumeLevel;
 	int pauseOnCall;
 	int pauseOnCallBefore;
 	int pauseLive;
@@ -121,6 +122,7 @@ public:
 	int reactOnDirection;               // what type of calls are we interested in (eDirection)?
 	int muteOnCall;                     // mute audio on calls
 	int muteAfterConnect;               // mute only after call connects
+	int muteVolumeLevel;                // on mute, decrease volume by muteVolumeLevel %
 	int pauseOnCall;                    // pause playback on calls
 	int pauseLive;                      // pause livetv on calls, too
 	int resumeAfterCall;                // resume playback after all calls have finished
