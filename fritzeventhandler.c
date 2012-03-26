@@ -32,6 +32,7 @@
 
 cFritzEventHandler::cFritzEventHandler(std::string onCallCmd) {
 	muted = false;
+	volumeLevel = 0;
 	paused = false;
 	getCallInfoCalled = false;
 	this->onCallCmd = onCallCmd;
@@ -151,8 +152,7 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 	// check for muting
 	if (fritzboxConfig.muteOnCall && !fritzboxConfig.muteAfterConnect && !cDevice::PrimaryDevice()->IsMute()) {
 		INF((outgoing ? "outgoing": "incoming") << " call, muting.");
-		cDevice::PrimaryDevice()->ToggleMute();
-		muted = true;
+		DoMute();
 	}
 	// check for pausing replay or live tv
 	if (fritzboxConfig.pauseOnCall && !paused &&
@@ -222,8 +222,7 @@ void cFritzEventHandler::HandleConnect(int connId) {
 
 	if (fritzboxConfig.muteOnCall && fritzboxConfig.muteAfterConnect && !cDevice::PrimaryDevice()->IsMute()) {
 		INF("muting connected call");
-		cDevice::PrimaryDevice()->ToggleMute();
-		muted = true;
+		DoMute();
 	}
 
 	mutex.Lock();
@@ -269,8 +268,7 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 	// unmute, if applicable
 	if (!activeCallsPending && muted && cDevice::PrimaryDevice()->IsMute()) {
 		INF("Finished all calls, unmuting.");
-		cDevice::PrimaryDevice()->ToggleMute();
-		muted = false;
+		DoUnmute();
 	}
 	// resume, if applicable
 	if (!activeCallsPending && paused) {
@@ -293,4 +291,21 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 void cFritzEventHandler::Exec(const std::ostream & cmd) const {
 	const std::stringstream &sCmd = static_cast<const std::stringstream&>(cmd);
 	SystemExec(sCmd.str().c_str(), false);
+}
+
+void cFritzEventHandler::DoMute() {
+	if (fritzboxConfig.muteVolumeLevel < 100) {
+		volumeLevel = cDevice::PrimaryDevice()->CurrentVolume();
+		cDevice::PrimaryDevice()->SetVolume(volumeLevel * (100 - fritzboxConfig.muteVolumeLevel) / 100, true);
+	} else
+		cDevice::PrimaryDevice()->ToggleMute();
+	muted = true;
+}
+
+void cFritzEventHandler::DoUnmute() {
+	if (fritzboxConfig.muteVolumeLevel < 100) {
+		cDevice::PrimaryDevice()->SetVolume(volumeLevel, true);
+	} else
+		cDevice::PrimaryDevice()->ToggleMute();
+	muted = false;
 }
