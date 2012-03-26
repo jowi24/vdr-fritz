@@ -54,6 +54,9 @@ msgstr "Daten noch nicht verfügbar."
 msgid "Date"
 msgstr "Datum"
 
+msgid "Decrease volume by [1..100%]"
+msgstr "Lautstärke nur absenken [1..100%]"
+
 msgid "Default"
 msgstr "Standard"
 
@@ -122,11 +125,11 @@ msgstr "Mehr"
 msgid "Mute on call"
 msgstr "Bei Anruf stummschalten"
 
+msgid "Mute only after connect"
+msgstr "Nur bei Verbindung stummschalten"
+
 msgid "Name"
 msgstr "Name"
-
-msgid "No number to add"
-msgstr "Keine Rufnummer zu Speichern"
 
 msgid "No number to call"
 msgstr "Ohne Nummer kein Anruf möglich"
@@ -149,6 +152,9 @@ msgstr "analog"
 
 msgid "Password"
 msgstr "Passwort"
+
+msgid "Pause live tv"
+msgstr "Auch Live TV anhalten"
 
 msgid "Pause on call"
 msgstr "Bei Anruf Wiedergabe pausieren"
@@ -267,6 +273,9 @@ msgstr "unbekannt"
 
 #~ msgid "Fritz!Box Notification"
 #~ msgstr "Fritz!Box Information"
+
+#~ msgid "No number to add"
+#~ msgstr "Keine Rufnummer zu Speichern"
 
 #~ msgid "Please wait..."
 #~ msgstr "Bitte warten..."
