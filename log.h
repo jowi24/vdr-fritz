@@ -24,7 +24,7 @@
 #ifndef LOG_H_
 #define LOG_H_
 
-class cLogBuf : public std::streambuf { //TODO: inherit from stringbuf?
+class LogBuf : public std::streambuf { //TODO: inherit from stringbuf?
 public:
 	enum eLogType {
 		DEBUG,
@@ -39,13 +39,13 @@ protected:
 	int	overflow(int);
 	int	sync();
 public:
-	cLogBuf(eLogType type);
-	virtual ~cLogBuf();
+	LogBuf(eLogType type);
+	virtual ~LogBuf();
 };
 
 class cLogStream: public std::ostream {
 public:
-	cLogStream(cLogBuf::eLogType type);
+	cLogStream(LogBuf::eLogType type);
 	//virtual ~LogStream();
 };
 
