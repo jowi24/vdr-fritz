@@ -23,7 +23,7 @@
 #include "log.h"
 #include <vdr/tools.h>
 
-cLogBuf::cLogBuf(eLogType type) {
+LogBuf::LogBuf(eLogType type) {
 	const unsigned int BUFFER_SIZE = 1024;
 	char	*ptr = new char[BUFFER_SIZE];
 	setp(ptr, ptr + BUFFER_SIZE);
@@ -31,7 +31,7 @@ cLogBuf::cLogBuf(eLogType type) {
 	this->type = type;
 }
 
-void cLogBuf::PutBuffer(void)
+void LogBuf::PutBuffer(void)
 {
 	if (pbase() != pptr())
 	{
@@ -58,7 +58,7 @@ void cLogBuf::PutBuffer(void)
 	}
 }
 
-int cLogBuf::overflow(int c)
+int LogBuf::overflow(int c)
 {
 	PutBuffer();
 
@@ -69,19 +69,19 @@ int cLogBuf::overflow(int c)
 
 }
 
-int cLogBuf::sync()
+int LogBuf::sync()
 {
 	PutBuffer();
 	return 0;
 }
 
-cLogBuf::~cLogBuf() {
+LogBuf::~LogBuf() {
 	sync();
 	delete[] pbase();
 }
 
-cLogStream::cLogStream(cLogBuf::eLogType type)
-:std::ostream(new cLogBuf(type))
+cLogStream::cLogStream(LogBuf::eLogType type)
+:std::ostream(new LogBuf(type))
 {
 }
 
