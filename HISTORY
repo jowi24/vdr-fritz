@@ -636,6 +636,8 @@ VDR Plugin 'fritzbox' Revision History
 - Fix resolve in OertlichesFonbook
   (patch provided by Kurt Wanner [43])
 
+2012-04-19: Version 1.4.3
+- Fix resolve in OertlichesFonbook
 
 --- References ---
 
