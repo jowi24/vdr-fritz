@@ -59,7 +59,7 @@ std::vector<int> cFritzEventHandler::GetPendingCallIds() {
 	std::vector<int> ids;
 	mutex.Lock();
 	for (std::map<int, sConnection>::iterator it = connections.begin(); it != connections.end(); it++) {
-		if (static_cast<sConnection>((*it).second).callInfo) {
+		if (static_cast<sConnection>((*it).second).displayed == false) {
 			ids.push_back((*it).first);
 		}
 	}
@@ -71,11 +71,10 @@ void cFritzEventHandler::NotificationDone(int connId) {
 	mutex.Lock();
 	sConnection &connection = connections[connId];
 	connection.displayed = true;
-	if (connection.state != sConnection::RINGING) {
+	if (connection.state == sConnection::IDLE) {
 		delete connection.callInfo;
 		connection.callInfo = NULL;
-		if (connection.state == sConnection::IDLE)
-			connections.erase(connId);
+		connections.erase(connId);
 	}
 	mutex.Unlock();
 }
@@ -122,19 +121,25 @@ std::string cFritzEventHandler::ComposeCallMessage(int connId) {
 	return rMsg;
 }
 
+bool cFritzEventHandler::CareForCall(bool outgoing) {
+	if (fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_ANY) {
+		if (outgoing && fritzboxConfig.reactOnDirection
+				!= fritzboxConfig.DIRECTION_OUT)
+			return false;
+		if (!outgoing && fritzboxConfig.reactOnDirection
+				!= fritzboxConfig.DIRECTION_IN)
+			return false;
+	}
+	return true;
+}
+
 void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 		std::string remoteNumber, std::string remoteName,
 		fritz::FonbookEntry::eType remoteType, std::string localParty,
 		std::string medium, std::string mediumName) {
 
-	if (fritzboxConfig.reactOnDirection != fritzboxConfig.DIRECTION_ANY) {
-		if (outgoing && fritzboxConfig.reactOnDirection
-				!= fritzboxConfig.DIRECTION_OUT)
-			return;
-		if (!outgoing && fritzboxConfig.reactOnDirection
-				!= fritzboxConfig.DIRECTION_IN)
-			return;
-	}
+	if (!CareForCall(outgoing))
+		return;
 
 	bool currPlay, currForw;
 	int currSpeed;
@@ -199,16 +204,22 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 		}
 	}
 
-	Exec(std::stringstream().flush() << onCallCmd << " CALL "
-			                         << (outgoing ? "OUT " : "IN ")
-			                         << connId << " "
-			                         << remoteNumber << " \"" << remoteName << "\" "
-			                         << localParty << " "
-			                         << medium << " \"" << mediumName << "\"");
+	if (onCallCmd.size())
+		Exec(std::stringstream().flush() << onCallCmd << " CALL "
+									     << (outgoing ? "OUT " : "IN ")
+			                             << connId << " "
+			                             << remoteNumber << " \"" << remoteName << "\" "
+			                             << localParty << " "
+			                             << medium << " \"" << mediumName << "\"");
 }
 
 void cFritzEventHandler::HandleConnect(int connId) {
-	// check for muting
+	if (connections.find(connId) == connections.end())
+		return;
+	bool outgoing = connections[connId].callInfo->isOutgoing;
+	if (!CareForCall(outgoing))
+		return;
+
 	if (fritzboxConfig.muteOnCall && fritzboxConfig.muteAfterConnect && !cDevice::PrimaryDevice()->IsMute()) {
 		INF("muting connected call");
 		cDevice::PrimaryDevice()->ToggleMute();
@@ -218,15 +229,18 @@ void cFritzEventHandler::HandleConnect(int connId) {
 	mutex.Lock();
 	sConnection &connection = connections[connId];
 	connection.state = sConnection::ACTIVE;
-	if (connection.displayed) {
-		delete connection.callInfo;
-		connection.callInfo = NULL;
-	}
 	mutex.Unlock();
-	Exec(std::stringstream().flush() << onCallCmd << " CONNECT " << connId);
+	if (onCallCmd.size())
+		Exec(std::stringstream().flush() << onCallCmd << " CONNECT " << connId);
 }
 
 void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
+	if (connections.find(connId) == connections.end())
+		return;
+	bool outgoing = connections[connId].callInfo->isOutgoing;
+	if (!CareForCall(outgoing))
+		return;
+
 	bool currPlay, currForw;
 	int currSpeed;
 	cControl *control = cControl::Control();
@@ -268,9 +282,12 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 		paused = false;
 	}
 
-	Exec(std::stringstream().flush() << onCallCmd << " DISCONNECT " << connId << " " << duration);
-	if (!activeCallsPending)
-		Exec(std::stringstream().flush() << onCallCmd << " FINISHED");
+	if (onCallCmd.size()) {
+		Exec(std::stringstream().flush() << onCallCmd << " DISCONNECT "
+				<< connId << " " << duration);
+		if (!activeCallsPending)
+			Exec(std::stringstream().flush() << onCallCmd << " FINISHED");
+	}
 }
 
 void cFritzEventHandler::Exec(const std::ostream & cmd) const {

@@ -48,15 +48,15 @@ private:
 	std::map<int, sConnection> connections;
 	cMutex mutex;
 	void Exec(const std::ostream & url) const;
+	bool CareForCall(bool outgoing);
 public:
-	cFritzEventHandler(std::string onCallCmd);
+	cFritzEventHandler(std::string onCallCmd = "");
 	virtual ~cFritzEventHandler();
-
+	size_t GetConnectionCount() { return connections.size(); }
 	std::vector<int> GetPendingCallIds();
 	fritz::sCallInfo GetCallInfo(int connId);
 	void NotificationDone(int connId);
 	std::string ComposeCallMessage(int connId);
-
 	virtual void HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, fritz::FonbookEntry::eType remoteType, std::string localParty, std::string medium, std::string mediumName);
 	virtual void HandleConnect(int connId);
 	virtual void HandleDisconnect(int connId, std::string duration);
