@@ -108,9 +108,9 @@ bool cPluginFritzbox::Initialize(void)
 bool cPluginFritzbox::Start(void)
 {
 	// first enable logging to syslog
-	dlog = new cLogStream(cLogBuf::DEBUG);
-	elog = new cLogStream(cLogBuf::ERROR);
-	ilog = new cLogStream(cLogBuf::INFO);
+	dlog = new cLogStream(LogBuf::DEBUG);
+	elog = new cLogStream(LogBuf::ERROR);
+	ilog = new cLogStream(LogBuf::INFO);
 	// use logging objects with libfritz++
 	fritz::Config::SetupLogging(dlog, ilog, elog);
 
