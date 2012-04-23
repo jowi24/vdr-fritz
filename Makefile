@@ -64,14 +64,15 @@ LIBS += $(LIBFRITZ)/$(LIBFRITZ).a -lgcrypt -lccgnu2
 OBJS = $(PLUGIN).o fritzeventhandler.o log.o menu.o notifyosd.o setup.o	  
 
 ### Targets:
-all: libvdr-$(PLUGIN).so i18n
+all: libvdr-$(PLUGIN).so i18n test $(LIBFRITZ)
 	@-cp --remove-destination libvdr-$(PLUGIN).so $(LIBDIR)/libvdr-$(PLUGIN).so.$(APIVERSION) 
 ## TODO: Prevent so file from beeing build every time
-libvdr-$(PLUGIN).so: $(OBJS) libfritz 
+libvdr-$(PLUGIN).so: $(OBJS) $(LIBFRITZ)/$(LIBFRITZ).a 
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LIBS) -o $@
+	ar ru libvdr-$(PLUGIN).a $(OBJS)
 	
-libfritz:
-	$(MAKE) -C $(LIBFRITZ)	
+$(LIBFRITZ):
+	@$(MAKE) -C $(LIBFRITZ)
 	
 %.o: %.c
 	$(CXX) $(CXXFLAGS) -c $(DEFINES) $(INCLUDES) $<
@@ -86,8 +87,9 @@ dist: clean
 
 clean:
 	@-rm -f $(PODIR)/*.mo $(PODIR)/*.pot
-	@-rm -f $(OBJS) $(DEPFILE) *.so *.tgz core* *~
+	@-rm -f $(OBJS) $(DEPFILE) *.so *.a *.tgz core* *~
 	@-make -C $(LIBFRITZ) clean
+	@-make -C test clean
 
 ### Internationalization (I18N):
 
@@ -114,8 +116,11 @@ $(I18Nmsgs): $(LOCALEDIR)/%/LC_MESSAGES/vdr-$(PLUGIN).mo: $(PODIR)/%.mo
 	@mkdir -p $(dir $@)
 	cp $< $@
 
-.PHONY: i18n
+.PHONY: i18n test $(LIBFRITZ)
 i18n: $(I18Nmsgs)
+
+test:
+	@-make -C test
 
 srcdoc:
 	@cp $(DOXYFILE) $(DOXYFILE).tmp
