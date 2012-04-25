@@ -67,7 +67,7 @@ OBJS = $(PLUGIN).o fritzeventhandler.o log.o menu.o notifyosd.o setup.o
 all: libvdr-$(PLUGIN).so i18n test $(LIBFRITZ)
 	@-cp --remove-destination libvdr-$(PLUGIN).so $(LIBDIR)/libvdr-$(PLUGIN).so.$(APIVERSION) 
 ## TODO: Prevent so file from beeing build every time
-libvdr-$(PLUGIN).so: $(OBJS) $(LIBFRITZ)/$(LIBFRITZ).a 
+libvdr-$(PLUGIN).so: $(OBJS) $(LIBFRITZ) 
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LIBS) -o $@
 	ar ru libvdr-$(PLUGIN).a $(OBJS)
 	
