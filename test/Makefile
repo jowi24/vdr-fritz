@@ -8,7 +8,7 @@ EXEC = fritzplugintest
 
 INCLUDES += -I$(VDRDIR)/include
 INCLUDES += -I.. -I../libfritz++ 
-LDFLAGS += -lpthread -lgcrypt -lccgnu2 -ljpeg $(shell pkg-config --libs freetype2 fontconfig)
+LDFLAGS += -lpthread -lgcrypt -lccgnu2 -ljpeg -lrt -ldl $(shell pkg-config --libs freetype2 fontconfig)
 
 all: $(EXEC)
 
@@ -29,4 +29,4 @@ $(VDR_LIB):
 	
 clean:
 	@-make -C gtest clean
-	@-rm $(OBJS) $(EXEC)
+	@-rm $(OBJS) $(EXEC) $(VDR_LIB) 
