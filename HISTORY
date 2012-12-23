@@ -652,7 +652,24 @@ VDR Plugin 'fritzbox' Revision History
 - Add option to mute only after connect
   (Requested by derdoc [53])
   
-
+2012-12-23: Version 1.5.1
+- New feature: Only decrease volume on call
+  Fixes #513 [VDR]
+- Fix a bug in cFritzEventHandler
+  Weired behaviour after calls when reactOnDirection is not DIRECTION_ANY
+  Reported by Kurt Wanner and Christian Holder
+- Update german translation
+- Improved privacy in syslog information (hide msns)
+- Support for new FB firmware versions xx.05.50
+- Changes in libfritz++
+  * Fix a possible deadlock in Tools::GetSipSettings()
+  * Move convertEntities from XmlFonbook up to Fonbook and improved it
+  * Fix resolve in TelLocalChFonbook  
+  * Fix resolve in OertlichesFonbook
+  * Implement new login scheme using login_sid.lua for FB firmware >= xx.05.50
+  * Adapt sip settings, location settings, call list and phone book requests
+    to new uris and format
+  * Hide msn in syslog if logPersonalInfo is disabled
 
 --- References ---
 
