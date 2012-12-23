@@ -1,7 +1,7 @@
 /*
  * Fritz!Box plugin for VDR
  *
- * Copyright (C) 2008 Joachim Wilke <vdr@joachim-wilke.de>
+ * Copyright (C) 2008-2012Joachim Wilke <vdr@joachim-wilke.de>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
