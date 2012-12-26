@@ -266,7 +266,7 @@ void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
 	}
 	mutex.Unlock();
 	// unmute, if applicable
-	if (!activeCallsPending && muted && cDevice::PrimaryDevice()->IsMute()) {
+	if (!activeCallsPending && muted) {
 		INF("Finished all calls, unmuting.");
 		DoUnmute();
 	}
@@ -297,7 +297,7 @@ void cFritzEventHandler::DoMute() {
 	if (fritzboxConfig.muteVolumeLevel < 100) {
 		volumeLevel = cDevice::PrimaryDevice()->CurrentVolume();
 		cDevice::PrimaryDevice()->SetVolume(volumeLevel * (100 - fritzboxConfig.muteVolumeLevel) / 100, true);
-	} else
+	} else if (!cDevice::PrimaryDevice()->IsMute())
 		cDevice::PrimaryDevice()->ToggleMute();
 	muted = true;
 }
@@ -305,7 +305,7 @@ void cFritzEventHandler::DoMute() {
 void cFritzEventHandler::DoUnmute() {
 	if (fritzboxConfig.muteVolumeLevel < 100) {
 		cDevice::PrimaryDevice()->SetVolume(volumeLevel, true);
-	} else
+	} else if (cDevice::PrimaryDevice()->IsMute())
 		cDevice::PrimaryDevice()->ToggleMute();
 	muted = false;
 }
