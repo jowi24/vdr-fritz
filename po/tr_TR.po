@@ -59,6 +59,9 @@ msgstr "Telefon defteri mevcut deðil"
 msgid "Date"
 msgstr ""
 
+msgid "Decrease volume by [1..100%]"
+msgstr ""
+
 msgid "Default"
 msgstr ""
 
@@ -130,12 +133,11 @@ msgstr ""
 msgid "Mute on call"
 msgstr "Telefon gelince sesi kes"
 
-msgid "Name"
+msgid "Mute only after connect"
 msgstr ""
 
-#, fuzzy
-msgid "No number to add"
-msgstr "Numarasýz arama imkansýz"
+msgid "Name"
+msgstr ""
 
 msgid "No number to call"
 msgstr "Numarasýz arama imkansýz"
@@ -159,6 +161,9 @@ msgstr "analog"
 
 msgid "Password"
 msgstr "Þifre"
+
+msgid "Pause live tv"
+msgstr ""
 
 msgid "Pause on call"
 msgstr "Telefon gelince durakla"
@@ -289,6 +294,10 @@ msgstr "mechul"
 #, fuzzy
 #~ msgid "Fritz!Box Notification"
 #~ msgstr "Fritz!Box konuþma listesi"
+
+#, fuzzy
+#~ msgid "No number to add"
+#~ msgstr "Numarasýz arama imkansýz"
 
 #~ msgid "Please wait..."
 #~ msgstr "Lütfen bekleyin"

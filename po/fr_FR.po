@@ -58,6 +58,9 @@ msgstr "Carnet d'adresse n'est pas encore disponible"
 msgid "Date"
 msgstr "Date"
 
+msgid "Decrease volume by [1..100%]"
+msgstr ""
+
 msgid "Default"
 msgstr ""
 
@@ -130,12 +133,11 @@ msgstr "Plus"
 msgid "Mute on call"
 msgstr "Muet lors d'un appel"
 
-msgid "Name"
+msgid "Mute only after connect"
 msgstr ""
 
-#, fuzzy
-msgid "No number to add"
-msgstr "Aucun numéro à appeler"
+msgid "Name"
+msgstr ""
 
 msgid "No number to call"
 msgstr "Aucun numéro à appeler"
@@ -159,6 +161,9 @@ msgstr "analogue"
 
 msgid "Password"
 msgstr "Mot de passe"
+
+msgid "Pause live tv"
+msgstr ""
 
 msgid "Pause on call"
 msgstr "Pause pour appel"
@@ -289,6 +294,10 @@ msgstr "inconnu"
 #, fuzzy
 #~ msgid "Fritz!Box Notification"
 #~ msgstr "Liste d'appelle de la Fritz!Box"
+
+#, fuzzy
+#~ msgid "No number to add"
+#~ msgstr "Aucun numéro à appeler"
 
 #~ msgid "Please wait..."
 #~ msgstr "Attendez SVP..."
