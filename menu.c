@@ -122,7 +122,7 @@ void cMenuFritzbox::DisplayFonbuch() {
 			const fritz::FonbookEntry *fe = fonbook->RetrieveFonbookEntry(pos);
 			if (fe) {
 				bool firstEntry = true;
-				for (size_t numberPos = 0; numberPos < fritz::FonbookEntry::MAX_NUMBERS; numberPos++) {
+				for (size_t numberPos = 0; numberPos < fe->GetSize(); numberPos++) {
 					if (fe->GetNumber(numberPos).empty())
 						continue;
 					// build the menu entries
@@ -329,7 +329,7 @@ cMenuFonbuchDetail::cMenuFonbuchDetail(const fritz::FonbookEntry *fe)
 	} else {
 	  sText << tr("Name")          << "\t" << fe->GetName()      				   << "\n"
 	        << tr("Numbers")       << "\t\n";
-	  for (size_t pos = 0; pos < fritz::FonbookEntry::MAX_NUMBERS; pos++)
+	  for (size_t pos = 0; pos < fe->GetSize(); pos++)
 		  sText << cPluginFritzbox::FonbookEntryTypeToName(fe->GetType(pos), true) << "\t" << fe->GetNumber(pos) << "\n";
 	}
 	std::string text = sText.str();
