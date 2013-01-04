@@ -1,3 +1,4 @@
+VDRDIR=../../vdr
 PLUGIN_LIB = ../libvdr-fritzbox.a 
 FRITZ_LIB  = ../libfritz++/libfritz++.a
 VDR_LIB = vdr.a
@@ -25,7 +26,7 @@ $(PLUGIN_LIB):
 	make -C ..
 
 $(VDR_LIB):
-	ar ru $(VDR_LIB) $(wildcard ../../vdr/*.o) 
+	ar ru $(VDR_LIB) $(wildcard $(VDRDIR)/*.o) 
 	
 clean:
 	@-make -C gtest clean
