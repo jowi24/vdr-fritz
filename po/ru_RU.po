@@ -57,6 +57,9 @@ msgstr "Телефонный справочник пока не доступен
 msgid "Date"
 msgstr "Дата"
 
+msgid "Decrease volume by [1..100%]"
+msgstr ""
+
 msgid "Default"
 msgstr "По умолчанию"
 
@@ -126,12 +129,11 @@ msgstr "Больше"
 msgid "Mute on call"
 msgstr "Выключить звук при звонке"
 
+msgid "Mute only after connect"
+msgstr ""
+
 msgid "Name"
 msgstr "Имя"
-
-#, fuzzy
-msgid "No number to add"
-msgstr "Без номера звонок не возможен"
 
 msgid "No number to call"
 msgstr "Без номера звонок не возможен"
@@ -154,6 +156,9 @@ msgstr "аналог"
 
 msgid "Password"
 msgstr "Пароль"
+
+msgid "Pause live tv"
+msgstr ""
 
 msgid "Pause on call"
 msgstr "Активировать паузу при звонке"
@@ -270,3 +275,7 @@ msgstr "неизвестный"
 
 #~ msgid "Error fetching the call list"
 #~ msgstr "Ошибка при запросе списка звонков"
+
+#, fuzzy
+#~ msgid "No number to add"
+#~ msgstr "Без номера звонок не возможен"
