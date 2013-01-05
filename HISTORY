@@ -670,12 +670,33 @@ VDR Plugin 'fritzbox' Revision History
   * Adapt sip settings, location settings, call list and phone book requests
     to new uris and format
   * Hide msn in syslog if logPersonalInfo is disabled
-
+  
+2013-01-05: Version 1.5.2
+- Changes in libfritz++
+  * Fixes login problems with old fw-versions that return 404 on login_sid.lua
+    Fixes #312204 [KDE], reported by sofasurfer [54]
+    Fixes #1203 [VDR], reported by wolfi
+  * Fix encoding conversion when requesting call list
+  * Fix MSN filter to only match if filter is equal number of postfix of number
+  * Fix resolving test in tel.local.ch phonebook
+- Add support for FB phonebooks with >3 numbers per entry, fixes a sigsev 
+  on startup using such phonebooks
+  Fixes #1202, reported by Stefan [56], fix provided by Igel 
+- Fix decreasing/increasing volume on ring/call
+  Fixes #1188 [VDR], reported by SvenS [45]
+- Update Makefile to work with VDR >= 1.7.34
+  For older VDR versions, use the old Makefile, available as Makefile.pre.1.7.34
+  in the plugin directory
+- Show call information during complete ringing phase
+  Fixes #1189 [VDR], reported by speed [55]
+  
+  
 --- References ---
 
 Bugtracker:
   
 [VDR] -> http://projects.vdr-developer.org/issues/
+[KDE] -> https://bugs.kde.org/show_bug.cgi?id=XXXXXX
 
 Contributors:
 
@@ -736,7 +757,7 @@ Contributors:
 [43] Kurt Wanner <kurt@wanner.me>
 [44] Achim Bohnet <allee@kubuntu.org>
 [45] SvenS
-     http://vdr-portal.de/board/profile.php?userid=404
+     http://www.vdr-portal.de/user/404-svens/
 [46] Hartmut
      http://vdr-portal.de/board/profile.php?userid=15636
 [47] http://vdr-portal.de/board/profile.php?userid=2579
@@ -750,3 +771,7 @@ Contributors:
 [52] Christian Holder <chris@hchris.selfip.com>
 [53] derdoc
      http://www.vdr-portal.de/user/28286-derdoc/
+[54] sofasurfer@gmail.com
+[55] speed
+     http://www.vdr-portal.de/user/10911-speed
+[56] Stephan <sg@conectas.net>
