@@ -60,7 +60,8 @@ std::vector<int> cFritzEventHandler::GetPendingCallIds() {
 	std::vector<int> ids;
 	mutex.Lock();
 	for (std::map<int, sConnection>::iterator it = connections.begin(); it != connections.end(); it++) {
-		if (static_cast<sConnection>((*it).second).displayed == false) {
+		if ((static_cast<sConnection>((*it).second).displayed == false) ||
+			(static_cast<sConnection>((*it).second).state == sConnection::RINGING )) {
 			ids.push_back((*it).first);
 		}
 	}
