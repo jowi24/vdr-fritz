@@ -21,8 +21,8 @@
 
 #include <iostream>
 
-#ifndef LOG_H_
-#define LOG_H_
+#ifndef LOGSTREAM_H_
+#define LOGSTREAM_H_
 
 class LogBuf : public std::streambuf { //TODO: inherit from stringbuf?
 public:

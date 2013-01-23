@@ -21,7 +21,8 @@ TMPDIR = /tmp
 
 ### The compiler options:
 export CFLAGS   = $(call PKGCFG,cflags)
-export CXXFLAGS = $(call PKGCFG,cxxflags)
+export CXXFLAGS = $(call PKGCFG,cxxflags) -std=c++11
+export LDFLAGS += -lgcrypt -lboost_system -lboost_thread -lpthread
 
 ### The version number of VDR's plugin API (taken from VDR's "config.h"):
 
@@ -36,6 +37,8 @@ PACKAGE = vdr-$(ARCHIVE)
 
 ### The name of the shared object file:
 SOFILE = libvdr-$(PLUGIN).so
+### The name of the static object file:
+AFILE = libvdr-$(PLUGIN).a
 
 ### Includes and Defines (add further entries here):
 
@@ -44,7 +47,7 @@ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 ### libfritz++
 LIBFRITZ = libfritz++
 INCLUDES += -I$(LIBFRITZ)
-LIBS += $(LIBFRITZ)/$(LIBFRITZ).a -lgcrypt -lccgnu2
+STATIC_LIBS = $(LIBFRITZ)/$(LIBFRITZ).a
 
 ### The object files (add further files here):
 
@@ -59,10 +62,12 @@ I18Nmsgs  = $(addprefix $(LOCDIR)/, $(addsuffix /LC_MESSAGES/vdr-$(PLUGIN).mo, $
 I18Npot   = $(PODIR)/$(PLUGIN).pot
 
 ### Targets:
-all: $(SOFILE) i18n test $(LIBFRITZ)
+all: $(SOFILE) $(AFILE) i18n test $(LIBFRITZ)
 
-libvdr-$(PLUGIN).so: $(OBJS) $(LIBFRITZ) 
-	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LIBS) -o $@
+$(SOFILE): $(OBJS) $(LIBFRITZ) 
+	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LDFLAGS) $(STATIC_LIBS) -o $@
+	
+$(AFILE): $(OBJS) 
 	ar ru libvdr-$(PLUGIN).a $(OBJS)
 
 install-lib: $(SOFILE)
@@ -111,7 +116,7 @@ i18n: $(I18Nmo) $(I18Npot)
 install-i18n: $(I18Nmsgs)
 
 test:
-	@-make -C test
+	test -d test && make -C test || true
 
 srcdoc:
 	@cp $(DOXYFILE) $(DOXYFILE).tmp
@@ -126,6 +131,6 @@ srcdoc:
 MAKEDEP = $(CXX) -MM -MG
 DEPFILE = .dependencies
 $(DEPFILE): Makefile
-	@$(MAKEDEP) $(DEFINES) $(INCLUDES) $(OBJS:%.o=%.c) > $@
+	@$(MAKEDEP) $(DEFINES) $(INCLUDES) $(OBJS:%.o=%.c) $(CXXFLAGS) > $@
 
 -include $(DEPFILE)

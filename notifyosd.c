@@ -21,6 +21,7 @@
 
 #include <vdr/osd.h>
 #include <vdr/status.h>
+#include <Log.h>
 #include "notifyosd.h"
 #include "setup.h"
 
