@@ -23,6 +23,7 @@
 #include <vector>
 #include <vdr/menu.h>
 #include <vdr/status.h>
+#include <Log.h>
 #include "FonbookManager.h"
 #include "FritzClient.h"
 #include "menu.h"

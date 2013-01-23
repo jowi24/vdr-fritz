@@ -25,6 +25,7 @@
 #include <CallList.h>
 #include <Listener.h>
 #include <Config.h>
+#include <Log.h>
 #include <vdr/menuitems.h>
 
 #if VDRVERSNUM < 10509
@@ -35,11 +36,6 @@ sFritzboxConfig fritzboxConfig;
 
 // possible characters for Fritz!Box password, according to web interface
 const char *PasswordChars = "abcdefghijklmnopqrstuvwxyz0123456789 !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-
-// set logging objects
-std::ostream *dlog = &std::clog;
-std::ostream *ilog = &std::cout;
-std::ostream *elog = &std::cerr;
 
 std::string cMenuSetupFritzbox::StoreMsn(){
 	std::vector<std::string>::iterator it;

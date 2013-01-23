@@ -9,12 +9,12 @@ EXEC = fritzplugintest
 
 INCLUDES += -I$(VDRDIR)/include
 INCLUDES += -I.. -I../libfritz++ 
-LDFLAGS += -lpthread -lgcrypt -lccgnu2 -ljpeg -lrt -ldl $(shell pkg-config --libs freetype2 fontconfig)
+LDFLAGS += -ljpeg -lrt -ldl $(shell pkg-config --libs freetype2 fontconfig) $(GTEST_LIB) $(PLUGIN_LIB) $(FRITZ_LIB) $(VDR_LIB) $(SI_LIB) 
 
 all: $(EXEC)
 
 $(EXEC): $(OBJS) $(PLUGIN_LIB) $(GTEST_LIB) $(VDR_LIB) 
-	$(CXX) $(CXXFLAGS) -o $(EXEC) $(OBJS) $(GTEST_LIB) $(PLUGIN_LIB) $(FRITZ_LIB) $(VDR_LIB) $(SI_LIB) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
 
 %.o: %.c
 	$(CXX) $(CXXFLAGS) -o $@ -c $(DEFINES) $(INCLUDES) $<

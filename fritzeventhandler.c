@@ -26,6 +26,7 @@
 #include <vdr/thread.h>
 
 #include <Fonbook.h>
+#include <Log.h>
 #include "setup.h"
 #include "fritzeventhandler.h"
 #include "notifyosd.h"

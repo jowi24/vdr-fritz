@@ -26,8 +26,10 @@
 #include <FonbookManager.h>
 #include <Listener.h>
 #include <Config.h>
+#include <Log.h>
 #include "fritzbox.h"
 #include "setup.h"
+#include "log.h"
 #include "notifyosd.h"
 #include "menu.h"
 
@@ -107,11 +109,10 @@ bool cPluginFritzbox::Initialize(void)
 
 bool cPluginFritzbox::Start(void)
 {
-	// first enable logging to syslog
-	dlog = new cLogStream(LogBuf::DEBUG);
-	elog = new cLogStream(LogBuf::ERROR);
-	ilog = new cLogStream(LogBuf::INFO);
 	// use logging objects with libfritz++
+	std::ostream *dlog = new cLogStream(LogBuf::DEBUG);
+	std::ostream *ilog = new cLogStream(LogBuf::INFO);
+	std::ostream *elog = new cLogStream(LogBuf::ERROR);
 	fritz::Config::SetupLogging(dlog, ilog, elog);
 
 	event = new cFritzEventHandler(onCallCmd);
@@ -136,12 +137,12 @@ void cPluginFritzbox::Stop(void)
 	fritz::Config::Shutdown();
 	if (event)
 		delete event;
-	if (dlog)
-		delete dlog;
-	if (ilog)
-		delete ilog;
-	if (elog)
-		delete elog;
+//	if (dlog)
+//		delete dlog;
+//	if (ilog)
+//		delete ilog;
+//	if (elog)
+//		delete elog;
 }
 
 void cPluginFritzbox::Housekeeping(void)
