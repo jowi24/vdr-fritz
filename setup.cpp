@@ -21,12 +21,13 @@
 
 #include "setup.h"
 #include "menu.h"
-#include <FonbookManager.h>
-#include <CallList.h>
-#include <Listener.h>
-#include <Config.h>
-#include <Log.h>
+#include "libfritz++/FonbookManager.h"
+#include "libfritz++/CallList.h"
+#include "libfritz++/Listener.h"
+#include "libfritz++/Config.h"
+#include "liblog++/Log.h"
 #include <vdr/menuitems.h>
+#include <vdr/i18n.h>
 
 #if VDRVERSNUM < 10509
 #define trVDR(s) tr(s)
@@ -186,7 +187,7 @@ eOSState cMenuSetupFritzbox::ProcessKey(eKeys Key) {
 	if (state == osUnknown) {
 		switch (Key) {
 		case kRed:
-			fritz::FonbookManager::GetFonbook()->Reload();
+			fritz::FonbookManager::GetFonbook()->reload();
 			Skins.QueueMessage(mtInfo, tr("Retrieving phone book"));
 			state = osContinue;
 			break;
@@ -331,14 +332,14 @@ cMenuSetupFritzbox::~cMenuSetupFritzbox()
 cMenuSetupFritzboxFonbooks::cMenuSetupFritzboxFonbooks(std::vector<std::string> *selectedFonbookIDs)
 :cOsdMenu(tr("Setup phonebooks to use"), 4)
 {
-	fonbooks = fritz::FonbookManager::GetFonbookManager()->GetFonbooks();
+	fonbooks = fritz::FonbookManager::GetFonbookManager()->getFonbooks();
 	this->selectedFonbookIDs = selectedFonbookIDs;
 	// copy setup to temporary parameters
 	numberOfSelectedFonbooks = selectedFonbookIDs->size();
 	selectedFonbookPos = (int **)  malloc(fonbooks->size() * sizeof(int *));
 	fonbookTitles      = (char **) malloc(fonbooks->size() * sizeof(char *));
 	for (size_t i=0; i<fonbooks->size(); i++) {
-		int ret = asprintf(&fonbookTitles[i], "%s", tr((*fonbooks)[i]->GetTitle().c_str()));
+		int ret = asprintf(&fonbookTitles[i], "%s", tr((*fonbooks)[i]->getTitle().c_str()));
 		if (ret <= 0) {
 			ERR("Error allocating linebuffer for cOsdItem.");
 		}
@@ -377,7 +378,7 @@ void cMenuSetupFritzboxFonbooks::Setup(void) {
 		size_t pos = 0;
 		if (i < selectedFonbookIDs->size())
 			while (pos < fbCount &&
-					(*fonbooks)[pos]->GetTechId().compare((*selectedFonbookIDs)[i]) != 0)
+					(*fonbooks)[pos]->getTechId().compare((*selectedFonbookIDs)[i]) != 0)
 				pos++;
 		*(selectedFonbookPos[i]) = (int) pos;
 		Add(new cMenuEditStraItem(numberStr, selectedFonbookPos[i], fbCount, fonbookTitles));
@@ -411,7 +412,7 @@ eOSState cMenuSetupFritzboxFonbooks::ProcessKey(eKeys Key) {
 		case kOk:
 			selectedFonbookIDs->clear();
 			for (size_t i=0; i<numberOfSelectedFonbooks; i++) {
-				std::string s = (*fonbooks)[*selectedFonbookPos[i]]->GetTechId();
+				std::string s = (*fonbooks)[*selectedFonbookPos[i]]->getTechId();
 				selectedFonbookIDs->push_back(s);
 			}
 			state = osBack;

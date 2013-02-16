@@ -42,74 +42,74 @@ protected:
 TEST_F(FritzEventHandler, OneIncomingCallReactOnAny) {
 	fritzboxConfig.reactOnDirection = sFritzboxConfig::DIRECTION_ANY;
 
-	feh->HandleCall(false, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(false, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(1, feh->GetConnectionCount());
 	feh->NotificationDone(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleConnect(0);
+	feh->handleConnect(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleDisconnect(0, "0:01");
+	feh->handleDisconnect(0, "0:01");
 	ASSERT_EQ(0, feh->GetConnectionCount());
 }
 
 TEST_F(FritzEventHandler, OneIncomingCallReactOnIncoming) {
 	fritzboxConfig.reactOnDirection = sFritzboxConfig::DIRECTION_IN;
 
-	feh->HandleCall(false, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(false, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(1, feh->GetConnectionCount());
 	feh->NotificationDone(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleConnect(0);
+	feh->handleConnect(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleDisconnect(0, "0:01");
+	feh->handleDisconnect(0, "0:01");
 	ASSERT_EQ(0, feh->GetConnectionCount());
 }
 
 TEST_F(FritzEventHandler, OneIncomingCallReactOnOutgoing) {
 	fritzboxConfig.reactOnDirection = sFritzboxConfig::DIRECTION_OUT;
 
-	feh->HandleCall(false, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(false, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(0, feh->GetConnectionCount());
-	feh->HandleConnect(0);
+	feh->handleConnect(0);
 	ASSERT_EQ(0, feh->GetConnectionCount());
-	feh->HandleDisconnect(0, "0:01");
+	feh->handleDisconnect(0, "0:01");
 	ASSERT_EQ(0, feh->GetConnectionCount());
 }
 
 TEST_F(FritzEventHandler, OneOutgoingCallReactOnAny) {
 	fritzboxConfig.reactOnDirection = sFritzboxConfig::DIRECTION_ANY;
 
-	feh->HandleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(1, feh->GetConnectionCount());
 	feh->NotificationDone(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleConnect(0);
+	feh->handleConnect(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleDisconnect(0, "0:01");
+	feh->handleDisconnect(0, "0:01");
 	ASSERT_EQ(0, feh->GetConnectionCount());
 }
 
 TEST_F(FritzEventHandler, OneOutgoingCallReactOnOutgoing) {
 	fritzboxConfig.reactOnDirection = sFritzboxConfig::DIRECTION_OUT;
 
-	feh->HandleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(1, feh->GetConnectionCount());
 	feh->NotificationDone(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleConnect(0);
+	feh->handleConnect(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleDisconnect(0, "0:01");
+	feh->handleDisconnect(0, "0:01");
 	ASSERT_EQ(0, feh->GetConnectionCount());
 }
 
 TEST_F(FritzEventHandler, OneOutgoingCallReactOnIncoming) {
 	fritzboxConfig.reactOnDirection = sFritzboxConfig::DIRECTION_IN;
 
-	feh->HandleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(0, feh->GetConnectionCount());
-	feh->HandleConnect(0);
+	feh->handleConnect(0);
 	ASSERT_EQ(0, feh->GetConnectionCount());
-	feh->HandleDisconnect(0, "0:01");
+	feh->handleDisconnect(0, "0:01");
 	ASSERT_EQ(0, feh->GetConnectionCount());
 }
 
@@ -117,50 +117,50 @@ TEST_F(FritzEventHandler, OneOutgoingCallReactOnIncoming) {
 TEST_F(FritzEventHandler, MultipleCallsReactOnAny) {
 	fritzboxConfig.reactOnDirection = sFritzboxConfig::DIRECTION_ANY;
 
-	feh->HandleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleConnect(0);
+	feh->handleConnect(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleCall(false, 1, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(false, 1, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(2, feh->GetConnectionCount());
-	feh->HandleCall(true, 3, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(true, 3, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(3, feh->GetConnectionCount());
 	feh->NotificationDone(0);
 	ASSERT_EQ(3, feh->GetConnectionCount());
-	feh->HandleDisconnect(0, "0:01");
+	feh->handleDisconnect(0, "0:01");
 	ASSERT_EQ(2, feh->GetConnectionCount());
-	feh->HandleDisconnect(1, "0:01");
+	feh->handleDisconnect(1, "0:01");
 	ASSERT_EQ(2, feh->GetConnectionCount());
 	feh->NotificationDone(1);
 	ASSERT_EQ(1, feh->GetConnectionCount());
 	feh->NotificationDone(3);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleDisconnect(3, "0:01");
+	feh->handleDisconnect(3, "0:01");
 	ASSERT_EQ(0, feh->GetConnectionCount());
 }
 
 TEST_F(FritzEventHandler, MultipleCallsReactOnOutgoing) {
 	fritzboxConfig.reactOnDirection = sFritzboxConfig::DIRECTION_OUT;
 
-	feh->HandleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(true, 0, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleConnect(0);
+	feh->handleConnect(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleCall(false, 1, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(false, 1, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleCall(true, 3, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
+	feh->handleCall(true, 3, "4711", "", fritz::FonbookEntry::TYPE_HOME, "1", "SIP0", "2&2 Internetz");
 	ASSERT_EQ(2, feh->GetConnectionCount());
 	feh->NotificationDone(0);
 	ASSERT_EQ(2, feh->GetConnectionCount());
-	feh->HandleDisconnect(0, "0:01");
+	feh->handleDisconnect(0, "0:01");
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleDisconnect(1, "0:01");
+	feh->handleDisconnect(1, "0:01");
 	ASSERT_EQ(1, feh->GetConnectionCount());
 	feh->NotificationDone(3);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleConnect(0);
+	feh->handleConnect(0);
 	ASSERT_EQ(1, feh->GetConnectionCount());
-	feh->HandleDisconnect(3, "0:01");
+	feh->handleDisconnect(3, "0:01");
 	ASSERT_EQ(0, feh->GetConnectionCount());
 }
 

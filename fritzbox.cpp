@@ -23,13 +23,13 @@
 #include <unistd.h>
 #include <getopt.h>
 #include <vdr/remote.h>
-#include <FonbookManager.h>
-#include <Listener.h>
-#include <Config.h>
-#include <Log.h>
+#include <vdr/config.h>
+#include "libfritz++/FonbookManager.h"
+#include "libfritz++/Listener.h"
+#include "libfritz++/Config.h"
+#include "liblog++/Log.h"
 #include "fritzbox.h"
 #include "setup.h"
-#include "log.h"
 #include "notifyosd.h"
 #include "menu.h"
 
@@ -46,6 +46,13 @@ cPluginFritzbox::cPluginFritzbox(void)
 	event = NULL;
 	logPersonalInfo = false;
 	migratePassword = false;
+
+	logger::Log::setPrefix("vdr-fritz");
+	logger::Log::setCustomLogger(
+		[](const std::string &message) { esyslog(message.c_str()); },
+		[](const std::string &message) { isyslog(message.c_str()); },
+		[](const std::string &message) { dsyslog(message.c_str()); }
+	);
 }
 
 cPluginFritzbox::~cPluginFritzbox()
@@ -109,12 +116,6 @@ bool cPluginFritzbox::Initialize(void)
 
 bool cPluginFritzbox::Start(void)
 {
-	// use logging objects with libfritz++
-	std::ostream *dlog = new cLogStream(LogBuf::DEBUG);
-	std::ostream *ilog = new cLogStream(LogBuf::INFO);
-	std::ostream *elog = new cLogStream(LogBuf::ERROR);
-	fritz::Config::SetupLogging(dlog, ilog, elog);
-
 	event = new cFritzEventHandler(onCallCmd);
 	// start new thread for plugin initialization (may take some time)
 	cThread::Start();
@@ -180,10 +181,10 @@ const char *cPluginFritzbox::MainMenuEntry(void)
 {
 	std::ostringstream ssMainMenuEntry;
 	ssMainMenuEntry << tr(MAINMENUENTRY);
-	fritz::CallList *callList = fritz::CallList::getCallList(false);
-	if (callList && callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) > 0) {
-		std::string buffer = (callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) > 1) ? tr("missed calls") : tr("missed call");
-		ssMainMenuEntry << " (" << callList->MissedCalls(fritzboxConfig.lastKnownMissedCall) << " " << buffer << ")";
+	fritz::CallList *callList = fritz::CallList::GetCallList(false);
+	if (callList && callList->missedCalls(fritzboxConfig.lastKnownMissedCall) > 0) {
+		std::string buffer = (callList->missedCalls(fritzboxConfig.lastKnownMissedCall) > 1) ? tr("missed calls") : tr("missed call");
+		ssMainMenuEntry << " (" << callList->missedCalls(fritzboxConfig.lastKnownMissedCall) << " " << buffer << ")";
 	}
 	mainMenuEntry = ssMainMenuEntry.str();
 	return fritzboxConfig.hideMainMenu ? NULL : mainMenuEntry.c_str();

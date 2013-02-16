@@ -26,7 +26,7 @@
 #include <map>
 #include <list>
 #include <vdr/thread.h>
-#include <Listener.h>
+#include "libfritz++/Listener.h"
 
 class cFritzEventHandler : public fritz::EventHandler {
 private:
@@ -60,9 +60,9 @@ public:
 	fritz::sCallInfo GetCallInfo(int connId);
 	void NotificationDone(int connId);
 	std::string ComposeCallMessage(int connId);
-	virtual void HandleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, fritz::FonbookEntry::eType remoteType, std::string localParty, std::string medium, std::string mediumName);
-	virtual void HandleConnect(int connId);
-	virtual void HandleDisconnect(int connId, std::string duration);
+	virtual void handleCall(bool outgoing, int connId, std::string remoteNumber, std::string remoteName, fritz::FonbookEntry::eType remoteType, std::string localParty, std::string medium, std::string mediumName) override;
+	virtual void handleConnect(int connId) override;
+	virtual void handleDisconnect(int connId, std::string duration) override;
 };
 
 #endif /* FRITZEVENTHANDLER_H_ */

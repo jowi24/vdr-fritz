@@ -25,8 +25,8 @@
 #include <vdr/shutdown.h>
 #include <vdr/thread.h>
 
-#include <Fonbook.h>
-#include <Log.h>
+#include "libfritz++/Fonbook.h"
+#include "liblog++/Log.h"
 #include "setup.h"
 #include "fritzeventhandler.h"
 #include "notifyosd.h"
@@ -136,7 +136,7 @@ bool cFritzEventHandler::CareForCall(bool outgoing) {
 	return true;
 }
 
-void cFritzEventHandler::HandleCall(bool outgoing, int connId,
+void cFritzEventHandler::handleCall(bool outgoing, int connId,
 		std::string remoteNumber, std::string remoteName,
 		fritz::FonbookEntry::eType remoteType, std::string localParty,
 		std::string medium, std::string mediumName) {
@@ -215,7 +215,7 @@ void cFritzEventHandler::HandleCall(bool outgoing, int connId,
 			                             << medium << " \"" << mediumName << "\"");
 }
 
-void cFritzEventHandler::HandleConnect(int connId) {
+void cFritzEventHandler::handleConnect(int connId) {
 	if (connections.find(connId) == connections.end())
 		return;
 	bool outgoing = connections[connId].callInfo->isOutgoing;
@@ -235,7 +235,7 @@ void cFritzEventHandler::HandleConnect(int connId) {
 		Exec(std::stringstream().flush() << onCallCmd << " CONNECT " << connId);
 }
 
-void cFritzEventHandler::HandleDisconnect(int connId, std::string duration) {
+void cFritzEventHandler::handleDisconnect(int connId, std::string duration) {
 	if (connections.find(connId) == connections.end())
 		return;
 	bool outgoing = connections[connId].callInfo->isOutgoing;
