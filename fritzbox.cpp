@@ -47,7 +47,7 @@ cPluginFritzbox::cPluginFritzbox(void)
 	logPersonalInfo = false;
 	migratePassword = false;
 
-	logger::Log::setPrefix("vdr-fritz");
+	logger::Log::setPrefix("fritzbox");
 	logger::Log::setCustomLogger(
 		[](const std::string &message) { esyslog(message.c_str()); },
 		[](const std::string &message) { isyslog(message.c_str()); },
