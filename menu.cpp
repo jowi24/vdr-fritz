@@ -23,9 +23,9 @@
 #include <vector>
 #include <vdr/menu.h>
 #include <vdr/status.h>
-#include <Log.h>
-#include "FonbookManager.h"
-#include "FritzClient.h"
+#include "liblog++/Log.h"
+#include "libfritz++/FonbookManager.h"
+#include "libfritz++/FritzClient.h"
 #include "menu.h"
 #include "setup.h"
 
@@ -51,7 +51,7 @@ cMenuFritzbox::~cMenuFritzbox()
 
 eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 	fritz::Fonbook  *fonbook  = fritz::FonbookManager::GetFonbook();
-	fritz::CallList *callList = fritz::CallList::getCallList();
+	fritz::CallList *callList = fritz::CallList::GetCallList();
 
 	eOSState state = cOsdMenu::ProcessKey(Key);
 	fritz::CallEntry *ce = NULL;
@@ -62,23 +62,23 @@ eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 			switch (currentMode) {
 			case FONBUCH:
 				if (currentKeyItem && fonbook->isDisplayable() && fonbook->isInitialized())
-					state = AddSubMenu(new cMenuFonbuchDetail(fonbook->RetrieveFonbookEntry(currentKeyItem->key)));
+					state = AddSubMenu(new cMenuFonbuchDetail(fonbook->retrieveFonbookEntry(currentKeyItem->key)));
 				break;
 			case IN:
 				if (currentKeyItem)
-					ce = callList->RetrieveEntry(fritz::CallEntry::INCOMING, currentKeyItem->key);
+					ce = callList->retrieveEntry(fritz::CallEntry::INCOMING, currentKeyItem->key);
 				if (ce)
 					state = AddSubMenu(new cMenuCallDetail(ce, currentMode, fonbook));
 				break;
 			case OUT:
 				if (currentKeyItem)
-					ce = callList->RetrieveEntry(fritz::CallEntry::OUTGOING, currentKeyItem->key);
+					ce = callList->retrieveEntry(fritz::CallEntry::OUTGOING, currentKeyItem->key);
 				if (ce)
 					state = AddSubMenu(new cMenuCallDetail(ce, currentMode, fonbook));
 				break;
 			case MISSED:
 				if (currentKeyItem)
-					ce = callList->RetrieveEntry(fritz::CallEntry::MISSED, currentKeyItem->key);
+					ce = callList->retrieveEntry(fritz::CallEntry::MISSED, currentKeyItem->key);
 				if (ce)
 					state = AddSubMenu(new cMenuCallDetail(ce, currentMode, fonbook));
 				break;
@@ -86,7 +86,7 @@ eOSState cMenuFritzbox::ProcessKey (eKeys Key) {
 			break;
 		case kRed:
 			if (currentMode == FONBUCH) {
-				fritz::FonbookManager::GetFonbookManager()->NextFonbook();
+				fritz::FonbookManager::GetFonbookManager()->nextFonbook();
 			}
 			DisplayFonbuch();
 			state = osContinue;
@@ -108,7 +108,7 @@ void cMenuFritzbox::DisplayFonbuch() {
 	unsigned int nameWidth = 0;
 	fritz::Fonbook  *fonbook  = fritz::FonbookManager::GetFonbook();
 	currentMode = FONBUCH;
-	SetTitle(tr(fonbook->GetTitle().c_str()));
+	SetTitle(tr(fonbook->getTitle().c_str()));
 	Clear();
 	if (fonbook->isInitialized() == false) {
 		Add(new cOsdItem(tr("This phonebook is not yet available."), osUnknown, false));
@@ -119,22 +119,22 @@ void cMenuFritzbox::DisplayFonbuch() {
 		Add(new cOsdItem(tr("This phonebook is not displayable"), osUnknown, false));
 	}
 	else {
-		for (size_t pos=0; pos < fonbook->GetFonbookSize(); pos++) {
-			const fritz::FonbookEntry *fe = fonbook->RetrieveFonbookEntry(pos);
+		for (size_t pos=0; pos < fonbook->getFonbookSize(); pos++) {
+			const fritz::FonbookEntry *fe = fonbook->retrieveFonbookEntry(pos);
 			if (fe) {
 				bool firstEntry = true;
-				for (size_t numberPos = 0; numberPos < fe->GetSize(); numberPos++) {
-					if (fe->GetNumber(numberPos).empty())
+				for (size_t numberPos = 0; numberPos < fe->getSize(); numberPos++) {
+					if (fe->getNumber(numberPos).empty())
 						continue;
 					// build the menu entries
 					char *line;
-					int ret = asprintf(&line,"%s\t%s\t%s", !firstEntry ? "" : fe->GetName().c_str(), cPluginFritzbox::FonbookEntryTypeToName(fe->GetType(numberPos)).c_str(), fe->GetNumber(numberPos).c_str());
+					int ret = asprintf(&line,"%s\t%s\t%s", !firstEntry ? "" : fe->getName().c_str(), cPluginFritzbox::FonbookEntryTypeToName(fe->getType(numberPos)).c_str(), fe->getNumber(numberPos).c_str());
 					if (ret <= 0) {
 						ERR("Error allocating line buffer for cOsdItem.");
 						continue;
 					}
-					if (fe->GetName().length() > nameWidth)
-						nameWidth = fe->GetName().length();
+					if (fe->getName().length() > nameWidth)
+						nameWidth = fe->getName().length();
 					Add(new cKeyOsdItem(line, osUnknown, true, pos));
 					firstEntry = false;
 				}
@@ -149,7 +149,7 @@ void cMenuFritzbox::DisplayFonbuch() {
 void cMenuFritzbox::DisplayCalls(fritz::CallEntry::eCallType ct) {
 	currentMode = (mode) ct;
 	std::string title=tr("Fritz!Box call list");
-	fritz::CallList *callList = fritz::CallList::getCallList();
+	fritz::CallList *callList = fritz::CallList::GetCallList();
 	Clear();
 	title += " (";
 	switch(ct) {
@@ -158,8 +158,8 @@ void cMenuFritzbox::DisplayCalls(fritz::CallEntry::eCallType ct) {
 		break;
 	case fritz::CallEntry::MISSED:
 		title += tr("missed");
-		if (fritzboxConfig.lastKnownMissedCall != callList->LastMissedCall()) {
-			fritzboxConfig.lastKnownMissedCall = callList->LastMissedCall();
+		if (fritzboxConfig.lastKnownMissedCall != callList->getLastMissedCall()) {
+			fritzboxConfig.lastKnownMissedCall = callList->getLastMissedCall();
 			// save this change as soon as possible, that it is not lost if VDR crashes later on
 			plugin->SetupStore("LastKnownMissedCall", fritzboxConfig.lastKnownMissedCall);
 			Setup.Save();
@@ -176,11 +176,11 @@ void cMenuFritzbox::DisplayCalls(fritz::CallEntry::eCallType ct) {
 	unsigned int destWidth = 0;
 	std::string oldDate;
 	if (callList->isValid()) {
-		for (unsigned int pos=0; pos < callList->GetSize(ct); pos++) {
-			fritz::CallEntry *ce = callList->RetrieveEntry(ct, pos);
+		for (unsigned int pos=0; pos < callList->getSize(ct); pos++) {
+			fritz::CallEntry *ce = callList->retrieveEntry(ct, pos);
 			// build the menu entries
 
-			if ( !ce->MatchesFilter())
+			if ( !ce->matchesFilter())
 				continue;
 
 			// show remote name, remote number or "unknown"
@@ -233,7 +233,7 @@ cMenuCallDetail::cMenuCallDetail(fritz::CallEntry *ce, cMenuFritzbox::mode mode,
 	this->ce = ce;
 
 	if (ce->remoteNumber.size() > 0 && ce->remoteName.compare(ce->remoteNumber) == 0) {
-		fritz::Fonbook::sResolveResult rr = fonbook->ResolveToName(ce->remoteNumber);
+		fritz::Fonbook::sResolveResult rr = fonbook->resolveToName(ce->remoteNumber);
 		ce->remoteName = rr.name;
 		if (cPluginFritzbox::FonbookEntryTypeToName(rr.type).size() > 0) {
 			ce->remoteName += " ";
@@ -283,7 +283,7 @@ eOSState cMenuCallDetail::ProcessKey (eKeys Key) {
 				Skins.Message(mtError, tr("No number to call"));
 			} else {
 				fritz::FritzClient fc;
-				if (fc.InitCall(ce->remoteNumber))
+				if (fc.initCall(ce->remoteNumber))
 					Skins.Message(mtInfo, tr("Pick up your phone now"));
 				else
 					Skins.Message(mtError, tr("Error while initiating call"));
@@ -323,15 +323,15 @@ cMenuFonbuchDetail::cMenuFonbuchDetail(const fritz::FonbookEntry *fe)
 	std::ostringstream sText;
 	// if a number of TYPE_NONE is given, a simple version of the details screen is shown
 	// this type is set, e.g., with old Fritz!Boxes
-	if (fe->GetType(0) == fritz::FonbookEntry::TYPE_NONE) {
-	  sText << tr("Name")          << "\t" << fe->GetName()      				   << "\n"
+	if (fe->getType(0) == fritz::FonbookEntry::TYPE_NONE) {
+	  sText << tr("Name")          << "\t" << fe->getName()      				   << "\n"
 	        << tr("Numbers")       << "\t\n"
-		    << tr("Default")       << "\t" << fe->GetNumber(0) << "\n";
+		    << tr("Default")       << "\t" << fe->getNumber(0) << "\n";
 	} else {
-	  sText << tr("Name")          << "\t" << fe->GetName()      				   << "\n"
+	  sText << tr("Name")          << "\t" << fe->getName()      				   << "\n"
 	        << tr("Numbers")       << "\t\n";
-	  for (size_t pos = 0; pos < fe->GetSize(); pos++)
-		  sText << cPluginFritzbox::FonbookEntryTypeToName(fe->GetType(pos), true) << "\t" << fe->GetNumber(pos) << "\n";
+	  for (size_t pos = 0; pos < fe->getSize(); pos++)
+		  sText << cPluginFritzbox::FonbookEntryTypeToName(fe->getType(pos), true) << "\t" << fe->getNumber(pos) << "\n";
 	}
 	std::string text = sText.str();
 	std::string::size_type pos = 0;
@@ -359,18 +359,18 @@ eOSState cMenuFonbuchDetail::ProcessKey (eKeys Key) {
 		switch (Key) {
 		case kRed:
 			// determine which number to call
-			if (fe->GetType(0) == fritz::FonbookEntry::TYPE_NONE){
-				numberToCall = fe->GetNumber(0);
+			if (fe->getType(0) == fritz::FonbookEntry::TYPE_NONE){
+				numberToCall = fe->getNumber(0);
 			}
 			else {
-				numberToCall = fe->GetNumber(Current() - 2);
+				numberToCall = fe->getNumber(Current() - 2);
 			}
 			// initiate a call
 			if (numberToCall.empty()) {
 				Skins.Message(mtError, tr("No number to call"));
 			} else {
 				fritz::FritzClient fc;
-				if (fc.InitCall(numberToCall))
+				if (fc.initCall(numberToCall))
 					Skins.Message(mtInfo, tr("Pick up your phone now"));
 				else
 					Skins.Message(mtError, tr("Error while initiating call"));

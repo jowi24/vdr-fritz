@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
-"Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
+"Report-Msgid-Bugs-To: <see README>\n"
+"POT-Creation-Date: 2013-02-16 13:11+0100\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Oktay Yolgeçen <oktay_73@yahoo.de>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -15,28 +16,124 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-9\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Fritz Plugin for AVM Fritz!Box"
+msgstr ""
+
 #, fuzzy
-msgid "> PB"
-msgstr "TD"
+msgid "Fritz!Box"
+msgstr "Fritz!Box URL"
+
+#, fuzzy
+msgid "missed calls"
+msgstr "kaçýrýlan"
+
+#, fuzzy
+msgid "missed call"
+msgstr "kaçýrýlan"
+
+#, fuzzy
+msgid "Data not yet available."
+msgstr "Telefon defteri mevcut deðil"
+
+msgid "Private"
+msgstr ""
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
+msgid "H"
+msgstr ""
+
+msgid "Mobile"
+msgstr ""
+
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
+msgid "M"
+msgstr ""
 
 msgid "Business"
 msgstr ""
 
-#. TRANSLATORS: these are labels for color keys in the CallDetails menu
-#. TRANSLATORS: this is the label for the button to initiate a call
-#, fuzzy
-msgid "Button$Call"
-msgstr "Telefon gelince sesi kes"
+#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
+msgid "W"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Calling %s [%s]"
+msgstr "Arayan numara"
 
 #, fuzzy
 msgid "Call"
 msgstr "Arayan numara"
 
+msgid "Call from"
+msgstr "Arayan numara"
+
+msgid "POTS"
+msgstr "analog"
+
+msgid "ISDN"
+msgstr "ISDN"
+
+msgid "VoIP"
+msgstr "VoIP"
+
+#, fuzzy
+msgid "This phonebook is not yet available."
+msgstr "Telefon defteri mevcut deðil"
+
+msgid "You may need to wait some minutes,"
+msgstr ""
+
+msgid "otherwise there may be a network problem."
+msgstr ""
+
+#, fuzzy
+msgid "This phonebook is not displayable"
+msgstr "Telefon defteri mevcut deðil"
+
+#, fuzzy
+msgid "> PB"
+msgstr "TD"
+
+msgid "Fritz!Box call list"
+msgstr "Fritz!Box konuþma listesi"
+
+msgid "incoming"
+msgstr "gelen"
+
+msgid "missed"
+msgstr "kaçýrýlan"
+
+msgid "outgoing"
+msgstr "giden"
+
+msgid "unknown"
+msgstr "mechul"
+
+#, fuzzy
+msgid "The call list is not yet available."
+msgstr "Telefon defteri mevcut deðil"
+
+#. TRANSLATORS: this is the short form of "phone book"
+msgid "PB"
+msgstr "TD"
+
 msgid "Call details"
 msgstr ""
 
-msgid "Call from"
-msgstr "Arayan numara"
+msgid "Date"
+msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Duration"
+msgstr ""
+
+msgid "call was not accepted"
+msgstr ""
+
+msgid "Extension"
+msgstr "MSN"
 
 msgid "Callee"
 msgstr ""
@@ -45,220 +142,42 @@ msgstr ""
 msgid "Caller"
 msgstr "Arayan numara"
 
-#, fuzzy, c-format
-msgid "Calling %s [%s]"
-msgstr "Arayan numara"
-
-msgid "Country code"
-msgstr ""
-
+#. TRANSLATORS: these are labels for color keys in the CallDetails menu
+#. TRANSLATORS: this is the label for the button to initiate a call
 #, fuzzy
-msgid "Data not yet available."
-msgstr "Telefon defteri mevcut deðil"
+msgid "Button$Call"
+msgstr "Telefon gelince sesi kes"
 
-msgid "Date"
-msgstr ""
+msgid "No number to call"
+msgstr "Numarasýz arama imkansýz"
 
-msgid "Decrease volume by [1..100%]"
-msgstr ""
-
-msgid "Default"
-msgstr ""
-
-msgid "Default menu"
-msgstr ""
-
-msgid "Detailed call lists"
-msgstr "Detaylý konuþma listesi"
-
-msgid "Duration"
-msgstr ""
+msgid "Pick up your phone now"
+msgstr "Telefonu þimdi kaldýrýn"
 
 msgid "Error while initiating call"
 msgstr "Baglantý hatasý"
 
-msgid "Extension"
-msgstr "MSN"
-
-msgid "Fritz Plugin for AVM Fritz!Box"
-msgstr ""
-
-#, fuzzy
-msgid "Fritz!Box"
-msgstr "Fritz!Box URL"
-
-msgid "Fritz!Box URL"
-msgstr "Fritz!Box URL"
-
-msgid "Fritz!Box call list"
-msgstr "Fritz!Box konuþma listesi"
-
-msgid "Fritz!Box phone book"
-msgstr "Fritz!Box telefon defteri"
-
-msgid "Group call lists by date"
-msgstr ""
-
-#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
-msgid "H"
-msgstr ""
-
-msgid "Hide main menu entry"
-msgstr "Ana menüde sakla"
-
-msgid "ISDN"
-msgstr "ISDN"
-
-#, fuzzy
-msgid "Incoming call"
-msgstr "Gelen aramalarý göster"
-
-msgid "Less"
-msgstr ""
-
-#, fuzzy
-msgid "Local phone book"
-msgstr "Fritz!Box telefon defteri"
-
-#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
-msgid "M"
-msgstr ""
-
-msgid "Mobile"
-msgstr ""
-
-msgid "More"
-msgstr ""
-
-msgid "Mute on call"
-msgstr "Telefon gelince sesi kes"
-
-msgid "Mute only after connect"
+msgid "Phone book details"
 msgstr ""
 
 msgid "Name"
 msgstr ""
 
-msgid "No number to call"
-msgstr "Numarasýz arama imkansýz"
-
-msgid "Number of monitored extensions"
-msgstr "Gözlenen MSN'lerinin sayýsý"
-
 msgid "Numbers"
+msgstr ""
+
+msgid "Default"
 msgstr ""
 
 #, fuzzy
 msgid "Outgoing call"
 msgstr "Telefon gelince sesi kes"
 
-#. TRANSLATORS: this is the short form of "phone book"
-msgid "PB"
-msgstr "TD"
-
-msgid "POTS"
-msgstr "analog"
-
-msgid "Password"
-msgstr "Þifre"
-
-msgid "Pause live tv"
-msgstr ""
-
-msgid "Pause on call"
-msgstr "Telefon gelince durakla"
-
-msgid "Phone book details"
-msgstr ""
-
-msgid "Pick up your phone now"
-msgstr "Telefonu þimdi kaldýrýn"
-
-msgid "Private"
-msgstr ""
-
 #, fuzzy
-msgid "React on calls"
-msgstr "Telefon gelince sesi kes"
-
-msgid "Region code"
-msgstr ""
-
-msgid "Reload"
-msgstr "Tekrar yükle"
-
-msgid "Restrict monitor to certain extensions"
-msgstr "Gözlenen MSN'leri sýnýrla"
-
-msgid "Resume after call"
-msgstr ""
-
-msgid "Retrieving phone book"
-msgstr "Telefon defteri yükleniyor"
-
-msgid "Setup phonebooks to use"
-msgstr ""
-
-msgid "Setup phonebooks to use..."
-msgstr ""
-
-#, fuzzy
-msgid "Show calls"
+msgid "Incoming call"
 msgstr "Gelen aramalarý göster"
 
-#, fuzzy
-msgid "Show detailed call information"
-msgstr "Detaylý konuþma listesi"
-
-#, fuzzy
-msgid "The call list is not yet available."
-msgstr "Telefon defteri mevcut deðil"
-
-#, fuzzy
-msgid "This phonebook is not displayable"
-msgstr "Telefon defteri mevcut deðil"
-
-#, fuzzy
-msgid "This phonebook is not yet available."
-msgstr "Telefon defteri mevcut deðil"
-
-msgid "Time"
-msgstr ""
-
-msgid "VoIP"
-msgstr "VoIP"
-
-#. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
-msgid "W"
-msgstr ""
-
-msgid "You may need to wait some minutes,"
-msgstr ""
-
 msgid "any"
-msgstr ""
-
-msgid "call was not accepted"
-msgstr ""
-
-msgid "das-oertliche.de"
-msgstr ""
-
-msgid "incoming"
-msgstr "gelen"
-
-msgid "missed"
-msgstr "kaçýrýlan"
-
-#, fuzzy
-msgid "missed call"
-msgstr "kaçýrýlan"
-
-#, fuzzy
-msgid "missed calls"
-msgstr "kaçýrýlan"
-
-msgid "nummerzoeker.com"
 msgstr ""
 
 #, fuzzy
@@ -269,17 +188,90 @@ msgstr "gelen"
 msgid "only outgoing"
 msgstr "giden"
 
-msgid "otherwise there may be a network problem."
+msgid "Fritz!Box URL"
+msgstr "Fritz!Box URL"
+
+msgid "Password"
+msgstr "Þifre"
+
+msgid "Country code"
 msgstr ""
 
-msgid "outgoing"
-msgstr "giden"
-
-msgid "tel.local.ch"
+msgid "Region code"
 msgstr ""
 
-msgid "unknown"
-msgstr "mechul"
+#, fuzzy
+msgid "React on calls"
+msgstr "Telefon gelince sesi kes"
+
+msgid "Mute on call"
+msgstr "Telefon gelince sesi kes"
+
+msgid "Mute only after connect"
+msgstr ""
+
+msgid "Decrease volume by [1..100%]"
+msgstr ""
+
+msgid "Pause on call"
+msgstr "Telefon gelince durakla"
+
+msgid "Pause live tv"
+msgstr ""
+
+msgid "Resume after call"
+msgstr ""
+
+#, fuzzy
+msgid "Show calls"
+msgstr "Gelen aramalarý göster"
+
+#, fuzzy
+msgid "Show detailed call information"
+msgstr "Detaylý konuþma listesi"
+
+msgid "Detailed call lists"
+msgstr "Detaylý konuþma listesi"
+
+msgid "Group call lists by date"
+msgstr ""
+
+msgid "Hide main menu entry"
+msgstr "Ana menüde sakla"
+
+msgid "Default menu"
+msgstr ""
+
+msgid "Setup phonebooks to use..."
+msgstr ""
+
+msgid "Restrict monitor to certain extensions"
+msgstr "Gözlenen MSN'leri sýnýrla"
+
+msgid "Number of monitored extensions"
+msgstr "Gözlenen MSN'lerinin sayýsý"
+
+msgid "Reload"
+msgstr "Tekrar yükle"
+
+msgid "Retrieving phone book"
+msgstr "Telefon defteri yükleniyor"
+
+msgid "Setup phonebooks to use"
+msgstr ""
+
+msgid "More"
+msgstr ""
+
+msgid "Less"
+msgstr ""
+
+#~ msgid "Fritz!Box phone book"
+#~ msgstr "Fritz!Box telefon defteri"
+
+#, fuzzy
+#~ msgid "Local phone book"
+#~ msgstr "Fritz!Box telefon defteri"
 
 #, fuzzy
 #~ msgid "Button$To PB"

@@ -24,11 +24,10 @@
 
 #include <vdr/plugin.h>
 #include <sstream>
-#include <Fonbook.h>
-#include <Listener.h>
-#include <CallList.h>
+#include "libfritz++/Fonbook.h"
+#include "libfritz++/Listener.h"
+#include "libfritz++/CallList.h"
 #include "fritzeventhandler.h"
-#include "log.h"
 
 class cPluginFritzbox : public cPlugin, cThread {
 	friend class cMenuSetupFritzbox;

@@ -7,28 +7,34 @@
 # This name will be used in the '-P...' option of VDR to load the plugin.
 # By default the main source file also carries this name.
 
-PLUGIN = fritzbox
-	
+PLUGIN = $(notdir $(subst /vdr-,/,$(CURDIR)))
+
 ### The version number of this plugin (taken from the main source file):
 
-VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).c | awk '{ print $$6 }' | sed -e 's/[";]//g')
+VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).h | awk '{ print $$6 }' | sed -e 's/[";]//g')
+
+### The directory environment:
 
 # Use package data if installed...otherwise assume we're under the VDR source directory:
 PKGCFG = $(if $(VDRDIR),$(shell pkg-config --variable=$(1) $(VDRDIR)/vdr.pc),$(shell pkg-config --variable=$(1) vdr || pkg-config --variable=$(1) ../../../vdr.pc))
-LIBDIR = $(DESTDIR)$(call PKGCFG,libdir)
-LOCDIR = $(DESTDIR)$(call PKGCFG,locdir)
-TMPDIR = /tmp
+LIBDIR = $(call PKGCFG,libdir)
+LOCDIR = $(call PKGCFG,locdir)
+PLGCFG = $(call PKGCFG,plgcfg)
+#
+TMPDIR ?= /tmp
 
 ### The compiler options:
-export CFLAGS   = $(call PKGCFG,cflags)
-export CXXFLAGS = $(call PKGCFG,cxxflags) -std=c++11
-export LDFLAGS += -lgcrypt -lboost_system -lboost_thread -lpthread
 
-### The version number of VDR's plugin API (taken from VDR's "config.h"):
+export CFLAGS   = $(call PKGCFG,cflags)
+export CXXFLAGS = $(call PKGCFG,cxxflags)
+
+### The version number of VDR's plugin API:
 
 APIVERSION = $(call PKGCFG,apiversion)
-DOXYFILE = Doxyfile
-DOXYGEN  = doxygen
+
+### Allow user defined options to overwrite defaults:
+
+-include $(PLGCFG)
 
 ### The name of the distribution archive:
 
@@ -36,101 +42,110 @@ ARCHIVE = $(PLUGIN)-$(VERSION)
 PACKAGE = vdr-$(ARCHIVE)
 
 ### The name of the shared object file:
+
 SOFILE = libvdr-$(PLUGIN).so
-### The name of the static object file:
-AFILE = libvdr-$(PLUGIN).a
 
 ### Includes and Defines (add further entries here):
 
-DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
+INCLUDES +=
 
-### libfritz++
-LIBFRITZ = libfritz++
-INCLUDES += -I$(LIBFRITZ)
-STATIC_LIBS = $(LIBFRITZ)/$(LIBFRITZ).a
+DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 
 ### The object files (add further files here):
 
-OBJS = $(PLUGIN).o fritzeventhandler.o log.o menu.o notifyosd.o setup.o	
+OBJS = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+
+### Static libraries
+
+LIBS = libfritz++/libfritz++.a libnet++/libnet++.a liblog++/liblog++.a libconv++/libconv++.a
+
+STATIC_LIB_DIRS = $(dir $(LIBS))
+STATIC_LIBS     = $(LIBS:%=$(CURDIR)/%)
+CXXFLAGS       += -I$(CURDIR) -std=c++11
+LDFLAGS        += -lboost_system -lboost_thread -lpthread -lgcrypt
+export STATIC_LIBS CXXFLAGS LDFLAGS
+
+### Tests
+
+TEST_DIRS       = $(wildcard $(addsuffix test,$(dir $(LIBS)))) $(wildcard test)
 
 ### Internationalization (I18N):
 
 PODIR     = po
 I18Npo    = $(wildcard $(PODIR)/*.po)
 I18Nmo    = $(addsuffix .mo, $(foreach file, $(I18Npo), $(basename $(file))))
-I18Nmsgs  = $(addprefix $(LOCDIR)/, $(addsuffix /LC_MESSAGES/vdr-$(PLUGIN).mo, $(notdir $(foreach file, $(I18Npo), $(basename $(file))))))
+I18Nmsgs  = $(addprefix $(DESTDIR)$(LOCDIR)/, $(addsuffix /LC_MESSAGES/vdr-$(PLUGIN).mo, $(notdir $(foreach file, $(I18Npo), $(basename $(file))))))
 I18Npot   = $(PODIR)/$(PLUGIN).pot
 
-### Targets:
-all: $(SOFILE) $(AFILE) i18n test $(LIBFRITZ)
+### Phony targets
 
-$(SOFILE): $(OBJS) $(LIBFRITZ) 
-	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LDFLAGS) $(STATIC_LIBS) -o $@
-	
-$(AFILE): $(OBJS) 
-	ar ru libvdr-$(PLUGIN).a $(OBJS)
+.PHONY: all install i18n clean test $(STATIC_LIB_DIRS) $(TEST_DIRS)
+
+### Targets:
+
+all: $(SOFILE) i18n test
+
+$(SOFILE): $(OBJS) $(LIBS)
+	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LIBS) $(LDFLAGS) -o $@
+
+%.a: $(STATIC_LIB_DIRS)
+	@
+
+$(STATIC_LIB_DIRS): 
+	@$(MAKE) -C $@ $(@:/=).a
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $(DEFINES) $(INCLUDES) -o $@ $<
 
 install-lib: $(SOFILE)
-	install -D $^ $(LIBDIR)/$^.$(APIVERSION)
+	install -D $^ $(DESTDIR)$(LIBDIR)/$^.$(APIVERSION)
 
 install: install-lib install-i18n
 
-$(LIBFRITZ):
-	@$(MAKE) -C $(LIBFRITZ)
-	
-%.o: %.c
-	$(CXX) $(CXXFLAGS) -c $(DEFINES) $(INCLUDES) $<
+test: $(STATIC_LIB_DIRS) $(TEST_DIRS)
 
-dist: clean
+$(TEST_DIRS): 
+	@$(MAKE) -C $@
+
+dist: $(I18Npo) clean
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)
 	@mkdir $(TMPDIR)/$(ARCHIVE)
 	@cp -a * $(TMPDIR)/$(ARCHIVE)
-	@tar czf $(PACKAGE).tgz --exclude=.* --exclude=test --exclude=test.old --exclude=*.launch -C $(TMPDIR) $(ARCHIVE)
+	@tar czf $(PACKAGE).tgz -C $(TMPDIR) $(ARCHIVE)
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)
 	@echo Distribution package created as $(PACKAGE).tgz
 
 clean:
+	@$(foreach LIB,$(STATIC_LIB_DIRS),$(MAKE) -C $(LIB) clean;)
+	@$(foreach DIR,$(TEST_DIRS),$(MAKE) -C $(DIR) clean;)
 	@-rm -f $(PODIR)/*.mo $(PODIR)/*.pot
-	@-rm -f $(OBJS) $(DEPFILE) *.so *.a *.tgz core* *~
-	@-make -C $(LIBFRITZ) clean
-	@-make -C test clean
-	
+	@-rm -f $(OBJS) $(DEPFILE) *.so *.tgz core* *~
+
+### I18n targets
+
 %.mo: %.po
 	msgfmt -c -o $@ $<
 
-$(I18Npot): $(wildcard *.c) $(wildcard libfritz++/*.cpp)
-	xgettext -C -cTRANSLATORS --no-wrap -s --no-location -k -ktr -ktrNOOP -kI18N_NOOP \
-	         --package-name=vdr-$(PLUGIN) --package-version=$(VERSION) --msgid-bugs-address='<vdr@joachim-wilke.de>' -o $@ `ls $^`
-	grep -v POT-Creation $(I18Npot) > $(I18Npot)~
-	mv $(I18Npot)~ $(I18Npot)
+$(I18Npot): $(wildcard *.cpp)
+	mkdir -p $(PODIR)
+	xgettext -C -cTRANSLATORS --no-wrap --no-location -k -ktr -ktrNOOP --package-name=vdr-$(PLUGIN) --package-version=$(VERSION) --msgid-bugs-address='<see README>' -o $@ `ls $^`
 
 %.po: $(I18Npot)
 	msgmerge -U --no-wrap --no-location --backup=none -q -N $@ $<
 	@touch $@
 
-$(I18Nmsgs): $(LOCDIR)/%/LC_MESSAGES/vdr-$(PLUGIN).mo: $(PODIR)/%.mo
+$(I18Nmsgs): $(DESTDIR)$(LOCDIR)/%/LC_MESSAGES/vdr-$(PLUGIN).mo: $(PODIR)/%.mo
 	install -D -m644 $< $@
 
 i18n: $(I18Nmo) $(I18Npot)
 
 install-i18n: $(I18Nmsgs)
 
-test:
-	test -d test && make -C test || true
-
-srcdoc:
-	@cp $(DOXYFILE) $(DOXYFILE).tmp
-	@echo PROJECT_NUMBER = $(VERSION) >> $(DOXYFILE).tmp
-	$(DOXYGEN) $(DOXYFILE).tmp
-	@rm $(DOXYFILE).tmp
-
-.PHONY: i18n test $(LIBFRITZ)
-				
-# Dependencies:
+### Dependencies:
 
 MAKEDEP = $(CXX) -MM -MG
 DEPFILE = .dependencies
 $(DEPFILE): Makefile
-	@$(MAKEDEP) $(DEFINES) $(INCLUDES) $(OBJS:%.o=%.c) $(CXXFLAGS) > $@
+	@$(MAKEDEP) $(CXXFLAGS) $(DEFINES) $(INCLUDES) $(OBJS:%.o=%.cpp) > $@
 
 -include $(DEPFILE)

@@ -25,20 +25,12 @@
 #include <string>
 #include <vector>
 #include <vdr/menuitems.h>
-#include <Fonbooks.h>
+#include "libfritz++/Fonbooks.h"
 #include <iostream>
 #include "fritzeventhandler.h"
 #include "fritzbox.h"
 
-#include <Config.h> // import logging macros DBG, INF, ERR
-#undef NAMESPACE
-#define NAMESPACE "vdr-fritz"
-
 #define MAX_MSN_COUNT 22
-
-extern std::ostream *dlog;
-extern std::ostream *ilog;
-extern std::ostream *elog;
 
 class cMenuSetupFritzbox : public cMenuSetupPage
 {

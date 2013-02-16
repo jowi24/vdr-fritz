@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
-"Report-Msgid-Bugs-To: <vdr@joachim-wilke.de>\n"
-"POT-Creation-Date: \n"
+"Report-Msgid-Bugs-To: <see README>\n"
+"POT-Creation-Date: 2013-02-16 13:11+0100\n"
 "PO-Revision-Date: 2011-03-05 16:29+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -18,219 +18,78 @@ msgstr ""
 "X-Poedit-Country: ITALY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-msgid "> PB"
-msgstr "> RU"
-
-msgid "Business"
-msgstr "Affari"
-
-#. TRANSLATORS: these are labels for color keys in the CallDetails menu
-#. TRANSLATORS: this is the label for the button to initiate a call
-msgid "Button$Call"
-msgstr "Chiama"
-
-msgid "Call"
-msgstr "Chiama"
-
-msgid "Call details"
-msgstr "Dettagli chiamate"
-
-msgid "Call from"
-msgstr "Chiamata da"
-
-msgid "Callee"
-msgstr "Chiamato"
-
-msgid "Caller"
-msgstr "Chiamante"
-
-#, c-format
-msgid "Calling %s [%s]"
-msgstr "Chiamata %s [%s]"
-
-msgid "Country code"
-msgstr "Codice internazionale"
-
-msgid "Data not yet available."
-msgstr "Dati non ancora disponibili."
-
-msgid "Date"
-msgstr "Data"
-
-msgid "Decrease volume by [1..100%]"
-msgstr ""
-
-msgid "Default"
-msgstr "Predefinito"
-
-msgid "Default menu"
-msgstr "Menu predefinito"
-
-msgid "Detailed call lists"
-msgstr "Dettagli elenco chiamate"
-
-msgid "Duration"
-msgstr "Durata"
-
-msgid "Error while initiating call"
-msgstr "Errore avvio chiamata"
-
-msgid "Extension"
-msgstr "Estensione MSN"
-
 msgid "Fritz Plugin for AVM Fritz!Box"
 msgstr "Plugin Fritz per AVM Fritz!Box"
 
 msgid "Fritz!Box"
 msgstr "Fritz!Box"
 
-msgid "Fritz!Box URL"
-msgstr "Indirizzo Fritz!Box"
+msgid "missed calls"
+msgstr "chiamate perse"
 
-msgid "Fritz!Box call list"
-msgstr "Elenco chiamate Fritz!Box"
+msgid "missed call"
+msgstr "chiamata persa"
 
-msgid "Fritz!Box phone book"
-msgstr "Rubrica Fritz!Box"
+msgid "Data not yet available."
+msgstr "Dati non ancora disponibili."
 
-msgid "Group call lists by date"
-msgstr "Raggruppa chiamate per data"
+msgid "Private"
+msgstr "Privato"
 
 #. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "home"
 msgid "H"
 msgstr "C"
 
-msgid "Hide main menu entry"
-msgstr "Nascondi voce menu principale"
-
-msgid "ISDN"
-msgstr "ISDN"
-
-msgid "Incoming call"
-msgstr "Chiamata in arrivo"
-
-msgid "Less"
-msgstr "Elimina"
-
-msgid "Local phone book"
-msgstr "Rubrica locale"
+msgid "Mobile"
+msgstr "Cellulare"
 
 #. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "mobile"
 msgid "M"
 msgstr "T"
 
-msgid "Mobile"
-msgstr "Cellulare"
-
-msgid "More"
-msgstr "Aggiungi"
-
-msgid "Mute on call"
-msgstr "Metti in muto la chiamata"
-
-msgid "Mute only after connect"
-msgstr ""
-
-msgid "Name"
-msgstr "Nome"
-
-msgid "No number to call"
-msgstr "Nessun numero da chiamare"
-
-msgid "Number of monitored extensions"
-msgstr "Num. estens. MSN controllate"
-
-msgid "Numbers"
-msgstr "Numeri"
-
-msgid "Outgoing call"
-msgstr "Chiamata in uscita"
-
-#. TRANSLATORS: this is the short form of "phone book"
-msgid "PB"
-msgstr "RU"
-
-msgid "POTS"
-msgstr "analogico"
-
-msgid "Password"
-msgstr "Password"
-
-msgid "Pause live tv"
-msgstr ""
-
-msgid "Pause on call"
-msgstr "Metti in pausa la chiamata"
-
-msgid "Phone book details"
-msgstr "Dettagli rubrica"
-
-msgid "Pick up your phone now"
-msgstr "Prendi ora la telefonata"
-
-msgid "Private"
-msgstr "Privato"
-
-msgid "React on calls"
-msgstr "Azione alla chiamata"
-
-msgid "Region code"
-msgstr "Codice area"
-
-msgid "Reload"
-msgstr "Ricarica"
-
-msgid "Restrict monitor to certain extensions"
-msgstr "Restringi controllo estensioni MSN"
-
-msgid "Resume after call"
-msgstr "Riprendi dopo chiamata"
-
-msgid "Retrieving phone book"
-msgstr "Recupero rubrica"
-
-msgid "Setup phonebooks to use"
-msgstr "Imposta rubriche da utilizzare"
-
-msgid "Setup phonebooks to use..."
-msgstr "Imposta rubriche da utilizzare..."
-
-msgid "Show calls"
-msgstr "Mostra chiamate"
-
-msgid "Show detailed call information"
-msgstr "Mostra info dettagliate chiamata"
-
-msgid "The call list is not yet available."
-msgstr "Elenco chiamate non ancora disponibile."
-
-msgid "This phonebook is not displayable"
-msgstr "Questa rubrica non è disponibile"
-
-msgid "This phonebook is not yet available."
-msgstr "Questa rubrica non è ancora disponibile."
-
-msgid "Time"
-msgstr "Ora"
-
-msgid "VoIP"
-msgstr "VoIP"
+msgid "Business"
+msgstr "Affari"
 
 #. TRANSLATORS: telephonebook number type: this is a one char abbreviation for "work"
 msgid "W"
 msgstr "L"
 
+#, c-format
+msgid "Calling %s [%s]"
+msgstr "Chiamata %s [%s]"
+
+msgid "Call"
+msgstr "Chiama"
+
+msgid "Call from"
+msgstr "Chiamata da"
+
+msgid "POTS"
+msgstr "analogico"
+
+msgid "ISDN"
+msgstr "ISDN"
+
+msgid "VoIP"
+msgstr "VoIP"
+
+msgid "This phonebook is not yet available."
+msgstr "Questa rubrica non è ancora disponibile."
+
 msgid "You may need to wait some minutes,"
 msgstr "Potresti dover aspettare alcuni minuti,"
 
-msgid "any"
-msgstr "qualsiasi"
+msgid "otherwise there may be a network problem."
+msgstr "altrimenti ci potrebbe essere un problema di rete."
 
-msgid "call was not accepted"
-msgstr "chiamata non accettata"
+msgid "This phonebook is not displayable"
+msgstr "Questa rubrica non è disponibile"
 
-msgid "das-oertliche.de"
-msgstr "das-oertliche.de"
+msgid "> PB"
+msgstr "> RU"
+
+msgid "Fritz!Box call list"
+msgstr "Elenco chiamate Fritz!Box"
 
 msgid "incoming"
 msgstr "in arrivo"
@@ -238,14 +97,77 @@ msgstr "in arrivo"
 msgid "missed"
 msgstr "perse"
 
-msgid "missed call"
-msgstr "chiamata persa"
+msgid "outgoing"
+msgstr "in uscita"
 
-msgid "missed calls"
-msgstr "chiamate perse"
+msgid "unknown"
+msgstr "sconosciuta"
 
-msgid "nummerzoeker.com"
-msgstr "nummerzoeker.com"
+msgid "The call list is not yet available."
+msgstr "Elenco chiamate non ancora disponibile."
+
+#. TRANSLATORS: this is the short form of "phone book"
+msgid "PB"
+msgstr "RU"
+
+msgid "Call details"
+msgstr "Dettagli chiamate"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Time"
+msgstr "Ora"
+
+msgid "Duration"
+msgstr "Durata"
+
+msgid "call was not accepted"
+msgstr "chiamata non accettata"
+
+msgid "Extension"
+msgstr "Estensione MSN"
+
+msgid "Callee"
+msgstr "Chiamato"
+
+msgid "Caller"
+msgstr "Chiamante"
+
+#. TRANSLATORS: these are labels for color keys in the CallDetails menu
+#. TRANSLATORS: this is the label for the button to initiate a call
+msgid "Button$Call"
+msgstr "Chiama"
+
+msgid "No number to call"
+msgstr "Nessun numero da chiamare"
+
+msgid "Pick up your phone now"
+msgstr "Prendi ora la telefonata"
+
+msgid "Error while initiating call"
+msgstr "Errore avvio chiamata"
+
+msgid "Phone book details"
+msgstr "Dettagli rubrica"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Numbers"
+msgstr "Numeri"
+
+msgid "Default"
+msgstr "Predefinito"
+
+msgid "Outgoing call"
+msgstr "Chiamata in uscita"
+
+msgid "Incoming call"
+msgstr "Chiamata in arrivo"
+
+msgid "any"
+msgstr "qualsiasi"
 
 msgid "only incoming"
 msgstr "solo in arrivo"
@@ -253,17 +175,95 @@ msgstr "solo in arrivo"
 msgid "only outgoing"
 msgstr "solo in uscita"
 
-msgid "otherwise there may be a network problem."
-msgstr "altrimenti ci potrebbe essere un problema di rete."
+msgid "Fritz!Box URL"
+msgstr "Indirizzo Fritz!Box"
 
-msgid "outgoing"
-msgstr "in uscita"
+msgid "Password"
+msgstr "Password"
 
-msgid "tel.local.ch"
-msgstr "tel.local.ch"
+msgid "Country code"
+msgstr "Codice internazionale"
 
-msgid "unknown"
-msgstr "sconosciuta"
+msgid "Region code"
+msgstr "Codice area"
+
+msgid "React on calls"
+msgstr "Azione alla chiamata"
+
+msgid "Mute on call"
+msgstr "Metti in muto la chiamata"
+
+msgid "Mute only after connect"
+msgstr ""
+
+msgid "Decrease volume by [1..100%]"
+msgstr ""
+
+msgid "Pause on call"
+msgstr "Metti in pausa la chiamata"
+
+msgid "Pause live tv"
+msgstr ""
+
+msgid "Resume after call"
+msgstr "Riprendi dopo chiamata"
+
+msgid "Show calls"
+msgstr "Mostra chiamate"
+
+msgid "Show detailed call information"
+msgstr "Mostra info dettagliate chiamata"
+
+msgid "Detailed call lists"
+msgstr "Dettagli elenco chiamate"
+
+msgid "Group call lists by date"
+msgstr "Raggruppa chiamate per data"
+
+msgid "Hide main menu entry"
+msgstr "Nascondi voce menu principale"
+
+msgid "Default menu"
+msgstr "Menu predefinito"
+
+msgid "Setup phonebooks to use..."
+msgstr "Imposta rubriche da utilizzare..."
+
+msgid "Restrict monitor to certain extensions"
+msgstr "Restringi controllo estensioni MSN"
+
+msgid "Number of monitored extensions"
+msgstr "Num. estens. MSN controllate"
+
+msgid "Reload"
+msgstr "Ricarica"
+
+msgid "Retrieving phone book"
+msgstr "Recupero rubrica"
+
+msgid "Setup phonebooks to use"
+msgstr "Imposta rubriche da utilizzare"
+
+msgid "More"
+msgstr "Aggiungi"
+
+msgid "Less"
+msgstr "Elimina"
+
+#~ msgid "Fritz!Box phone book"
+#~ msgstr "Rubrica Fritz!Box"
+
+#~ msgid "Local phone book"
+#~ msgstr "Rubrica locale"
+
+#~ msgid "das-oertliche.de"
+#~ msgstr "das-oertliche.de"
+
+#~ msgid "nummerzoeker.com"
+#~ msgstr "nummerzoeker.com"
+
+#~ msgid "tel.local.ch"
+#~ msgstr "tel.local.ch"
 
 #~ msgid " "
 #~ msgstr " "
