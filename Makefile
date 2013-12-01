@@ -111,7 +111,10 @@ dist: $(I18Npo) clean
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)
 	@mkdir $(TMPDIR)/$(ARCHIVE)
 	@cp -a * $(TMPDIR)/$(ARCHIVE)
-	@tar czf $(PACKAGE).tgz -C $(TMPDIR) $(ARCHIVE)
+	@rm -rf $(TMPDIR)/$(ARCHIVE)/lib*/.git
+	@rm -rf $(TMPDIR)/$(ARCHIVE)/test
+	@rm -rf $(TMPDIR)/$(ARCHIVE)/lib*/test
+	@tar czf $(PACKAGE).tgz --exclude=.* --exclude=test --exclude=test.old --exclude=*.launch -C $(TMPDIR) $(ARCHIVE)
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)
 	@echo Distribution package created as $(PACKAGE).tgz
 
