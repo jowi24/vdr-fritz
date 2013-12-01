@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2013-02-16 13:11+0100\n"
+"POT-Creation-Date: 2013-12-01 20:07+0100\n"
 "PO-Revision-Date: 2007-08-12 21:40+0200\n"
 "Last-Translator: Matthias Becker <becker.matthias@gmail.com>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -175,6 +175,9 @@ msgstr "nur ausgehend"
 
 msgid "Fritz!Box URL"
 msgstr "Fritz!Box URL"
+
+msgid "Username"
+msgstr "Benutzername"
 
 msgid "Password"
 msgstr "Passwort"

@@ -106,6 +106,7 @@ void cMenuSetupFritzbox::Setup(void) {
 	}
 	// build up setup menu
 	Add(new cMenuEditStrItem (tr("Fritz!Box URL"),                  		url,           			MaxFileName, tr(FileNameChars)));
+	Add(new cMenuEditStrItem (tr("Username"),                  				username,           	MaxFileName, tr(FileNameChars)));
 	Add(new cMenuEditStrItem (tr("Password"),                       		password, 	   			MaxFileName, PasswordChars));
 	Add(new cMenuEditStrItem (tr("Country code"),                           countryCode,            5,           "0123456789"));
 	Add(new cMenuEditStrItem (tr("Region code"),                            regionCode,             10,          "0123456789"));
@@ -204,6 +205,7 @@ void cMenuSetupFritzbox::Store(void) {
 	fritz::Config::Shutdown(); // clean up before changing the configuration
 
 	fritzboxConfig.url            		= url;
+	fritzboxConfig.username        		= username;
 	int i = 0;
 	// only store the password if it was changed
 	while (password[i]) {
@@ -247,6 +249,7 @@ void cMenuSetupFritzbox::Store(void) {
 	((cThread *)fritzbox)->Start(); // re-read configuration, notify libfritz++ about changes
 
 	SetupStore("Url",          			url);
+	SetupStore("Username",    			username);
 	SetupStore("Password",     			""); // has been migrated to EncodedPassword
 	SetupStore("EncodedPassword",       fritzboxConfig.string2hex(fritzboxConfig.password).c_str());
 	SetupStore("ReactOnDirection",      reactOnDirection);
@@ -274,6 +277,7 @@ cMenuSetupFritzbox::cMenuSetupFritzbox(cPluginFritzbox *fritzbox)
 	// copy setup to temporary parameters
 	msn = (char **) malloc(MAX_MSN_COUNT * sizeof(char *));
 	url             	 = strdup(fritzboxConfig.url.c_str());
+	username          	 = strdup(fritzboxConfig.username.c_str());
 	password        	 = strdup(fritzboxConfig.password.c_str());
 	// the original password is not visible in the setup page
 	// every single character of the password is displayed as "*"
@@ -317,6 +321,7 @@ cMenuSetupFritzbox::~cMenuSetupFritzbox()
 {
 	// free up malloced space from constructor
 	free(url);
+	free(username);
 	free(password);
 	for (int i=0; i<msnCount; i++)
 		free(msn[i]);
@@ -363,7 +368,7 @@ cMenuSetupFritzboxFonbooks::~cMenuSetupFritzboxFonbooks()
 
 void cMenuSetupFritzboxFonbooks::Setup(void) {
 	size_t fbCount = fonbooks->size();
-	// save current postion
+	// save current position
 	int current = Current();
 	// clear entries, if any
 	Clear();
@@ -428,6 +433,7 @@ sFritzboxConfig::sFritzboxConfig() {
 	pluginName              = "";
 	lang                    = "";
 	url             		= "fritz.box";
+	username                = "";
 	password        		= "";
 	countryCode             = "49";
 	regionCode              = "";
@@ -490,6 +496,7 @@ bool sFritzboxConfig::SetupParseFonbooks(const char *value){
 
 bool sFritzboxConfig::SetupParse(const char *name, const char *value) {
 	if      (!strcasecmp(name, "Url"))          		url          		 = value;
+	else if (!strcasecmp(name, "Username"))	            username         = value;
 	else if (!strcasecmp(name, "Password"))	            password             = value;
 	else if (!strcasecmp(name, "EncodedPassword"))      password             = hex2string(value);
 	else if (!strcasecmp(name, "ReactOnDirection"))     reactOnDirection     = atoi(value);
