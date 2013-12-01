@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.5.7\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2013-02-16 13:11+0100\n"
+"POT-Creation-Date: 2013-12-01 20:07+0100\n"
 "PO-Revision-Date: 2011-03-05 16:29+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -177,6 +177,9 @@ msgstr "solo in uscita"
 
 msgid "Fritz!Box URL"
 msgstr "Indirizzo Fritz!Box"
+
+msgid "Username"
+msgstr ""
 
 msgid "Password"
 msgstr "Password"

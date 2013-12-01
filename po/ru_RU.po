@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru_RU-UTF8\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2013-02-16 13:11+0100\n"
+"POT-Creation-Date: 2013-12-01 20:07+0100\n"
 "PO-Revision-Date: 2008-09-09 01:48+0200\n"
 "Last-Translator: Alexander Gross\n"
 "Language-Team: russian\n"
@@ -181,6 +181,9 @@ msgstr "выходящие"
 
 msgid "Fritz!Box URL"
 msgstr "Адрес Fritz!Box "
+
+msgid "Username"
+msgstr ""
 
 msgid "Password"
 msgstr "Пароль"

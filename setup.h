@@ -37,6 +37,7 @@ class cMenuSetupFritzbox : public cMenuSetupPage
 private:
 	cPluginFritzbox	 *fritzbox;
 	char *url;
+	char *username;
 	char *password;
 	char *directions[3];
 	char *menus[4];
@@ -107,6 +108,7 @@ public:
 	std::string pluginName;             // name of this plugin (e.g., for cRemote::CallPlugin)
 	std::string lang;                   // webinterface language
 	std::string url;                    // fritz!box url
+	std::string username;               // fritz!box web interface username
 	std::string password;               // fritz!box web interface password
 	bool locationSettingsDetected;      // if true, location settings were autodetected by libfritz
 	std::string countryCode;            // fritz!box country-code
