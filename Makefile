@@ -83,7 +83,7 @@ I18Npot   = $(PODIR)/$(PLUGIN).pot
 
 ### Targets:
 
-all: $(SOFILE) i18n test
+all: $(SOFILE) i18n
 
 $(SOFILE): $(OBJS) $(LIBS)
 	$(CXX) $(CXXFLAGS) -shared $(OBJS) $(LIBS) $(LDFLAGS) -o $@
