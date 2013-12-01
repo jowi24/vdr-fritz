@@ -62,7 +62,7 @@ LIBS = libfritz++/libfritz++.a libnet++/libnet++.a liblog++/liblog++.a libconv++
 STATIC_LIB_DIRS = $(dir $(LIBS))
 STATIC_LIBS     = $(LIBS:%=$(CURDIR)/%)
 CXXFLAGS       += -I$(CURDIR) -std=c++11
-LDFLAGS        += -lboost_system -lboost_thread -lpthread -lgcrypt
+LDFLAGS        += -lboost_system -lboost_thread -lboost_regex -lpthread -lgcrypt
 export STATIC_LIBS CXXFLAGS LDFLAGS
 
 ### Tests
