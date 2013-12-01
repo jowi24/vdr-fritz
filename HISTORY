@@ -690,6 +690,13 @@ VDR Plugin 'fritzbox' Revision History
 - Show call information during complete ringing phase
   Fixes #1189 [VDR], reported by speed [55]
   
+2013-12-01: Version 1.5.3
+- New dependency boost::asio, dropped dependency to commoncpp
+- Fix resolve in TelLocalChFonbook
+- Add support for username authentication: new setup option
+  Fixes #1385 [VDR]
+- Fix some warning about unused parameters
+
   
 --- References ---
 
