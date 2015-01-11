@@ -116,6 +116,18 @@ A sample script is provided in template/on-call.sh.
 
 ---
 
+# Screenshots
+
+[![Screenshot 1](https://jowi24.github.io/vdr-fritz/screenshot-fritz1.jpg)](https://jowi24.github.io/vdr-fritz/screenshot-fritz1.jpg)
+[![Screenshot 2](https://jowi24.github.io/vdr-fritz/screenshot-fritz2.jpg)](https://jowi24.github.io/vdr-fritz/screenshot-fritz2.jpg)
+[![Screenshot 1](https://jowi24.github.io/vdr-fritz/screenshot-fritz3.jpg)](https://jowi24.github.io/vdr-fritz/screenshot-fritz3.jpg)
+[![Screenshot 2](https://jowi24.github.io/vdr-fritz/screenshot-fritz4.jpg)](https://jowi24.github.io/vdr-fritz/screenshot-fritz4.jpg)
+[![Screenshot 1](https://jowi24.github.io/vdr-fritz/screenshot-fritz5.jpg)](https://jowi24.github.io/vdr-fritz/screenshot-fritz5.jpg)
+[![Screenshot 2](https://jowi24.github.io/vdr-fritz/screenshot-fritz6.jpg)](https://jowi24.github.io/vdr-fritz/screenshot-fritz6.jpg)
+[![Screenshot 1](https://jowi24.github.io/vdr-fritz/screenshot-fritz7.jpg)](https://jowi24.github.io/vdr-fritz/screenshot-fritz7.jpg)
+
+---
+
 Note: This Plugin has been tested with Fritz!Box Fon WLAN 7390 FW 06.20
 However it may also work for other models or firmware versions. For a detailed
 list see the plugin's homepage. If you have another model, either positive or 
