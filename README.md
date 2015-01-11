@@ -1,7 +1,9 @@
+# Overview
 This is a "plugin" for the Video Disk Recorder (VDR).
 
-Written by:                  Joachim Wilke <vdr@joachim-wilke.de>
-                             Matthias Becker <becker.matthias@gmail.com>
+Written by:
+* Joachim Wilke [vdr (at) joachim (minus) wilke (dot) de]
+* Matthias Becker [becker (dot) matthias (at) gmail (dot) com]
 
 Project's homepage:          https://github.com/jowi24/vdr-fritz
 
@@ -10,34 +12,32 @@ Latest version available at: https://github.com/jowi24/vdr-fritz/releases
 See the file COPYING for license information.
 
 ** Note: The HISTORY file may contain information on new features, which are
-not yet documented in this READE. For up to date information also have a look 
+not yet documented in this README. For up to date information also have a look 
 in that file. **
 
---<----------------------------------------------------------------------------
+---
 
-Installation:
+# Installation
 
 The Fritz plugin is not very different from other plugins for VDR, most of the 
 common installation procedure for plugins, documented in VDR's core 
 documentation applies. However, the following build dependecies are required:
   - GCrypt library (libgcrypt)
-  - Gnu Common CPP library (libccgnu2, libccext2)
 
---<----------------------------------------------------------------------------
+---
 
-Description:
+# Description
 
-* Call notification
+## Call notification
 
 The Fritz!Box Plugin connects to the Fritz!Box to inform you about
 incoming and outgoing calls. As an option, the plugin can automatically mute
 VDR and pause replays when a call comes in or goes out.
 
-To enable this feature you have to dial "#96*5*" once with a telephone
-connected to the Fritz!Box. This works for all firmware versions 
->= xx.03.99
+To enable this feature you have to dial `#96*5*` once with a telephone
+connected to the Fritz!Box. This works for all firmware versions >= xx.03.99
 
-You may experience problems when trying to dial "#96*5*" with an ISDN 
+You may experience problems when trying to dial `#96*5*` with an ISDN 
 telephone. In such a case try to activate "auto keypad", "dial * and #" 
 or some similar setting in your ISDN telephone. If your ISDN telephone 
 contains no keypad support simply use an analogue telephone instead.
@@ -49,7 +49,7 @@ are supported.
 Configuration regarding call notification, muting and pausing is done
 in the plugin setup menu in VDR.
 
-* Phone book support
+## Phone book support
 
 The plugin supports multiple phonebooks. In the plugin's setup, you can 
 choose which phonebooks are used. The order matters with respect to number
@@ -64,59 +64,59 @@ menu you can browse this phone book and initiate calls out of it via the
 Fritz!Box web interface for this purpose. (In German the menu path is: 
 Telefonie > Anrufliste > Wählhilfe) 
 
--> Fritz!Box phone book
+### Fritz!Box phone book
 
 This accesses the Fritz!Box phonebook stored on the box itself.
 
--> das-oertliche.de phone book
+### das-oertliche.de phone book
 
 This tries to resolve any number via the german website das-oertliche.de.
 As this is a lookup-only phonebook, it's entries cannot be displayed 
 in the main menu... ;-)
 
--> nummerzoeker phone book / tel.local.ch phone book
+### nummerzoeker phone book / tel.local.ch phone book
 
 Same as das-oertliche.de, but for numbers from the Netherlands and Switzerland.
 
-* Fritz!Box call list
+## Fritz!Box call list
 
 Via the colour buttons you can access three different call lists.
-Press [Green] to see the history of incoming calls. Use [Yellow] for the
-list of missed calls. Finally [Blue] gives you an overview on whom you 
+Press `[Green]` to see the history of incoming calls. Use `[Yellow]` for the
+list of missed calls. Finally `[Blue]` gives you an overview on whom you 
 called yourself.
 
-Pressing [OK] shows a separate page with details to the selected call.
+Pressing `[OK]` shows a separate page with details to the selected call.
 In this menu you can initiate calls, as in the phone book menu, by pressing
-[Red].
+`[Red]`.
 
---<----------------------------------------------------------------------------
+---
 
-Command line options:
+# Command line options
 
--> Privacy
+## Privacy
 
 This plugin logs status and debug information to system log (syslog). By default, 
 no sensitive information, like phone numbers or similar are logged. However, for
-debugging purposes, this can be enabled, by the '-p' parameter.
+debugging purposes, this can be enabled, by the `-p` parameter.
 
--> Running custom commands on call events
+### Running custom commands on call events
 
-Using the '-c cmd' parameter, a command or script 'cmd' can be specified, that
+Using the `-c cmd` parameter, a command or script 'cmd' can be specified, that
 is called when an incoming or outgoing call is initiated or finished. The plugin
 calls cmd with additional parameters depending on the type of event.
 * On incoming or outgoing calls:
-  - cmd CALL [OUT|IN] <connection_id> <remote_number> <remote_name> <local_party> <medium> <medium_name>
+  - `cmd CALL [OUT|IN] <connection_id> <remote_number> <remote_name> <local_party> <medium> <medium_name>`
 * On call connect:
-  - cmd CONNECT <connection_id>  
+  - `cmd CONNECT <connection_id>`
 * On call disconnect:
-  - cmd DISCONNECT <connection_id> <duration>
+  - `cmd DISCONNECT <connection_id> <duration>`
 * When all ongoing calls have been finished:
-  - cmd FINISHED
+  - `cmd FINISHED`
 A sample script is provided in template/on-call.sh.
 
---<----------------------------------------------------------------------------
+---
 
-Note: This Plugin has been tested with Fritz!Box Fon WLAN 7170 FW 29.04.29.
+Note: This Plugin has been tested with Fritz!Box Fon WLAN 7390 FW 06.20
 However it may also work for other models or firmware versions. For a detailed
 list see the plugin's homepage. If you have another model, either positive or 
 negative feedback is appreciated. 
