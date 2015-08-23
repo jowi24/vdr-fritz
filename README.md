@@ -23,7 +23,8 @@ The Fritz plugin is not very different from other plugins for VDR, most of the
 common installation procedure for plugins, documented in VDR's core 
 documentation applies. However, the following build dependecies are required:
   - GCrypt library (libgcrypt)
-  - Boost asio 
+  - Asio (>= 1.4.1)
+  - Boost (>= 1.54.0)
 
 ## Cloning the GIT repository
 
