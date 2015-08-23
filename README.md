@@ -23,6 +23,11 @@ The Fritz plugin is not very different from other plugins for VDR, most of the
 common installation procedure for plugins, documented in VDR's core 
 documentation applies. However, the following build dependecies are required:
   - GCrypt library (libgcrypt)
+  - Boost asio 
+
+## Cloning the GIT repository
+
+Use `git clone --recursive` to clone submodules, as well.
 
 ---
 
@@ -62,7 +67,7 @@ first configured phonebook, that has displayable entries. Via VDR's main
 menu you can browse this phone book and initiate calls out of it via the 
 [OK]-button. This function uses the telephone you have configures in 
 Fritz!Box web interface for this purpose. (In German the menu path is: 
-Telefonie > Anrufliste > Wählhilfe) 
+Telefonie > Anrufliste > WÃ¤hlhilfe) 
 
 ### Fritz!Box phone book
 
