@@ -49,9 +49,9 @@ cPluginFritzbox::cPluginFritzbox(void)
 
 	logger::Log::setPrefix("fritzbox");
 	logger::Log::setCustomLogger(
-		[](const std::string &message) { esyslog(message.c_str()); },
-		[](const std::string &message) { isyslog(message.c_str()); },
-		[](const std::string &message) { dsyslog(message.c_str()); }
+		[](const std::string &message) { esyslog("%s", message.c_str()); },
+		[](const std::string &message) { isyslog("%s", message.c_str()); },
+		[](const std::string &message) { dsyslog("%s", message.c_str()); }
 	);
 }
 
