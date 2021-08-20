@@ -697,6 +697,13 @@ VDR Plugin 'fritzbox' Revision History
   Fixes #1385 [VDR]
 - Fix some warning about unused parameters
 
+2021-08-20: Version 1.5.4
+- Changes in libfritz++
+  * Fix a compile problem reported in https://bugs.gentoo.org/808665, fix provided by [57]
+- Fixed formatting issue #2 [GitHub]
+- Fixed issue #3 [GitHub] provided by [58]
+- Updated documentation
+
   
 --- References ---
 
@@ -704,6 +711,7 @@ Bugtracker:
   
 [VDR] -> http://projects.vdr-developer.org/issues/
 [KDE] -> https://bugs.kde.org/show_bug.cgi?id=XXXXXX
+[GitHub] -> https://github.com/jowi24/vdr-fritz/issues 
 
 Contributors:
 
@@ -725,7 +733,7 @@ Contributors:
 [13] Oktay Yolgecen <Oktay_73@yahoo.de>
 [14] http://vdr-portal.de/board/profile.php?userid=1551
 [15] Axel Naumann <axel-naumann@gmx.de>
-[16] Thomas Günther <tom@toms-cafe.de>
+[16] Thomas Gï¿½nther <tom@toms-cafe.de>
      http://vdr-portal.de/board/profile.php?userid=4452
 [17] Torsten Weigelt <torsten.weigelt@web.de>
      http://vdr-portal.de/board/profile.php?userid=16817
@@ -733,7 +741,7 @@ Contributors:
 [19] http://vdr-portal.de/board/profile.php?userid=99
 [20] http://vdr-portal.de/board/profile.php?userid=15737
 [21] http://vdr-portal.de/board/profile.php?userid=8904
-[22] Hans Jürgen Meier <Hans-Juergen@Kalmei.de>
+[22] Hans Jï¿½rgen Meier <Hans-Juergen@Kalmei.de>
 [23] http://vdr-portal.de/board/profile.php?userid=272	
 [24] Diego Pierotto <vdr-italian@tiscali.it>
      http://vdr-italia.phpbb24.com/portal.php
@@ -782,3 +790,5 @@ Contributors:
 [55] speed
      http://www.vdr-portal.de/user/10911-speed
 [56] Stephan <sg@conectas.net>
+[57] https://github.com/thesamesam/ 
+[58] https://github.com/vdkost
