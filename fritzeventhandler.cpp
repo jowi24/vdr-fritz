@@ -146,7 +146,12 @@ void cFritzEventHandler::handleCall(bool outgoing, int connId,
 
 	bool currPlay, currForw;
 	int currSpeed;
+	#if APIVERSNUM >= 20402
+	cMutexLock mutexLock;
+	cControl *control = cControl::Control(mutexLock);
+	#else
 	cControl *control = cControl::Control();
+	#endif
 	if (control) {
 		control->GetReplayMode(currPlay, currForw, currSpeed);
 	}
@@ -244,7 +249,12 @@ void cFritzEventHandler::handleDisconnect(int connId, std::string duration) {
 
 	bool currPlay, currForw;
 	int currSpeed;
+	#if APIVERSNUM >= 20402
+	cMutexLock mutexLock;
+	cControl *control = cControl::Control(mutexLock);
+	#else
 	cControl *control = cControl::Control();
+	#endif
 	if (control) {
 		control->GetReplayMode(currPlay, currForw, currSpeed);
 	}
