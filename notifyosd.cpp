@@ -128,7 +128,7 @@ void cNotifyOsd::Show(void) {
 		delete osd;
 	osd = cOsdProvider::NewOsd(left, top);
 	// defines drawing area and color depth
-	tArea Area = { 0, 0, width-1, height-1, colorDepth };
+	tArea Area = { 0, 0, static_cast<int>(width-1), static_cast<int>(height-1), colorDepth };
 	osd->SetAreas(&Area, 1);
 	// draw osd frame, 2px thick
 	osd->DrawRectangle(0,             0,             width-1,               height-1,               clrBackground);
