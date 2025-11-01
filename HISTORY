@@ -722,6 +722,16 @@ VDR Plugin 'fritzbox' Revision History
 - Corrected version number (was still showing 1.5.3 in code after 1.5.4 release)
 - Completed changelog for version 1.5.4 (submodule changes were missing)
 
+2025-11-01: Version 1.5.6
+- Fixed compilation error with clang (adds missing include / adjusts code for stricter clang build)
+  * Fixes #6 [GitHub] provided by [59]
+- Changes in libnet++
+  * Fix compile with recent boost versions
+  * Merge PR for boost compatibility (includes changes up to commit 9b5400c)
+  * Provided by [59]
+- Maintenance: bumped plugin version to 1.5.6
+- Internal: preparing for broader compiler support (gcc/clang)
+
   
 --- References ---
 
