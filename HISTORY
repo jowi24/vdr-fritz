@@ -732,6 +732,16 @@ VDR Plugin 'fritzbox' Revision History
 - Maintenance: bumped plugin version to 1.5.6
 - Internal: preparing for broader compiler support (gcc/clang)
 
+2025-11-10: Version 1.5.7
+- Changes in libnet++
+  * Improved boost compatibility to maintain backward compatibility
+  * Use conditional compilation based on BOOST_VERSION (<=1.84.0 vs >1.84.0)
+  * Boost <= 1.84.0: uses expires_from_now() with boost::posix_time
+  * Boost > 1.84.0: uses expires_after() with std::chrono
+  * This restores compatibility with older boost versions while supporting new ones
+  * Suggested by butterweich [60] and implemented by Zabrimus [61]
+- Updated libnet++ submodule reference to commit 81381ca
+
   
 --- References ---
 
@@ -821,3 +831,5 @@ Contributors:
 [57] https://github.com/thesamesam/ 
 [58] https://github.com/vdkost
 [59] Martin Dummer <martin.dummer@gmx.net> - https://github.com/madmartin
+[60] https://github.com/butterweich
+[61] https://github.com/Zabrimus
