@@ -40,7 +40,7 @@ cNotifyOsd::cNotifyOsd(cFritzEventHandler *event) {
 
 cNotifyOsd::~cNotifyOsd() {
 	DBG("closing OSD");
-	cStatus::MsgOsdStatusMessage(NULL);
+	cStatus::MsgOsdStatusMessage(mtStatus, NULL);
 	open = false;
 	delete osd;
 }
@@ -52,7 +52,7 @@ bool cNotifyOsd::GenerateOsdText() {
 		fritz::sCallInfo callInfo = event->GetCallInfo(*it);
 		if (callInfo.localNumber.length() == 0)
 			continue;
-		cStatus::MsgOsdStatusMessage(event->ComposeCallMessage(*it).c_str());
+		cStatus::MsgOsdStatusMessage(mtStatus, event->ComposeCallMessage(*it).c_str());
 		event->NotificationDone(*it);
 		// 0: separation betwenn multiple calls
 		if (it != ids.begin())

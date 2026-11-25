@@ -16,11 +16,14 @@ Funktionen beinhalten, die in dieser Dokumentation noch nicht eingepflegt sind. 
 
 Installation:
 
-Das Fritz Plugin unterscheidet sich nicht wesentlich von anderen Plugins f¸r den
-VDR. Das meiste der VDR-Dokumentation zu Plugins gilt auch hier. Zus‰tzlich sind
-lediglich die folgende Bibliotheks-Abh‰ngigkeiten zu beachten:  
+Das Fritz Plugin unterscheidet sich nicht wesentlich von anderen Plugins f√ºr den
+VDR. Das meiste der VDR-Dokumentation zu Plugins gilt auch hier. Zus√§tzlich sind
+lediglich die folgende Bibliotheks-Abh√§ngigkeiten zu beachten:  
   - GCrypt Bibliothek (libgcrypt)
   - Gnu Common CPP Bibliothek (libccgnu2, libccext2)
+  - Zus√§tzliche Build-Abh√§ngigkeit f√ºr die HTTPS-R√ºckwartssuche:
+    libcurl (Entwicklungspaket, z. B. libcurl4-openssl-dev unter Debian/Ubuntu).
+    Beim Linken wird -lcurl verwendet. Die TLS-Zertifikatspr√ºfung ist aktiviert.
 
 --<----------------------------------------------------------------------------
   
@@ -111,8 +114,7 @@ Ein Beispiel-Skript befindet sich in template/on-call.sh.
 
 --<----------------------------------------------------------------------------
 
-Hinweis: Dieses Plugin wurde urspr¸nglich mit der Fritz!Box Fon WLAN 7170 
-FW 29.04.29 getestet. Eine ausf¸hrliche Liste findet sich auf der Projektseite. 
-Wir freuen uns ¸ber R¸ckmeldung zu (Miss)-Erfolg mit anderen Firmware-Versionen 
-und Ger‰ten.
- 
+Hinweis: Dieses Plugin wurde mit der Fritz!Box FW 8.25 getestet.
+Eine ausf√ºhrliche Liste findet sich auf der Projektseite. Wir freuen uns
+√ºber R√ºckmeldung zu (Miss)-Erfolg mit anderen Firmware-Versionen 
+und Ger√§ten.
