@@ -751,6 +751,18 @@ VDR Plugin 'fritzbox' Revision History
 - Updated documentation
 - Consolidated version tracking across branches
 
+2026-11-27: Version 1.5.9
+- Added support for FRITZ!OS 8.25
+- Updated libfritz++ for modern Fritz!Box settings pages
+- Added HTTPS support for das-oertliche reverse lookup
+- Updated call-list parsing for newer Fritz!Box firmware
+- Added bounds checks for Fritz!Box phonebook entries
+- Improved compatibility with VDR 2.6 and newer
+- Improved Boost.Asio timeout compatibility across old and new Boost versions
+- Added a GitHub Actions build matrix for Ubuntu 22.04, 24.04 and 26.04
+  with VDR 2.6.9, 2.7.4 and 2.8.4
+- Contribution provided by butterweich [64], Issue #9 [GitHub]
+
   
 --- References ---
 
@@ -844,3 +856,4 @@ Contributors:
 [61] https://github.com/Zabrimus
 [62] https://github.com/M-Reimer
 [63] https://github.com/a17r
+[64] https://github.com/butterweich
