@@ -189,10 +189,12 @@ void cMenuFritzbox::DisplayCalls(fritz::CallEntry::eCallType ct) {
 			// external lookups in it.
 			if (!ce->remoteNumber.empty() &&
 			    (ce->remoteName.empty() || ce->remoteName == ce->remoteNumber)) {
-				fritz::Fonbook::sResolveResult rr =
-					fonbook->resolveToName(ce->remoteNumber);
-				if (rr.successful && !rr.name.empty())
-					ce->remoteName = rr.name;
+				if (fonbook) {
+					fritz::Fonbook::sResolveResult rr =
+						fonbook->resolveToName(ce->remoteNumber);
+					if (rr.successful && !rr.name.empty())
+						ce->remoteName = rr.name;
+				}
 			}
 
 			// show remote name, remote number or "unknown"
