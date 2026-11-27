@@ -763,7 +763,14 @@ VDR Plugin 'fritzbox' Revision History
   with VDR 2.6.9, 2.7.4 and 2.8.4
 - Contribution provided by butterweich [64], Issue #9 [GitHub]
 
-  
+2026-11-27: Version 1.5.10
+- Added reverse-lookup caching for call-list names
+- Read cached names from the local phone book even when it is not selected for display
+- Persist successful reverse lookups in localphonebook.xml
+- Improved cache entry merging and XML escaping
+- Contribution provided by butterweich [64], Issue #12 [GitHub]
+
+
 --- References ---
 
 Bugtracker:
