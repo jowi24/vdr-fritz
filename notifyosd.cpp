@@ -40,7 +40,11 @@ cNotifyOsd::cNotifyOsd(cFritzEventHandler *event) {
 
 cNotifyOsd::~cNotifyOsd() {
 	DBG("closing OSD");
+#if VDRVERSNUM >= 20704
 	cStatus::MsgOsdStatusMessage(mtStatus, NULL);
+#else
+	cStatus::MsgOsdStatusMessage(NULL);
+#endif
 	open = false;
 	delete osd;
 }
@@ -52,7 +56,11 @@ bool cNotifyOsd::GenerateOsdText() {
 		fritz::sCallInfo callInfo = event->GetCallInfo(*it);
 		if (callInfo.localNumber.length() == 0)
 			continue;
+#if VDRVERSNUM >= 20704
 		cStatus::MsgOsdStatusMessage(mtStatus, event->ComposeCallMessage(*it).c_str());
+#else
+		cStatus::MsgOsdStatusMessage(event->ComposeCallMessage(*it).c_str());
+#endif
 		event->NotificationDone(*it);
 		// 0: separation betwenn multiple calls
 		if (it != ids.begin())
