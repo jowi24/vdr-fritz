@@ -20,6 +20,9 @@ jobs:
           - runner: ubuntu-22.04
             os: "22.04"
             vdr: "2.7.4"
+          - runner: ubuntu-22.04
+            os: "22.04"
+            vdr: "2.8.4"
           - runner: ubuntu-24.04
             os: "24.04"
             vdr: "2.6.9"
@@ -29,6 +32,12 @@ jobs:
           - runner: ubuntu-24.04
             os: "24.04"
             vdr: "2.8.4"
+          - runner: ubuntu-26.04
+            os: "26.04"
+            vdr: "2.6.9"
+          - runner: ubuntu-26.04
+            os: "26.04"
+            vdr: "2.7.4"
           - runner: ubuntu-26.04
             os: "26.04"
             vdr: "2.8.4"
