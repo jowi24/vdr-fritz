@@ -150,6 +150,7 @@ void cMenuFritzbox::DisplayCalls(fritz::CallEntry::eCallType ct) {
 	currentMode = (mode) ct;
 	std::string title=tr("Fritz!Box call list");
 	fritz::CallList *callList = fritz::CallList::GetCallList();
+	fritz::Fonbook *fonbook = fritz::FonbookManager::GetFonbook();
 	Clear();
 	title += " (";
 	switch(ct) {
@@ -182,6 +183,19 @@ void cMenuFritzbox::DisplayCalls(fritz::CallEntry::eCallType ct) {
 
 			if ( !ce->matchesFilter())
 				continue;
+
+			// Resolve unknown remote numbers before displaying the call list.
+			// FonbookManager checks the local phone book first and caches successful
+			// external lookups in it.
+			if (!ce->remoteNumber.empty() &&
+			    (ce->remoteName.empty() || ce->remoteName == ce->remoteNumber)) {
+				if (fonbook) {
+					fritz::Fonbook::sResolveResult rr =
+						fonbook->resolveToName(ce->remoteNumber);
+					if (rr.successful && !rr.name.empty())
+						ce->remoteName = rr.name;
+				}
+			}
 
 			// show remote name, remote number or "unknown"
 			std::string sLine = ce->remoteName.length()   > 0 ? ce->remoteName   :
