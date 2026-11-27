@@ -1,0 +1,65 @@
+name: Build matrix
+
+on:
+  pull_request:
+  push:
+    branches:
+      - issue-9-fritzbox-fw-825-update-v2
+
+jobs:
+  build:
+    name: Ubuntu ${{ matrix.os }} / VDR ${{ matrix.vdr }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-22.04
+            os: "22.04"
+            vdr: "2.6.9"
+          - runner: ubuntu-22.04
+            os: "22.04"
+            vdr: "2.7.4"
+          - runner: ubuntu-24.04
+            os: "24.04"
+            vdr: "2.6.9"
+          - runner: ubuntu-24.04
+            os: "24.04"
+            vdr: "2.7.4"
+          - runner: ubuntu-24.04
+            os: "24.04"
+            vdr: "2.8.4"
+          - runner: ubuntu-26.04
+            os: "26.04"
+            vdr: "2.8.4"
+
+    steps:
+      - name: Check out plugin and submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential pkg-config \
+            libboost-thread-dev libboost-regex-dev \
+            libgcrypt20-dev libcurl4-openssl-dev \
+            libjpeg-dev libfontconfig1-dev libfreetype-dev \
+            libcap-dev gettext git
+
+      - name: Build VDR ${{ matrix.vdr }}
+        run: |
+          git clone --branch "${{ matrix.vdr }}" --depth 1 \
+            https://github.com/vdr-projects/vdr.git vdr
+          cd vdr
+          make -j"$(nproc)" include-dir vdr vdr.pc
+
+      - name: Build plugin
+        run: |
+          make clean
+          make -j"$(nproc)" \
+            VDRDIR="$GITHUB_WORKSPACE/vdr" \
+            INCLUDES="-I$GITHUB_WORKSPACE/vdr/include" \
+            PKG_CONFIG_PATH="$GITHUB_WORKSPACE/vdr"
+
